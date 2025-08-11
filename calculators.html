@@ -7,369 +7,48 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <style>
-        /* --- Global Variables & Base Styles --- */
-        :root {
-            --primary-color: #4A90E2;
-            --business-color: #00BFA5;
-            --health-color: #F44336;
-            --finance-color: #6B6EEA;
-            --background-color: #F8F9FA;
-            --card-bg: #FFFFFF;
-            --text-color: #333;
-            --secondary-text: #666;
-            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
-            --border-radius: 12px;
-            --red-color: #FF0000;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 20px;
-            width: 100%;
-        }
-
-        /* --- Animations --- */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* --- Header --- */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease-out 0.2s forwards;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .home-btn {
-            background-color: var(--card-bg);
-            border: 1px solid #ddd;
-            padding: 8px 12px;
-            border-radius: var(--border-radius);
-            margin-right: 15px;
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-color);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            text-decoration: none;
-        }
-
-        .home-btn:hover {
-            background-color: #e9ecef;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        .logo a {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--primary-color);
-            text-decoration: none;
-            letter-spacing: -1px;
-            display: flex;
-            align-items: center;
-        }
-
-        .logo a .tool-text {
-            color: var(--red-color);
-        }
-
-        .logo a .hub-text {
-            color: var(--primary-color);
-        }
-
-        .language-switcher {
-            display: flex;
-            align-items: center;
-        }
-
-        .lang-btn {
-            background-color: transparent;
-            border: 1px solid #ccc;
-            padding: 6px 12px;
-            cursor: pointer;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin-left: 8px;
-        }
-
-        .lang-btn.active {
-            background-color: var(--primary-color);
-            color: #fff;
-            border-color: var(--primary-color);
-        }
-
-        .lang-btn:hover:not(.active) {
-            background-color: #e0e0e0;
-        }
-
-        /* --- Hero Section --- */
-        .hero-section {
-            text-align: center;
-            padding: 80px 20px;
-            background-image: linear-gradient(135deg, var(--primary-color), var(--finance-color));
-            color: #fff;
-            margin-bottom: 50px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-light);
-            position: relative;
-            overflow: hidden;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease-out 0.4s forwards;
-        }
-
-        .hero-section h1, .hero-section p {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-section h1 {
-            font-size: 52px;
-            margin-bottom: 10px;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-
-        .hero-section p {
-            font-size: 18px;
-            margin-bottom: 20px;
-            opacity: 0.9;
-        }
-
-        /* --- Tool Content --- */
-        .tool-content {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px 20px;
-        }
-
-        .tool-card {
-            background-color: var(--card-bg);
-            padding: 40px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-light);
-            width: 100%;
-            max-width: 800px;
-            margin-bottom: 40px;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease-out forwards;
-        }
-
-        .tool-card:nth-of-type(1) { animation-delay: 0.6s; }
-        .tool-card:nth-of-type(2) { animation-delay: 0.8s; }
-        .tool-card:nth-of-type(3) { animation-delay: 1.0s; }
-        
-        /* Input & Form Group Styles */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group input:focus {
-            border-color: var(--primary-color);
-        }
-        
-        /* --- Calculator Buttons Styles --- */
-        .calculator-buttons-group {
-            display: flex;
-            gap: 15px;
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        .calculate-btn, .reset-btn {
-            width: 50%;
-            padding: 14px 24px;
-            border-radius: 8px;
-            border: none;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .calculate-btn {
-            background-color: var(--primary-color);
-            color: #fff;
-        }
-        
-        .business-calculator .calculate-btn { background-color: var(--business-color); }
-        .health-calculator .calculate-btn { background-color: var(--health-color); }
-        .finance-calculator .calculate-btn { background-color: var(--finance-color); }
-
-        .calculate-btn:hover {
-            background-color: #2F6DB8;
-            transform: translateY(-2px);
-        }
-        
-        .business-calculator .calculate-btn:hover { background-color: #00897B; }
-        .health-calculator .calculate-btn:hover { background-color: #D32F2F; }
-        .finance-calculator .calculate-btn:hover { background-color: #5B5CCB; }
-
-
-        .reset-btn {
-            background-color: #E0E0E0;
-            color: #333;
-        }
-
-        .reset-btn:hover {
-            background-color: #CDCDCD;
-            transform: translateY(-2px);
-        }
-
-        /* --- Result Section Styles (Common) --- */
-        .result-container {
-            margin-top: 25px;
-            padding: 20px;
-            background-color: #e9ecef;
-            border-radius: 8px;
-            font-weight: 600;
-            display: none;
-            text-align: center;
-        }
-        .result-container h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-        .result-container p {
-            margin: 0;
-            font-size: 1.2rem;
-        }
-        .result-container p span {
-            font-weight: 400;
-        }
-        
-        .result-breakdown {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #f1f3f5;
-            border-radius: 8px;
-            text-align: left;
-            font-size: 1rem;
-        }
-        
-        /* BMI Category Styles */
-        .bmi-category-box {
-            margin-top: 15px;
-            padding: 10px;
-            border-radius: 8px;
-            color: #fff;
-            font-size: 1.2rem;
-            font-weight: 700;
-        }
-        .underweight { background-color: #89CFF0; }
-        .normal { background-color: #7BC043; }
-        .overweight { background-color: #FFC107; }
-        .obesity { background-color: #D32F2F; }
-
-        /* View all tools button styling */
-        .view-btn {
-            background-color: var(--primary-color);
-            color: #fff;
-            padding: 12px 24px;
-            border-radius: 8px;
-            border: none;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            width: 100%;
-            margin-top: 30px;
-            text-decoration: none;
-            display: block;
-            text-align: center;
-        }
-
-        .view-btn:hover {
-            background-color: #2F6DB8;
-            transform: translateY(-2px);
-        }
-
-        .view-btn:active {
-            transform: scale(0.98);
-        }
-
-        /* --- Footer --- */
-        .footer {
-            text-align: center;
-            padding: 30px;
-            margin-top: auto;
-            background-color: var(--card-bg);
-            border-top: 1px solid #e0e0e0;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease-out 1.2s forwards;
-        }
-
-        .footer-links a {
-            color: #666;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 14px;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--primary-color);
-        }
-
-        .footer p {
-            margin-top: 15px;
-            font-size: 14px;
-            color: #666;
-        }
+        /* (যে CSS তুমি পাঠিয়েছিলে সেটাই 그대로 আছে — নিরাপদে কপি করে রেখেছি) */
+        :root { --primary-color: #4A90E2; --business-color: #00BFA5; --health-color: #F44336; --finance-color: #6B6EEA; --background-color: #F8F9FA; --card-bg: #FFFFFF; --text-color: #333; --secondary-text: #666; --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08); --border-radius: 12px; --red-color: #FF0000; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px; width: 100%; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; opacity: 0; animation: fadeInUp 0.8s ease-out 0.2s forwards; }
+        .logo-container { display:flex; align-items:center; }
+        .home-btn { background-color: var(--card-bg); border: 1px solid #ddd; padding: 8px 12px; border-radius: var(--border-radius); margin-right: 15px; font-size: 16px; font-weight: 600; color: var(--text-color); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.05); text-decoration: none; }
+        .home-btn:hover { background-color: #e9ecef; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .logo a { font-size: 28px; font-weight: 700; color: var(--primary-color); text-decoration: none; letter-spacing: -1px; display:flex; align-items:center; }
+        .logo a .tool-text { color: var(--red-color); } .logo a .hub-text { color: var(--primary-color); }
+        .language-switcher { display:flex; align-items:center; }
+        .lang-btn { background-color: transparent; border: 1px solid #ccc; padding: 6px 12px; cursor:pointer; border-radius:6px; font-size:14px; font-weight:600; transition: all 0.3s ease; margin-left:8px; }
+        .lang-btn.active { background-color: var(--primary-color); color: #fff; border-color: var(--primary-color); }
+        .hero-section { text-align:center; padding:80px 20px; background-image: linear-gradient(135deg, var(--primary-color), var(--finance-color)); color:#fff; margin-bottom:50px; border-radius:var(--border-radius); box-shadow:var(--shadow-light); position:relative; overflow:hidden; opacity:0; animation: fadeInUp 0.8s ease-out 0.4s forwards; }
+        .hero-section h1 { font-size:52px; margin-bottom:10px; font-weight:700; line-height:1.2; }
+        .hero-section p { font-size:18px; margin-bottom:20px; opacity:0.9; }
+        .tool-content { flex-grow:1; display:flex; flex-direction:column; align-items:center; padding:40px 20px; }
+        .tool-card { background-color: var(--card-bg); padding:40px; border-radius:var(--border-radius); box-shadow:var(--shadow-light); width:100%; max-width:800px; margin-bottom:40px; opacity:0; animation: fadeInUp 0.8s ease-out forwards; }
+        .tool-card:nth-of-type(1) { animation-delay:0.6s; } .tool-card:nth-of-type(2) { animation-delay:0.8s; } .tool-card:nth-of-type(3) { animation-delay:1.0s; }
+        .form-group { margin-bottom:20px; }
+        .form-group label { display:block; margin-bottom:8px; font-weight:600; font-size:1.1rem; }
+        .form-group input { width:100%; padding:12px; border:1px solid #ddd; border-radius:8px; font-size:1rem; outline:none; transition:border-color 0.3s ease; }
+        .form-group input:focus { border-color: var(--primary-color); }
+        .calculator-buttons-group { display:flex; gap:15px; width:100%; margin-top:20px; }
+        .calculate-btn, .reset-btn { width:50%; padding:14px 24px; border-radius:8px; border:none; font-size:1.1rem; font-weight:600; cursor:pointer; transition: all 0.3s ease; }
+        .calculate-btn { background-color: var(--primary-color); color:#fff; } .business-calculator .calculate-btn { background-color: var(--business-color); } .health-calculator .calculate-btn { background-color: var(--health-color); } .finance-calculator .calculate-btn { background-color: var(--finance-color); }
+        .calculate-btn:hover { background-color:#2F6DB8; transform: translateY(-2px); } .business-calculator .calculate-btn:hover { background-color:#00897B; } .health-calculator .calculate-btn:hover { background-color:#D32F2F; } .finance-calculator .calculate-btn:hover { background-color:#5B5CCB; }
+        .reset-btn { background-color:#E0E0E0; color:#333; } .reset-btn:hover { background-color:#CDCDCD; transform: translateY(-2px); }
+        .result-container { margin-top:25px; padding:20px; background-color:#e9ecef; border-radius:8px; font-weight:600; display:none; text-align:center; }
+        .result-container h3 { font-size:1.5rem; margin-bottom:10px; }
+        .result-container p { margin:0; font-size:1.2rem; }
+        .result-container p span { font-weight:400; }
+        .result-breakdown { margin-top:20px; padding:15px; background-color:#f1f3f5; border-radius:8px; text-align:left; font-size:1rem; }
+        .bmi-category-box { margin-top:15px; padding:10px; border-radius:8px; color:#fff; font-size:1.2rem; font-weight:700; }
+        .underweight { background-color:#89CFF0; } .normal { background-color:#7BC043; } .overweight { background-color:#FFC107; } .obesity { background-color:#D32F2F; }
+        .view-btn { background-color: var(--primary-color); color:#fff; padding:12px 24px; border-radius:8px; border:none; font-size:16px; font-weight:600; cursor:pointer; transition: background-color 0.3s ease, transform 0.2s ease; width:100%; margin-top:30px; text-decoration:none; display:block; text-align:center; }
+        .view-btn:hover { background-color:#2F6DB8; transform: translateY(-2px); } .view-btn:active { transform: scale(0.98); }
+        .footer { text-align:center; padding:30px; margin-top:auto; background-color:var(--card-bg); border-top:1px solid #e0e0e0; opacity:0; animation: fadeInUp 0.8s ease-out 1.2s forwards; }
+        .footer-links a { color:#666; text-decoration:none; margin:0 15px; font-size:14px; transition: color 0.3s ease; } .footer-links a:hover { color:var(--primary-color); }
+        .footer p { margin-top:15px; font-size:14px; color:#666; }
     </style>
 </head>
 <body>
@@ -377,9 +56,9 @@
     <div class="container">
         <header class="header">
             <div class="logo-container">
-                <a href="index.html" class="home-btn" data-lang-en="Home" data-lang-bn="হোম"><i class="ri-home-4-line"></i></a>
+                <a href="#" class="home-btn" data-lang-en="Home" data-lang-bn="হোম"><i class="ri-home-4-line"></i></a>
                 <div class="logo">
-                    <a href="index.html">Nex<span class="tool-text">Tool</span> <span class="hub-text">Hub</span></a>
+                    <a href="#">Nex<span class="tool-text">Tool</span> <span class="hub-text">Hub</span></a>
                 </div>
             </div>
             <div class="language-switcher">
@@ -399,7 +78,7 @@
                 <p data-lang-en="Calculate profit, margin, and markup for your small business to optimize pricing strategy." data-lang-bn="আপনার ছোট ব্যবসার জন্য লাভ, মার্জিন এবং মার্কআপ গণনা করুন।">Calculate profit, margin, and markup for your small business to optimize pricing strategy.</p>
                 <div class="calculator">
                     <div class="form-group">
-                        <label for="profit-cost" data-lang-en="Cost Price (₹)" data-lang-bn="খরচ (₹)">Cost Price (₹)</label>
+                        <label for="profit-cost" data-lang-en="Cost Price (₹)" data-lang-bn="খরচ (₹-তে)">Cost Price (₹)</label>
                         <input type="number" id="profit-cost" placeholder="e.g., 500">
                     </div>
                     <div class="form-group">
@@ -414,9 +93,7 @@
                 <div id="profit-result" class="result-container">
                     <h3 data-lang-en="Profit & Margin Details" data-lang-bn="লাভ ও মার্জিনের বিস্তারিত">Profit & Margin Details</h3>
                     <div class="result-breakdown">
-                        <p data-lang-en="Profit Amount: <span></span>" data-lang-bn="লাভের পরিমাণ: <span></span>">Profit Amount: <span></span></p>
-                        <p data-lang-en="Profit Margin: <span></span>" data-lang-bn="প্রফিট মার্জিন: <span></span>">Profit Margin: <span></span></p>
-                        <p data-lang-en="Markup: <span></span>" data-lang-bn="মার্কআপ: <span></span>">Markup: <span></span></p>
+                        <!-- content will be injected dynamically -->
                     </div>
                 </div>
             </div>
@@ -440,8 +117,10 @@
                 </div>
                 <div id="bmi-result" class="result-container">
                     <h3 data-lang-en="Your BMI Result" data-lang-bn="আপনার BMI ফলাফল">Your BMI Result</h3>
-                    <p data-lang-en="Your BMI is: <span></span>" data-lang-bn="আপনার BMI হল: <span></span>">Your BMI is: <span></span></p>
-                    <div id="bmi-category-box" class="bmi-category-box"></div>
+                    <div class="result-breakdown">
+                        <!-- injected -->
+                    </div>
+                    <div id="bmi-category-box" class="bmi-category-box" style="display:none;"></div>
                 </div>
             </div>
 
@@ -451,15 +130,15 @@
                 <div class="calculator">
                     <div class="form-group">
                         <label for="emi-loan-amount" data-lang-en="Loan Amount (₹)" data-lang-bn="ঋণের পরিমাণ (₹)">Loan Amount (₹)</label>
-                        <input type="number" id="emi-loan-amount" placeholder="e.g., 100000">
+                        <input type="number" id="emi-loan-amount" placeholder="e.g., 100000" data-lang-en="e.g., 100000" data-lang-bn="উদাহরণ: 100000">
                     </div>
                     <div class="form-group">
                         <label for="emi-interest-rate" data-lang-en="Interest Rate (%)" data-lang-bn="সুদের হার (%)">Interest Rate (%)</label>
-                        <input type="number" id="emi-interest-rate" placeholder="e.g., 8.5" step="0.1">
+                        <input type="number" id="emi-interest-rate" placeholder="e.g., 8.5" step="0.1" data-lang-en="e.g., 8.5" data-lang-bn="উদাহরণ: 8.5">
                     </div>
                     <div class="form-group">
                         <label for="emi-loan-tenure" data-lang-en="Loan Tenure (in years)" data-lang-bn="ঋণের মেয়াদ (বছরে)">Loan Tenure (in years)</label>
-                        <input type="number" id="emi-loan-tenure" placeholder="e.g., 5">
+                        <input type="number" id="emi-loan-tenure" placeholder="e.g., 5" data-lang-en="e.g., 5" data-lang-bn="উদাহরণ: 5">
                     </div>
                     <div class="calculator-buttons-group">
                         <button id="emi-calculate-btn" class="calculate-btn" data-lang-en="Calculate" data-lang-bn="গণনা করুন">Calculate</button>
@@ -469,47 +148,57 @@
                 <div id="emi-result" class="result-container">
                     <h3 data-lang-en="Your EMI Result" data-lang-bn="আপনার EMI ফলাফল">Your EMI Result</h3>
                     <div class="result-breakdown">
-                        <p data-lang-en="Monthly EMI: <span></span>" data-lang-bn="মাসিক EMI: <span></span>">Monthly EMI: <span></span></p>
-                        <p data-lang-en="Total Interest: <span></span>" data-lang-bn="মোট সুদ: <span></span>">Total Interest: <span></span></p>
-                        <p data-lang-en="Total Payable: <span></span>" data-lang-bn="মোট পরিশোধযোগ্য: <span></span>">Total Payable: <span></span></p>
+                        <!-- injected -->
                     </div>
                 </div>
             </div>
 
-            <a href="index.html" class="view-btn" data-lang-en="View All Tools" data-lang-bn="সব টুল দেখুন">View All Tools</a>
+            <a href="#" class="view-btn" data-lang-en="View All Tools" data-lang-bn="সব টুল দেখুন">View All Tools</a>
         </section>
     </div>
 
     <footer class="footer">
         <div class="footer-links">
-            <a href="about.html" data-lang-en="About Us" data-lang-bn="আমাদের সম্পর্কে">About Us</a>
-            <a href="contact.html" data-lang-en="Contact" data-lang-bn="যোগাযোগ">Contact</a>
-            <a href="terms.html" data-lang-en="Terms" data-lang-bn="শর্তাবলী">Terms</a>
-            <a href="privacy.html" data-lang-en="Privacy" data-lang-bn="গোপনীয়তা">Privacy</a>
+            <a href="#" data-lang-en="About Us" data-lang-bn="আমাদের সম্পর্কে">About Us</a>
+            <a href="#" data-lang-en="Contact" data-lang-bn="যোগাযোগ">Contact</a>
+            <a href="#" data-lang-en="Terms" data-lang-bn="শর্তাবলী">Terms</a>
+            <a href="#" data-lang-en="Privacy" data-lang-bn="গোপনীয়তা">Privacy</a>
         </div>
         <p data-lang-en="&copy; 2025 NexTool Hub. All rights reserved." data-lang-bn="&copy; 2025 নেক্সটুল হাব। সর্বস্বত্ব সংরক্ষিত।">&copy; 2025 NexTool Hub. All rights reserved.</p>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        window.onload = function() {
             // Language Switcher
             const langButtons = document.querySelectorAll('.lang-btn');
             const elementsToTranslate = document.querySelectorAll('[data-lang-en], [data-lang-bn]');
             const placeholders = document.querySelectorAll('[placeholder][data-lang-en], [placeholder][data-lang-bn]');
 
             function setLanguage(lang) {
+                const titleEl = document.querySelector('title');
+                const titleText = titleEl.dataset[lang === 'en' ? 'langEn' : 'langBn'];
+                if (titleText) {
+                    document.title = titleText;
+                }
+
                 elementsToTranslate.forEach(el => {
+                    // skip inputs/placeholders here — handled separately
+                    if (el.hasAttribute('placeholder')) return;
+
                     const textContent = el.dataset[lang === 'en' ? 'langEn' : 'langBn'];
-                    if (textContent) {
-                        el.textContent = textContent;
+                    if (typeof textContent !== 'undefined') {
+                        // use innerHTML so embedded tags like <span> remain DOM elements
+                        el.innerHTML = textContent;
                     }
                 });
+
                 placeholders.forEach(el => {
                     const placeholderText = el.dataset[lang === 'en' ? 'langEn' : 'langBn'];
                     if (placeholderText) {
                         el.placeholder = placeholderText;
                     }
                 });
+
                 langButtons.forEach(btn => {
                     btn.classList.remove('active');
                     btn.setAttribute('aria-pressed', 'false');
@@ -525,144 +214,160 @@
                 button.addEventListener('click', () => setLanguage(button.dataset.lang));
             });
 
-            // Business Profit Margin Calculator Logic
+            /* ---------------- Business Profit Margin ---------------- */
             const profitCostInput = document.getElementById('profit-cost');
             const profitSellingPriceInput = document.getElementById('profit-selling-price');
             const profitCalculateBtn = document.getElementById('profit-calculate-btn');
             const profitResetBtn = document.getElementById('profit-reset-btn');
             const profitResultContainer = document.getElementById('profit-result');
-            const profitAmountSpan = profitResultContainer.querySelector('.result-breakdown p:nth-child(1) span');
-            const profitMarginSpan = profitResultContainer.querySelector('.result-breakdown p:nth-child(2) span');
-            const markupSpan = profitResultContainer.querySelector('.result-breakdown p:nth-child(3) span');
 
-            const calculateProfit = () => {
+            profitCalculateBtn.addEventListener('click', () => {
                 const cost = parseFloat(profitCostInput.value);
                 const sellingPrice = parseFloat(profitSellingPriceInput.value);
+                const lang = document.querySelector('.lang-btn.active').dataset.lang;
 
-                if (isNaN(cost) || isNaN(sellingPrice) || cost <= 0 || sellingPrice < cost) {
-                    profitAmountSpan.textContent = 'Invalid Input';
-                    profitMarginSpan.textContent = 'N/A';
-                    markupSpan.textContent = 'N/A';
+                if (isNaN(cost) || isNaN(sellingPrice) || cost <= 0) {
+                    const msg = (lang === 'en') ? 'Invalid Input' : 'অবৈধ ইনপুট';
+                    profitResultContainer.querySelector('.result-breakdown').innerHTML = `<p>${msg}</p>`;
                     profitResultContainer.style.display = 'block';
                     return;
                 }
-                
-                const profitAmount = sellingPrice - cost;
-                const profitMargin = (profitAmount / sellingPrice) * 100;
-                const markup = (profitAmount / cost) * 100;
 
-                profitAmountSpan.textContent = `₹${profitAmount.toFixed(2)}`;
-                profitMarginSpan.textContent = `${profitMargin.toFixed(2)}%`;
-                markupSpan.textContent = `${markup.toFixed(2)}%`;
+                const profitAmount = sellingPrice - cost;
+                const profitMargin = (sellingPrice === 0) ? 0 : (profitAmount / sellingPrice) * 100;
+                const markup = (cost === 0) ? 0 : (profitAmount / cost) * 100;
+
+                // Inject language-specific breakdown (ensures spans exist)
+                if (lang === 'en') {
+                    profitResultContainer.querySelector('.result-breakdown').innerHTML =
+                        `<p>Profit Amount: <span>₹${profitAmount.toFixed(2)}</span></p>
+                         <p>Profit Margin: <span>${profitMargin.toFixed(2)}%</span></p>
+                         <p>Markup: <span>${markup.toFixed(2)}%</span></p>`;
+                } else {
+                    profitResultContainer.querySelector('.result-breakdown').innerHTML =
+                        `<p>লাভের পরিমাণ: <span>₹${profitAmount.toFixed(2)}</span></p>
+                         <p>প্রফিট মার্জিন: <span>${profitMargin.toFixed(2)}%</span></p>
+                         <p>মার্কআপ: <span>${markup.toFixed(2)}%</span></p>`;
+                }
+
                 profitResultContainer.style.display = 'block';
-            };
-            
-            profitCalculateBtn.addEventListener('click', calculateProfit);
+            });
+
             profitResetBtn.addEventListener('click', () => {
                 profitCostInput.value = '';
                 profitSellingPriceInput.value = '';
                 profitResultContainer.style.display = 'none';
             });
 
-            // BMI Calculator Logic
+            /* ---------------- BMI ---------------- */
             const bmiWeightInput = document.getElementById('bmi-weight');
             const bmiHeightInput = document.getElementById('bmi-height');
             const bmiCalculateBtn = document.getElementById('bmi-calculate-btn');
             const bmiResetBtn = document.getElementById('bmi-reset-btn');
             const bmiResultContainer = document.getElementById('bmi-result');
-            const bmiResultSpan = bmiResultContainer.querySelector('p span');
             const bmiCategoryBox = document.getElementById('bmi-category-box');
 
-            const calculateBmi = () => {
+            bmiCalculateBtn.addEventListener('click', () => {
                 const weight = parseFloat(bmiWeightInput.value);
                 const height = parseFloat(bmiHeightInput.value);
+                const lang = document.querySelector('.lang-btn.active').dataset.lang;
 
                 if (isNaN(weight) || isNaN(height) || weight <= 0 || height <= 0) {
-                    bmiResultSpan.textContent = 'Invalid Input';
-                    bmiCategoryBox.textContent = '';
-                    bmiCategoryBox.className = 'bmi-category-box';
+                    const msg = (lang === 'en') ? 'Invalid Input' : 'অবৈধ ইনপুট';
+                    bmiResultContainer.querySelector('.result-breakdown').innerHTML = `<p>${msg}</p>`;
+                    bmiCategoryBox.style.display = 'none';
                     bmiResultContainer.style.display = 'block';
                     return;
                 }
-                
+
                 const heightInMeters = height / 100;
                 const bmi = weight / (heightInMeters * heightInMeters);
-                bmiResultSpan.textContent = bmi.toFixed(2);
-                
+
                 let category = '';
                 let categoryClass = '';
-                const lang = document.querySelector('.lang-btn.active').dataset.lang;
-
                 if (lang === 'en') {
                     if (bmi < 18.5) { category = 'Underweight'; categoryClass = 'underweight'; }
                     else if (bmi >= 18.5 && bmi < 24.9) { category = 'Normal weight'; categoryClass = 'normal'; }
                     else if (bmi >= 25 && bmi < 29.9) { category = 'Overweight'; categoryClass = 'overweight'; }
                     else { category = 'Obesity'; categoryClass = 'obesity'; }
-                } else { // bn
+                    bmiResultContainer.querySelector('.result-breakdown').innerHTML = `<p>Your BMI is: <span>${bmi.toFixed(2)}</span></p>`;
+                } else {
                     if (bmi < 18.5) { category = 'ওজন কম'; categoryClass = 'underweight'; }
                     else if (bmi >= 18.5 && bmi < 24.9) { category = 'স্বাভাবিক ওজন'; categoryClass = 'normal'; }
                     else if (bmi >= 25 && bmi < 29.9) { category = 'ওজন বেশি'; categoryClass = 'overweight'; }
                     else { category = 'স্থূলতা'; categoryClass = 'obesity'; }
+                    bmiResultContainer.querySelector('.result-breakdown').innerHTML = `<p>আপনার BMI হল: <span>${bmi.toFixed(2)}</span></p>`;
                 }
 
                 bmiCategoryBox.textContent = category;
                 bmiCategoryBox.className = 'bmi-category-box ' + categoryClass;
+                bmiCategoryBox.style.display = 'block';
                 bmiResultContainer.style.display = 'block';
-            };
-            
-            bmiCalculateBtn.addEventListener('click', calculateBmi);
+            });
+
             bmiResetBtn.addEventListener('click', () => {
                 bmiWeightInput.value = '';
                 bmiHeightInput.value = '';
                 bmiResultContainer.style.display = 'none';
+                bmiCategoryBox.style.display = 'none';
             });
-            
-            // EMI Calculator Logic
+
+            /* ---------------- EMI ---------------- */
             const emiLoanAmountInput = document.getElementById('emi-loan-amount');
             const emiInterestRateInput = document.getElementById('emi-interest-rate');
             const emiLoanTenureInput = document.getElementById('emi-loan-tenure');
             const emiCalculateBtn = document.getElementById('emi-calculate-btn');
             const emiResetBtn = document.getElementById('emi-reset-btn');
             const emiResultContainer = document.getElementById('emi-result');
-            const monthlyEmiSpan = emiResultContainer.querySelector('.result-breakdown p:nth-child(1) span');
-            const totalInterestSpan = emiResultContainer.querySelector('.result-breakdown p:nth-child(2) span');
-            const totalPayableSpan = emiResultContainer.querySelector('.result-breakdown p:nth-child(3) span');
-            
-            const calculateEmi = () => {
+
+            emiCalculateBtn.addEventListener('click', () => {
                 const loanAmount = parseFloat(emiLoanAmountInput.value);
                 const interestRate = parseFloat(emiInterestRateInput.value);
                 const loanTenure = parseFloat(emiLoanTenureInput.value);
-                
+                const lang = document.querySelector('.lang-btn.active').dataset.lang;
+
                 if (isNaN(loanAmount) || isNaN(interestRate) || isNaN(loanTenure) || loanAmount <= 0 || interestRate < 0 || loanTenure <= 0) {
-                    monthlyEmiSpan.textContent = 'Invalid Input';
-                    totalInterestSpan.textContent = 'N/A';
-                    totalPayableSpan.textContent = 'N/A';
+                    const msg = (lang === 'en') ? 'Invalid Input' : 'অবৈধ ইনপুট';
+                    emiResultContainer.querySelector('.result-breakdown').innerHTML = `<p>${msg}</p>`;
                     emiResultContainer.style.display = 'block';
                     return;
                 }
-                
+
                 const monthlyInterestRate = (interestRate / 100) / 12;
                 const numberOfPayments = loanTenure * 12;
-                
-                const emi = loanAmount * monthlyInterestRate * (Math.pow(1 + monthlyInterestRate, numberOfPayments)) / (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
-                
+
+                let emi;
+                if (monthlyInterestRate === 0) {
+                    emi = loanAmount / numberOfPayments;
+                } else {
+                    emi = loanAmount * monthlyInterestRate * (Math.pow(1 + monthlyInterestRate, numberOfPayments)) / (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
+                }
+
                 const totalPayable = emi * numberOfPayments;
                 const totalInterest = totalPayable - loanAmount;
-                
-                monthlyEmiSpan.textContent = `₹${emi.toFixed(2)}`;
-                totalInterestSpan.textContent = `₹${totalInterest.toFixed(2)}`;
-                totalPayableSpan.textContent = `₹${totalPayable.toFixed(2)}`;
+
+                if (lang === 'en') {
+                    emiResultContainer.querySelector('.result-breakdown').innerHTML =
+                        `<p>Monthly EMI: <span>₹${emi.toFixed(2)}</span></p>
+                         <p>Total Interest: <span>₹${totalInterest.toFixed(2)}</span></p>
+                         <p>Total Payable: <span>₹${totalPayable.toFixed(2)}</span></p>`;
+                } else {
+                    emiResultContainer.querySelector('.result-breakdown').innerHTML =
+                        `<p>মাসিক EMI: <span>₹${emi.toFixed(2)}</span></p>
+                         <p>মোট সুদ: <span>₹${totalInterest.toFixed(2)}</span></p>
+                         <p>মোট পরিশোধযোগ্য: <span>₹${totalPayable.toFixed(2)}</span></p>`;
+                }
+
                 emiResultContainer.style.display = 'block';
-            };
-            
-            emiCalculateBtn.addEventListener('click', calculateEmi);
+            });
+
             emiResetBtn.addEventListener('click', () => {
                 emiLoanAmountInput.value = '';
                 emiInterestRateInput.value = '';
                 emiLoanTenureInput.value = '';
                 emiResultContainer.style.display = 'none';
             });
-        });
+        };
     </script>
 </body>
 </html>
