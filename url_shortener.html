@@ -49,6 +49,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
+            opacity: 0; /* Add this */
+            animation: fadeInUp 0.8s ease-out 0.2s forwards; /* Add this */
         }
 
         .logo-container {
@@ -133,6 +135,8 @@
             box-shadow: var(--shadow-light);
             position: relative;
             overflow: hidden;
+            opacity: 0; /* Add this */
+            animation: fadeInUp 0.8s ease-out 0.4s forwards; /* Add this */
         }
 
         .hero-section h1, .hero-section p {
@@ -162,6 +166,8 @@
             justify-content: center;
             text-align: center;
             padding: 40px 20px;
+            opacity: 0; /* Add this */
+            animation: fadeInUp 0.8s ease-out 0.6s forwards; /* Add this */
         }
 
         .tool-card {
@@ -309,6 +315,8 @@
             margin-top: auto;
             background-color: var(--card-bg);
             border-top: 1px solid #e0e0e0;
+            opacity: 0; /* Add this */
+            animation: fadeInUp 0.8s ease-out 0.8s forwards; /* Add this */
         }
 
         .footer-links a {
@@ -327,6 +335,18 @@
             margin-top: 15px;
             font-size: 14px;
             color: #666;
+        }
+
+        /* New keyframes for fadeInUp animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
@@ -398,7 +418,7 @@
             const copyBtn = document.getElementById('copyBtn');
             const statusMessage = document.getElementById('statusMessage');
             const viewBtn = document.querySelector('.view-btn');
-
+            
             // --- Language Switcher Functionality ---
             function setLanguage(lang) {
                 const elementsToTranslate = document.querySelectorAll('[data-lang-en], [data-lang-bn]');
