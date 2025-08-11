@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-lang-en="NexTool Hub - Your Digital Toolbox" data-lang-bn="নেক্সটুল হাব - আপনার ডিজিটাল টুলবক্স">NexTool Hub - Your Digital Toolbox</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        /* --- Global Variables & Base Styles --- */
+        :root {
+            --primary-color: #4A90E2;
+            --accent-color: #E24A90;
+            --background-color: #F8F9FA;
+            --card-bg: #FFFFFF;
+            --text-color: #333;
+            --secondary-text: #666;
+            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --border-radius: 12px;
+            --red-color: #FF0000;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* --- Header --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo a {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo a .tool-text {
+            color: var(--red-color);
+        }
+
+        .logo a .hub-text {
+            color: var(--primary-color);
+        }
+
+        .language-switcher {
+            display: flex;
+            align-items: center;
+        }
+
+        .lang-btn {
+            background-color: transparent;
+            border: 1px solid #ccc;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-left: 8px;
+        }
+
+        .lang-btn.active {
+            background-color: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
+        }
+
+        .lang-btn:hover:not(.active) {
+            background-color: #e0e0e0;
+        }
+
+        /* --- Hero Section --- */
+        .hero-section {
+            text-align: center;
+            padding: 80px 20px;
+            background-image: linear-gradient(135deg, var(--primary-color), #6B6EEA);
+            color: #fff;
+            margin-bottom: 50px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section h1, .hero-section p {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-section h1 {
+            font-size: 52px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            line-height: 1.2;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero-section p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Paper Snippets Animation (Confetti) --- */
+        .paper-snippet {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.7);
+            opacity: 0;
+            animation: confetti-fall linear infinite;
+        }
+
+        .paper-snippet:nth-child(1) { top: -10%; left: 5%; width: 12px; height: 8px; background-color: #f0f8ff; animation-duration: 18s; animation-delay: 0s; transform: rotate(15deg); }
+        .paper-snippet:nth-child(2) { top: -10%; right: 10%; width: 10px; height: 10px; background-color: #e0ffff; animation-duration: 16s; animation-delay: 1s; transform: rotate(-30deg); }
+        .paper-snippet:nth-child(3) { top: -10%; left: 20%; width: 14px; height: 10px; background-color: #f5f5dc; animation-duration: 20s; animation-delay: 2s; transform: rotate(45deg); }
+        .paper-snippet:nth-child(4) { top: -10%; right: 25%; width: 9px; height: 11px; background-color: #fffacd; animation-duration: 19s; animation-delay: 3s; transform: rotate(0deg); }
+        .paper-snippet:nth-child(5) { top: -10%; left: 50%; width: 11px; height: 9px; background-color: #add8e6; animation-duration: 22s; animation-delay: 4s; transform: rotate(-15deg); }
+        .paper-snippet:nth-child(6) { top: -10%; right: 40%; width: 10px; height: 12px; background-color: #90ee90; animation-duration: 17s; animation-delay: 5s; transform: rotate(60deg); }
+        .paper-snippet:nth-child(7) { top: -10%; left: 70%; width: 13px; height: 9px; background-color: #d3d3d3; animation-duration: 16s; animation-delay: 6s; transform: rotate(-45deg); }
+        .paper-snippet:nth-child(8) { top: -10%; right: 60%; width: 10px; height: 8px; background-color: #ffa07a; animation-duration: 20s; animation-delay: 7s; transform: rotate(25deg); }
+        .paper-snippet:nth-child(9) { top: -10%; left: 90%; width: 11px; height: 11px; background-color: #87cefa; animation-duration: 15s; animation-delay: 8s; transform: rotate(10deg); }
+        .paper-snippet:nth-child(10) { top: -10%; left: 30%; width: 9px; height: 12px; background-color: #f08080; animation-duration: 21s; animation-delay: 9s; transform: rotate(-55deg); }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100px) rotate(0deg) scale(1); opacity: 0; }
+            10% { opacity: 0.7; }
+            100% { transform: translateY(100vh) rotate(720deg) scale(0.8); opacity: 0; }
+        }
+
+        /* --- Search Bar --- */
+        .search-bar-container {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .search-input-wrapper {
+            display: inline-block;
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 50px 12px 20px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .search-icon:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- Filter Options --- */
+        .filter-options {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .filter-btn {
+            background-color: var(--card-bg);
+            border: 1px solid #ddd;
+            padding: 8px 18px;
+            border-radius: 20px;
+            margin: 0 5px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
+        }
+
+        .filter-btn:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        /* --- Tools Panel --- */
+        .tools-panel h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .tool-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .tool-card {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: cardFadeIn 0.8s ease-out forwards;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
+            display: block; /* Ensure it starts visible before JS hides it */
+            border: 1px solid transparent; /* To prevent layout shift on highlight */
+        }
+
+        .tool-card:hover, .tool-card:focus {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: var(--shadow-hover);
+            z-index: 10;
+        }
+
+        .tool-card.highlight {
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 15px rgba(74, 144, 226, 0.5);
+            animation: highlightGlow 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes highlightGlow {
+            from { box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); }
+            to { box-shadow: 0 0 15px rgba(74, 144, 226, 0.8); }
+        }
+
+        @keyframes cardFadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tool-card:nth-child(1) { animation-delay: 0.2s; }
+        .tool-card:nth-child(2) { animation-delay: 0.4s; }
+        .tool-card:nth-child(3) { animation-delay: 0.6s; }
+        .tool-card:nth-child(4) { animation-delay: 0.8s; }
+        .tool-card:nth-child(5) { animation-delay: 1.0s; }
+        .tool-card:nth-child(6) { animation-delay: 1.2s; }
+        .tool-card:nth-child(7) { animation-delay: 1.4s; }
+        .tool-card:nth-child(8) { animation-delay: 1.6s; }
+        .tool-card:nth-child(9) { animation-delay: 1.8s; }
+        .tool-card:nth-child(10) { animation-delay: 2.0s; }
+        .tool-card:nth-child(11) { animation-delay: 2.2s; }
+        .tool-card:nth-child(12) { animation-delay: 2.4s; }
+
+        .tool-card .icon-wrapper {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover .icon-wrapper, .tool-card:focus .icon-wrapper {
+            background-color: var(--accent-color) !important;
+            transform: rotate(15deg);
+        }
+
+        .tool-card .icon {
+            font-size: 48px;
+            color: var(--accent-color);
+            transition: color 0.3s ease;
+        }
+
+        .tool-card:hover .icon, .tool-card:focus .icon {
+            color: #fff !important;
+        }
+
+        /* Individual icon colors */
+        .tool-card:nth-child(1) .icon-wrapper { background-color: #FEE7E7; }
+        .tool-card:nth-child(1) .icon { color: #E24A90; }
+
+        .tool-card:nth-child(2) .icon-wrapper { background-color: #E7F0FF; }
+        .tool-card:nth-child(2) .icon { color: #4A90E2; }
+
+        .tool-card:nth-child(3) .icon-wrapper { background-color: #FFF2E7; }
+        .tool-card:nth-child(3) .icon { color: #F5A623; }
+
+        .tool-card:nth-child(4) .icon-wrapper { background-color: #E6F8E6; }
+        .tool-card:nth-child(4) .icon { color: #5CB85C; }
+
+        .tool-card:nth-child(5) .icon-wrapper { background-color: #EAE6FF; }
+        .tool-card:nth-child(5) .icon { color: #6C5CE7; }
+
+        .tool-card:nth-child(6) .icon-wrapper { background-color: #FFE6E6; }
+        .tool-card:nth-child(6) .icon { color: #FF6363; }
+
+        .tool-card:nth-child(7) .icon-wrapper { background-color: #d8eaff; }
+        .tool-card:nth-child(7) .icon { color: #5A83E8; }
+
+        .tool-card:nth-child(8) .icon-wrapper { background-color: #e6f7ff; }
+        .tool-card:nth-child(8) .icon { color: #00A6D6; }
+
+        .tool-card:nth-child(9) .icon-wrapper { background-color: #fff0f0; }
+        .tool-card:nth-child(9) .icon { color: #E84D4D; }
+
+        .tool-card:nth-child(10) .icon-wrapper { background-color: #f7f0ff; }
+        .tool-card:nth-child(10) .icon { color: #A05CE8; }
+
+        .tool-card:nth-child(11) .icon-wrapper { background-color: #f0f8e7; }
+        .tool-card:nth-child(11) .icon { color: #73C94F; }
+
+        .tool-card:nth-child(12) .icon-wrapper { background-color: #e7fffd; }
+        .tool-card:nth-child(12) .icon { color: #4FC9A5; }
+
+        .tool-card h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            font-size: 15px;
+            color: var(--secondary-text);
+            margin-bottom: 25px;
+        }
+
+        /* Use Tool button styling */
+        .use-tool-btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            border: none;
+        }
+
+        .use-tool-btn:hover {
+            background-color: #2F6DB8;
+        }
+
+        .use-tool-btn:active {
+            background-color: #28a745;
+            transform: scale(0.98);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* --- Testimonials Section --- */
+        .testimonials-section {
+            padding: 60px 20px;
+            text-align: center;
+            background-color: var(--card-bg);
+        }
+
+        .testimonials-section h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .testimonial-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+            justify-content: center;
+        }
+
+        .testimonial-card {
+            background-color: var(--background-color);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            text-align: left;
+            border: 1px solid #e0e0e0;
+            transition: transform 0.3s ease;
+            display: block;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out, transform 0.3s ease;
+        }
+
+        .testimonial-card.hidden {
+            display: none;
+            opacity: 0;
+        }
+
+        .testimonial-card.glow {
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 15px rgba(74, 144, 226, 0.5);
+            animation: glowEffect 1s ease-in-out;
+        }
+
+        @keyframes glowEffect {
+            0% { box-shadow: 0 0 0px rgba(74, 144, 226, 0.5); }
+            50% { box-shadow: 0 0 15px rgba(74, 144, 226, 0.8); }
+            100% { box-shadow: 0 0 0px rgba(74, 144, 226, 0.5); }
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .testimonial-card p {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* No results message styling */
+        .no-results {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 20px;
+            color: #777;
+            display: none;
+        }
+
+        /* --- "Why Choose Us" Section --- */
+        .why-choose-us-section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .why-choose-us-section h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .benefit-card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 150px;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .benefit-card .icon-wrapper {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .benefit-card .icon {
+            font-size: 20px;
+            color: #fff;
+        }
+
+        .benefit-card h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .benefit-card p {
+            font-size: 12px;
+            color: var(--secondary-text);
+            margin-bottom: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            background-color: var(--card-bg);
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer p {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* --- Mobile Responsiveness --- */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 36px;
+            }
+            .tool-cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .testimonial-cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <a href="#">Nex<span class="tool-text">Tool</span> <span class="hub-text">Hub</span></a>
+            </div>
+            <div class="language-switcher">
+                <button class="lang-btn active" data-lang="en" aria-label="Switch to English">EN</button>
+                <button class="lang-btn" data-lang="bn" aria-label="Switch to Bengali">BN</button>
+            </div>
+        </header>
+
+        <section class="hero-section">
+            <h1 data-lang-en="Your All-in-One Digital Toolbox" data-lang-bn="আপনার সব ডিজিটাল প্রয়োজনের জন্য একটি টুলবক্স।">Your All-in-One Digital Toolbox</h1>
+            <p data-lang-en="A collection of simple yet powerful online tools to boost your productivity." data-lang-bn="আপনার উৎপাদনশীলতা বাড়াতে সহজ কিন্তু শক্তিশালী অনলাইন টুলের একটি সংগ্রহ।">A collection of simple yet powerful online tools to boost your productivity.</p>
+            <div class="paper-snippet" aria-hidden="true"></div>
+            <div class="paper-snippet" aria-hidden="true"></div>
+            <div class="paper-snippet" aria-hidden="true"></div>
+            <div class="paper-snippet" aria-hidden="true"></div>
+            <div class="paper-snippet" aria-hidden="true"></div>
+            <div class="paper-snippet" aria-hidden="true"></div>
+            <div class="paper-snippet" aria-hidden="true"></div>
+            <div class="paper-snippet" aria-hidden="true"></div>
+            <div class="paper-snippet" aria-hidden="true"></div>
+            <div class="paper-snippet" aria-hidden="true"></div>
+        </section>
+
+        <div class="search-bar-container">
+            <div class="search-input-wrapper">
+                <input type="text" class="search-input" data-lang-en="Search for any tool..." data-lang-bn="যেকোনো টুল খুঁজুন..." placeholder="Search for any tool..." aria-label="Search for tools">
+                <i class="ri-search-line search-icon"></i>
+            </div>
+        </div>
+
+        <div class="filter-options">
+            <button class="filter-btn active" data-lang-en="All" data-lang-bn="সব" data-filter="all" aria-pressed="true">All</button>
+            <button class="filter-btn" data-lang-en="Developer" data-lang-bn="ডেভেলপার" data-filter="developer" aria-pressed="false">Developer</button>
+            <button class="filter-btn" data-lang-en="Images" data-lang-bn="ছবি" data-filter="images" aria-pressed="false">Images</button>
+            <button class="filter-btn" data-lang-en="Calculators" data-lang-bn="ক্যালকুলেটর" data-filter="calculators" aria-pressed="false">Calculators</button>
+            <button class="filter-btn" data-lang-en="Text" data-lang-bn="টেক্সট" data-filter="text" aria-pressed="false">Text</button>
+        </div>
+
+        <section id="tools-panel" class="tools-panel">
+            <h2 data-lang-en="Popular Tools" data-lang-bn="জনপ্রিয় টুলস">Popular Tools</h2>
+            <div class="tool-cards-grid">
+                
+                <div class="tool-card" tabindex="0" data-category="images" data-lang-en-title="Image Resizer" data-lang-bn-title="ছবি রিসাইজার" data-lang-en-desc="Resize images for social media, web, and more without losing quality." data-lang-bn-desc="সোশ্যাল মিডিয়া, ওয়েব এবং অন্যান্য কাজের জন্য ছবির সাইজ পরিবর্তন করুন।">
+                    <div class="icon-wrapper">
+                        <i class="ri-image-line icon"></i>
+                    </div>
+                    <h3 data-lang-en="Image Resizer" data-lang-bn="ছবি রিসাইজার">Image Resizer</h3>
+                    <p data-lang-en="Resize images for social media, web, and more without losing quality." data-lang-bn="সোশ্যাল মিডিয়া, ওয়েব এবং অন্যান্য কাজের জন্য ছবির সাইজ পরিবর্তন করুন।">Resize images for social media, web, and more without losing quality.</p>
+                    <button class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</button>
+                </div>
+                
+                <div class="tool-card" tabindex="0" data-category="developer" data-lang-en-title="QR Code Generator" data-lang-bn-title="QR কোড জেনারেটর" data-lang-en-desc="Create custom QR codes for URLs, text, and WiFi passwords." data-lang-bn-desc="আপনার URL, টেক্সট, ওয়াইফাই পাসওয়ার্ডের জন্য কাস্টম QR কোড তৈরি করুন।">
+                    <div class="icon-wrapper">
+                        <i class="ri-qr-code-line icon"></i>
+                    </div>
+                    <h3 data-lang-en="QR Code Generator" data-lang-bn="QR কোড জেনারেটর">QR Code Generator</h3>
+                    <p data-lang-en="Create custom QR codes for URLs, text, and WiFi passwords." data-lang-bn="আপনার URL, টেক্সট, ওয়াইফাই পাসওয়ার্ডের জন্য কাস্টম QR কোড তৈরি করুন।">Create custom QR codes for URLs, text, and WiFi passwords.</p>
+                    <button class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</button>
+                </div>
+
+                <div class="tool-card" tabindex="0" data-category="developer" data-lang-en-title="URL Shortener" data-lang-bn-title="URL শর্টনার" data-lang-en-desc="Shorten your long URLs with a custom alias for easy sharing." data-lang-bn-desc="আপনার লম্বা URL-কে কাস্টম নাম সহ ছোট করুন।">
+                    <div class="icon-wrapper">
+                        <i class="ri-link-m icon"></i>
+                    </div>
+                    <h3 data-lang-en="URL Shortener" data-lang-bn="URL শর্টনার">URL Shortener</h3>
+                    <p data-lang-en="Shorten your long URLs with a custom alias for easy sharing." data-lang-bn="আপনার লম্বা URL-কে কাস্টম নাম সহ ছোট করুন।">Shorten your long URLs with a custom alias for easy sharing.</p>
+                    <button class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</button>
+                </div>
+
+                <div class="tool-card" tabindex="0" data-category="calculators" data-lang-en-title="Niche Calculators" data-lang-bn-title="নির্দিষ্ট ক্যালকুলেটর" data-lang-en-desc="A collection of specialized calculators like BMI, EMI, and more." data-lang-bn-desc="BMI, EMI, এবং অন্যান্য প্রয়োজনীয় ক্যালকুলেটর ব্যবহার করুন।">
+                    <div class="icon-wrapper">
+                        <i class="ri-calculator-line icon"></i>
+                    </div>
+                    <h3 data-lang-en="Niche Calculators" data-lang-bn="নির্দিষ্ট ক্যালকুলেটর">Niche Calculators</h3>
+                    <p data-lang-en="A collection of specialized calculators like BMI, EMI, and more." data-lang-bn="BMI, EMI, এবং অন্যান্য প্রয়োজনীয় ক্যালকুলেটর ব্যবহার করুন।">A collection of specialized calculators like BMI, EMI, and more.</p>
+                    <button class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</button>
+                </div>
+
+                <div class="tool-card" tabindex="0" data-category="developer" data-lang-en-title="JSON Formatter" data-lang-bn-title="JSON ফরম্যাটার" data-lang-en-desc="Format and validate your JSON data instantly for clean code." data-lang-bn-desc="ডেভেলপারদের জন্য দ্রুত JSON ডেটা ফরম্যাট এবং ভ্যালিডেট করুন।">
+                    <div class="icon-wrapper">
+                        <i class="ri-code-s-slash-line icon"></i>
+                    </div>
+                    <h3 data-lang-en="JSON Formatter" data-lang-bn="JSON ফরম্যাটার">JSON Formatter</h3>
+                    <p data-lang-en="Format and validate your JSON data instantly for clean code." data-lang-bn="ডেভেলপারদের জন্য দ্রুত JSON ডেটা ফরম্যাট এবং ভ্যালিডেট করুন।">Format and validate your JSON data instantly for clean code.</p>
+                    <button class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</button>
+                </div>
+
+                <div class="tool-card" tabindex="0" data-category="developer" data-lang-en-title="Markdown to HTML" data-lang-bn-title="মার্কডাউন থেকে HTML" data-lang-en-desc="Convert your Markdown text to HTML code in real-time." data-lang-bn-desc="আপনার Markdown টেক্সটকে রিয়েল-টাইমে HTML কোডে কনভার্ট করুন।">
+                    <div class="icon-wrapper">
+                        <i class="ri-markup-line icon"></i>
+                    </div>
+                    <h3 data-lang-en="Markdown to HTML" data-lang-bn="মার্কডাউন থেকে HTML">Markdown to HTML</h3>
+                    <p data-lang-en="Convert your Markdown text to HTML code in real-time." data-lang-bn="আপনার Markdown টেক্সটকে রিয়েল-টাইমে HTML কোডে কনভার্ট করুন।">Convert your Markdown text to HTML code in real-time.</p>
+                    <button class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</button>
+                </div>
+
+                <div class="tool-card" tabindex="0" data-category="text" data-lang-en-title="Text Counter" data-lang-bn-title="টেক্সট কাউন্টার" data-lang-en-desc="Count characters, words, sentences, and paragraphs instantly." data-lang-bn-desc="এক নিমিষেই অক্ষর, শব্দ, বাক্য এবং অনুচ্ছেদ গণনা করুন।">
+                    <div class="icon-wrapper">
+                        <i class="ri-font-size-2 icon"></i>
+                    </div>
+                    <h3 data-lang-en="Text Counter" data-lang-bn="টেক্সট কাউন্টার">Text Counter</h3>
+                    <p data-lang-en="Count characters, words, sentences, and paragraphs instantly." data-lang-bn="এক নিমিষেই অক্ষর, শব্দ, বাক্য এবং অনুচ্ছেদ গণনা করুন।">Count characters, words, sentences, and paragraphs instantly.</p>
+                    <button class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</button>
+                </div>
+
+                <div class="tool-card" tabindex="0" data-category="images" data-lang-en-title="Image Compressor" data-lang-bn-title="ছবি কম্প্রেসার" data-lang-en-desc="Compress images without losing quality for faster websites." data-lang-bn-desc="গুণগত মান না হারিয়ে ছবি কম্প্রেস করুন, আপনার ওয়েবসাইটকে দ্রুত করুন।">
+                    <div class="icon-wrapper">
+                        <i class="ri-compress-line icon"></i>
+                    </div>
+                    <h3 data-lang-en="Image Compressor" data-lang-bn="ছবি কম্প্রেসার">Image Compressor</h3>
+                    <p data-lang-en="Compress images without losing quality for faster websites." data-lang-bn="গুণগত মান না হারিয়ে ছবি কম্প্রেস করুন, আপনার ওয়েবসাইটকে দ্রুত করুন।">Compress images without losing quality for faster websites.</p>
+                    <button class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</button>
+                </div>
+                
+                <div class="tool-card" tabindex="0" data-category="developer" data-lang-en-title="Base64 Encoder" data-lang-bn-title="Base64 এনকোডার" data-lang-en-desc="Encode and decode text or files to Base64 format easily." data-lang-bn-desc="সহজে টেক্সট বা ফাইলকে Base64 ফরম্যাটে এনকোড এবং ডিকোড করুন।">
+                    <div class="icon-wrapper">
+                        <i class="ri-lock-2-line icon"></i>
+                    </div>
+                    <h3 data-lang-en="Base64 Encoder" data-lang-bn="Base64 এনকোডার">Base64 Encoder</h3>
+                    <p data-lang-en="Encode and decode text or files to Base64 format easily." data-lang-bn="সহজে টেক্সট বা ফাইলকে Base64 ফরম্যাটে এনকোড এবং ডিকোড করুন।">Encode and decode text or files to Base64 format easily.</p>
+                    <button class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</button>
+                </div>
+
+                <div class="tool-card" tabindex="0" data-category="text" data-lang-en-title="Case Converter" data-lang-bn-title="কেস কনভার্টার" data-lang-en-desc="Convert text to different cases: uppercase, lowercase, title case, etc." data-lang-bn-desc="টেক্সটকে বিভিন্ন কেসে রূপান্তর করুন:Uppercase, lowercase, Title Case ইত্যাদি।">
+                    <div class="icon-wrapper">
+                        <i class="ri-a-b icon"></i>
+                    </div>
+                    <h3 data-lang-en="Case Converter" data-lang-bn="কেস কনভার্টার">Case Converter</h3>
+                    <p data-lang-en="Convert text to different cases: uppercase, lowercase, title case, etc." data-lang-bn="টেক্সটকে বিভিন্ন কেসে রূপান্তর করুন:Uppercase, lowercase, Title Case ইত্যাদি।">Convert text to different cases: uppercase, lowercase, title case, etc.</p>
+                    <button class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</button>
+                </div>
+
+            </div>
+            <p class="no-results" data-lang-en="No tools found for your search." data-lang-bn="আপনার অনুসন্ধানের জন্য কোনো টুল পাওয়া যায়নি।">No tools found for your search.</p>
+        </section>
+
+        <section class="testimonials-section">
+            <h2 data-lang-en="What Our Users Say" data-lang-bn="ব্যবহারকারীরা যা বলেন">What Our Users Say</h2>
+            <div class="testimonial-cards-grid">
+                <div class="testimonial-card" data-tool="images">
+                    <p data-lang-en="“As a photographer, I needed a tool that was fast and didn't compromise on quality. This is a game-changer for my workflow!”" data-lang-bn="“একজন ফটোগ্রাফার হিসাবে, আমার একটি দ্রুত টুলের প্রয়োজন ছিল যা মানের সাথে আপস করে না। এটি আমার কাজের জন্য একটি গেম-চেঞ্জার!”">“As a photographer, I needed a tool that was fast and didn't compromise on quality. This is a game-changer for my workflow!”</p>
+                    <h4 data-lang-en="- Jamil Ahmed" data-lang-bn="- জামিল আহমেদ">- Jamil Ahmed</h4>
+                </div>
+                <div class="testimonial-card" data-tool="developer">
+                    <p data-lang-en="“I’ve hacked my way through complex JSON files. This tool makes my code clean and secure. Instantly powerful.”" data-lang-bn="“আমি জটিল JSON ফাইলগুলো সহজে হ্যাক করে ফেলেছি। এই টুলটি আমার কোডকে পরিষ্কার এবং সুরক্ষিত করে তোলে। সত্যিই শক্তিশালী।”">“I’ve hacked my way through complex JSON files. This tool makes my code clean and secure. Instantly powerful.”</p>
+                    <h4 data-lang-en="- Farhana Khan" data-lang-bn="- ফারহানা খান">- Farhana Khan</h4>
+                </div>
+                <div class="testimonial-card hidden" data-tool="developer">
+                    <p data-lang-en="“This tool is a lifesaver! The URL Shortener with a custom alias is a killer feature for my campaigns.”" data-lang-bn="“এই টুলটি জীবন রক্ষাকারী! কাস্টম নাম সহ URL শর্টনারটি আমার প্রচারণার জন্য একটি দারুণ ফিচার।”">“This tool is a lifesaver! The URL Shortener with a custom alias is a killer feature for my campaigns.”</p>
+                    <h4 data-lang-en="- Alif Chowdhury" data-lang-bn="- আরিফ চৌধুরী">- Alif Chowdhury</h4>
+                </div>
+                <div class="testimonial-card hidden" data-tool="developer">
+                    <p data-lang-en="“The QR Code Generator works flawlessly. It’s a thrilling experience to create secure codes for my clients.”" data-lang-bn="“QR কোড জেনারেটরটি অনবদ্য কাজ করে। আমার ক্লায়েন্টদের জন্য সুরক্ষিত কোড তৈরি করা একটি রোমাঞ্চকর অভিজ্ঞতা।”">“The QR Code Generator works flawlessly. It’s a thrilling experience to create secure codes for my clients.”</p>
+                    <h4 data-lang-en="- Nabila Haque" data-lang-bn="- নাবিলা হক">- Nabila Haque</h4>
+                </div>
+                <div class="testimonial-card hidden" data-tool="developer">
+                    <p data-lang-en="“Converting Markdown to HTML has never been this smooth. It’s like magic! A must-have tool for any developer.”" data-lang-bn="“মার্কডাউন থেকে HTML রূপান্তর করা এত সহজ আগে কখনও ছিল না। এটি যেন জাদু! প্রতিটি ডেভেলপারের জন্য একটি আবশ্যক টুল।”">“Converting Markdown to HTML has never been this smooth. It’s like magic! A must-have tool for any developer.”</p>
+                    <h4 data-lang-en="- Riad Hossain" data-lang-bn="- রিয়াদ হোসেন">- Riad Hossain</h4>
+                </div>
+                <div class="testimonial-card hidden" data-tool="developer">
+                    <p data-lang-en="“My code readability has increased ten-fold. The JSON Formatter is a powerful weapon in my development arsenal.”" data-lang-bn="“আমার কোডের পঠনযোগ্যতা দশগুণ বেড়েছে। JSON ফরম্যাটার আমার ডেভেলপমেন্টের জন্য একটি শক্তিশালী অস্ত্র।”">“My code readability has increased ten-fold. The JSON Formatter is a powerful weapon in my development arsenal.”</p>
+                    <h4 data-lang-en="- Sanaa Islam" data-lang-bn="- সানা ইসলাম">- Sanaa Islam</h4>
+                </div>
+                <div class="testimonial-card hidden" data-tool="images">
+                    <p data-lang-en="“I’ve been able to optimize hundreds of images in minutes. This tool's speed is truly breathtaking and thrilling!”" data-lang-bn="“আমি কয়েক মিনিটের মধ্যে শত শত ছবি অপটিমাইজ করতে পেরেছি। এই টুলের গতি সত্যিই শ্বাসরুদ্ধকর এবং রোমাঞ্চকর!”">“I’ve been able to optimize hundreds of images in minutes. This tool's speed is truly breathtaking and thrilling!”</p>
+                    <h4 data-lang-en="- Anisur Rahman" data-lang-bn="- আনিসুর রহমান">- Anisur Rahman</h4>
+                </div>
+                <div class="testimonial-card hidden" data-tool="calculators">
+                    <p data-lang-en="“The specialized calculators saved me a lot of time and effort. This feels like having a secret, powerful tool at my fingertips.”" data-lang-bn="“নির্দিষ্ট ক্যালকুলেটরগুলো আমার অনেক সময় ও শ্রম বাঁচিয়েছে। এটি আমার নখদর্পণে একটি গোপন, শক্তিশালী টুল থাকার মতো অনুভূতি।”">“The specialized calculators saved me a lot of time and effort. This feels like having a secret, powerful tool at my fingertips.”</p>
+                    <h4 data-lang-en="- Tania Akter" data-lang-bn="- তানিয়া আক্তার">- Tania Akter</h4>
+                </div>
+                <div class="testimonial-card hidden" data-tool="text">
+                    <p data-lang-en="“I love the text counter! It's super fast and accurate, which is a big help for my writing tasks.”" data-lang-bn="“আমি টেক্সট কাউন্টারটি খুব পছন্দ করি! এটি খুব দ্রুত এবং নির্ভুল, যা আমার লেখার কাজগুলিতে অনেক সাহায্য করে।”">“I love the text counter! It's super fast and accurate, which is a big help for my writing tasks.”</p>
+                    <h4 data-lang-en="- Karim Hassan" data-lang-bn="- করিম হাসান">- Karim Hassan</h4>
+                </div>
+            </div>
+        </section>
+        
+        <section class="why-choose-us-section">
+            <h2 data-lang-en="Why Choose Our Tools?" data-lang-bn="কেন আমাদের টুল ব্যবহার করবেন?">Why Choose Our Tools?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="icon-wrapper">
+                        <i class="ri-flashlight-line icon"></i>
+                    </div>
+                    <h3 data-lang-en="Fast & Efficient" data-lang-bn="দ্রুত এবং কার্যকরী">Fast & Efficient</h3>
+                    <p data-lang-en="Our tools are designed to work instantly, helping you save time and boost productivity." data-lang-bn="আমাদের টুলগুলো দ্রুত কাজ করার জন্য তৈরি, যা আপনার সময় বাঁচায় এবং উৎপাদনশীলতা বাড়ায়।">Our tools are designed to work instantly, helping you save time and boost productivity.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="icon-wrapper">
+                        <i class="ri-shield-check-line icon"></i>
+                    </div>
+                    <h3 data-lang-en="Secure & Private" data-lang-bn="সুরক্ষিত এবং ব্যক্তিগত">Secure & Private</h3>
+                    <p data-lang-en="Your data is processed locally in your browser, ensuring complete privacy." data-lang-bn="আপনার ডেটা আপনার ব্রাউজারে স্থানীয়ভাবে প্রক্রিয়াকরণ করা হয়, যা সম্পূর্ণ গোপনীয়তা নিশ্চিত করে।">Your data is processed locally in your browser, ensuring complete privacy.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="icon-wrapper">
+                        <i class="ri-wallet-3-line icon"></i>
+                    </div>
+                    <h3 data-lang-en="Completely Free" data-lang-bn="সম্পূর্ণ বিনামূল্যে">Completely Free</h3>
+                    <p data-lang-en="All our tools are free to use without any hidden costs or subscriptions." data-lang-bn="আমাদের সমস্ত টুল কোনো লুকানো খরচ বা সাবস্ক্রিপশন ছাড়াই বিনামূল্যে ব্যবহার করা যায়।">All our tools are free to use without any hidden costs or subscriptions.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#" data-lang-en="About Us" data-lang-bn="আমাদের সম্পর্কে">About Us</a>
+            <a href="#" data-lang-en="Contact" data-lang-bn="যোগাযোগ">Contact</a>
+            <a href="#" data-lang-en="Terms" data-lang-bn="শর্তাবলী">Terms</a>
+            <a href="#" data-lang-en="Privacy" data-lang-bn="গোপনীয়তা">Privacy</a>
+        </div>
+        <p data-lang-en="&copy; 2025 NexTool Hub. All rights reserved." data-lang-bn="&copy; 2025 নেক্সটুল হাব। সর্বস্বত্ব সংরক্ষিত।">&copy; 2025 NexTool Hub. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const langButtons = document.querySelectorAll('.lang-btn');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const searchInput = document.querySelector('.search-input');
+            const toolCards = document.querySelectorAll('.tool-card');
+            const noResultsMessage = document.querySelector('.no-results');
+            const useToolButtons = document.querySelectorAll('.use-tool-btn');
+            const testimonialCards = document.querySelectorAll('.testimonial-card');
+
+            // --- Language Switcher Functionality ---
+            function setLanguage(lang) {
+                const elementsToTranslate = document.querySelectorAll('[data-lang-en], [data-lang-bn]');
+                elementsToTranslate.forEach(el => {
+                    const textContent = el.dataset[lang === 'en' ? 'langEn' : 'langBn'];
+                    if (textContent) {
+                        el.textContent = textContent;
+                    }
+                });
+
+                if (searchInput) {
+                    searchInput.placeholder = searchInput.dataset[lang === 'en' ? 'langEn' : 'langBn'];
+                }
+
+                langButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-pressed', 'false');
+                    if (btn.dataset.lang === lang) {
+                        btn.classList.add('active');
+                        btn.setAttribute('aria-pressed', 'true');
+                    }
+                });
+
+                // Update filter button text
+                filterButtons.forEach(btn => {
+                    const filterText = btn.dataset[lang === 'en' ? 'langEn' : 'langBn'];
+                    if (filterText) {
+                        btn.textContent = filterText;
+                    }
+                });
+
+                // Update tool card titles and descriptions
+                toolCards.forEach(card => {
+                    const title = card.querySelector('h3');
+                    const desc = card.querySelector('p');
+                    if (title) title.textContent = card.dataset[lang === 'en' ? 'langEnTitle' : 'langBnTitle'];
+                    if (desc) desc.textContent = card.dataset[lang === 'en' ? 'langEnDesc' : 'langBnDesc'];
+                });
+            }
+
+            setLanguage('en');
+
+            langButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const lang = button.dataset.lang;
+                    setLanguage(lang);
+                });
+            });
+
+            // --- Filter and Search Functionality ---
+            function filterTools(filter) {
+                let foundCount = 0;
+                toolCards.forEach(card => {
+                    const category = card.dataset.category;
+                    const isMatch = filter === 'all' || category === filter;
+                    if (isMatch) {
+                        card.style.display = 'block';
+                        foundCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                if (foundCount === 0) {
+                    noResultsMessage.style.display = 'block';
+                } else {
+                    noResultsMessage.style.display = 'none';
+                }
+            }
+
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                let foundMatchCount = 0;
+                const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+
+                // Clear all highlights
+                toolCards.forEach(card => card.classList.remove('highlight'));
+
+                toolCards.forEach(card => {
+                    const cardTitle = card.querySelector('h3').textContent.toLowerCase();
+                    const cardDescription = card.querySelector('p').textContent.toLowerCase();
+                    const cardCategory = card.dataset.category;
+
+                    const isCategoryMatch = activeFilter === 'all' || cardCategory === activeFilter;
+                    const isTextMatch = cardTitle.includes(searchTerm) || cardDescription.includes(searchTerm);
+                    
+                    if (isCategoryMatch && isTextMatch) {
+                        card.style.display = 'block';
+                        foundMatchCount++;
+                        if (searchTerm.length > 0) {
+                            card.classList.add('highlight');
+                        }
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                if (foundMatchCount === 0) {
+                    noResultsMessage.style.display = 'block';
+                } else {
+                    noResultsMessage.style.display = 'none';
+                }
+            }
+            
+            searchInput.addEventListener('input', performSearch);
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const filter = button.dataset.filter;
+
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.setAttribute('aria-pressed', 'false');
+                    });
+                    button.classList.add('active');
+                    button.setAttribute('aria-pressed', 'true');
+
+                    filterTools(filter);
+                    performSearch(); // Re-run search with the new filter
+                });
+            });
+
+            // --- Testimonial Rotation Logic ---
+            const testimonialContainer = document.querySelector('.testimonial-cards-grid');
+            const totalTestimonials = testimonialCards.length;
+            
+            function rotateTestimonials() {
+                // Find the currently visible cards
+                const visibleCards = Array.from(testimonialContainer.children).filter(card => !card.classList.contains('hidden'));
+                
+                // Get the cards that are hidden
+                const hiddenCards = Array.from(testimonialContainer.children).filter(card => card.classList.contains('hidden'));
+
+                if (hiddenCards.length === 0) return;
+
+                const cardToHide = visibleCards[Math.floor(Math.random() * visibleCards.length)];
+                const cardToShow = hiddenCards[Math.floor(Math.random() * hiddenCards.length)];
+
+                // Animate hide
+                cardToHide.classList.add('hidden');
+                
+                // Animate show with glow
+                cardToShow.classList.remove('hidden');
+                cardToShow.classList.add('glow');
+                
+                setTimeout(() => {
+                    cardToShow.classList.remove('glow');
+                }, 1500);
+
+                // Re-append the hidden card to the end of the container to maintain order logic for the next rotation
+                testimonialContainer.appendChild(cardToHide);
+            }
+
+            // Initially show 3 testimonials if available
+            if (totalTestimonials > 3) {
+                for (let i = 3; i < totalTestimonials; i++) {
+                    testimonialCards[i].classList.add('hidden');
+                }
+            }
+            
+            // Set up interval for rotation
+            setInterval(rotateTestimonials, 5000);
+
+            // Prevent default button behavior
+            useToolButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    console.log("Use Tool button clicked!");
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
