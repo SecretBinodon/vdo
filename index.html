@@ -46,6 +46,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
+            flex-wrap: nowrap;
         }
 
         .logo a {
@@ -64,6 +65,30 @@
 
         .logo a .hub-text {
             color: var(--primary-color);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .social-link {
+            font-size: 20px;
+            color: var(--secondary-text);
+            transition: color 0.3s ease, transform 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            color: var(--primary-color);
+            transform: translateY(-2px);
         }
 
         .language-switcher {
@@ -96,7 +121,7 @@
         /* --- Hero Section --- */
         .hero-section {
             text-align: center;
-            padding: 80px 20px;
+            padding: 40px 20px;
             background-image: linear-gradient(135deg, var(--primary-color), #6B6EEA);
             color: #fff;
             margin-bottom: 50px;
@@ -210,6 +235,10 @@
         .filter-options {
             text-align: center;
             margin-bottom: 25px;
+            display: flex; /* Ensure buttons are in a row */
+            justify-content: center;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            gap: 10px; /* Add some space between buttons */
         }
 
         .filter-btn {
@@ -217,7 +246,6 @@
             border: 1px solid #ddd;
             padding: 8px 18px;
             border-radius: 20px;
-            margin: 0 5px;
             font-size: 14px;
             font-weight: 600;
             color: #666;
@@ -249,6 +277,13 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
+            justify-content: center;
+        }
+
+        .tool-card:nth-of-type(5) {
+            grid-column: span 2;
+            width: calc(100% - 25px);
+            margin: 0 auto;
         }
 
         .tool-card {
@@ -262,8 +297,8 @@
             animation: cardFadeIn 0.8s ease-out forwards;
             position: relative;
             transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
-            display: block; /* Ensure it starts visible before JS hides it */
-            border: 1px solid transparent; /* To prevent layout shift on highlight */
+            display: block;
+            border: 1px solid transparent;
         }
 
         .tool-card:hover, .tool-card:focus {
@@ -342,6 +377,7 @@
         .tool-card:nth-child(5) .icon-wrapper { background-color: #EAE6FF; }
         .tool-card:nth-child(5) .icon { color: #6C5CE7; }
 
+        /* The below styles are now for the remaining tool cards */
         .tool-card:nth-child(6) .icon-wrapper { background-color: #FFE6E6; }
         .tool-card:nth-child(6) .icon { color: #FF6363; }
 
@@ -399,6 +435,71 @@
             background-color: #28a745;
             transform: scale(0.98);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* --- New Articles Section --- */
+        .articles-section {
+            padding: 60px 20px;
+            text-align: center;
+            background-color: #f0f2f5;
+        }
+
+        .articles-section h2 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: var(--text-color);
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            justify-content: center;
+        }
+
+        .article-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: left;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .article-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .article-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+        }
+
+        .article-content {
+            padding: 20px;
+        }
+
+        .article-content h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .article-content p {
+            font-size: 14px;
+            color: var(--secondary-text);
+            line-height: 1.5;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
         }
 
         /* --- Testimonials Section --- */
@@ -546,18 +647,39 @@
         /* --- Footer --- */
         .footer {
             text-align: center;
-            padding: 30px;
+            padding: 30px 20px;
             margin-top: 50px;
             background-color: var(--card-bg);
             border-top: 1px solid #e0e0e0;
         }
 
+        .footer-main-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .footer-motto {
+            font-size: 14px;
+            color: #666;
+            margin: 0;
+            max-width: 60%;
+            text-align: left;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 15px;
+        }
+
         .footer-links a {
             color: #666;
             text-decoration: none;
-            margin: 0 15px;
             font-size: 14px;
             transition: color 0.3s ease;
+            white-space: nowrap;
         }
 
         .footer-links a:hover {
@@ -572,17 +694,101 @@
 
         /* --- Mobile Responsiveness --- */
         @media (max-width: 768px) {
+            .header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .logo a {
+                font-size: 22px;
+            }
+
+            .header-right {
+                flex-direction: row;
+                justify-content: flex-end;
+                gap: 10px;
+            }
+
+            .social-links {
+                gap: 10px;
+            }
+
+            .social-link {
+                font-size: 18px;
+            }
+
+            .language-switcher {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+
+            .lang-btn {
+                padding: 4px 8px;
+                font-size: 12px;
+                margin-left: 0;
+            }
+
+            .hero-section {
+                padding: 30px 15px;
+                margin-bottom: 50px;
+            }
+
             .hero-section h1 {
                 font-size: 36px;
             }
-            .tool-cards-grid {
-                grid-template-columns: 1fr;
+
+            .filter-options {
+                gap: 5px;
+                flex-wrap: wrap;
+                justify-content: center;
             }
-            .testimonial-cards-grid {
-                grid-template-columns: 1fr;
+
+            .filter-btn {
+                padding: 6px 12px;
+                font-size: 12px;
             }
+
+            .tool-cards-grid,
+            .articles-grid,
+            .testimonial-cards-grid,
             .benefits-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .tool-card:nth-of-type(5) {
+                grid-column: span 1;
+                width: 100%;
+                margin: 0;
+            }
+            
+            /* Footer mobile styles */
+            .footer-main-row {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 15px;
+            }
+            .footer-motto {
+                max-width: 100%;
+                text-align: center;
+            }
+            .footer-links {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+        }
+
+        /* New media query for larger screens */
+        @media (min-width: 1024px) {
+            .tool-cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .tool-card:nth-of-type(5) {
+                grid-column: span 2;
+                width: 100%;
             }
         }
     </style>
@@ -594,9 +800,17 @@
             <div class="logo">
                 <a href="#">Nex<span class="tool-text">Tool</span> <span class="hub-text">Hub</span></a>
             </div>
-            <div class="language-switcher">
-                <button class="lang-btn active" data-lang="en" aria-label="Switch to English">EN</button>
-                <button class="lang-btn" data-lang="bn" aria-label="Switch to Bengali">BN</button>
+
+            <div class="header-right">
+                <div class="social-links">
+                    <a href="#" class="social-link" aria-label="Facebook"><i class="ri-facebook-box-fill"></i></a>
+                    <a href="#" class="social-link" aria-label="Twitter"><i class="ri-twitter-x-fill"></i></a>
+                    <a href="#" class="social-link" aria-label="WhatsApp"><i class="ri-whatsapp-line"></i></a>
+                </div>
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="en" aria-label="Switch to English">EN</button>
+                    <button class="lang-btn" data-lang="bn" aria-label="Switch to Bengali">BN</button>
+                </div>
             </div>
         </header>
 
@@ -633,7 +847,7 @@
         <section id="tools-panel" class="tools-panel">
             <h2 data-lang-en="Popular Tools" data-lang-bn="জনপ্রিয় টুলস">Popular Tools</h2>
             <div class="tool-cards-grid">
-                
+
                 <div class="tool-card" tabindex="0" data-category="images" data-lang-en-title="Image Resizer" data-lang-bn-title="ছবি রিসাইজার" data-lang-en-desc="Resize images for social media, web, and more without losing quality." data-lang-bn-desc="সোশ্যাল মিডিয়া, ওয়েব এবং অন্যান্য কাজের জন্য ছবির সাইজ পরিবর্তন করুন।">
                     <div class="icon-wrapper">
                         <i class="ri-image-line icon"></i>
@@ -642,7 +856,7 @@
                     <p data-lang-en="Resize images for social media, web, and more without losing quality." data-lang-bn="সোশ্যাল মিডিয়া, ওয়েব এবং অন্যান্য কাজের জন্য ছবির সাইজ পরিবর্তন করুন।">Resize images for social media, web, and more without losing quality.</p>
                     <a href="image_resizer.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</a>
                 </div>
-                
+
                 <div class="tool-card" tabindex="0" data-category="developer" data-lang-en-title="QR Code Generator" data-lang-bn-title="QR কোড জেনারেটর" data-lang-en-desc="Create custom QR codes for URLs, text, and WiFi passwords." data-lang-bn-desc="আপনার URL, টেক্সট, ওয়াইফাই পাসওয়ার্ডের জন্য কাস্টম QR কোড তৈরি করুন।">
                     <div class="icon-wrapper">
                         <i class="ri-qr-code-line icon"></i>
@@ -661,6 +875,15 @@
                     <a href="url_shortener.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</a>
                 </div>
 
+                <div class="tool-card" tabindex="0" data-category="images" data-lang-en-title="Image Compressor" data-lang-bn-title="ছবি কম্প্রেসার" data-lang-en-desc="Compress images without losing quality for faster websites." data-lang-bn-desc="গুণগত মান না হারিয়ে ছবি কম্প্রেস করুন, আপনার ওয়েবসাইটকে দ্রুত করুন।">
+                    <div class="icon-wrapper">
+                        <i class="ri-compress-line icon"></i>
+                    </div>
+                    <h3 data-lang-en="Image Compressor" data-lang-bn="ছবি কম্প্রেসার">Image Compressor</h3>
+                    <p data-lang-en="Compress images without losing quality for faster websites." data-lang-bn="গুণগত মান না হারিয়ে ছবি কম্প্রেস করুন, আপনার ওয়েবসাইটকে দ্রুত করুন।">Compress images without losing quality for faster websites.</p>
+                    <a href="image_compressor.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</a>
+                </div>
+
                 <div class="tool-card" tabindex="0" data-category="calculators" data-lang-en-title="Niche Calculators" data-lang-bn-title="নির্দিষ্ট ক্যালকুলেটর" data-lang-en-desc="A collection of specialized calculators like BMI, EMI, and more." data-lang-bn-desc="BMI, EMI, এবং অন্যান্য প্রয়োজনীয় ক্যালকুলেটর ব্যবহার করুন।">
                     <div class="icon-wrapper">
                         <i class="ri-calculator-line icon"></i>
@@ -670,62 +893,31 @@
                     <a href="calculators.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</a>
                 </div>
 
-                <div class="tool-card" tabindex="0" data-category="developer" data-lang-en-title="JSON Formatter" data-lang-bn-title="JSON ফরম্যাটার" data-lang-en-desc="Format and validate your JSON data instantly for clean code." data-lang-bn-desc="ডেভেলপারদের জন্য দ্রুত JSON ডেটা ফরম্যাট এবং ভ্যালিডেট করুন।">
-                    <div class="icon-wrapper">
-                        <i class="ri-code-s-slash-line icon"></i>
-                    </div>
-                    <h3 data-lang-en="JSON Formatter" data-lang-bn="JSON ফরম্যাটার">JSON Formatter</h3>
-                    <p data-lang-en="Format and validate your JSON data instantly for clean code." data-lang-bn="ডেভেলপারদের জন্য দ্রুত JSON ডেটা ফরম্যাট এবং ভ্যালিডেট করুন।">Format and validate your JSON data instantly for clean code.</p>
-                    <a href="json_formatter.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</a>
-                </div>
-
-                <div class="tool-card" tabindex="0" data-category="developer" data-lang-en-title="Markdown to HTML" data-lang-bn-title="মার্কডাউন থেকে HTML" data-lang-en-desc="Convert your Markdown text to HTML code in real-time." data-lang-bn-desc="আপনার Markdown টেক্সটকে রিয়েল-টাইমে HTML কোডে কনভার্ট করুন।">
-                    <div class="icon-wrapper">
-                        <i class="ri-markup-line icon"></i>
-                    </div>
-                    <h3 data-lang-en="Markdown to HTML" data-lang-bn="মার্কডাউন থেকে HTML">Markdown to HTML</h3>
-                    <p data-lang-en="Convert your Markdown text to HTML code in real-time." data-lang-bn="আপনার Markdown টেক্সটকে রিয়েল-টাইমে HTML কোডে কনভার্ট করুন।">Convert your Markdown text to HTML code in real-time.</p>
-                    <a href="markdown_to_html.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</a>
-                </div>
-
-                <div class="tool-card" tabindex="0" data-category="text" data-lang-en-title="Text Counter" data-lang-bn-title="টেক্সট কাউন্টার" data-lang-en-desc="Count characters, words, sentences, and paragraphs instantly." data-lang-bn-desc="এক নিমিষেই অক্ষর, শব্দ, বাক্য এবং অনুচ্ছেদ গণনা করুন।">
-                    <div class="icon-wrapper">
-                        <i class="ri-font-size-2 icon"></i>
-                    </div>
-                    <h3 data-lang-en="Text Counter" data-lang-bn="টেক্সট কাউন্টার">Text Counter</h3>
-                    <p data-lang-en="Count characters, words, sentences, and paragraphs instantly." data-lang-bn="এক নিমিষেই অক্ষর, শব্দ, বাক্য এবং অনুচ্ছেদ গণনা করুন।">Count characters, words, sentences, and paragraphs instantly.</p>
-                    <a href="text_counter.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</a>
-                </div>
-
-                <div class="tool-card" tabindex="0" data-category="images" data-lang-en-title="Image Compressor" data-lang-bn-title="ছবি কম্প্রেসার" data-lang-en-desc="Compress images without losing quality for faster websites." data-lang-bn-desc="গুণগত মান না হারিয়ে ছবি কম্প্রেস করুন, আপনার ওয়েবসাইটকে দ্রুত করুন।">
-                    <div class="icon-wrapper">
-                        <i class="ri-compress-line icon"></i>
-                    </div>
-                    <h3 data-lang-en="Image Compressor" data-lang-bn="ছবি কম্প্রেসার">Image Compressor</h3>
-                    <p data-lang-en="Compress images without losing quality for faster websites." data-lang-bn="গুণগত মান না হারিয়ে ছবি কম্প্রেস করুন, আপনার ওয়েবসাইটকে দ্রুত করুন।">Compress images without losing quality for faster websites.</p>
-                    <a href="image_compressor.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</a>
-                </div>
-                
-                <div class="tool-card" tabindex="0" data-category="developer" data-lang-en-title="Base64 Encoder" data-lang-bn-title="Base64 এনকোডার" data-lang-en-desc="Encode and decode text or files to Base64 format easily." data-lang-bn-desc="সহজে টেক্সট বা ফাইলকে Base64 ফরম্যাটে এনকোড এবং ডিকোড করুন।">
-                    <div class="icon-wrapper">
-                        <i class="ri-lock-2-line icon"></i>
-                    </div>
-                    <h3 data-lang-en="Base64 Encoder" data-lang-bn="Base64 এনকোডার">Base64 Encoder</h3>
-                    <p data-lang-en="Encode and decode text or files to Base64 format easily." data-lang-bn="সহজে টেক্সট বা ফাইলকে Base64 ফরম্যাটে এনকোড এবং ডিকোড করুন।">Encode and decode text or files to Base64 format easily.</p>
-                    <a href="base64_encoder.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</a>
-                </div>
-
-                <div class="tool-card" tabindex="0" data-category="text" data-lang-en-title="Case Converter" data-lang-bn-title="কেস কনভার্টার" data-lang-en-desc="Convert text to different cases: uppercase, lowercase, title case, etc." data-lang-bn-desc="টেক্সটকে বিভিন্ন কেসে রূপান্তর করুন:Uppercase, lowercase, Title Case ইত্যাদি।">
-                    <div class="icon-wrapper">
-                        <i class="ri-a-b icon"></i>
-                    </div>
-                    <h3 data-lang-en="Case Converter" data-lang-bn="কেস কনভার্টার">Case Converter</h3>
-                    <p data-lang-en="Convert text to different cases: uppercase, lowercase, title case, etc." data-lang-bn="টেক্সটকে বিভিন্ন কেসে রূপান্তর করুন:Uppercase, lowercase, Title Case ইত্যাদি।">Convert text to different cases: uppercase, lowercase, Title Case ইত্যাদি।</p>
-                    <a href="case_converter.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</a>
-                </div>
-
             </div>
             <p class="no-results" data-lang-en="No tools found for your search." data-lang-bn="আপনার অনুসন্ধানের জন্য কোনো টুল পাওয়া যায়নি।">No tools found for your search.</p>
+        </section>
+
+        <section class="articles-section">
+            <h2 data-lang-en="Our Latest Articles" data-lang-bn="আমাদের সাম্প্রতিক আর্টিকেল">Our Latest Articles</h2>
+            <div class="articles-grid">
+
+                <a href="#" class="article-card" data-lang-en-title="How to optimize images for your website" data-lang-bn-title="আপনার ওয়েবসাইটের জন্য ছবি কিভাবে অপটিমাইজ করবেন">
+                    <img src="https://via.placeholder.com/400x200.png?text=Article+Image+1" alt="Article image 1">
+                    <div class="article-content">
+                        <h3 data-lang-en="How to optimize images for your website" data-lang-bn="আপনার ওয়েবসাইটের জন্য ছবি কিভাবে অপটিমাইজ করবেন">How to optimize images for your website</h3>
+                        <p data-lang-en="Learn the best techniques to compress and resize your images without losing quality, making your website load faster." data-lang-bn="আপনার ওয়েবসাইটের লোডিং স্পিড বাড়ানোর জন্য ছবি কম্প্রেস এবং রিসাইজ করার সেরা কৌশলগুলো শিখুন।">Learn the best techniques to compress and resize your images without losing quality, making your website load faster.</p>
+                    </div>
+                </a>
+
+                <a href="#" class="article-card" data-lang-en-title="The benefits of using a QR code generator for your business" data-lang-bn-title="আপনার ব্যবসার জন্য QR কোড জেনারেটর ব্যবহারের সুবিধা">
+                    <img src="https://via.placeholder.com/400x200.png?text=Article+Image+2" alt="Article image 2">
+                    <div class="article-content">
+                        <h3 data-lang-en="The benefits of using a QR code generator for your business" data-lang-bn="আপনার ব্যবসার জন্য QR কোড জেনারেটর ব্যবহারের সুবিধা">The benefits of using a QR code generator for your business</h3>
+                        <p data-lang-en="Discover how custom QR codes can enhance your marketing strategies, from business cards to event promotions." data-lang-bn="কাস্টম QR কোড আপনার মার্কেটিং কৌশলকে কীভাবে উন্নত করতে পারে তা জানুন, যা আপনার ব্যবসার জন্য খুবই গুরুত্বপূর্ণ।">Discover how custom QR codes can enhance your marketing strategies, from business cards to event promotions.</p>
+                    </div>
+                </a>
+
+            </div>
         </section>
 
         <section class="testimonials-section">
@@ -769,7 +961,7 @@
                 </div>
             </div>
         </section>
-        
+
         <section class="why-choose-us-section">
             <h2 data-lang-en="Why Choose Our Tools?" data-lang-bn="কেন আমাদের টুল ব্যবহার করবেন?">Why Choose Our Tools?</h2>
             <div class="benefits-grid">
@@ -799,11 +991,14 @@
     </div>
 
     <footer class="footer">
-        <div class="footer-links">
-            <a href="#" data-lang-en="About Us" data-lang-bn="আমাদের সম্পর্কে">About Us</a>
-            <a href="#" data-lang-en="Contact" data-lang-bn="যোগাযোগ">Contact</a>
-            <a href="#" data-lang-en="Terms" data-lang-bn="শর্তাবলী">Terms</a>
-            <a href="#" data-lang-en="Privacy" data-lang-bn="গোপনীয়তা">Privacy</a>
+        <div class="footer-main-row">
+            <p class="footer-motto" data-lang-en="Ashikur crafted this panel for your convenience, with advanced updates on the way." data-lang-bn="আপনাদের নিত্য নতুন কাজের সুবিধার্থে আশিকুর এই প্যানেলটি বানিয়েছে যেখানে সময়ের সাথে সাথে আরো অনেক অনেক উন্নত আপডেট পাবেন।">Ashikur crafted this panel for your convenience, with advanced updates on the way.</p>
+            <div class="footer-links">
+                <a href="#" data-lang-en="About Us" data-lang-bn="আমাদের সম্পর্কে">About Us</a>
+                <a href="#" data-lang-en="Contact" data-lang-bn="যোগাযোগ">Contact</a>
+                <a href="#" data-lang-en="Terms" data-lang-bn="শর্তাবলী">Terms</a>
+                <a href="#" data-lang-en="Privacy" data-lang-bn="গোপনীয়তা">Privacy</a>
+            </div>
         </div>
         <p data-lang-en="&copy; 2025 NexTool Hub. All rights reserved." data-lang-bn="&copy; 2025 নেক্সটুল হাব। সর্বস্বত্ব সংরক্ষিত।">&copy; 2025 NexTool Hub. All rights reserved.</p>
     </footer>
@@ -816,6 +1011,10 @@
             const toolCards = document.querySelectorAll('.tool-card');
             const noResultsMessage = document.querySelector('.no-results');
             const testimonialCards = document.querySelectorAll('.testimonial-card');
+            const articleCards = document.querySelectorAll('.article-card');
+            const footerMotto = document.querySelector('.footer-motto');
+            const footerLinks = document.querySelectorAll('.footer-links a');
+            const copyrightText = document.querySelector('footer > p');
 
             // --- Language Switcher Functionality ---
             function setLanguage(lang) {
@@ -850,6 +1049,14 @@
 
                 // Update tool card titles and descriptions
                 toolCards.forEach(card => {
+                    const title = card.querySelector('h3');
+                    const desc = card.querySelector('p');
+                    if (title) title.textContent = card.dataset[lang === 'en' ? 'langEnTitle' : 'langBnTitle'];
+                    if (desc) desc.textContent = card.dataset[lang === 'en' ? 'langEnDesc' : 'langBnDesc'];
+                });
+
+                // Update article card titles and descriptions
+                articleCards.forEach(card => {
                     const title = card.querySelector('h3');
                     const desc = card.querySelector('p');
                     if (title) title.textContent = card.dataset[lang === 'en' ? 'langEnTitle' : 'langBnTitle'];
@@ -902,7 +1109,7 @@
 
                     const isCategoryMatch = activeFilter === 'all' || cardCategory === activeFilter;
                     const isTextMatch = cardTitle.includes(searchTerm) || cardDescription.includes(searchTerm);
-                    
+
                     if (isCategoryMatch && isTextMatch) {
                         card.style.display = 'block';
                         foundMatchCount++;
@@ -913,14 +1120,14 @@
                         card.style.display = 'none';
                     }
                 });
-                
+
                 if (foundMatchCount === 0) {
                     noResultsMessage.style.display = 'block';
                 } else {
                     noResultsMessage.style.display = 'none';
                 }
             }
-            
+
             searchInput.addEventListener('input', performSearch);
 
             filterButtons.forEach(button => {
@@ -942,11 +1149,11 @@
             // --- Testimonial Rotation Logic ---
             const testimonialContainer = document.querySelector('.testimonial-cards-grid');
             const totalTestimonials = testimonialCards.length;
-            
+
             function rotateTestimonials() {
                 // Find the currently visible cards
                 const visibleCards = Array.from(testimonialContainer.children).filter(card => !card.classList.contains('hidden'));
-                
+
                 // Get the cards that are hidden
                 const hiddenCards = Array.from(testimonialContainer.children).filter(card => card.classList.contains('hidden'));
 
@@ -957,11 +1164,11 @@
 
                 // Animate hide
                 cardToHide.classList.add('hidden');
-                
+
                 // Animate show with glow
                 cardToShow.classList.remove('hidden');
                 cardToShow.classList.add('glow');
-                
+
                 setTimeout(() => {
                     cardToShow.classList.remove('glow');
                 }, 1500);
@@ -976,7 +1183,7 @@
                     testimonialCards[i].classList.add('hidden');
                 }
             }
-            
+
             // Set up interval for rotation
             setInterval(rotateTestimonials, 5000);
 
