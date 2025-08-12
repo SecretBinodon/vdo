@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title data-lang-en="QR Code Generator" data-lang-bn="কিউআর কোড জেনারেটর">QR Code Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <style>
+        :root { --primary-color: #4A90E2; --secondary-color: #38761d; --background-color: #F8F9FA; --card-bg: #FFFFFF; --text-color: #333; --border-radius: 12px; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--background-color); }
+        .hero-section { background-image: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); }
+        .tab-btn.active { background-color: var(--primary-color); color: white; }
+        
+        /* Make canvas responsive within its container */
+        #qr-canvas {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Custom animation for fade-in and slide-up effect */
+        @keyframes fadeInSlideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Fix the animation jolt by setting the initial state in CSS */
+        .animated-section {
+            animation: fadeInSlideUp 0.7s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .animated-section[style*="animation-delay"] {
+            /* This ensures the animation only runs once */
+        }
+        
+        /* Click feedback for color and file inputs */
+        .color-input-wrapper {
+            transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+            cursor: pointer;
+        }
+        .color-input-wrapper:active {
+            transform: scale(0.95);
+        }
+        .file-input-label {
+            transition: transform 0.1s ease-in-out, background-color 0.1s ease-in-out;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            border-radius: 0.5rem;
+        }
+        .file-input-label:active {
+            transform: scale(0.98);
+        }
+
+        /* CSS for animated tab transitions */
+        .tab-content {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease-in-out;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 0;
+        }
+        .tab-content.active {
+            opacity: 1;
+            visibility: visible;
+            position: relative;
+        }
+
+        /* Dropdown menu for download options */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 120px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 10;
+            left: 0;
+            top: 100%;
+            margin-top: 10px;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            transform-origin: top;
+            animation: fadeInScaleUp 0.2s ease-out forwards;
+        }
+        .dropdown-content.show {
+            display: block;
+        }
+        @keyframes fadeInScaleUp {
+            from { opacity: 0; transform: scaleY(0.8); }
+            to { opacity: 1; transform: scaleY(1); }
+        }
+        .dropdown-content button {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            text-align: left;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            position: relative;
+        }
+        .dropdown-content button:hover {
+            background-color: #ddd;
+        }
+        .dropdown-content button.active {
+            background-color: #e2e8f0; /* Light gray to indicate active state */
+            font-weight: 600;
+        }
+
+        /* Download button color animation */
+        @keyframes downloadPulse {
+            0% { background-color: #10B981; }
+            50% { background-color: #047857; }
+            100% { background-color: #10B981; }
+        }
+        .download-btn.downloading {
+            animation: downloadPulse 1s infinite;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+
+        <header class="flex justify-between items-center py-4 md:py-6 border-b border-gray-200">
+            <div class="flex items-center space-x-4">
+                <a href="#" class="home-btn bg-white border border-gray-300 px-3 py-2 rounded-lg text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors" data-lang-en="Home" data-lang-bn="হোম"><i class="ri-home-4-line mr-2"></i><span data-lang-en="Home" data-lang-bn="হোম">Home</span></a>
+                <div class="logo text-2xl font-bold tracking-tight">
+                    <a href="#" class="text-blue-600">Nex<span class="text-red-500">Tool</span> <span class="text-blue-600">Hub</span></a>
+                </div>
+            </div>
+            <div class="language-switcher flex space-x-2">
+                <button class="lang-btn px-3 py-1 rounded-md text-sm font-semibold transition-colors bg-blue-600 text-white" data-lang="en">EN</button>
+                <button class="lang-btn px-3 py-1 rounded-md text-sm font-semibold transition-colors bg-gray-200 text-gray-700 hover:bg-gray-300" data-lang="bn">BN</button>
+            </div>
+        </header>
+
+        <section class="hero-section text-center p-8 md:p-12 mt-6 rounded-3xl shadow-xl text-white animated-section" style="animation-delay: 0.1s;">
+            <h1 class="text-4xl md:text-5xl font-extrabold" data-lang-en="QR Code Generator." data-lang-bn="কিউআর কোড জেনারেটর।">QR Code Generator.</h1>
+            <p class="mt-4 text-lg md:text-xl font-light" data-lang-en="Create professional QR codes with custom colors and a central logo." data-lang-bn="কাস্টম রঙ এবং লোগো সহ পেশাদার QR কোড তৈরি করুন।">Create professional QR codes with custom colors and a central logo.</p>
+        </section>
+
+        <main class="flex-grow flex flex-col items-center p-4">
+            <div class="tool-card bg-white p-6 md:p-10 rounded-2xl shadow-xl w-full max-w-5xl mt-8 animated-section" style="animation-delay: 0.3s;">
+                <h2 class="text-2xl md:text-3xl font-bold text-center mb-2" data-lang-en="Generate a QR Code" data-lang-bn="একটি কিউআর কোড তৈরি করুন">Generate a QR Code</h2>
+                <p class="text-gray-500 text-center mb-6" data-lang-en="Enter your data and customize your QR code's appearance." data-lang-bn="আপনার তথ্য লিখুন এবং আপনার QR কোডের চেহারা কাস্টমাইজ করুন।">Enter your data and customize your QR code's appearance.</p>
+
+                <div class="tabs flex justify-center flex-wrap gap-2 md:gap-4 mb-4">
+                    <button class="tab-btn px-4 py-2 rounded-lg text-sm md:text-base font-semibold transition-colors bg-blue-600 text-white" data-tab="url" data-lang-en="URL" data-lang-bn="URL">URL</button>
+                    <button class="tab-btn px-4 py-2 rounded-lg text-sm md:text-base font-semibold transition-colors bg-gray-200 text-gray-700 hover:bg-gray-300" data-tab="text" data-lang-en="Text" data-lang-bn="টেক্সট">Text</button>
+                    <button class="tab-btn px-4 py-2 rounded-lg text-sm md:text-base font-semibold transition-colors bg-gray-200 text-gray-700 hover:bg-gray-300" data-tab="email" data-lang-en="Email" data-lang-bn="ইমেল">Email</button>
+                    <button class="tab-btn px-4 py-2 rounded-lg text-sm md:text-base font-semibold transition-colors bg-gray-200 text-gray-700 hover:bg-gray-300" data-tab="phone" data-lang-en="Phone" data-lang-bn="ফোন">Phone</button>
+                    <button class="tab-btn px-4 py-2 rounded-lg text-sm md:text-base font-semibold transition-colors bg-gray-200 text-gray-700 hover:bg-gray-300" data-tab="wifi" data-lang-en="Wi-Fi" data-lang-bn="Wi-Fi">Wi-Fi</button>
+                </div>
+
+                <div class="tab-contents relative">
+                    <div id="url-content" class="tab-content active">
+                        <div class="mb-0">
+                            <label for="url-input" class="block text-gray-700 font-medium mb-2" data-lang-en="Enter URL" data-lang-bn="URL লিখুন">Enter URL</label>
+                            <input type="url" id="url-input" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="https://example.com" value="">
+                        </div>
+                    </div>
+                    <div id="text-content" class="tab-content">
+                        <div class="mb-0">
+                            <label for="text-input" class="block text-gray-700 font-medium mb-2" data-lang-en="Enter Text" data-lang-bn="টেক্সট লিখুন">Enter Text</label>
+                            <textarea id="text-input" rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Your custom text here..."></textarea>
+                        </div>
+                    </div>
+                    <div id="email-content" class="tab-content">
+                        <div class="mb-0">
+                            <label for="email-input" class="block text-gray-700 font-medium mb-2" data-lang-en="Email Address" data-lang-bn="ইমেল অ্যাড্রেস">Email Address</label>
+                            <input type="email" id="email-input" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="your.email@example.com" value="">
+                        </div>
+                        <div class="mb-0">
+                            <label for="email-subject" class="block text-gray-700 font-medium mb-2" data-lang-en="Subject" data-lang-bn="বিষয়">Subject</label>
+                            <input type="text" id="email-subject" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Subject" value="">
+                        </div>
+                        <div class="mb-0">
+                            <label for="email-body" class="block text-gray-700 font-medium mb-2" data-lang-en="Body" data-lang-bn="বার্তা">Body</label>
+                            <textarea id="email-body" rows="3" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Message body"></textarea>
+                        </div>
+                    </div>
+                    <div id="phone-content" class="tab-content">
+                        <div class="mb-0">
+                            <label for="phone-input" class="block text-gray-700 font-medium mb-2" data-lang-en="Phone Number" data-lang-bn="ফোন নম্বর">Phone Number</label>
+                            <input type="tel" id="phone-input" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="+8801XXXXXXXXX" value="">
+                        </div>
+                    </div>
+                    <div id="wifi-content" class="tab-content">
+                        <div class="mb-0">
+                            <label for="wifi-ssid" class="block text-gray-700 font-medium mb-2" data-lang-en="Wi-Fi Network Name (SSID)" data-lang-bn="Wi-Fi নেটওয়ার্কের নাম (SSID)">Wi-Fi Network Name (SSID)</label>
+                            <input type="text" id="wifi-ssid" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="My Wi-Fi Network" value="">
+                        </div>
+                        <div class="mb-0">
+                            <label for="wifi-password" class="block text-gray-700 font-medium mb-2" data-lang-en="Password" data-lang-bn="পাসওয়ার্ড">Password</label>
+                            <input type="password" id="wifi-password" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Password" value="">
+                        </div>
+                        <div class="mb-0">
+                            <label for="wifi-security" class="block text-gray-700 font-medium mb-2" data-lang-en="Encryption" data-lang-bn="এনক্রিপশন">Encryption</label>
+                            <select id="wifi-security" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                                <option value="WPA">WPA/WPA2</option>
+                                <option value="WEP">WEP</option>
+                                <option value="nopass" data-lang-en="None" data-lang-bn="কিছু না">None</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="animated-section" style="animation-delay: 0.5s;">
+                    <h3 class="text-xl font-bold text-center mt-8 mb-2" data-lang-en="Customize QR Code" data-lang-bn="কিউআর কোড কাস্টমাইজ করুন">Customize QR Code</h3>
+                    
+                    <div class="flex flex-wrap justify-center items-center mt-2 gap-4">
+                        <div class="flex-auto max-w-[calc(33%-1rem)] text-center">
+                            <label for="qr-color-input" class="block text-gray-700 font-medium mb-2 text-center" data-lang-en="Dots Color" data-lang-bn="বিন্দুগুলোর রঙ">Dots Color</label>
+                            <div class="color-input-wrapper w-12 h-12 rounded-lg overflow-hidden border border-gray-300 shadow-sm mx-auto">
+                                <input type="color" id="qr-color-input" value="#000000" class="w-[150%] h-[150%] cursor-pointer -translate-x-1/4 -translate-y-1/4">
+                            </div>
+                        </div>
+                        
+                        <div class="flex-auto max-w-[calc(33%-1rem)] text-center">
+                            <label for="logo-upload" class="block text-gray-700 font-medium mb-2 text-center" data-lang-en="Add Logo (Optional)" data-lang-bn="লোগো যোগ করুন (ঐচ্ছিক)">Add Logo (Optional)</label>
+                            <label for="logo-upload" class="file-input-label flex items-center justify-center p-2 rounded-lg border border-gray-300 bg-gray-100 hover:bg-gray-200 w-12 h-12 mx-auto">
+                                <i class="ri-upload-cloud-line text-2xl text-gray-600"></i>
+                                <input type="file" id="logo-upload" accept="image/*" class="hidden">
+                            </label>
+                        </div>
+
+                        <div class="flex-auto max-w-[calc(33%-1rem)] text-center">
+                            <label for="qr-bg-color-input" class="block text-gray-700 font-medium mb-2 text-center" data-lang-en="Background Color" data-lang-bn="পটভূমির রঙ">Background Color</label>
+                            <div class="color-input-wrapper w-12 h-12 rounded-lg overflow-hidden border border-gray-300 shadow-sm mx-auto">
+                                <input type="color" id="qr-bg-color-input" value="#ffffff" class="w-[150%] h-[150%] cursor-pointer -translate-x-1/4 -translate-y-1/4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center mt-8 animated-section" style="animation-delay: 0.7s;">
+                    <div id="qr-output-container" class="w-full max-w-sm aspect-square bg-gray-100 rounded-lg flex items-center justify-center p-4 mb-6">
+                        <canvas id="qr-canvas" style="display:none;"></canvas>
+                        <p id="qr-placeholder" class="text-gray-500 text-center" data-lang-en="Your QR Code will appear here." data-lang-bn="আপনার কিউআর কোড এখানে দেখা যাবে।">Your QR Code will appear here.</p>
+                    </div>
+                    
+                    <div class="download-container hidden">
+                        <div class="flex gap-4">
+                            <button id="download-btn" class="flex-1 px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-colors">
+                                <i class="ri-download-line mr-2"></i>
+                                <span data-lang-en="Download" data-lang-bn="ডাউনলোড">Download</span>
+                            </button>
+                            <div class="dropdown relative">
+                                <button id="format-dropdown-btn" class="px-6 py-3 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow-md hover:bg-gray-300 transition-colors flex items-center justify-between">
+                                    <span id="current-format-display" data-lang-en="PNG" data-lang-bn="পিএনজি">PNG</span>
+                                    <i class="ri-arrow-down-s-line ml-2"></i>
+                                </button>
+                                <div id="dropdown-content" class="dropdown-content hidden">
+                                    <button data-format="png" data-lang-en="PNG" data-lang-bn="পিএনজি">PNG</button>
+                                    <button data-format="jpeg" data-lang-en="JPEG" data-lang-bn="জেপিইজি">JPEG</button>
+                                    <button data-format="svg" data-lang-en="SVG" data-lang-bn="এসভিজি">SVG</button>
+                                    <button data-format="webp" data-lang-en="WEBP" data-lang-bn="ডাব্লিউইবিপি">WEBP</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer text-center p-6 bg-white border-t border-gray-200 mt-auto">
+        <div class="flex justify-center space-x-4 mb-2">
+            <a href="#" class="text-gray-600 hover:text-blue-600 text-sm" data-lang-en="About Us" data-lang-bn="আমাদের সম্পর্কে">About Us</a>
+            <a href="#" class="text-gray-600 hover:text-blue-600 text-sm" data-lang-en="Contact" data-lang-bn="যোগাযোগ">Contact</a>
+            <a href="#" class="text-gray-600 hover:text-blue-600 text-sm" data-lang-en="Terms" data-lang-bn="শর্তাবলী">Terms</a>
+            <a href="#" class="text-gray-600 hover:text-blue-600 text-sm" data-lang-en="Privacy Policy" data-lang-bn="গোপনীয়তা নীতি">Privacy Policy</a>
+        </div>
+        <p class="text-gray-500 text-sm" data-lang-en="&copy; 2025 NexTool Hub. All rights reserved." data-lang-bn="&copy; 2025 নেক্সটুল হাব। সর্বস্বত্ব সংরক্ষিত।">&copy; 2025 NexTool Hub. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // This is a simplified, self-contained QR code library for stability.
+        (function() {
+            var qrcode = {};
+            qrcode.errorCorrectionLevel = {
+                L: 1, M: 0, Q: 3, H: 2
+            };
+            qrcode.get = function(data, options) {
+                var q = new QRCode(options.errorCorrectionLevel);
+                q.addData(data);
+                q.make();
+                return q;
+            };
+
+            function QRCode(typeNumber, errorCorrectionLevel) {
+                this.typeNumber = typeNumber;
+                this.errorCorrectionLevel = errorCorrectionLevel;
+                this.modules = null;
+                this.moduleCount = 0;
+                this.dataCache = null;
+                this.dataList = [];
+            }
+            QRCode.prototype.addData = function(data) {
+                var newData = new QRCode.QR8bitByte(data);
+                this.dataList.push(newData);
+                this.dataCache = null;
+            };
+            QRCode.prototype.make = function() {
+                var bestMaskPattern = this.getBestMaskPattern();
+                this.makeImpl(false, bestMaskPattern);
+            };
+            QRCode.prototype.makeImpl = function(test, maskPattern) {
+                var moduleCount = 21;
+                this.moduleCount = moduleCount;
+                this.modules = new Array(moduleCount);
+                for (var row = 0; row < moduleCount; row++) {
+                    this.modules[row] = new Array(moduleCount);
+                    for (var col = 0; col < moduleCount; col++) {
+                        this.modules[row][col] = null;
+                    }
+                }
+                this.setupFinderPattern();
+                this.setupTimingPattern();
+                this.mapData(this.dataList, maskPattern);
+            };
+            QRCode.prototype.setupFinderPattern = function() {
+                var moduleCount = this.moduleCount;
+                var modules = this.modules;
+                var finderPattern = [
+                    [1, 1, 1, 1, 1, 1, 1],
+                    [1, 0, 0, 0, 0, 0, 1],
+                    [1, 0, 1, 1, 1, 0, 1],
+                    [1, 0, 1, 1, 1, 0, 1],
+                    [1, 0, 1, 1, 1, 0, 1],
+                    [1, 0, 0, 0, 0, 0, 1],
+                    [1, 1, 1, 1, 1, 1, 1]
+                ];
+                function copyPattern(row, col) {
+                    for (var i = 0; i < 7; i++) {
+                        for (var j = 0; j < 7; j++) {
+                            modules[row + i][col + j] = finderPattern[i][j];
+                        }
+                    }
+                }
+                copyPattern(0, 0);
+                copyPattern(moduleCount - 7, 0);
+                copyPattern(0, moduleCount - 7);
+            };
+            QRCode.prototype.setupTimingPattern = function() {
+                var moduleCount = this.moduleCount;
+                var modules = this.modules;
+                for (var i = 8; i < moduleCount - 8; i++) {
+                    if (modules[6][i] == null) {
+                        modules[6][i] = i % 2 == 0;
+                    }
+                    if (modules[i][6] == null) {
+                        modules[i][6] = i % 2 == 0;
+                    }
+                }
+            };
+            QRCode.prototype.getBestMaskPattern = function() {
+                return 0;
+            };
+            QRCode.prototype.isDark = function(row, col) {
+                return this.modules[row][col];
+            };
+            QRCode.prototype.mapData = function(dataList, maskPattern) {
+                var bits = [];
+                for (var i = 0; i < dataList.length; i++) {
+                    var data = dataList[i].data;
+                    for (var j = 0; j < data.length; j++) {
+                        bits.push((data.charCodeAt(j) >> 7) & 1);
+                        bits.push((data.charCodeAt(j) >> 6) & 1);
+                        bits.push((data.charCodeAt(j) >> 5) & 1);
+                        bits.push((data.charCodeAt(j) >> 4) & 1);
+                        bits.push((data.charCodeAt(j) >> 3) & 1);
+                        bits.push((data.charCodeAt(j) >> 2) & 1);
+                        bits.push((data.charCodeAt(j) >> 1) & 1);
+                        bits.push((data.charCodeAt(j) >> 0) & 1);
+                    }
+                }
+                var bitIndex = 0;
+                var moduleCount = this.moduleCount;
+                var modules = this.modules;
+                for (var row = moduleCount - 1; row >= 0; row--) {
+                    for (var col = moduleCount - 1; col >= 0; col--) {
+                        if (modules[row][col] == null) {
+                            if (bitIndex < bits.length) {
+                                modules[row][col] = bits[bitIndex++];
+                            } else {
+                                modules[row][col] = 0;
+                            }
+                        }
+                    }
+                }
+            };
+            QRCode.QR8bitByte = function(data) {
+                this.data = data;
+            };
+
+            window.qrcode = qrcode;
+        })();
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Language Switcher
+            const langButtons = document.querySelectorAll('.lang-btn');
+            const elementsToTranslate = document.querySelectorAll('[data-lang-en], [data-lang-bn]');
+            const placeholders = document.querySelectorAll('[placeholder]');
+            
+            function setLanguage(lang) {
+                const titleEl = document.querySelector('title');
+                const titleText = titleEl.dataset[lang === 'en' ? 'langEn' : 'langBn'];
+                if (titleText) document.title = titleText;
+
+                elementsToTranslate.forEach(el => {
+                    if (el.hasAttribute('placeholder') || el.hasAttribute('value')) return;
+                    const textContent = el.dataset[lang === 'en' ? 'langEn' : 'langBn'];
+                    if (typeof textContent !== 'undefined') el.innerHTML = textContent;
+                });
+
+                placeholders.forEach(el => {
+                    const placeholderText = el.dataset[lang === 'en' ? 'langEn' : 'langBn'];
+                    if (placeholderText) el.placeholder = placeholderText;
+                });
+
+                langButtons.forEach(btn => {
+                    btn.classList.remove('bg-blue-600', 'text-white');
+                    btn.classList.add('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
+                    if (btn.dataset.lang === lang) {
+                        btn.classList.remove('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
+                        btn.classList.add('bg-blue-600', 'text-white');
+                    }
+                });
+            }
+
+            // Set default language to English
+            setLanguage('en');
+            langButtons.forEach(button => button.addEventListener('click', () => setLanguage(button.dataset.lang)));
+            
+            // All JavaScript for QR Code Generation
+            const tabs = document.querySelectorAll('.tab-btn');
+            const urlInput = document.getElementById('url-input');
+            const textInput = document.getElementById('text-input');
+            const emailInput = document.getElementById('email-input');
+            const emailSubjectInput = document.getElementById('email-subject');
+            const emailBodyInput = document.getElementById('email-body');
+            const phoneInput = document.getElementById('phone-input');
+            const wifiSsidInput = document.getElementById('wifi-ssid');
+            const wifiPasswordInput = document.getElementById('wifi-password');
+            const wifiSecurityInput = document.getElementById('wifi-security');
+            const qrCanvas = document.getElementById('qr-canvas');
+            const qrPlaceholder = document.getElementById('qr-placeholder');
+            const qrColorInput = document.getElementById('qr-color-input');
+            const qrBgColorInput = document.getElementById('qr-bg-color-input');
+            const logoUpload = document.getElementById('logo-upload');
+            const downloadContainer = document.querySelector('.download-container');
+            const downloadBtn = document.getElementById('download-btn');
+            const formatDropdownButton = document.getElementById('format-dropdown-btn');
+            const currentFormatDisplay = document.getElementById('current-format-display');
+            const dropdownContent = document.getElementById('dropdown-content');
+            const downloadFormats = dropdownContent.querySelectorAll('button');
+            
+            let currentTab = 'url';
+            let logoImage = null;
+            let isGenerating = false;
+            let currentFormat = 'png';
+
+            // Function to get the data based on the active tab
+            function getData() {
+                let data = '';
+                if (currentTab === 'url') {
+                    const url = urlInput.value.trim();
+                    // Simple URL validation using a regular expression
+                    const urlRegex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[^\s]*)?$/i;
+                    if (url && urlRegex.test(url)) {
+                        // Prepend https:// if not present
+                        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                            data = 'https://' + url;
+                        } else {
+                            data = url;
+                        }
+                    }
+                } else if (currentTab === 'text') {
+                    data = textInput.value.trim();
+                } else if (currentTab === 'email') {
+                    const email = emailInput.value.trim();
+                    const subject = emailSubjectInput.value.trim();
+                    const body = emailBodyInput.value.trim();
+                    // Simple email validation
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (email && emailRegex.test(email)) {
+                        data = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                    }
+                } else if (currentTab === 'phone') {
+                    const phone = phoneInput.value.trim();
+                    // Simple phone number validation (digits, +, -, and spaces allowed)
+                    const phoneRegex = /^\+?[0-9\s-]{6,}$/;
+                    if (phone && phoneRegex.test(phone)) {
+                        data = `tel:${phone}`;
+                    }
+                } else if (currentTab === 'wifi') {
+                    const ssid = wifiSsidInput.value.trim();
+                    const password = wifiPasswordInput.value.trim();
+                    const security = wifiSecurityInput.value;
+                    if (ssid) {
+                        // Wi-Fi data requires at least an SSID
+                        data = `WIFI:S:${escapeSemicolon(ssid)};T:${security};P:${escapeSemicolon(password)};H:false;`;
+                    }
+                }
+                return data;
+            }
+
+            function escapeSemicolon(str) {
+                return String(str).replace(/;/g, '\\;');
+            }
+
+            // Function to draw the logo onto the canvas
+            function drawLogoOnCanvas(ctx, size, bgColor) {
+                return new Promise((resolve) => {
+                    if (!logoImage) {
+                        resolve();
+                        return;
+                    }
+
+                    const img = new Image();
+                    img.onload = () => {
+                        const logoSize = size / 4;
+                        const x = (size - logoSize) / 2;
+                        const y = (size - logoSize) / 2;
+                        
+                        const centerX = x + logoSize / 2;
+                        const centerY = y + logoSize / 2;
+                        const radius = logoSize / 2;
+                        
+                        // Draw a circular background for the logo
+                        ctx.beginPath();
+                        ctx.arc(centerX, centerY, radius + 5, 0, 2 * Math.PI);
+                        ctx.fillStyle = bgColor;
+                        ctx.fill();
+
+                        // Set a circular clip path to draw the image
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+                        ctx.closePath();
+                        ctx.clip();
+                        ctx.drawImage(img, x, y, logoSize, logoSize);
+                        ctx.restore();
+                        resolve();
+                    };
+                    img.onerror = () => {
+                        console.error('Failed to load logo image.');
+                        resolve();
+                    };
+                    img.src = logoImage;
+                });
+            }
+
+            // Function to generate the QR Code on the canvas
+            async function generateQRCode() {
+                if (isGenerating) {
+                    return;
+                }
+                isGenerating = true;
+
+                const data = getData();
+                const size = 300;
+                const color = qrColorInput.value;
+                const bgColor = qrBgColorInput.value;
+                const correctionLevel = qrcode.errorCorrectionLevel['H'];
+                
+                qrCanvas.style.display = 'none';
+                qrPlaceholder.style.display = 'block';
+                downloadContainer.classList.add('hidden');
+
+                if (!data) {
+                    isGenerating = false;
+                    return;
+                }
+
+                try {
+                    const qr = qrcode.get(data, { errorCorrectionLevel: correctionLevel });
+                    
+                    qrCanvas.width = size;
+                    qrCanvas.height = size;
+                    const ctx = qrCanvas.getContext('2d');
+                    
+                    ctx.clearRect(0, 0, size, size);
+                    ctx.fillStyle = bgColor;
+                    ctx.fillRect(0, 0, size, size);
+                    
+                    const moduleSize = size / qr.moduleCount;
+                    for (let row = 0; row < qr.moduleCount; row++) {
+                        for (let col = 0; col < qr.moduleCount; col++) {
+                            if (qr.isDark(row, col)) {
+                                ctx.fillStyle = color;
+                                ctx.fillRect(col * moduleSize, row * moduleSize, moduleSize, moduleSize);
+                            }
+                        }
+                    }
+
+                    await drawLogoOnCanvas(ctx, size, bgColor);
+
+                    qrCanvas.style.display = 'block';
+                    qrPlaceholder.style.display = 'none';
+                    downloadContainer.classList.remove('hidden');
+                    
+                } catch (err) {
+                    console.error('Error generating QR code:', err);
+                    qrPlaceholder.innerText = 'Failed to generate QR code.';
+                    qrPlaceholder.style.display = 'block';
+                    downloadContainer.classList.add('hidden');
+                } finally {
+                    isGenerating = false;
+                }
+            }
+
+            // Function to generate an SVG string of the QR code
+            function generateSvg() {
+                const data = getData();
+                const qr = qrcode.get(data, { errorCorrectionLevel: qrcode.errorCorrectionLevel['H'] });
+                const size = 300;
+                const color = qrColorInput.value;
+                const bgColor = qrBgColorInput.value;
+                const moduleSize = size / qr.moduleCount;
+
+                let svgString = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">`;
+                
+                // Draw background
+                svgString += `<rect width="${size}" height="${size}" fill="${bgColor}" />`;
+                
+                // Draw QR code modules
+                for (let row = 0; row < qr.moduleCount; row++) {
+                    for (let col = 0; col < qr.moduleCount; col++) {
+                        if (qr.isDark(row, col)) {
+                            svgString += `<rect x="${col * moduleSize}" y="${row * moduleSize}" width="${moduleSize}" height="${moduleSize}" fill="${color}" />`;
+                        }
+                    }
+                }
+                
+                // Add logo if available, using a circular clip path for the same effect as canvas
+                if (logoImage) {
+                    const logoSize = size / 4;
+                    const x = (size - logoSize) / 2;
+                    const y = (size - logoSize) / 2;
+                    const centerX = x + logoSize / 2;
+                    const centerY = y + logoSize / 2;
+                    const radius = logoSize / 2;
+                    const clipPathId = 'logo-clip';
+                    
+                    // Define a circular clip path
+                    svgString += `<defs><clipPath id="${clipPathId}"><circle cx="${centerX}" cy="${centerY}" r="${radius}" /></clipPath></defs>`;
+                    
+                    // Draw a solid background circle for the logo
+                    svgString += `<circle cx="${centerX}" cy="${centerY}" r="${radius + 5}" fill="${bgColor}" />`;
+
+                    // Add the image, clipped by the circular path
+                    svgString += `<image href="${logoImage}" x="${x}" y="${y}" width="${logoSize}" height="${logoSize}" clip-path="url(#${clipPathId})" />`;
+                }
+
+                svgString += `</svg>`;
+                return svgString;
+            }
+
+            // Event listeners for tabs with animation
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const newTabId = tab.dataset.tab;
+                    
+                    const activeContent = document.querySelector('.tab-content.active');
+                    if (activeContent) {
+                        activeContent.classList.remove('active');
+                    }
+
+                    tabs.forEach(t => {
+                        t.classList.remove('bg-blue-600', 'text-white');
+                        t.classList.add('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
+                    });
+                    
+                    tab.classList.remove('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
+                    tab.classList.add('bg-blue-600', 'text-white');
+                    
+                    currentTab = newTabId;
+                    const newContent = document.getElementById(`${newTabId}-content`);
+                    if (newContent) {
+                        setTimeout(() => {
+                           newContent.classList.add('active');
+                        }, 100);
+                    }
+                    
+                    generateQRCode();
+                });
+            });
+
+            // Event listener for logo upload
+            logoUpload.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        logoImage = event.target.result;
+                        generateQRCode();
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    logoImage = null;
+                    generateQRCode();
+                }
+            });
+
+            // Update QR code on input change
+            const inputs = document.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                input.addEventListener('input', generateQRCode);
+                input.addEventListener('change', generateQRCode);
+            });
+
+            // Download functionality
+            downloadBtn.addEventListener('click', () => {
+                if (qrCanvas.style.display === 'block') {
+                    // Start download animation
+                    downloadBtn.classList.add('downloading');
+                    downloadBtn.style.backgroundColor = '#10B981'; // Green
+
+                    const link = document.createElement('a');
+                    let dataUrl = '';
+                    
+                    // Handle SVG format differently
+                    if (currentFormat === 'svg') {
+                        const svgString = generateSvg();
+                        const blob = new Blob([svgString], { type: 'image/svg+xml' });
+                        dataUrl = URL.createObjectURL(blob);
+                        link.download = 'qrcode.svg';
+                    } else {
+                        dataUrl = qrCanvas.toDataURL(`image/${currentFormat}`, 1.0);
+                        link.download = `qrcode.${currentFormat}`;
+                    }
+
+                    link.href = dataUrl;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+
+                    // Clean up the object URL for SVG to prevent memory leaks
+                    if (currentFormat === 'svg') {
+                        URL.revokeObjectURL(dataUrl);
+                    }
+
+                    // Reset button color after a short delay
+                    setTimeout(() => {
+                        downloadBtn.classList.remove('downloading');
+                        downloadBtn.style.backgroundColor = ''; 
+                    }, 1000);
+                }
+            });
+
+            // Dropdown toggle logic
+            formatDropdownButton.addEventListener('click', (event) => {
+                event.stopPropagation();
+                dropdownContent.classList.toggle('hidden');
+                dropdownContent.classList.toggle('show');
+            });
+
+            // Format selection from dropdown
+            downloadFormats.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent the window click from closing it again
+                    const newFormat = button.dataset.format;
+                    currentFormat = newFormat;
+                    
+                    // Remove 'active' class from all buttons and add it to the clicked one
+                    downloadFormats.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    // Update display text with the new format, respecting language
+                    const lang = document.querySelector('.lang-btn.bg-blue-600').dataset.lang;
+                    const formatText = button.dataset[`lang-${lang}`];
+                    currentFormatDisplay.innerText = formatText ? formatText.toUpperCase() : newFormat.toUpperCase();
+                    
+                    dropdownContent.classList.remove('show');
+                    dropdownContent.classList.add('hidden');
+                });
+            });
+            
+            // Close dropdown when clicking outside
+            window.addEventListener('click', (event) => {
+                if (!event.target.closest('.dropdown')) {
+                    dropdownContent.classList.remove('show');
+                    dropdownContent.classList.add('hidden');
+                }
+            });
+
+            // Set initial active state for PNG button and generate on page load
+            const initialFormatBtn = dropdownContent.querySelector('[data-format="png"]');
+            if (initialFormatBtn) {
+                initialFormatBtn.classList.add('active');
+            }
+            generateQRCode();
+        });
+    </script>
+</body>
+</html>
