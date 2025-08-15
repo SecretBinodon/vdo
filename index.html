@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,9 +29,7 @@
             --paper-color5: #ffccbc;
         }
 
-        html {
-            scroll-behavior: smooth; /* ADDED: Smooth scrolling for all anchor links */
-        }
+        html { scroll-behavior: smooth; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Poppins', sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.6; }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
@@ -49,68 +48,6 @@
         .lang-btn { background-color: transparent; border: 1px solid #ccc; padding: 6px 12px; cursor: pointer; border-radius: 6px; font-size: 14px; font-weight: 600; transition: all 0.3s ease; margin-left: 8px; }
         .lang-btn.active { background-color: var(--primary-color); color: #fff; border-color: var(--primary-color); }
         .lang-btn:hover:not(.active) { background-color: #e0e0e0; }
-
-        /* --- Ad Styles --- */
-        .blog-ad-container-top {
-            margin-top: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .blog-ad-container-bottom {
-            margin-top: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        /* New Styles for consistency */
-        .blog-ad-container-bottom {
-            margin-top: 0; /* Changed from 20px to 0 */
-            margin-bottom: 0; /* Changed from 20px to 0 */
-        }
-
-        .desktop-ad-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 25px;
-            margin-top: 0;
-            margin-bottom: 0;
-            grid-column: 1 / -1;
-        }
-
-        .desktop-ad-small-wrapper {
-            display: grid;
-            grid-template-columns: 1fr;
-            place-items: center;
-            width: 100%;
-            max-width: 300px;
-            height: 250px;
-            justify-self: center;
-        }
-
-        .desktop-ad-small {
-            text-align: center;
-            width: 300px;
-            height: 250px;
-        }
-        
-        .desktop-ad-large-blog {
-            margin: 20px auto 0;
-        }
-        
-        /* New Ad Container Style */
-        .daily-offer-ad-container {
-            margin-top: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        @media (max-width: 768px) {
-            .blog-ad-container-top, .blog-ad-container-bottom, .desktop-ad-container, .desktop-ad-large-blog, .daily-offer-ad-container {
-                display: none !important;
-            }
-        }
         
         /* --- Hero Section with Paper Effect --- */
         .hero-section {
@@ -129,7 +66,6 @@
             align-items: center;
             min-height: 250px;
         }
-        /* Paper Pieces Container */
         .hero-section .paper-pieces-container {
             position: absolute;
             top: 0;
@@ -140,7 +76,6 @@
             pointer-events: none;
             overflow: hidden;
         }
-        /* Individual paper piece styling */
         .paper-piece {
             position: absolute;
             background-color: var(--paper-color1);
@@ -157,14 +92,12 @@
             95% { opacity: 0.8; }
             100% { transform: translate(0, 100vh) rotate(360deg); opacity: 0; }
         }
-
         @keyframes diagonal-left {
             0% { transform: translate(10vw, -100%) rotate(0deg); opacity: 0; }
             5% { opacity: 0.6; }
             95% { opacity: 0.6; }
             100% { transform: translate(-10vw, 100vh) rotate(-360deg); opacity: 0; }
         }
-        
         @keyframes diagonal-right {
             0% { transform: translate(-10vw, -100%) rotate(0deg); opacity: 0; }
             5% { opacity: 0.7; }
@@ -222,7 +155,6 @@
             display: block;
             border: 1px solid transparent;
         }
-        
         .tool-card:hover, .tool-card:focus, .tool-card:active {
             transform: scale(1.05);
             box-shadow: var(--shadow-hover);
@@ -271,8 +203,8 @@
 
         /* --- Blog Section CSS (Updated to reduce space) --- */
         .blog-section { 
-            padding-bottom: 20px; /* Reduced space */
-            padding-top: 30px; /* Original value, kept for clarity */
+            padding-bottom: 20px; 
+            padding-top: 30px; 
             background-color: var(--background-color); 
         }
         .blog-section h2 { font-size: 32px; margin-bottom: 20px; text-align: center; color: var(--text-color); }
@@ -297,7 +229,7 @@
 
         /* --- Testimonials Section (Updated to reduce space) --- */
         .testimonials-section {
-            padding: 20px 20px; /* Reduced space from 30px */
+            padding: 20px 20px; 
             text-align: center;
             background-color: var(--card-bg);
         }
@@ -380,21 +312,11 @@
             .tools-panel .tool-cards-grid .tool-card:nth-child(3) {
                 grid-column: 1 / -1;
             }
-            .tools-panel .tool-cards-grid .desktop-ad-container {
-                grid-column: 1 / -1;
-                display: flex;
-                flex-direction: row;
-                justify-content: space-around;
-            }
-            .tools-panel .tool-cards-grid .desktop-ad-container .desktop-ad-small-wrapper {
-                width: auto;
-                max-width: none;
-            }
-            .tools-panel .tool-cards-grid .tool-card:nth-child(5),
-            .tools-panel .tool-cards-grid .tool-card:nth-child(6) {
+            .tools-panel .tool-cards-grid .tool-card:nth-child(4),
+            .tools-panel .tool-cards-grid .tool-card:nth-child(5) {
                 grid-column: span 1;
             }
-            .tools-panel .tool-cards-grid .tool-card:nth-child(7) {
+            .tools-panel .tool-cards-grid .tool-card:nth-child(6) {
                 grid-column: 1 / -1;
             }
 
@@ -430,19 +352,6 @@
         </header>
     </div>
 
-    <div class="container blog-ad-container-top">
-        <script type="text/javascript">
-            atOptions = {
-                'key' : '3107b60e8baa0d0e886adf12d55fbd7e',
-                'format' : 'iframe',
-                'height' : 90,
-                'width' : 728,
-                'params' : {}
-            };
-        </script>
-        <script type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
-    </div>
-
     <section class="hero-section">
         <div class="paper-pieces-container">
             <div class="paper-piece square" style="left: 10%; top: -10%; width: 10px; height: 10px; background-color: var(--paper-color1); animation: falling 80s linear infinite;"></div>
@@ -469,19 +378,6 @@
                 <input type="text" class="search-input" data-lang-en="Search for any tool..." data-lang-bn="যেকোনো টুল খুঁজুন..." placeholder="Search for any tool..." aria-label="Search for tools" disabled>
                 <i class="ri-search-line search-icon"></i>
             </div>
-        </div>
-
-        <div class="container blog-ad-container-top">
-            <script type="text/javascript">
-                atOptions = {
-                    'key' : '3107b60e8baa0d0e886adf12d55fbd7e',
-                    'format' : 'iframe',
-                    'height' : 90,
-                    'width' : 728,
-                    'params' : {}
-                };
-            </script>
-            <script type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
         </div>
 
         <div class="filter-options">
@@ -515,37 +411,6 @@
                     <h3 data-lang-en="Facebook Free Like Follow" data-lang-bn="ফেসবুক ফ্রি লাইক ফলো">Facebook Free Like Follow</h3>
                     <p data-lang-en="Boost your Facebook page's likes and followers for free." data-lang-bn="আপনার ফেসবুক পেজের লাইক এবং ফলোয়ার বিনামূল্যে বাড়ান।">Boost your Facebook page's likes and followers for free.</p>
                     <a href="facebook_likes.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
-                </div>
-                
-                <div class="desktop-ad-container">
-                    <div class="desktop-ad-small-wrapper">
-                        <div class="desktop-ad-small">
-                            <script type="text/javascript">
-                                atOptions = {
-                                    'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
-                                    'format' : 'iframe',
-                                    'height' : 250,
-                                    'width' : 300,
-                                    'params' : {}
-                                };
-                            </script>
-                            <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
-                        </div>
-                    </div>
-                    <div class="desktop-ad-small-wrapper">
-                        <div class="desktop-ad-small">
-                            <script type="text/javascript">
-                                atOptions = {
-                                    'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
-                                    'format' : 'iframe',
-                                    'height' : 250,
-                                    'width' : 300,
-                                    'params' : {}
-                                };
-                            </script>
-                            <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="tool-card" tabindex="0" data-category="utilities" data-lang-en-title="Text Counter" data-lang-bn-title="টেক্সট কাউন্টার" data-lang-en-desc="Count words, characters, and sentences in your text instantly." data-lang-bn-desc="আপনার লেখার শব্দ, অক্ষর এবং বাক্য দ্রুত গণনা করুন।">
@@ -599,19 +464,6 @@
                     <a href="#" class="join-offer-btn" data-lang-en="Join Offer" data-lang-bn="অফারে যোগ দিন">Join Offer</a>
                 </div>
             </div>
-            
-            <div class="container daily-offer-ad-container">
-                <script type="text/javascript">
-                    atOptions = {
-                        'key' : '3107b60e8baa0d0e886adf12d55fbd7e',
-                        'format' : 'iframe',
-                        'height' : 90,
-                        'width' : 728,
-                        'params' : {}
-                    };
-                </script>
-                <script type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
-            </div>
             </section>
 
         <section id="new-blog-section" class="blog-section filterable-section visible">
@@ -640,12 +492,6 @@
                         <p data-lang-en="Learn how a simple URL shortener can transform your branding and improve your marketing campaigns. It's more than just a short link." data-lang-bn="একটি সাধারণ URL শর্টনার কীভাবে আপনার ব্র্যান্ডিংকে উন্নত করতে এবং আপনার বিপণন প্রচারাভিযানকে আরও কার্যকরী করতে পারে তা জানুন।">Learn how a simple URL shortener can transform your branding and improve your marketing campaigns. It's more than just a short link.</p>
                         <a href="#" class="read-more-btn" data-lang-en="Read More" data-lang-bn="আরও পড়ুন">Read More <i class="ri-arrow-right-line"></i></a>
                     </div>
-                </div>
-            </div>
-            <div class="blog-ad-container-bottom">
-                <div class="desktop-ad-large-blog">
-                    <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script>
-                    <div id="container-45718544708b185acff6d14248cc94cd"></div>
                 </div>
             </div>
         </section>
@@ -706,7 +552,7 @@
         <p data-lang-en="&copy; 2025 NexTool Hub. All rights reserved." data-lang-bn="&copy; 2025 নেক্সটুল হাব। সর্বস্বত্ব সংরক্ষিত।">&copy; 2025 NexTool Hub. All rights reserved.</p>
         
         <div class="ashiqur-popup" id="ashiqur-popup">
-            <span data-lang-bn="আমার নাম আশিকুর রহমান সুলতান। আমার পক্ষ থেকে আপনাকে জানাই 'স্বাগতম'" data-lang-en="My name is Ashikur Rahman Sultan. I welcome you on my behalf."></span>
+            <span data-lang-bn="আমার নাম আশিকুর রহমান সুলতান। আমি আমার পক্ষ থেকে আপনাকে জানাই 'স্বাগতম'" data-lang-en="My name is Ashikur Rahman Sultan. I welcome you on my behalf."></span>
         </div>
     </footer>
 
@@ -714,8 +560,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             const langButtons = document.querySelectorAll('.lang-btn');
             const filterButtons = document.querySelectorAll('.filter-btn');
-            const searchInput = document.querySelector('.search-input');
-            const toolCards = document.querySelectorAll('.tool-card');
             const sections = document.querySelectorAll('.filterable-section');
             const ashiqurBtn = document.querySelector('.ashiqur-btn');
             const ashiqurPopup = document.getElementById('ashiqur-popup');
@@ -758,7 +602,6 @@
                 const staticCard = testimonialCards[1 - cardToUpdateIndex];
 
                 cardToUpdate.style.opacity = 0;
-
                 staticCard.classList.add('glow-effect');
 
                 setTimeout(() => {
@@ -769,7 +612,6 @@
                     testimonialAuthors[cardToUpdateIndex].textContent = nextTestimonial[lang].author;
 
                     cardToUpdate.style.opacity = 1;
-
                     staticCard.classList.remove('glow-effect');
 
                     cardToUpdateIndex = 1 - cardToUpdateIndex;
@@ -784,7 +626,6 @@
             }
 
             const offerData = [
-                // Set 1
                 {
                     en: { title: "Income", text: "Earn $100 daily from home.", icon: "ri-money-dollar-circle-line" },
                     bn: { title: "ইনকাম", text: "ঘরে বসে রোজ $100 আয় করুন।", icon: "ri-money-dollar-circle-line" }
@@ -797,7 +638,6 @@
                     en: { title: "Community", text: "Start your online business with us.", icon: "ri-team-line" },
                     bn: { title: "কমিউনিটি", text: "আমাদের সাথে আপনার অনলাইন ব্যবসা শুরু করুন।", icon: "ri-team-line" }
                 },
-                // Set 2
                 {
                     en: { title: "Freedom", text: "Your first step to financial freedom.", icon: "ri-hand-coin-line" },
                     bn: { title: "স্বাধীনতা", text: "আর্থিক স্বাধীনতার পথে আপনার প্রথম ধাপ।", icon: "ri-hand-coin-line" }
@@ -810,7 +650,6 @@
                     en: { title: "Cash", text: "Daily payouts, instant cash.", icon: "ri-wallet-3-line" },
                     bn: { title: "ক্যাশ", text: "প্রতিদিনের পেমেন্ট, সাথে সাথে টাকা।", icon: "ri-wallet-3-line" }
                 },
-                // Set 3
                 {
                     en: { title: "Unlock", text: "Unlock a new income stream.", icon: "ri-key-2-line" },
                     bn: { title: "সুযোগ", text: "আয় করার নতুন রাস্তা খুলে নিন।", icon: "ri-key-2-line" }
@@ -886,7 +725,6 @@
                 });
             }
             
-            // Function to handle smooth scroll to a section
             function scrollToSection(sectionId) {
                 const targetSection = document.getElementById(sectionId);
                 if (targetSection) {
@@ -899,7 +737,7 @@
 
             filterButtons.forEach(button => {
                 button.addEventListener('click', (e) => {
-                    // Removed e.preventDefault() to allow the browser's native smooth scroll
+                    e.preventDefault();
                     
                     filterButtons.forEach(btn => {
                         btn.classList.remove('active');
@@ -912,12 +750,10 @@
                     const filterValue = button.dataset.filter;
                     filterSections(filterValue);
                     
-                    // Added: Manually handle smooth scroll if not all sections are visible
                     if (filterValue !== 'all') {
                         const sectionId = sectionMap[filterValue];
                         scrollToSection(sectionId);
                     } else {
-                         // Scroll to the top if 'All' is clicked
                          window.scrollTo({
                             top: 0,
                             behavior: 'smooth'
@@ -951,6 +787,7 @@
                     }
                 });
 
+                const searchInput = document.querySelector('.search-input');
                 if (searchInput) {
                     searchInput.placeholder = searchInput.dataset[lang === 'en' ? 'langEn' : 'langBn'];
                 }
@@ -996,6 +833,7 @@
                     }
                 }
                 
+                const toolCards = document.querySelectorAll('.tool-card');
                 toolCards.forEach(card => {
                     const title = card.querySelector('h3');
                     const desc = card.querySelector('p');
