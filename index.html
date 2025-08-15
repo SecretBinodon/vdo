@@ -60,7 +60,7 @@
             justify-content: center;
             align-items: center;
             gap: 25px;
-            margin-top: 0;
+            margin-top: 0; /* Changed */
             margin-bottom: 0;
             grid-column: 1 / -1;
         }
@@ -81,38 +81,34 @@
             height: 250px;
         }
 
-        /* Corrected Ad Styles for three ads in a row */
-        .ad-row-container {
-            display: none; /* Hidden by default for mobile */
-            grid-template-columns: repeat(3, 1fr); /* Corrected grid for three columns */
-            gap: 25px;
-            margin: 40px auto;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .ad-item {
+        /* --- নতুন অ্যাড কোডের জন্য স্টাইল --- */
+        .native-ads-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100%;
-            min-height: 200px; /* Adjust as needed */
+            gap: 20px; /* অ্যাডের মধ্যে গ্যাপ */
+            margin: 25px auto; /* উপরে-নিচে গ্যাপ */
+            flex-wrap: wrap;
+            grid-column: 1 / -1;
+            width: 100%;
+            max-width: 900px; /* অ্যাডের কনটেইনারের সর্বোচ্চ প্রস্থ */
+        }
+
+        .native-ad-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 300px; /* প্রতিটি অ্যাডের প্রস্থ */
+            height: 250px; /* প্রতিটি অ্যাডের উচ্চতা */
+        }
+
+        @media (max-width: 768px) {
+            .desktop-ad, .desktop-ad-container, .native-ads-container {
+                display: none !important;
+            }
         }
         
-        /* Ad Frame and Zoom-out effect */
-        .ad-item .ad-frame {
-            transform: scale(0.9); /* Perfect zoom-out effect for fitting inside */
-            transform-origin: center center;
-            overflow: hidden;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Hero Section with Paper Effect */
+        /* --- Hero Section with Paper Effect --- */
         .hero-section {
             text-align: center;
             padding: 25px 20px;
@@ -351,14 +347,14 @@
             .tool-card:nth-child(2) { grid-column: 2; }
             .tool-card:nth-child(3) {
                 grid-column: 1 / -1;
-                margin-bottom: 0;
+                margin-bottom: 0; /* Changed: Remove the margin from the large card itself */
             }
 
             .desktop-ad-container {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 gap: 25px;
-                margin-top: 0;
+                margin-top: 0; /* Changed: Remove the margin from the ad container */
                 grid-column: 1 / -1;
             }
             
@@ -371,10 +367,6 @@
                 grid-column: 2;
                 place-self: center;
             }
-
-            .ad-row-container {
-                display: grid; /* Keep as grid for desktop */
-            }
         }
         
         @media (min-width: 769px) {
@@ -385,13 +377,6 @@
             .ashiqur-btn-wrapper { margin-right: auto; }
             .download-btn-wrapper { margin-left: auto; }
             .ashiqur-popup { bottom: 80px; }
-        }
-        
-        /* Hide all ads on mobile by default */
-        @media (max-width: 768px) {
-            .desktop-ad, .desktop-ad-container, .ad-row-container {
-                display: none !important;
-            }
         }
     </style>
 </head>
@@ -532,6 +517,18 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="native-ads-container">
+                    <div class="native-ad-item">
+                        <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script> <div id="container-45718544708b185acff6d14248cc94cd"></div>
+                    </div>
+                    <div class="native-ad-item">
+                        <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script> <div id="container-45718544708b185acff6d14248cc94cd"></div>
+                    </div>
+                    <div class="native-ad-item">
+                        <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script> <div id="container-45718544708b185acff6d14248cc94cd"></div>
+                    </div>
+                </div>
             </div>
             <p class="no-results" data-align-en="center" data-lang-en="No tools found for your search." data-lang-bn="আপনার অনুসন্ধানের জন্য কোনো টুল পাওয়া যায়নি।">No tools found for your search.</p>
         </section>
@@ -591,27 +588,6 @@
                         <h3 data-lang-en="Why You Need a URL Shortener: The Key to Professional Branding" data-lang-bn="কেন আপনার URL শর্টনার প্রয়োজন: পেশাদার ব্র্যান্ডিংয়ের মূল চাবিকাঠি">Why You Need a URL Shortener: The Key to Professional Branding</h3>
                         <p data-lang-en="Learn how a simple URL shortener can transform your branding and improve your marketing campaigns. It's more than just a short link." data-lang-bn="একটি সাধারণ URL শর্টনার কীভাবে আপনার ব্র্যান্ডিংকে উন্নত করতে এবং আপনার বিপণন প্রচারাভিযানকে আরও কার্যকরী করতে পারে তা জানুন।">Learn how a simple URL shortener can transform your branding and improve your marketing campaigns. It's more than just a short link.</p>
                         <a href="#" class="read-more-btn" data-lang-en="Read More" data-lang-bn="আরও পড়ুন">Read More <i class="ri-arrow-right-line"></i></a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="ad-row-container on-scroll-animate">
-                <div class="ad-item">
-                    <div class="ad-frame">
-                        <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script>
-                        <div id="container-45718544708b185acff6d14248cc94cd"></div>
-                    </div>
-                </div>
-                <div class="ad-item">
-                    <div class="ad-frame">
-                        <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script>
-                        <div id="container-45718544708b185acff6d14248cc94cd"></div>
-                    </div>
-                </div>
-                <div class="ad-item">
-                    <div class="ad-frame">
-                        <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script>
-                        <div id="container-45718544708b185acff6d14248cc94cd"></div>
                     </div>
                 </div>
             </div>
