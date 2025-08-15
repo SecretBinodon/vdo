@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,6 +39,20 @@
         .logo a .nex-text { color: var(--primary-color); }
         .logo a .tool-text { color: var(--red-color); }
         .logo a .hub-text { color: var(--primary-color); }
+        
+        /* New code for the animated logo icon */
+        .logo-icon {
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-right: 8px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
         .header-right { display: flex; align-items: center; gap: 20px; }
         .social-links { display: flex; align-items: center; gap: 15px; }
         .social-link { font-size: 20px; color: var(--secondary-text); transition: color 0.3s ease, transform 0.3s ease; text-decoration: none; }
@@ -115,8 +128,8 @@
         /* --- Search Bar & Filters --- */
         .search-bar-container { text-align: center; margin-top: 20px; margin-bottom: 20px; position: relative; }
         .search-input-wrapper { display: inline-block; width: 100%; max-width: 600px; position: relative; }
-        .search-input { width: 100%; padding: 12px 50px 12px 20px; border: 1px solid #ddd; border-radius: var(--border-radius); font-size: 16px; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); background-color: #f0f0f0; cursor: not-allowed; }
-        .search-icon { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); font-size: 20px; color: #aaa; cursor: not-allowed; }
+        .search-input { width: 100%; padding: 12px 50px 12px 20px; border: 1px solid #ddd; border-radius: var(--border-radius); font-size: 16px; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); background-color: #f0f0f0; }
+        .search-icon { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); font-size: 20px; color: #aaa; }
         
         .filter-options { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 20px; margin-bottom: 20px; }
         .filter-btn { background-color: transparent; border: none; padding: 8px 18px; font-size: 16px; font-weight: 600; color: var(--secondary-text); cursor: pointer; white-space: nowrap; transition: background-color 0.3s ease, color 0.3s ease; text-decoration: none; display: block; border-radius: 20px; }
@@ -142,7 +155,7 @@
             gap: 25px;
             justify-content: center;
         }
-
+        
         .tool-card {
             background-color: var(--card-bg);
             padding: 30px 20px;
@@ -154,6 +167,9 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
             display: block;
             border: 1px solid transparent;
+        }
+        .tool-card.hide {
+            display: none;
         }
         .tool-card:hover, .tool-card:focus, .tool-card:active {
             transform: scale(1.05);
@@ -277,6 +293,7 @@
             .hero-section { margin-bottom: 15px; min-height: 200px; }
             .header { flex-direction: row; justify-content: space-between; align-items: center; }
             .logo a { font-size: 22px; }
+            .logo-icon { font-size: 26px; }
             .header-right { flex-direction: row; justify-content: flex-end; gap: 10px; }
             .social-links { gap: 10px; }
             .social-link { font-size: 18px; }
@@ -335,6 +352,7 @@
         <header class="header">
             <div class="logo">
                 <a href="#">
+                    <i class="ri-rocket-2-line logo-icon"></i>
                     <span class="nex-text">Nex</span><span class="tool-text">Tool</span> <span class="hub-text">Hub</span>
                 </a>
             </div>
@@ -375,18 +393,18 @@
     <div class="container">
         <div class="search-bar-container">
             <div class="search-input-wrapper">
-                <input type="text" class="search-input" data-lang-en="Search for any tool..." data-lang-bn="যেকোনো টুল খুঁজুন..." placeholder="Search for any tool..." aria-label="Search for tools" disabled>
+                <input type="text" id="search-input" class="search-input" data-lang-en="Search for any tool..." data-lang-bn="যেকোনো টুল খুঁজুন..." placeholder="Search for any tool..." aria-label="Search for tools">
                 <i class="ri-search-line search-icon"></i>
             </div>
         </div>
 
         <div class="filter-options">
-            <a href="#" class="filter-btn all-btn active" data-lang-en="All" data-lang-bn="সব" data-filter="all" aria-pressed="true">All</a>
-            <a href="#tools-panel" class="filter-btn" data-lang-en="Your Tools" data-lang-bn="আপনার টুলস" data-filter="tools" aria-pressed="false">Your Tools</a>
-            <a href="#daily-offer-section" class="filter-btn" data-lang-en="Daily Offer" data-lang-bn="দিনের সেরা অফার" data-filter="daily-offer" aria-pressed="false">Daily Offer</a>
-            <a href="#new-blog-section" class="filter-btn" data-lang-en="Our Blog" data-lang-bn="আমাদের ব্লগ" data-filter="blog" aria-pressed="false">Our Blog</a>
-            <a href="#testimonials-section" class="filter-btn" data-lang-en="Testimonials" data-lang-bn="সাক্ষ্য" data-filter="testimonials" aria-pressed="false">Testimonials</a>
-            <a href="#why-choose-us-section" class="filter-btn" data-lang-en="Why Us?" data-lang-bn="কেন আমরা?" data-filter="why-us" aria-pressed="false">Why Us?</a>
+            <button class="filter-btn all-btn active" data-lang-en="All" data-lang-bn="সব" data-filter="all" aria-pressed="true">All</button>
+            <button class="filter-btn" data-lang-en="Your Tools" data-lang-bn="আপনার টুলস" data-filter="tools" aria-pressed="false">Your Tools</button>
+            <button class="filter-btn" data-lang-en="Daily Offer" data-lang-bn="দিনের সেরা অফার" data-filter="daily-offer" aria-pressed="false">Daily Offer</button>
+            <button class="filter-btn" data-lang-en="Our Blog" data-lang-bn="আমাদের ব্লগ" data-filter="blog" aria-pressed="false">Our Blog</button>
+            <button class="filter-btn" data-lang-en="Testimonials" data-lang-bn="সাক্ষ্য" data-filter="testimonials" aria-pressed="false">Testimonials</button>
+            <button class="filter-btn" data-lang-en="Why Us?" data-lang-bn="কেন আমরা?" data-filter="why-us" aria-pressed="false">Why Us?</button>
         </div>
 
         <section id="tools-panel" class="tools-panel filterable-section visible">
@@ -563,6 +581,9 @@
             const sections = document.querySelectorAll('.filterable-section');
             const ashiqurBtn = document.querySelector('.ashiqur-btn');
             const ashiqurPopup = document.getElementById('ashiqur-popup');
+            const searchInput = document.getElementById('search-input');
+            const toolCards = document.querySelectorAll('.tool-card');
+            const noResultsMessage = document.querySelector('.no-results');
 
             const testimonials = [
                 { en: { text: "“I’ve shortened my long links with a custom alias. It’s a killer feature for my campaigns!”", author: "- Arif Chowdhury" }, bn: { text: "“আমি কাস্টম নাম দিয়ে আমার লম্বা লিঙ্কগুলো ছোট করতে পেরেছি। এটি আমার প্রচারণার জন্য একটি দারুণ ফিচার!”", author: "- আরিফ চৌধুরী" } },
@@ -728,9 +749,13 @@
             function scrollToSection(sectionId) {
                 const targetSection = document.getElementById(sectionId);
                 if (targetSection) {
-                    targetSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                    const headerOffset = 80; 
+                    const elementPosition = targetSection.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
                     });
                 }
             }
@@ -773,17 +798,13 @@
                     }
                 });
             }
-
+            
             function setLanguage(lang) {
                 const elementsToTranslate = document.querySelectorAll('[data-lang-en], [data-lang-bn]');
                 elementsToTranslate.forEach(el => {
                     const textContent = el.dataset[lang === 'en' ? 'langEn' : 'langBn'];
                     if (textContent) {
-                        if (el.tagName === 'H3' || el.tagName === 'P' || el.tagName === 'A' || el.tagName === 'BUTTON' || el.tagName === 'SPAN') {
-                            el.textContent = textContent;
-                        } else {
-                            el.textContent = textContent;
-                        }
+                        el.textContent = textContent;
                     }
                 });
 
@@ -801,38 +822,6 @@
                     }
                 });
                 
-                const filterLanguageButtons = document.querySelectorAll('.filter-btn');
-                filterLanguageButtons.forEach(btn => {
-                    const filterText = btn.dataset[lang === 'en' ? 'langEn' : 'langBn'];
-                    if (filterText) {
-                        btn.textContent = filterText;
-                    }
-                });
-                
-                const useToolButtons = document.querySelectorAll('.use-tool-btn');
-                useToolButtons.forEach(btn => {
-                    const btnText = btn.dataset[lang === 'en' ? 'langEn' : 'langBn'];
-                    if (btnText) {
-                        btn.textContent = btnText;
-                    }
-                });
-                
-                const joinOfferButtons = document.querySelectorAll('.join-offer-btn');
-                joinOfferButtons.forEach(btn => {
-                    const btnText = btn.dataset[lang === 'en' ? 'langEn' : 'langBn'];
-                    if (btnText) {
-                        btn.textContent = btnText;
-                    }
-                });
-
-                const downloadButton = document.querySelector('.download-btn');
-                if (downloadButton) {
-                    const btnText = downloadButton.dataset[lang === 'en' ? 'langEn' : 'langBn'];
-                    if (btnText) {
-                        downloadButton.textContent = btnText;
-                    }
-                }
-                
                 const toolCards = document.querySelectorAll('.tool-card');
                 toolCards.forEach(card => {
                     const title = card.querySelector('h3');
@@ -849,6 +838,31 @@
                 rotateOffers();
                 startOfferRotation();
             }
+            
+            function handleSearch() {
+                const searchTerm = searchInput.value.toLowerCase();
+                let resultsFound = false;
+
+                toolCards.forEach(card => {
+                    const cardTitle = card.querySelector('h3').textContent.toLowerCase();
+                    const cardDesc = card.querySelector('p').textContent.toLowerCase();
+
+                    if (cardTitle.includes(searchTerm) || cardDesc.includes(searchTerm)) {
+                        card.style.display = 'block';
+                        resultsFound = true;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                if (resultsFound) {
+                    noResultsMessage.style.display = 'none';
+                } else {
+                    noResultsMessage.style.display = 'block';
+                }
+            }
+
+            searchInput.addEventListener('input', handleSearch);
             
             setLanguage('en');
             filterSections('all');
