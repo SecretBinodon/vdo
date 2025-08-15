@@ -28,6 +28,9 @@
             --paper-color5: #ffccbc;
         }
 
+        html {
+            scroll-behavior: smooth; /* ADDED: Smooth scrolling for all anchor links */
+        }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Poppins', sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.6; }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
@@ -237,6 +240,12 @@
         .tool-card:nth-child(2) .icon { color: #6C5CE7; }
         .tool-card:nth-child(3) .icon-wrapper { background-color: #E0EBF4; }
         .tool-card:nth-child(3) .icon { color: #1877F2; }
+        .tool-card:nth-child(4) .icon-wrapper { background-color: #FFF3E0; }
+        .tool-card:nth-child(4) .icon { color: #FF9800; }
+        .tool-card:nth-child(5) .icon-wrapper { background-color: #E8F5E9; }
+        .tool-card:nth-child(5) .icon { color: #4CAF50; }
+        .tool-card:nth-child(6) .icon-wrapper { background-color: #E1F5FE; }
+        .tool-card:nth-child(6) .icon { color: #03A9F4; }
         .tool-card h3 { font-size: 24px; font-weight: 600; margin-bottom: 10px; }
         .tool-card p { font-size: 16px; color: var(--secondary-text); margin-bottom: 15px; padding: 0 10px; }
         
@@ -359,35 +368,36 @@
         /* --- Desktop Specific Styles --- */
         @media (min-width: 769px) {
             .tools-panel .tool-cards-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .tool-card:nth-child(1) { grid-column: 1; }
-            .tool-card:nth-child(2) { grid-column: 2; }
-            .tool-card:nth-child(3) {
-                grid-column: 1 / -1;
-                margin-bottom: 0;
-            }
-
-            .desktop-ad-container {
                 display: grid;
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: repeat(2, 1fr);
                 gap: 25px;
-                margin-top: 0;
-                grid-column: 1 / -1;
-            }
-            
-            .desktop-ad-small-wrapper:first-child {
-                grid-column: 1;
-                place-self: center;
             }
 
-            .desktop-ad-small-wrapper:last-child {
-                grid-column: 2;
-                place-self: center;
+            .tools-panel .tool-cards-grid .tool-card:nth-child(1),
+            .tools-panel .tool-cards-grid .tool-card:nth-child(2) {
+                grid-column: span 1;
             }
-        }
-        
-        @media (min-width: 769px) {
+            .tools-panel .tool-cards-grid .tool-card:nth-child(3) {
+                grid-column: 1 / -1;
+            }
+            .tools-panel .tool-cards-grid .desktop-ad-container {
+                grid-column: 1 / -1;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+            }
+            .tools-panel .tool-cards-grid .desktop-ad-container .desktop-ad-small-wrapper {
+                width: auto;
+                max-width: none;
+            }
+            .tools-panel .tool-cards-grid .tool-card:nth-child(5),
+            .tools-panel .tool-cards-grid .tool-card:nth-child(6) {
+                grid-column: span 1;
+            }
+            .tools-panel .tool-cards-grid .tool-card:nth-child(7) {
+                grid-column: 1 / -1;
+            }
+
             .footer-container { flex-direction: row; justify-content: space-between; align-items: center; }
             .footer-buttons-wrapper { display: flex; justify-content: space-between; align-items: center; width: 100%; }
             .footer-links-group { display: flex; flex-wrap: nowrap; justify-content: center; flex-grow: 1; gap: 20px; order: initial; }
@@ -486,6 +496,7 @@
         <section id="tools-panel" class="tools-panel filterable-section visible">
             <h2 class="on-scroll-animate" data-lang-en="Your Tools" data-lang-bn="আপনার টুলস">Your Tools</h2>
             <div class="tool-cards-grid on-scroll-animate">
+
                 <div class="tool-card" tabindex="0" data-category="developer" data-lang-en-title="URL Shortener" data-lang-bn-title="URL শর্টনার" data-lang-en-desc="Shorten your long URLs with a custom alias for easy sharing." data-lang-bn-desc="আপনার লম্বা URL-কে কাস্টম নাম সহ ছোট করুন।">
                     <div class="icon-wrapper"> <i class="ri-link-m icon"></i> </div>
                     <h3 data-lang-en="URL Shortener" data-lang-bn="URL শর্টনার">URL Shortener</h3>
@@ -498,6 +509,7 @@
                     <p data-lang-en="A collection of specialized calculators like BMI, EMI, and more." data-lang-bn="BMI, EMI, এবং অন্যান্য প্রয়োজনীয় ক্যালকুলেটর ব্যবহার করুন।">A collection of specialized calculators like BMI, EMI, and more.</p>
                     <a href="calculators.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
                 </div>
+
                 <div class="tool-card" tabindex="0" data-category="social" data-lang-en-title="Facebook Free Like Follow" data-lang-bn-title="ফেসবুক ফ্রি লাইক ফলো" data-lang-en-desc="Boost your Facebook page's likes and followers for free." data-lang-bn-desc="আপনার ফেসবুক পেজের লাইক এবং ফলোয়ার বিনামূল্যে বাড়ান।">
                     <div class="icon-wrapper"> <i class="ri-facebook-fill icon"></i> </div>
                     <h3 data-lang-en="Facebook Free Like Follow" data-lang-bn="ফেসবুক ফ্রি লাইক ফলো">Facebook Free Like Follow</h3>
@@ -534,6 +546,26 @@
                             <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
                         </div>
                     </div>
+                </div>
+
+                <div class="tool-card" tabindex="0" data-category="utilities" data-lang-en-title="Text Counter" data-lang-bn-title="টেক্সট কাউন্টার" data-lang-en-desc="Count words, characters, and sentences in your text instantly." data-lang-bn-desc="আপনার লেখার শব্দ, অক্ষর এবং বাক্য দ্রুত গণনা করুন।">
+                    <div class="icon-wrapper"> <i class="ri-file-text-line icon"></i> </div>
+                    <h3 data-lang-en="Text Counter" data-lang-bn="টেক্সট কাউন্টার">Text Counter</h3>
+                    <p data-lang-en="Count words, characters, and sentences in your text instantly." data-lang-bn="আপনার লেখার শব্দ, অক্ষর এবং বাক্য দ্রুত গণনা করুন।">Count words, characters, and sentences in your text instantly.</p>
+                    <a href="text_counter.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
+                </div>
+                <div class="tool-card" tabindex="0" data-category="utilities" data-lang-en-title="Timer & Stopwatch" data-lang-bn-title="টাইমার ও স্টপওয়াচ" data-lang-en-desc="A simple and effective timer and stopwatch for all your needs." data-lang-bn-desc="আপনার সব প্রয়োজনের জন্য একটি সহজ এবং কার্যকরী টাইমার এবং স্টপওয়াচ।">
+                    <div class="icon-wrapper"> <i class="ri-timer-line icon"></i> </div>
+                    <h3 data-lang-en="Timer & Stopwatch" data-lang-bn="টাইমার ও স্টপওয়াচ">Timer & Stopwatch</h3>
+                    <p data-lang-en="A simple and effective timer and stopwatch for all your needs." data-lang-bn="আপনার সব প্রয়োজনের জন্য একটি সহজ এবং কার্যকরী টাইমার এবং স্টপওয়াচ।">A simple and effective timer and stopwatch for all your needs.</p>
+                    <a href="timer_stopwatch.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
+                </div>
+
+                <div class="tool-card" tabindex="0" data-category="calculators" data-lang-en-title="Unit Converter" data-lang-bn-title="ইউনিট কনভার্টার" data-lang-en-desc="Convert units of length, weight, temperature, and more effortlessly." data-lang-bn-desc="দৈর্ঘ্য, ওজন, তাপমাত্রা এবং আরও অনেক কিছুর একক সহজেই রূপান্তর করুন।">
+                    <div class="icon-wrapper"> <i class="ri-scales-3-line icon"></i> </div>
+                    <h3 data-lang-en="Unit Converter" data-lang-bn="ইউনিট কনভার্টার">Unit Converter</h3>
+                    <p data-lang-en="Convert units of length, weight, temperature, and more effortlessly." data-lang-bn="দৈর্ঘ্য, ওজন, তাপমাত্রা এবং আরও অনেক কিছুর একক সহজেই রূপান্তর করুন।">Convert units of length, weight, temperature, and more effortlessly.</p>
+                    <a href="unit_converter.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
                 </div>
             </div>
             <p class="no-results" data-align-en="center" data-lang-en="No tools found for your search." data-lang-bn="আপনার অনুসন্ধানের জন্য কোনো টুল পাওয়া যায়নি।">No tools found for your search.</p>
@@ -853,10 +885,21 @@
                     }
                 });
             }
+            
+            // Function to handle smooth scroll to a section
+            function scrollToSection(sectionId) {
+                const targetSection = document.getElementById(sectionId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }
 
             filterButtons.forEach(button => {
                 button.addEventListener('click', (e) => {
-                    e.preventDefault();
+                    // Removed e.preventDefault() to allow the browser's native smooth scroll
                     
                     filterButtons.forEach(btn => {
                         btn.classList.remove('active');
@@ -868,6 +911,18 @@
                     
                     const filterValue = button.dataset.filter;
                     filterSections(filterValue);
+                    
+                    // Added: Manually handle smooth scroll if not all sections are visible
+                    if (filterValue !== 'all') {
+                        const sectionId = sectionMap[filterValue];
+                        scrollToSection(sectionId);
+                    } else {
+                         // Scroll to the top if 'All' is clicked
+                         window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                    }
                 });
             });
 
