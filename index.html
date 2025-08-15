@@ -49,15 +49,23 @@
 
         /* --- Ad Styles --- */
         .blog-ad-container-top {
-            margin: 20px auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
             text-align: center;
         }
 
         .blog-ad-container-bottom {
-            margin: 0 auto 20px;
+            margin-top: 20px;
+            margin-bottom: 20px;
             text-align: center;
         }
         
+        /* New Styles for consistency */
+        .blog-ad-container-bottom {
+            margin-top: 0; /* Changed from 20px to 0 */
+            margin-bottom: 0; /* Changed from 20px to 0 */
+        }
+
         .desktop-ad-container {
             display: flex;
             justify-content: center;
@@ -87,9 +95,16 @@
         .desktop-ad-large-blog {
             margin: 20px auto 0;
         }
-
+        
+        /* New Ad Container Style */
+        .daily-offer-ad-container {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
         @media (max-width: 768px) {
-            .blog-ad-container-top, .blog-ad-container-bottom, .desktop-ad-container, .desktop-ad-large-blog {
+            .blog-ad-container-top, .blog-ad-container-bottom, .desktop-ad-container, .desktop-ad-large-blog, .daily-offer-ad-container {
                 display: none !important;
             }
         }
@@ -232,7 +247,7 @@
         .no-results { text-align: center; margin-top: 50px; font-size: 20px; color: #777; display: none; }
         
         /* --- Daily Offer Section CSS --- */
-        .daily-offer-section { padding: 50px 20px; background-color: var(--card-bg); }
+        .daily-offer-section { padding: 20px 20px; background-color: var(--card-bg); }
         .daily-offer-section h2 { font-size: 32px; margin-bottom: 40px; text-align: center; color: var(--text-color); }
         .offer-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; justify-content: center; }
         .offer-card { background-color: var(--background-color); padding: 30px 20px; border-radius: var(--border-radius); box-shadow: var(--shadow-light); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; justify-content: space-between; min-height: 250px; }
@@ -245,11 +260,24 @@
         .join-offer-btn { display: inline-block; background-color: var(--green-color); color: #fff; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 16px; transition: background-color 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
         .join-offer-btn:hover { background-color: #218838; }
 
-        /* --- Blog Section CSS --- */
-        .blog-section { padding: 60px 20px; background-color: var(--background-color); }
-        .blog-section h2 { font-size: 32px; margin-bottom: 40px; text-align: center; color: var(--text-color); }
+        /* --- Blog Section CSS (Updated to reduce space) --- */
+        .blog-section { 
+            padding-bottom: 20px; /* Reduced space */
+            padding-top: 30px; /* Original value, kept for clarity */
+            background-color: var(--background-color); 
+        }
+        .blog-section h2 { font-size: 32px; margin-bottom: 20px; text-align: center; color: var(--text-color); }
         .blog-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
-        .blog-card { background-color: var(--card-bg); border-radius: var(--border-radius); box-shadow: var(--shadow-light); overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; }
+        .blog-card { 
+            background-color: var(--card-bg); 
+            border-radius: var(--border-radius); 
+            box-shadow: var(--shadow-light); 
+            overflow: hidden; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+            display: flex; 
+            flex-direction: column;
+            margin-bottom: 0;
+        }
         .blog-card:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); }
         .blog-card-image { width: 100%; height: 200px; object-fit: cover; display: block; }
         .blog-card-content { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
@@ -258,8 +286,12 @@
         .read-more-btn { display: inline-block; color: var(--primary-color); font-weight: 600; text-decoration: none; transition: color 0.3s ease; align-self: flex-start; }
         .read-more-btn:hover { text-decoration: underline; }
 
-        /* --- Testimonials Section --- */
-        .testimonials-section { padding: 60px 20px; text-align: center; background-color: var(--card-bg); }
+        /* --- Testimonials Section (Updated to reduce space) --- */
+        .testimonials-section {
+            padding: 20px 20px; /* Reduced space from 30px */
+            text-align: center;
+            background-color: var(--card-bg);
+        }
         .testimonials-section h2 { font-size: 32px; margin-bottom: 10px; }
         .testimonial-cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 40px; justify-content: center; }
         .testimonial-card { background-color: var(--background-color); padding: 30px; border-radius: var(--border-radius); text-align: left; border: 1px solid #e0e0e0; transition: transform 0.3s ease, opacity 0.5s ease-in-out, box-shadow 0.5s ease-in-out; display: block; opacity: 1; position: relative; height: 250px; overflow: hidden; }
@@ -535,7 +567,20 @@
                     <a href="#" class="join-offer-btn" data-lang-en="Join Offer" data-lang-bn="অফারে যোগ দিন">Join Offer</a>
                 </div>
             </div>
-        </section>
+            
+            <div class="container daily-offer-ad-container">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '3107b60e8baa0d0e886adf12d55fbd7e',
+                        'format' : 'iframe',
+                        'height' : 90,
+                        'width' : 728,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
+            </div>
+            </section>
 
         <section id="new-blog-section" class="blog-section filterable-section visible">
             <h2 class="on-scroll-animate" data-lang-en="Latest from Our Blog" data-lang-bn="আমাদের ব্লগ থেকে নতুন লেখা">Latest from Our Blog</h2>
