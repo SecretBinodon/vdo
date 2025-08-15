@@ -81,29 +81,8 @@
             height: 250px;
         }
 
-        /* --- নতুন অ্যাড কোডের জন্য স্টাইল --- */
-        .native-ads-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px; /* অ্যাডের মধ্যে গ্যাপ */
-            margin: 25px auto; /* উপরে-নিচে গ্যাপ */
-            flex-wrap: wrap;
-            grid-column: 1 / -1;
-            width: 100%;
-            max-width: 900px; /* অ্যাডের কনটেইনারের সর্বোচ্চ প্রস্থ */
-        }
-
-        .native-ad-item {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 300px; /* প্রতিটি অ্যাডের প্রস্থ */
-            height: 250px; /* প্রতিটি অ্যাডের উচ্চতা */
-        }
-
         @media (max-width: 768px) {
-            .desktop-ad, .desktop-ad-container, .native-ads-container {
+            .desktop-ad, .desktop-ad-container, .desktop-ad-large-blog {
                 display: none !important;
             }
         }
@@ -271,6 +250,12 @@
         .blog-card p { font-size: 14px; color: var(--secondary-text); flex-grow: 1; margin-bottom: 15px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
         .read-more-btn { display: inline-block; color: var(--primary-color); font-weight: 600; text-decoration: none; transition: color 0.3s ease; align-self: flex-start; }
         .read-more-btn:hover { text-decoration: underline; }
+
+        .desktop-ad-large-blog {
+            display: block;
+            margin-top: 40px;
+            text-align: center;
+        }
 
         /* --- Testimonials Section --- */
         .testimonials-section { padding: 60px 20px; text-align: center; background-color: var(--card-bg); }
@@ -517,18 +502,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="native-ads-container">
-                    <div class="native-ad-item">
-                        <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script> <div id="container-45718544708b185acff6d14248cc94cd"></div>
-                    </div>
-                    <div class="native-ad-item">
-                        <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script> <div id="container-45718544708b185acff6d14248cc94cd"></div>
-                    </div>
-                    <div class="native-ad-item">
-                        <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script> <div id="container-45718544708b185acff6d14248cc94cd"></div>
-                    </div>
-                </div>
             </div>
             <p class="no-results" data-align-en="center" data-lang-en="No tools found for your search." data-lang-bn="আপনার অনুসন্ধানের জন্য কোনো টুল পাওয়া যায়নি।">No tools found for your search.</p>
         </section>
@@ -590,6 +563,10 @@
                         <a href="#" class="read-more-btn" data-lang-en="Read More" data-lang-bn="আরও পড়ুন">Read More <i class="ri-arrow-right-line"></i></a>
                     </div>
                 </div>
+            </div>
+            <div class="desktop-ad-large-blog">
+                <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script>
+                <div id="container-45718544708b185acff6d14248cc94cd"></div>
             </div>
         </section>
         <section id="testimonials-section" class="testimonials-section filterable-section visible">
