@@ -47,24 +47,27 @@
         .lang-btn.active { background-color: var(--primary-color); color: #fff; border-color: var(--primary-color); }
         .lang-btn:hover:not(.active) { background-color: #e0e0e0; }
 
-        /* Desktop Ad Styles */
-        .desktop-ad {
-            display: block;
+        /* --- Ad Styles --- */
+        .blog-ad-container-top {
             margin: 20px auto;
             text-align: center;
-            max-width: 728px;
         }
 
+        .blog-ad-container-bottom {
+            margin: 0 auto 20px;
+            text-align: center;
+        }
+        
         .desktop-ad-container {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 25px;
-            margin-top: 0; /* Changed */
+            margin-top: 0;
             margin-bottom: 0;
             grid-column: 1 / -1;
         }
-        
+
         .desktop-ad-small-wrapper {
             display: grid;
             grid-template-columns: 1fr;
@@ -80,9 +83,13 @@
             width: 300px;
             height: 250px;
         }
+        
+        .desktop-ad-large-blog {
+            margin: 20px auto 0;
+        }
 
         @media (max-width: 768px) {
-            .desktop-ad, .desktop-ad-container, .desktop-ad-large-blog {
+            .blog-ad-container-top, .blog-ad-container-bottom, .desktop-ad-container, .desktop-ad-large-blog {
                 display: none !important;
             }
         }
@@ -251,12 +258,6 @@
         .read-more-btn { display: inline-block; color: var(--primary-color); font-weight: 600; text-decoration: none; transition: color 0.3s ease; align-self: flex-start; }
         .read-more-btn:hover { text-decoration: underline; }
 
-        .desktop-ad-large-blog {
-            display: block;
-            margin-top: 40px;
-            text-align: center;
-        }
-
         /* --- Testimonials Section --- */
         .testimonials-section { padding: 60px 20px; text-align: center; background-color: var(--card-bg); }
         .testimonials-section h2 { font-size: 32px; margin-bottom: 10px; }
@@ -332,14 +333,14 @@
             .tool-card:nth-child(2) { grid-column: 2; }
             .tool-card:nth-child(3) {
                 grid-column: 1 / -1;
-                margin-bottom: 0; /* Changed: Remove the margin from the large card itself */
+                margin-bottom: 0;
             }
 
             .desktop-ad-container {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 gap: 25px;
-                margin-top: 0; /* Changed: Remove the margin from the ad container */
+                margin-top: 0;
                 grid-column: 1 / -1;
             }
             
@@ -387,7 +388,7 @@
         </header>
     </div>
 
-    <div class="container desktop-ad">
+    <div class="container blog-ad-container-top">
         <script type="text/javascript">
             atOptions = {
                 'key' : '3107b60e8baa0d0e886adf12d55fbd7e',
@@ -428,7 +429,7 @@
             </div>
         </div>
 
-        <div class="container desktop-ad">
+        <div class="container blog-ad-container-top">
             <script type="text/javascript">
                 atOptions = {
                     'key' : '3107b60e8baa0d0e886adf12d55fbd7e',
@@ -564,9 +565,11 @@
                     </div>
                 </div>
             </div>
-            <div class="desktop-ad-large-blog">
-                <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script>
-                <div id="container-45718544708b185acff6d14248cc94cd"></div>
+            <div class="blog-ad-container-bottom">
+                <div class="desktop-ad-large-blog">
+                    <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script>
+                    <div id="container-45718544708b185acff6d14248cc94cd"></div>
+                </div>
             </div>
         </section>
         <section id="testimonials-section" class="testimonials-section filterable-section visible">
