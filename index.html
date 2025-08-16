@@ -30,7 +30,7 @@
 
         html { scroll-behavior: smooth; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Poppins', sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.6; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.6; transition: opacity 0.5s ease-out; }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
         /* --- Header --- */
@@ -39,20 +39,6 @@
         .logo a .nex-text { color: var(--primary-color); }
         .logo a .tool-text { color: var(--red-color); }
         .logo a .hub-text { color: var(--primary-color); }
-        
-        /* New code for the animated logo icon */
-        .logo-icon {
-            font-size: 32px;
-            color: var(--primary-color);
-            margin-right: 8px;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-
         .header-right { display: flex; align-items: center; gap: 20px; }
         .social-links { display: flex; align-items: center; gap: 15px; }
         .social-link { font-size: 20px; color: var(--secondary-text); transition: color 0.3s ease, transform 0.3s ease; text-decoration: none; }
@@ -197,9 +183,9 @@
         .tool-card h3 { font-size: 24px; font-weight: 600; margin-bottom: 10px; }
         .tool-card p { font-size: 16px; color: var(--secondary-text); margin-bottom: 15px; padding: 0 10px; }
         
-        .use-tool-btn, .action-btn { display: inline-block; background-color: var(--primary-color); color: #fff; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 16px; transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); cursor: pointer; border: none; }
-        .use-tool-btn:hover, .action-btn:hover { background-color: #2F6DB8; }
-        .use-tool-btn:active, .action-btn:active { background-color: #28a745; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); transform: translateY(1px); }
+        .use-tool-btn, .action-btn, .join-offer-btn, .download-btn, .footer a { display: inline-block; background-color: var(--primary-color); color: #fff; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 16px; transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); cursor: pointer; border: none; }
+        .use-tool-btn:hover, .action-btn:hover, .join-offer-btn:hover, .download-btn:hover, .footer a:hover { background-color: #2F6DB8; }
+        .use-tool-btn:active, .action-btn:active, .join-offer-btn:active, .download-btn:active, .footer a:active { background-color: #28a745; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); transform: translateY(1px); }
 
         .no-results { text-align: center; margin-top: 50px; font-size: 20px; color: #777; display: none; }
         
@@ -234,14 +220,31 @@
             display: flex; 
             flex-direction: column;
             margin-bottom: 0;
+            position: relative; /* Add for absolute positioning of read more */
+            text-decoration: none; /* Make the whole card a link */
+            color: inherit;
         }
         .blog-card:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); }
         .blog-card-image { width: 100%; height: 200px; object-fit: cover; display: block; }
         .blog-card-content { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
         .blog-card h3 { font-size: 20px; font-weight: 600; margin-bottom: 10px; line-height: 1.4; }
         .blog-card p { font-size: 14px; color: var(--secondary-text); flex-grow: 1; margin-bottom: 15px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
-        .read-more-btn { display: inline-block; color: var(--primary-color); font-weight: 600; text-decoration: none; transition: color 0.3s ease; align-self: flex-start; }
-        .read-more-btn:hover { text-decoration: underline; }
+
+        /* Updated read more style */
+        .read-more-text {
+            display: block;
+            text-align: center;
+            font-size: 18px; /* Bigger font size */
+            font-weight: 700; /* Bolder */
+            color: var(--primary-color);
+            margin-top: auto; /* Push to the bottom */
+            padding-top: 15px; /* Spacing from the text */
+            transition: color 0.3s ease;
+        }
+        .read-more-text:hover {
+            color: #2F6DB8;
+            text-decoration: underline;
+        }
 
         /* --- Testimonials Section (Updated to reduce space) --- */
         .testimonials-section {
@@ -293,7 +296,6 @@
             .hero-section { margin-bottom: 15px; min-height: 200px; }
             .header { flex-direction: row; justify-content: space-between; align-items: center; }
             .logo a { font-size: 22px; }
-            .logo-icon { font-size: 26px; }
             .header-right { flex-direction: row; justify-content: flex-end; gap: 10px; }
             .social-links { gap: 10px; }
             .social-link { font-size: 18px; }
@@ -352,7 +354,6 @@
         <header class="header">
             <div class="logo">
                 <a href="#">
-                    <i class="ri-rocket-2-line logo-icon"></i>
                     <span class="nex-text">Nex</span><span class="tool-text">Tool</span> <span class="hub-text">Hub</span>
                 </a>
             </div>
@@ -411,44 +412,44 @@
             <h2 class="on-scroll-animate" data-lang-en="Your Tools" data-lang-bn="আপনার টুলস">Your Tools</h2>
             <div class="tool-cards-grid on-scroll-animate">
 
-                <div class="tool-card" tabindex="0" data-category="developer" data-lang-en-title="URL Shortener" data-lang-bn-title="URL শর্টনার" data-lang-en-desc="Shorten your long URLs with a custom alias for easy sharing." data-lang-bn-desc="আপনার লম্বা URL-কে কাস্টম নাম সহ ছোট করুন।">
+                <div class="tool-card" data-category="developer" data-lang-en-title="URL Shortener" data-lang-bn-title="URL শর্টনার" data-lang-en-desc="Shorten your long URLs with a custom alias for easy sharing." data-lang-bn-desc="আপনার লম্বা URL-কে কাস্টম নাম সহ ছোট করুন।">
                     <div class="icon-wrapper"> <i class="ri-link-m icon"></i> </div>
                     <h3 data-lang-en="URL Shortener" data-lang-bn="URL শর্টনার">URL Shortener</h3>
                     <p data-lang-en="Shorten your long URLs with a custom alias for easy sharing." data-lang-bn="আপনার লম্বা URL-কে কাস্টম নাম সহ ছোট করুন।">Shorten your long URLs with a custom alias for easy sharing.</p>
-                    <a href="url_shortener.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
+                    <a href="url_shortener.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer" tabindex="0">Use Tool</a>
                 </div>
-                <div class="tool-card" tabindex="0" data-category="calculators" data-lang-en-title="Niche Calculators" data-lang-bn-title="নির্দিষ্ট ক্যালকুলেটর" data-lang-en-desc="A collection of specialized calculators like BMI, EMI, and more." data-lang-bn-desc="BMI, EMI, এবং অন্যান্য প্রয়োজনীয় ক্যালকুলেটর ব্যবহার করুন।">
+                <div class="tool-card" data-category="calculators" data-lang-en-title="Niche Calculators" data-lang-bn-title="নির্দিষ্ট ক্যালকুলেটর" data-lang-en-desc="A collection of specialized calculators like BMI, EMI, and more." data-lang-bn-desc="BMI, EMI, এবং অন্যান্য প্রয়োজনীয় ক্যালকুলেটর ব্যবহার করুন।">
                     <div class="icon-wrapper"> <i class="ri-calculator-line icon"></i> </div>
                     <h3 data-lang-en="Niche Calculators" data-lang-bn="নির্দিষ্ট ক্যালকুলেটর">Niche Calculators</h3>
                     <p data-lang-en="A collection of specialized calculators like BMI, EMI, and more." data-lang-bn="BMI, EMI, এবং অন্যান্য প্রয়োজনীয় ক্যালকুলেটর ব্যবহার করুন।">A collection of specialized calculators like BMI, EMI, and more.</p>
-                    <a href="calculators.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
+                    <a href="calculators.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer" tabindex="0">Use Tool</a>
                 </div>
 
-                <div class="tool-card" tabindex="0" data-category="social" data-lang-en-title="Facebook Free Like Follow" data-lang-bn-title="ফেসবুক ফ্রি লাইক ফলো" data-lang-en-desc="Boost your Facebook page's likes and followers for free." data-lang-bn-desc="আপনার ফেসবুক পেজের লাইক এবং ফলোয়ার বিনামূল্যে বাড়ান।">
+                <div class="tool-card" data-category="social" data-lang-en-title="Facebook Free Like Follow" data-lang-bn-title="ফেসবুক ফ্রি লাইক ফলো" data-lang-en-desc="Boost your Facebook page's likes and followers for free." data-lang-bn-desc="আপনার ফেসবুক পেজের লাইক এবং ফলোয়ার বিনামূল্যে বাড়ান।">
                     <div class="icon-wrapper"> <i class="ri-facebook-fill icon"></i> </div>
                     <h3 data-lang-en="Facebook Free Like Follow" data-lang-bn="ফেসবুক ফ্রি লাইক ফলো">Facebook Free Like Follow</h3>
                     <p data-lang-en="Boost your Facebook page's likes and followers for free." data-lang-bn="আপনার ফেসবুক পেজের লাইক এবং ফলোয়ার বিনামূল্যে বাড়ান।">Boost your Facebook page's likes and followers for free.</p>
-                    <a href="facebook_likes.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
+                    <a href="facebook_likes.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer" tabindex="0">Use Tool</a>
                 </div>
 
-                <div class="tool-card" tabindex="0" data-category="utilities" data-lang-en-title="Text Counter" data-lang-bn-title="টেক্সট কাউন্টার" data-lang-en-desc="Count words, characters, and sentences in your text instantly." data-lang-bn-desc="আপনার লেখার শব্দ, অক্ষর এবং বাক্য দ্রুত গণনা করুন।">
+                <div class="tool-card" data-category="utilities" data-lang-en-title="Text Counter" data-lang-bn-title="টেক্সট কাউন্টার" data-lang-en-desc="Count words, characters, and sentences in your text instantly." data-lang-bn-desc="আপনার লেখার শব্দ, অক্ষর এবং বাক্য দ্রুত গণনা করুন।">
                     <div class="icon-wrapper"> <i class="ri-file-text-line icon"></i> </div>
                     <h3 data-lang-en="Text Counter" data-lang-bn="টেক্সট কাউন্টার">Text Counter</h3>
                     <p data-lang-en="Count words, characters, and sentences in your text instantly." data-lang-bn="আপনার লেখার শব্দ, অক্ষর এবং বাক্য দ্রুত গণনা করুন।">Count words, characters, and sentences in your text instantly.</p>
-                    <a href="text_counter.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
+                    <a href="text_counter.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer" tabindex="0">Use Tool</a>
                 </div>
-                <div class="tool-card" tabindex="0" data-category="utilities" data-lang-en-title="Timer & Stopwatch" data-lang-bn-title="টাইমার ও স্টপওয়াচ" data-lang-en-desc="A simple and effective timer and stopwatch for all your needs." data-lang-bn-desc="আপনার সব প্রয়োজনের জন্য একটি সহজ এবং কার্যকরী টাইমার এবং স্টপওয়াচ।">
+                <div class="tool-card" data-category="utilities" data-lang-en-title="Timer & Stopwatch" data-lang-bn-title="টাইমার ও স্টপওয়াচ" data-lang-en-desc="A simple and effective timer and stopwatch for all your needs." data-lang-bn-desc="আপনার সব প্রয়োজনের জন্য একটি সহজ এবং কার্যকরী টাইমার এবং স্টপওয়াচ।">
                     <div class="icon-wrapper"> <i class="ri-timer-line icon"></i> </div>
                     <h3 data-lang-en="Timer & Stopwatch" data-lang-bn="টাইমার ও স্টপওয়াচ">Timer & Stopwatch</h3>
                     <p data-lang-en="A simple and effective timer and stopwatch for all your needs." data-lang-bn="আপনার সব প্রয়োজনের জন্য একটি সহজ এবং কার্যকরী টাইমার এবং স্টপওয়াচ।">A simple and effective timer and stopwatch for all your needs.</p>
-                    <a href="timer_stopwatch.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
+                    <a href="timer_stopwatch.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer" tabindex="0">Use Tool</a>
                 </div>
 
-                <div class="tool-card" tabindex="0" data-category="calculators" data-lang-en-title="Unit Converter" data-lang-bn-title="ইউনিট কনভার্টার" data-lang-en-desc="Convert units of length, weight, temperature, and more effortlessly." data-lang-bn-desc="দৈর্ঘ্য, ওজন, তাপমাত্রা এবং আরও অনেক কিছুর একক সহজেই রূপান্তর করুন।">
+                <div class="tool-card" data-category="calculators" data-lang-en-title="Unit Converter" data-lang-bn-title="ইউনিট কনভার্টার" data-lang-en-desc="Convert units of length, weight, temperature, and more effortlessly." data-lang-bn-desc="দৈর্ঘ্য, ওজন, তাপমাত্রা এবং আরও অনেক কিছুর একক সহজেই রূপান্তর করুন।">
                     <div class="icon-wrapper"> <i class="ri-scales-3-line icon"></i> </div>
                     <h3 data-lang-en="Unit Converter" data-lang-bn="ইউনিট কনভার্টার">Unit Converter</h3>
                     <p data-lang-en="Convert units of length, weight, temperature, and more effortlessly." data-lang-bn="দৈর্ঘ্য, ওজন, তাপমাত্রা এবং আরও অনেক কিছুর একক সহজেই রূপান্তর করুন।">Convert units of length, weight, temperature, and more effortlessly.</p>
-                    <a href="unit_converter.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
+                    <a href="unit_converter.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer" tabindex="0">Use Tool</a>
                 </div>
             </div>
             <p class="no-results" data-align-en="center" data-lang-en="No tools found for your search." data-lang-bn="আপনার অনুসন্ধানের জন্য কোনো টুল পাওয়া যায়নি।">No tools found for your search.</p>
@@ -487,30 +488,30 @@
         <section id="new-blog-section" class="blog-section filterable-section visible">
             <h2 class="on-scroll-animate" data-lang-en="Latest from Our Blog" data-lang-bn="আমাদের ব্লগ থেকে নতুন লেখা">Latest from Our Blog</h2>
             <div class="blog-cards-grid on-scroll-animate">
-                <div class="blog-card">
+                <a href="#" class="blog-card" tabindex="0">
                     <img src="http://googleusercontent.com/generated_image_content/0" alt="A futuristic digital workstation with a laptop, glowing charts, a holographic calendar, and a glowing digital assistant icon, representing secret productivity hacks." class="blog-card-image">
                     <div class="blog-card-content">
                         <h3 data-lang-en="Unleash Your Productivity: 7 Secret Hacks for Digital Success" data-lang-bn="আপনার উৎপাদনশীলতা বাড়ান: ডিজিটাল সাফল্যের ৭ গোপন কৌশল">Unleash Your Productivity: 7 Secret Hacks for Digital Success</h3>
                         <p data-lang-en="Discover the ultimate techniques to supercharge your daily workflow and save hours of time. These simple tricks will change how you work forever." data-lang-bn="আপনার দৈনন্দিন কাজের গতি বাড়াতে এবং মূল্যবান সময় বাঁচাতে দারুণ কিছু কৌশল আবিষ্কার করুন। এই সাধারণ কৌশলগুলি আপনার কাজ করার পদ্ধতি চিরতরে বদলে দেবে।">Discover the ultimate techniques to supercharge your daily workflow and save hours of time. These simple tricks will change how you work forever.</p>
-                        <a href="#" class="read-more-btn" data-lang-en="Read More" data-lang-bn="আরও পড়ুন">Read More <i class="ri-arrow-right-line"></i></a>
+                        <span class="read-more-text" data-lang-en="Read More" data-lang-bn="আরও পড়ুন">Read More</span>
                     </div>
-                </div>
-                <div class="blog-card">
+                </a>
+                <a href="#" class="blog-card" tabindex="0">
                     <img src="http://googleusercontent.com/generated_image_content/1" alt="A vibrant image of a Facebook logo with a rapidly ascending growth chart, with the year 2025 and social media icons, symbolizing a guide to gaining free followers." class="blog-card-image">
                     <div class="blog-card-content">
                         <h3 data-lang-en="The Ultimate Guide to Gaining Free Facebook Followers in 2025" data-lang-bn="২০২৫ সালে বিনামূল্যে ফেসবুক ফলোয়ার পাওয়ার সেরা গাইড">The Ultimate Guide to Gaining Free Facebook Followers in 2025</h3>
                         <p data-lang-en="Want to grow your Facebook page without spending a dime? Our step-by-step guide reveals the best free methods that actually work." data-lang-bn="কোনো খরচ ছাড়াই আপনার ফেসবুক পেজ বড় করতে চান? আমাদের ধাপে ধাপে নির্দেশিকাটি এমন কিছু সেরা বিনামূল্যে পদ্ধতি প্রকাশ করবে যা সত্যিই কাজ করে।">Want to grow your Facebook page without spending a dime? Our step-by-step guide reveals the best free methods that actually work.</p>
-                        <a href="#" class="read-more-btn" data-lang-en="Read More" data-lang-bn="আরও পড়ুন">Read More <i class="ri-arrow-right-line"></i></a>
+                        <span class="read-more-text" data-lang-en="Read More" data-lang-bn="আরও পড়ুন">Read More</span>
                     </div>
-                </div>
-                <div class="blog-card">
+                </a>
+                <a href="#" class="blog-card" tabindex="0">
                     <img src="http://googleusercontent.com/generated_image_content/2" alt="A dramatic image showing a tangled, long URL chain transforming into a clean, short, and glowing link, with a golden key, representing professional branding with a URL shortener." class="blog-card-image">
                     <div class="blog-card-content">
                         <h3 data-lang-en="Why You Need a URL Shortener: The Key to Professional Branding" data-lang-bn="কেন আপনার URL শর্টনার প্রয়োজন: পেশাদার ব্র্যান্ডিংয়ের মূল চাবিকাঠি">Why You Need a URL Shortener: The Key to Professional Branding</h3>
                         <p data-lang-en="Learn how a simple URL shortener can transform your branding and improve your marketing campaigns. It's more than just a short link." data-lang-bn="একটি সাধারণ URL শর্টনার কীভাবে আপনার ব্র্যান্ডিংকে উন্নত করতে এবং আপনার বিপণন প্রচারাভিযানকে আরও কার্যকরী করতে পারে তা জানুন।">Learn how a simple URL shortener can transform your branding and improve your marketing campaigns. It's more than just a short link.</p>
-                        <a href="#" class="read-more-btn" data-lang-en="Read More" data-lang-bn="আরও পড়ুন">Read More <i class="ri-arrow-right-line"></i></a>
+                        <span class="read-more-text" data-lang-en="Read More" data-lang-bn="আরও পড়ুন">Read More</span>
                     </div>
-                </div>
+                </a>
             </div>
         </section>
         <section id="testimonials-section" class="testimonials-section filterable-section visible">
@@ -897,6 +898,33 @@
             
             checkVisibility();
             window.addEventListener('scroll', checkVisibility);
+            
+            // নতুন ফাংশন: স্মুথ ট্রানজিশন প্রয়োগের জন্য
+            function applySmoothTransitionToButtons(selector) {
+                const buttons = document.querySelectorAll(selector);
+                buttons.forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault(); 
+                        const targetUrl = button.getAttribute('href');
+                        
+                        document.body.style.opacity = 0;
+                        document.body.style.transition = 'opacity 0.5s ease-out';
+                        
+                        setTimeout(() => {
+                            if (targetUrl) {
+                                window.location.href = targetUrl;
+                            }
+                        }, 500); 
+                    });
+                });
+            }
+
+            // সমস্ত বাটনে স্মুথ ট্রানজিশন প্রয়োগ করা হচ্ছে
+            applySmoothTransitionToButtons('.use-tool-btn');
+            applySmoothTransitionToButtons('.join-offer-btn');
+            applySmoothTransitionToButtons('.blog-card');
+            applySmoothTransitionToButtons('.download-btn');
+            applySmoothTransitionToButtons('.footer-links-group a');
         });
     </script>
 </body>
