@@ -33,6 +33,20 @@
         body { font-family: 'Poppins', sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.6; }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
+        /* --- New Ad Styles --- */
+        .ad-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        /* --- New Addition for full-width ad --- */
+        html, body {
+            overflow-x: hidden;
+        }
+        
         /* --- Header --- */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; flex-wrap: nowrap; }
         .logo a { font-size: 28px; font-weight: 700; text-decoration: none; display: flex; align-items: center; }
@@ -100,19 +114,19 @@
         }
 
         @keyframes falling {
-            0% { transform: translate(0, -100%) rotate(0deg); opacity: 0; }
+            0%, 100% { transform: translate(0, -100%) rotate(0deg); opacity: 0; }
             5% { opacity: 0.8; }
             95% { opacity: 0.8; }
             100% { transform: translate(0, 100vh) rotate(360deg); opacity: 0; }
         }
         @keyframes diagonal-left {
-            0% { transform: translate(10vw, -100%) rotate(0deg); opacity: 0; }
+            0%, 100% { transform: translate(10vw, -100%) rotate(0deg); opacity: 0; }
             5% { opacity: 0.6; }
             95% { opacity: 0.6; }
             100% { transform: translate(-10vw, 100vh) rotate(-360deg); opacity: 0; }
         }
         @keyframes diagonal-right {
-            0% { transform: translate(-10vw, -100%) rotate(0deg); opacity: 0; }
+            0%, 100% { transform: translate(-10vw, -100%) rotate(0deg); opacity: 0; }
             5% { opacity: 0.7; }
             95% { opacity: 0.7; }
             100% { transform: translate(10vw, 100vh) rotate(360deg); opacity: 0; }
@@ -345,16 +359,6 @@
             .download-btn-wrapper { margin-left: auto; }
             .ashiqur-popup { bottom: 80px; }
         }
-
-        /* --- New Ad Styles --- */
-        .ad-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px 0;
-        }
-        
     </style>
 </head>
 <body>
