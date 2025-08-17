@@ -240,8 +240,28 @@
         .offer-card:hover .icon, .offer-card:focus .icon { transform: scale(1.1); }
         .offer-card h3 { font-size: 24px; font-weight: 600; margin-bottom: 10px; }
         .offer-card p { font-size: 16px; color: var(--secondary-text); margin-bottom: 20px; flex-grow: 1; display: flex; align-items: center; justify-content: center; transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; }
-        /* .join-offer-btn { display: inline-block; background-color: var(--green-color); color: #fff; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 16px; transition: background-color 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
-        .join-offer-btn:hover { background-color: #218838; } */
+        .join-offer-btn {
+            display: inline-block;
+            background-color: var(--green-color); /* Default color green */
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            border: none;
+        }
+        .join-offer-btn:hover, .join-offer-btn:focus {
+            background-color: var(--primary-color); /* Hover color blue */
+        }
+        .join-offer-btn:active {
+            background-color: var(--primary-color); /* Click color blue */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transform: translateY(1px);
+        }
         .dark-mode .offer-card .icon-wrapper { background-color: #2E3A59; }
 
         /* --- Blog Section CSS (Updated to reduce space) --- */
@@ -548,7 +568,7 @@
                     </div>
                     <h3 data-lang-en="Income" data-lang-bn="ইনকাম">Income</h3>
                     <p data-lang-en="Earn $100 daily from home." data-lang-bn="ঘরে বসে রোজ $100 আয় করুন।">Earn $100 daily from home.</p>
-                    <a href="#" class="use-tool-btn" data-lang-en="Join Offer" data-lang-bn="অফারে যোগ দিন" target="_blank" rel="noopener noreferrer">Join Offer</a>
+                    <a href="#" class="join-offer-btn" data-lang-en="Join Offer" data-lang-bn="অফারে যোগ দিন" target="_blank" rel="noopener noreferrer">Join Offer</a>
                 </div>
                 <div class="offer-card" data-card-index="1" tabindex="0">
                     <div class="icon-wrapper">
@@ -556,7 +576,7 @@
                     </div>
                     <h3 data-lang-en="Tasks" data-lang-bn="কাজ">Tasks</h3>
                     <p data-lang-en="Make money with simple online tasks." data-lang-bn="সহজ অনলাইন কাজ করে টাকা আয় করুন।">Make money with simple online tasks.</p>
-                    <a href="#" class="use-tool-btn" data-lang-en="Join Offer" data-lang-bn="অফারে যোগ দিন" target="_blank" rel="noopener noreferrer">Join Offer</a>
+                    <a href="#" class="join-offer-btn" data-lang-en="Join Offer" data-lang-bn="অফারে যোগ দিন" target="_blank" rel="noopener noreferrer">Join Offer</a>
                 </div>
                 <div class="offer-card" data-card-index="2" tabindex="0">
                     <div class="icon-wrapper">
@@ -564,7 +584,7 @@
                     </div>
                     <h3 data-lang-en="Community" data-lang-bn="কমিউনিটি">Community</h3>
                     <p data-lang-en="Start your online business with us." data-lang-bn="আমাদের সাথে আপনার অনলাইন ব্যবসা শুরু করুন।">Start your online business with us.</p>
-                    <a href="#" class="use-tool-btn" data-lang-en="Join Offer" data-lang-bn="অফারে যোগ দিন" target="_blank" rel="noopener noreferrer">Join Offer</a>
+                    <a href="#" class="join-offer-btn" data-lang-en="Join Offer" data-lang-bn="অফারে যোগ দিন" target="_blank" rel="noopener noreferrer">Join Offer</a>
                 </div>
             </div>
         </section>
