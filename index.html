@@ -100,19 +100,19 @@
         }
 
         @keyframes falling {
-            0% { transform: translate(0, -100%) rotate(0deg); opacity: 0; }
+            0%, 100% { transform: translate(0, -100%) rotate(0deg); opacity: 0; }
             5% { opacity: 0.8; }
             95% { opacity: 0.8; }
             100% { transform: translate(0, 100vh) rotate(360deg); opacity: 0; }
         }
         @keyframes diagonal-left {
-            0% { transform: translate(10vw, -100%) rotate(0deg); opacity: 0; }
+            0%, 100% { transform: translate(10vw, -100%) rotate(0deg); opacity: 0; }
             5% { opacity: 0.6; }
             95% { opacity: 0.6; }
             100% { transform: translate(-10vw, 100vh) rotate(-360deg); opacity: 0; }
         }
         @keyframes diagonal-right {
-            0% { transform: translate(-10vw, -100%) rotate(0deg); opacity: 0; }
+            0%, 100% { transform: translate(-10vw, -100%) rotate(0deg); opacity: 0; }
             5% { opacity: 0.7; }
             95% { opacity: 0.7; }
             100% { transform: translate(10vw, 100vh) rotate(360deg); opacity: 0; }
@@ -345,6 +345,71 @@
             .download-btn-wrapper { margin-left: auto; }
             .ashiqur-popup { bottom: 80px; }
         }
+        
+        /* --- বিজ্ঞাপন দেখানোর জন্য কোড --- */
+
+        /* প্রথমে সব বিজ্ঞাপন লুকিয়ে রাখা হবে */
+        .mobile-ad,
+        .desktop-ad,
+        .desktop-only-ad {
+            display: none;
+        }
+
+        /* যখন স্ক্রিন 768px বা তার কম হবে, তখন মোবাইল অ্যাড দেখানো হবে */
+        @media screen and (max-width: 768px) {
+            .mobile-ad {
+                display: block;
+            }
+            
+            /* মোবাইলের জন্য ডেস্কটপ অ্যাডের কন্টেইনার সম্পূর্ণ লুকিয়ে রাখা হয়েছে */
+            .inline-ad-container .desktop-ad,
+            .inline-ad-container .desktop-only-ad {
+                display: none;
+            }
+        }
+
+        /* যখন স্ক্রিন 769px বা তার বেশি হবে, তখন ডেস্কটপ অ্যাড দেখানো হবে */
+        @media screen and (min-width: 769px) {
+            .desktop-ad,
+            .desktop-only-ad {
+                display: block;
+            }
+
+            /* ডেস্কটপের জন্য মোবাইল অ্যাডের কন্টেইনার সম্পূর্ণ লুকিয়ে রাখা হয়েছে */
+            .inline-ad-container .mobile-ad {
+                display: none;
+            }
+        }
+        
+        /* একটি বিজ্ঞাপনকে মাঝখানে দেখানোর জন্য CSS */
+        .center-ad-container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* একটি বিজ্ঞাপনকে মাঝখানে দেখাবে কিন্তু অতিরিক্ত গ্যাপ তৈরি করবে না */
+        .inline-ad-container {
+            text-align: center;
+            padding: 10px 0;
+        }
+        
+        /* দুটি বিজ্ঞাপনকে ডানে ও বামে দেখানোর জন্য CSS */
+        .side-by-side-ad-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        /* মোবাইলে দুটি বিজ্ঞাপন একটির নিচে একটি দেখানোর জন্য */
+        @media screen and (max-width: 768px) {
+            .side-by-side-ad-container {
+                flex-direction: column;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -368,8 +433,35 @@
                 </div>
             </div>
         </header>
-    </div>
 
+        <div class="inline-ad-container">
+            <div class="desktop-ad">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '3107b60e8baa0d0e886adf12d55fbd7e',
+                        'format' : 'iframe',
+                        'height' : 90,
+                        'width' : 728,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
+            </div>
+            <div class="mobile-ad">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '02a9c12a5270a25efa5325c0e42ffc59',
+                        'format' : 'iframe',
+                        'height' : 50,
+                        'width' : 320,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
+            </div>
+        </div>
+
+    </div>
     <section class="hero-section">
         <div class="paper-pieces-container">
             <div class="paper-piece square" style="left: 10%; top: -10%; width: 10px; height: 10px; background-color: var(--paper-color1); animation: falling 80s linear infinite;"></div>
@@ -422,6 +514,11 @@
                     <h3 data-lang-en="Niche Calculators" data-lang-bn="নির্দিষ্ট ক্যালকুলেটর">Niche Calculators</h3>
                     <p data-lang-en="A collection of specialized calculators like BMI, EMI, and more." data-lang-bn="BMI, EMI, এবং অন্যান্য প্রয়োজনীয় ক্যালকুলেটর ব্যবহার করুন।">A collection of specialized calculators like BMI, EMI, and more.</p>
                     <a href="calculators.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
+                </div>
+
+                <div class="desktop-only-ad inline-ad-container">
+                    <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script>
+                    <div id="container-45718544708b185acff6d14248cc94cd"></div>
                 </div>
 
                 <div class="tool-card" tabindex="0" data-category="social" data-lang-en-title="Facebook Free Like Follow" data-lang-bn-title="ফেসবুক ফ্রি লাইক ফলো" data-lang-en-desc="Boost your Facebook page's likes and followers for free." data-lang-bn-desc="আপনার ফেসবুক পেজের লাইক এবং ফলোয়ার বিনামূল্যে বাড়ান।">
