@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,7 @@
     <title data-lang-en="NexTool Hub - Your Digital Toolbox" data-lang-bn="নেক্সটুল হাব - আপনার ডিজিটাল টুলবক্স">NexTool Hub - Your Digital Toolbox</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         /* --- Global Variables & Base Styles --- */
         :root {
@@ -34,13 +36,11 @@
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
         /* --- Header --- */
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; flex-wrap: nowrap; padding-bottom: 5px; } /* Added padding-bottom to reduce gap */
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; flex-wrap: nowrap; padding-bottom: 5px; }
         .logo a { font-size: 28px; font-weight: 700; text-decoration: none; display: flex; align-items: center; }
         .logo a .nex-text { color: var(--primary-color); }
         .logo a .tool-text { color: var(--red-color); }
         .logo a .hub-text { color: var(--primary-color); }
-        
-        /* New code for the animated logo icon */
         .logo-icon {
             font-size: 32px;
             color: var(--primary-color);
@@ -61,69 +61,17 @@
         .lang-btn { background-color: transparent; border: 1px solid #ccc; padding: 6px 12px; cursor: pointer; border-radius: 6px; font-size: 14px; font-weight: 600; transition: all 0.3s ease; margin-left: 8px; }
         .lang-btn.active { background-color: var(--primary-color); color: #fff; border-color: var(--primary-color); }
         .lang-btn:hover:not(.active) { background-color: #e0e0e0; }
-        
-        /* Ad Container Styles */
-        .ad-container {
-            width: 100%;
-            text-align: center;
-            margin: 0; /* Removed margin-top */
-        }
 
-        .ad-container.mobile-ad {
-            display: none;
-            width: 100%;
-            margin-bottom: 10px; /* Aligned with mobile ad gap */
-        }
-        
-        .ad-container.desktop-ad {
-            display: none;
-            margin-bottom: 15px; /* Aligned with desktop ad gap */
-        }
-        
-        .ad-iframe-container {
-            width: 100%;
-            max-width: 728px; /* Desktop ad max width */
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-        }
-        
+        /* Ad Container Styles */
+        .ad-container { width: 100%; text-align: center; margin: 0; }
+        .ad-container.mobile-ad { display: none; width: 100%; margin-bottom: 10px; }
+        .ad-container.desktop-ad { display: none; margin-bottom: 15px; }
+        .ad-iframe-container { width: 100%; max-width: 728px; margin: 0 auto; display: flex; justify-content: center; }
+
         /* --- Hero Section with Paper Effect --- */
-        .hero-section {
-            text-align: center;
-            padding: 25px 20px;
-            background-image: linear-gradient(135deg, var(--primary-color), #6B6EEA);
-            color: #fff;
-            margin-bottom: 25px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-light);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 250px;
-        }
-        .hero-section .paper-pieces-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        .paper-piece {
-            position: absolute;
-            background-color: var(--paper-color1);
-            opacity: 0.8;
-            will-change: transform, opacity;
-            animation-iteration-count: infinite;
-            animation-timing-function: linear;
-            filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1));
-        }
+        .hero-section { text-align: center; padding: 25px 20px; background-image: linear-gradient(135deg, var(--primary-color), #6B6EEA); color: #fff; margin-bottom: 25px; border-radius: var(--border-radius); box-shadow: var(--shadow-light); position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 250px; }
+        .hero-section .paper-pieces-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; overflow: hidden; }
+        .paper-piece { position: absolute; background-color: var(--paper-color1); opacity: 0.8; will-change: transform, opacity; animation-iteration-count: infinite; animation-timing-function: linear; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1)); }
 
         @keyframes falling {
             0% { transform: translate(0, -100%) rotate(0deg); opacity: 0; }
@@ -156,7 +104,7 @@
         .search-input-wrapper { display: inline-block; width: 100%; max-width: 600px; position: relative; }
         .search-input { width: 100%; padding: 12px 50px 12px 20px; border: 1px solid #ddd; border-radius: var(--border-radius); font-size: 16px; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); background-color: #f0f0f0; }
         .search-icon { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); font-size: 20px; color: #aaa; }
-        
+
         .filter-options { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 20px; margin-bottom: 20px; }
         .filter-btn { background-color: transparent; border: none; padding: 8px 18px; font-size: 16px; font-weight: 600; color: var(--secondary-text); cursor: pointer; white-space: nowrap; transition: background-color 0.3s ease, color 0.3s ease; text-decoration: none; display: block; border-radius: 20px; }
         .filter-btn:hover { color: var(--primary-color); }
@@ -166,22 +114,23 @@
         /* --- Global Scroll Animation & Filtering Animation --- */
         .on-scroll-animate { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; will-change: opacity, transform; }
         .on-scroll-animate.is-visible { opacity: 1; transform: translateY(0); }
-        
+
         .filterable-section { transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
         .filterable-section.hidden { opacity: 0; transform: translateY(20px); pointer-events: none; position: absolute; left: -9999px; }
-        .filterable-section.visible { opacity: 1; transform: translateY(0); }
-        
+        .filterable-section.visible { opacity: 1; transform: translateY(0); position: relative; left: 0; }
+
         /* --- Tools Panel --- */
         .tools-panel { padding-bottom: 25px; }
         .tools-panel h2 { text-align: center; margin-bottom: 40px; font-size: 36px; font-weight: 700; }
-        
+
+        /* Updated: Make tool cards match the size of offer cards */
         .tool-cards-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 25px;
             justify-content: center;
         }
-        
+
         .tool-card {
             background-color: var(--card-bg);
             padding: 30px 20px;
@@ -191,19 +140,16 @@
             animation: cardFadeIn 0.8s ease-out forwards;
             position: relative;
             transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
-            display: block;
+            display: flex; /* Use flexbox */
+            flex-direction: column; /* Stack children vertically */
+            justify-content: space-between; /* Distribute space evenly */
+            min-height: 250px; /* Set a fixed height to match daily offer cards */
             border: 1px solid transparent;
         }
-        .tool-card.hide {
-            display: none;
-        }
-        .tool-card:hover, .tool-card:focus, .tool-card:active {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-hover);
-            z-index: 10;
-        }
+        .tool-card.hide { display: none; }
+        .tool-card:hover, .tool-card:focus, .tool-card:active { transform: scale(1.05); box-shadow: var(--shadow-hover); z-index: 10; }
         @keyframes cardFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
+
         .tool-card .icon-wrapper { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; transition: all 0.3s ease; }
         .tool-card:hover .icon-wrapper, .tool-card:focus .icon-wrapper { background-color: var(--accent-color) !important; transform: rotate(15deg); }
         .tool-card .icon { font-size: 50px; color: var(--accent-color); transition: color 0.3s ease; }
@@ -220,15 +166,22 @@
         .tool-card:nth-child(5) .icon { color: #4CAF50; }
         .tool-card:nth-child(6) .icon-wrapper { background-color: #E1F5FE; }
         .tool-card:nth-child(6) .icon { color: #03A9F4; }
+        .tool-card:nth-child(7) .icon-wrapper { background-color: #ffe8e8; }
+        .tool-card:nth-child(7) .icon { color: #ff5050; }
+        .tool-card:nth-child(8) .icon-wrapper { background-color: #d8f5d0; }
+        .tool-card:nth-child(8) .icon { color: #6cbf3d; }
+        .tool-card:nth-child(9) .icon-wrapper { background-color: #f7e1ff; }
+        .tool-card:nth-child(9) .icon { color: #9b59b6; }
+
         .tool-card h3 { font-size: 24px; font-weight: 600; margin-bottom: 10px; }
-        .tool-card p { font-size: 16px; color: var(--secondary-text); margin-bottom: 15px; padding: 0 10px; }
-        
+        .tool-card p { font-size: 16px; color: var(--secondary-text); margin-bottom: 15px; padding: 0 10px; flex-grow: 1; display: flex; align-items: center; justify-content: center; } /* Updated: to center text and fill space */
+
         .use-tool-btn, .action-btn { display: inline-block; background-color: var(--primary-color); color: #fff; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 16px; transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); cursor: pointer; border: none; }
         .use-tool-btn:hover, .action-btn:hover { background-color: #2F6DB8; }
         .use-tool-btn:active, .action-btn:active { background-color: #28a745; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); transform: translateY(1px); }
 
         .no-results { text-align: center; margin-top: 50px; font-size: 20px; color: #777; display: none; }
-        
+
         /* --- Daily Offer Section CSS --- */
         .daily-offer-section { padding: 20px 20px; background-color: var(--card-bg); }
         .daily-offer-section h2 { font-size: 32px; margin-bottom: 40px; text-align: center; color: var(--text-color); }
@@ -244,20 +197,20 @@
         .join-offer-btn:hover { background-color: #218838; }
 
         /* --- Blog Section CSS (Updated to reduce space) --- */
-        .blog-section { 
-            padding-bottom: 20px; 
-            padding-top: 30px; 
-            background-color: var(--background-color); 
+        .blog-section {
+            padding-bottom: 20px;
+            padding-top: 30px;
+            background-color: var(--background-color);
         }
         .blog-section h2 { font-size: 32px; margin-bottom: 20px; text-align: center; color: var(--text-color); }
         .blog-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
-        .blog-card { 
-            background-color: var(--card-bg); 
-            border-radius: var(--border-radius); 
-            box-shadow: var(--shadow-light); 
-            overflow: hidden; 
-            transition: transform 0.3s ease, box-shadow 0.3s ease; 
-            display: flex; 
+        .blog-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
             flex-direction: column;
             margin-bottom: 0;
         }
@@ -271,7 +224,7 @@
 
         /* --- Testimonials Section (Updated to reduce space) --- */
         .testimonials-section {
-            padding: 20px 20px; 
+            padding: 20px 20px;
             text-align: center;
             background-color: var(--card-bg);
         }
@@ -281,7 +234,7 @@
         .testimonial-card:hover { transform: translateY(-5px); }
         .testimonial-card p { font-style: italic; color: #555; margin-bottom: 15px; }
         .testimonial-card h4 { font-size: 16px; font-weight: 600; color: var(--primary-color); }
-        
+
         .glow-effect { animation: glow 1.5s ease-in-out infinite; }
         @keyframes glow {
             0% { box-shadow: 0 0 5px rgba(74, 144, 226, 0.2), 0 0 10px rgba(74, 144, 226, 0.1); }
@@ -309,21 +262,15 @@
         .footer a:hover, .footer button:hover { color: var(--primary-color); background-color: #f0f0f0; }
         .ashiqur-btn, .download-btn { background-color: #f0f0f0; border: 1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .ashiqur-btn:hover, .download-btn:hover { background-color: #e0e0e0; }
-        
+
         .ashiqur-popup { position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%); background-color: var(--primary-color); color: #fff; padding: 15px 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); font-size: 16px; font-weight: 500; opacity: 0; visibility: hidden; transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); z-index: 20; white-space: nowrap; max-width: 90%; text-align: center; }
         .ashiqur-popup.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(-20px); }
         .ashiqur-popup.hide { opacity: 0; visibility: hidden; transform: translateX(-50%) translateY(20px); }
 
         /* --- Mobile Responsiveness --- */
         @media (max-width: 768px) {
-            .ad-container {
-                margin: 0; /* Adjusted for mobile to further reduce gap */
-            }
-
-            .header {
-                flex-direction: row; justify-content: space-between; align-items: center;
-                padding-bottom: 5px; /* Added padding-bottom to reduce gap */
-            }
+            .ad-container { margin: 0; }
+            .header { flex-direction: row; justify-content: space-between; align-items: center; padding-bottom: 5px; }
             .logo a { font-size: 22px; }
             .logo-icon { font-size: 26px; }
             .header-right { flex-direction: row; justify-content: flex-end; gap: 10px; }
@@ -344,49 +291,15 @@
             .ashiqur-btn, .download-btn { padding: 6px 10px; font-size: 12px; }
             .footer a { font-size: 12px; padding: 6px 8px; }
             .ashiqur-popup { font-size: 14px; width: 90%; max-width: 300px; text-align: center; bottom: 120px; white-space: normal; }
-            
-            /* Show mobile ad only on mobile view */
-            .ad-container.mobile-ad {
-                display: block;
-                padding-left: 0;
-                padding-right: 0;
-            }
-            .ad-container.mobile-ad .ad-iframe-container {
-                max-width: 100%;
-                justify-content: center;
-                overflow: hidden;
-            }
-
+            .ad-container.mobile-ad { display: block; padding-left: 0; padding-right: 0; }
+            .ad-container.mobile-ad .ad-iframe-container { max-width: 100%; justify-content: center; overflow: hidden; }
         }
-        
+
         /* --- Desktop Specific Styles --- */
         @media (min-width: 769px) {
-            .tools-panel .tool-cards-grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 25px;
-            }
+            .tools-panel .tool-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+            .native-ad-container { grid-column: 1 / -1; width: 100%; text-align: center; margin: 0; display: block; }
 
-            .tools-panel .tool-cards-grid .tool-card:nth-child(1),
-            .tools-panel .tool-cards-grid .tool-card:nth-child(2) {
-                grid-column: span 1;
-            }
-            /* Updated CSS to handle the ad's position */
-            .native-ad-container {
-                grid-column: 1 / -1; /* Spans the full width of the grid */
-                width: 100%;
-                text-align: center;
-                margin: 0;
-                display: none; /* Default hidden */
-            }
-
-            .tools-panel .tool-cards-grid .tool-card:nth-child(3),
-            .tools-panel .tool-cards-grid .tool-card:nth-child(4),
-            .tools-panel .tool-cards-grid .tool-card:nth-child(5),
-            .tools-panel .tool-cards-grid .tool-card:nth-child(6) {
-                grid-column: span 1;
-            }
-            
             .footer-container { flex-direction: row; justify-content: space-between; align-items: center; }
             .footer-buttons-wrapper { display: flex; justify-content: space-between; align-items: center; width: 100%; }
             .footer-links-group { display: flex; flex-wrap: nowrap; justify-content: center; flex-grow: 1; gap: 20px; order: initial; }
@@ -395,14 +308,8 @@
             .download-btn-wrapper { margin-left: auto; }
             .ashiqur-popup { bottom: 80px; }
 
-            /* Show desktop ad only on desktop view */
-            .ad-container.desktop-ad,
-            .native-ad-container {
-                display: block;
-            }
-            .ad-container.desktop-ad .ad-iframe-container {
-                 max-width: 728px;
-            }
+            .ad-container.desktop-ad, .native-ad-container { display: block; }
+            .ad-container.desktop-ad .ad-iframe-container { max-width: 728px; }
         }
     </style>
 </head>
@@ -443,7 +350,7 @@
             <script type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
         </div>
     </div>
-    
+
     <div class="ad-container mobile-ad">
         <div class="ad-iframe-container">
             <script type="text/javascript">
@@ -458,7 +365,7 @@
             <script type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
         </div>
     </div>
-    
+
     <section class="hero-section">
         <div class="paper-pieces-container">
             <div class="paper-piece square" style="left: 10%; top: -10%; width: 10px; height: 10px; background-color: var(--paper-color1); animation: falling 80s linear infinite;"></div>
@@ -512,17 +419,16 @@
                     <p data-lang-en="A collection of specialized calculators like BMI, EMI, and more." data-lang-bn="BMI, EMI, এবং অন্যান্য প্রয়োজনীয় ক্যালকুলেটর ব্যবহার করুন।">A collection of specialized calculators like BMI, EMI, and more.</p>
                     <a href="calculators.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
                 </div>
-                
-                <div class="native-ad-container">
-                    <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script>
-                    <div id="container-45718544708b185acff6d14248cc94cd"></div>
-                </div>
-
                 <div class="tool-card" tabindex="0" data-category="social" data-lang-en-title="Facebook Free Like Follow" data-lang-bn-title="ফেসবুক ফ্রি লাইক ফলো" data-lang-en-desc="Boost your Facebook page's likes and followers for free." data-lang-bn-desc="আপনার ফেসবুক পেজের লাইক এবং ফলোয়ার বিনামূল্যে বাড়ান।">
                     <div class="icon-wrapper"> <i class="ri-facebook-fill icon"></i> </div>
                     <h3 data-lang-en="Facebook Free Like Follow" data-lang-bn="ফেসবুক ফ্রি লাইক ফলো">Facebook Free Like Follow</h3>
                     <p data-lang-en="Boost your Facebook page's likes and followers for free." data-lang-bn="আপনার ফেসবুক পেজের লাইক এবং ফলোয়ার বিনামূল্যে বাড়ান।">Boost your Facebook page's likes and followers for free.</p>
                     <a href="facebook_likes.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
+                </div>
+
+                <div class="native-ad-container">
+                    <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script>
+                    <div id="container-45718544708b185acff6d14248cc94cd"></div>
                 </div>
 
                 <div class="tool-card" tabindex="0" data-category="utilities" data-lang-en-title="Text Counter" data-lang-bn-title="টেক্সট কাউন্টার" data-lang-en-desc="Count words, characters, and sentences in your text instantly." data-lang-bn-desc="আপনার লেখার শব্দ, অক্ষর এবং বাক্য দ্রুত গণনা করুন।">
@@ -537,17 +443,38 @@
                     <p data-lang-en="A simple and effective timer and stopwatch for all your needs." data-lang-bn="আপনার সব প্রয়োজনের জন্য একটি সহজ এবং কার্যকরী টাইমার এবং স্টপওয়াচ।">A simple and effective timer and stopwatch for all your needs.</p>
                     <a href="timer_stopwatch.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
                 </div>
-
                 <div class="tool-card" tabindex="0" data-category="calculators" data-lang-en-title="Unit Converter" data-lang-bn-title="ইউনিট কনভার্টার" data-lang-en-desc="Convert units of length, weight, temperature, and more effortlessly." data-lang-bn-desc="দৈর্ঘ্য, ওজন, তাপমাত্রা এবং আরও অনেক কিছুর একক সহজেই রূপান্তর করুন।">
                     <div class="icon-wrapper"> <i class="ri-scales-3-line icon"></i> </div>
                     <h3 data-lang-en="Unit Converter" data-lang-bn="ইউনিট কনভার্টার">Unit Converter</h3>
                     <p data-lang-en="Convert units of length, weight, temperature, and more effortlessly." data-lang-bn="দৈর্ঘ্য, ওজন, তাপমাত্রা এবং আরও অনেক কিছুর একক সহজেই রূপান্তর করুন।">Convert units of length, weight, temperature, and more effortlessly.</p>
                     <a href="unit_converter.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
                 </div>
+
+                <div class="tool-card" tabindex="0" data-category="image-converter" data-lang-en-title="Image to PDF" data-lang-bn-title="ছবি থেকে PDF" data-lang-en-desc="Convert multiple images to a single PDF document easily." data-lang-bn-desc="একাধিক ছবিকে সহজেই একটি PDF ডকুমেন্টে রূপান্তর করুন।">
+                    <div class="icon-wrapper"> <i class="ri-file-image-line icon"></i> </div>
+                    <h3 data-lang-en="Image to PDF" data-lang-bn="ছবি থেকে PDF">Image to PDF</h3>
+                    <p data-lang-en="Convert multiple images to a single PDF document easily." data-lang-bn="একাধিক ছবিকে সহজেই একটি PDF ডকুমেন্টে রূপান্তর করুন।">Convert multiple images to a single PDF document easily.</p>
+                    <a href="#" class="use-tool-btn coming-soon" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</a>
+                </div>
+
+                <div class="tool-card" tabindex="0" data-category="utilities" data-lang-en-title="QR Code Generator" data-lang-bn-title="QR কোড জেনারেটর" data-lang-en-desc="Create scannable QR codes from text, links, or contacts." data-lang-bn-desc="টেক্সট, লিংক বা যোগাযোগ থেকে স্ক্যানযোগ্য QR কোড তৈরি করুন।">
+                    <div class="icon-wrapper"> <i class="ri-qr-code-line icon"></i> </div>
+                    <h3 data-lang-en="QR Code Generator" data-lang-bn="QR কোড জেনারেটর">QR Code Generator</h3>
+                    <p data-lang-en="Create scannable QR codes from text, links, or contacts." data-lang-bn="টেক্সট, লিংক বা যোগাযোগ থেকে স্ক্যানযোগ্য QR কোড তৈরি করুন।">Create scannable QR codes from text, links, or contacts.</p>
+                    <a href="#" class="use-tool-btn coming-soon" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</a>
+                </div>
+
+                <div class="tool-card" tabindex="0" data-category="security" data-lang-en-title="Password Generator" data-lang-bn-title="পাসওয়ার্ড জেনারেটর" data-lang-en-desc="Generate strong, secure, and unique passwords instantly." data-lang-bn-desc="শক্তিশালী, সুরক্ষিত এবং অনন্য পাসওয়ার্ড দ্রুত তৈরি করুন।">
+                    <div class="icon-wrapper"> <i class="ri-lock-password-line icon"></i> </div>
+                    <h3 data-lang-en="Password Generator" data-lang-bn="পাসওয়ার্ড জেনারেটর">Password Generator</h3>
+                    <p data-lang-en="Generate strong, secure, and unique passwords instantly." data-lang-bn="শক্তিশালী, সুরক্ষিত এবং অনন্য পাসওয়ার্ড দ্রুত তৈরি করুন।">Generate strong, secure, and unique passwords instantly.</p>
+                    <a href="#" class="use-tool-btn coming-soon" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন">Use Tool</a>
+                </div>
+
             </div>
             <p class="no-results" data-align-en="center" data-lang-en="No tools found for your search." data-lang-bn="আপনার অনুসন্ধানের জন্য কোনো টুল পাওয়া যায়নি।">No tools found for your search.</p>
         </section>
-        
+
         <section id="daily-offer-section" class="daily-offer-section filterable-section visible">
             <h2 class="on-scroll-animate" data-lang-en="Daily Offer" data-lang-bn="দিনের সেরা অফার">Daily Offer</h2>
             <div class="offer-cards-grid on-scroll-animate">
@@ -565,7 +492,7 @@
                     </div>
                     <h3 data-lang-en="Tasks" data-lang-bn="কাজ">Tasks</h3>
                     <p data-lang-en="Make money with simple online tasks." data-lang-bn="সহজ অনলাইন কাজ করে টাকা আয় করুন।">Make money with simple online tasks.</p>
-                    <a href="#" class="join-offer-btn" data-lang-bn="অফারে যোগ দিন">Join Offer</a>
+                    <a href="#" class="join-offer-btn" data-lang-en="Join Offer" data-lang-bn="অফারে যোগ দিন">Join Offer</a>
                 </div>
                 <div class="offer-card" data-card-index="2">
                     <div class="icon-wrapper">
@@ -576,7 +503,7 @@
                     <a href="#" class="join-offer-btn" data-lang-en="Join Offer" data-lang-bn="অফারে যোগ দিন">Join Offer</a>
                 </div>
             </div>
-            </section>
+        </section>
 
         <section id="new-blog-section" class="blog-section filterable-section visible">
             <h2 class="on-scroll-animate" data-lang-en="Latest from Our Blog" data-lang-bn="আমাদের ব্লগ থেকে নতুন লেখা">Latest from Our Blog</h2>
@@ -653,7 +580,7 @@
                     <a href="http://download.com/" class="download-btn" data-lang-en="Download" data-lang-bn="ডাউনলোড" target="_blank" rel="noopener noreferrer">Download</a>
                 </div>
             </div>
-            
+
             <div class="footer-links-group">
                 <a href="#" data-lang-en="About Us" data-lang-bn="আমাদের সম্পর্কে">About Us</a>
                 <a href="#" data-lang-en="Contact" data-lang-bn="যোগাযোগ">Contact</a>
@@ -662,7 +589,7 @@
             </div>
         </div>
         <p data-lang-en="&copy; 2025 NexTool Hub. All rights reserved." data-lang-bn="&copy; 2025 নেক্সটুল হাব। সর্বস্বত্ব সংরক্ষিত।">&copy; 2025 NexTool Hub. All rights reserved.</p>
-        
+
         <div class="ashiqur-popup" id="ashiqur-popup">
             <span data-lang-bn="আমার নাম আশিকুর রহমান সুলতান। আমি আমার পক্ষ থেকে আপনাকে জানাই 'স্বাগতম'" data-lang-en="My name is Ashikur Rahman Sultan. I welcome you on my behalf."></span>
         </div>
@@ -678,6 +605,7 @@
             const searchInput = document.getElementById('search-input');
             const toolCards = document.querySelectorAll('.tool-card');
             const noResultsMessage = document.querySelector('.no-results');
+            const comingSoonBtns = document.querySelectorAll('.coming-soon');
 
             const testimonials = [
                 { en: { text: "“I’ve shortened my long links with a custom alias. It’s a killer feature for my campaigns!”", author: "- Arif Chowdhury" }, bn: { text: "“আমি কাস্টম নাম দিয়ে আমার লম্বা লিঙ্কগুলো ছোট করতে পেরেছি। এটি আমার প্রচারণার জন্য একটি দারুণ ফিচার!”", author: "- আরিফ চৌধুরী" } },
@@ -712,7 +640,7 @@
 
             function rotateTestimonials() {
                 const lang = document.querySelector('.lang-btn.active').dataset.lang;
-                
+
                 const cardToUpdate = testimonialCards[cardToUpdateIndex];
                 const staticCard = testimonialCards[1 - cardToUpdateIndex];
 
@@ -722,7 +650,7 @@
                 setTimeout(() => {
                     currentTestimonialIndex = (currentTestimonialIndex + 1) % testimonials.length;
                     const nextTestimonial = testimonials[currentTestimonialIndex];
-                    
+
                     testimonialTexts[cardToUpdateIndex].textContent = nextTestimonial[lang].text;
                     testimonialAuthors[cardToUpdateIndex].textContent = nextTestimonial[lang].author;
 
@@ -732,7 +660,7 @@
                     cardToUpdateIndex = 1 - cardToUpdateIndex;
                 }, 500);
             }
-            
+
             function startTestimonialRotation() {
                 if (testimonialIntervalId) {
                     clearInterval(testimonialIntervalId);
@@ -785,27 +713,27 @@
 
             function rotateOffers() {
                 const lang = document.querySelector('.lang-btn.active').dataset.lang;
-                
+
                 offerCards.forEach(card => {
                     card.querySelector('p').style.opacity = 0;
                     card.querySelector('.icon').style.opacity = 0;
                 });
-                
+
                 setTimeout(() => {
                     for (let i = 0; i < 3; i++) {
                         const card = offerCards[i];
                         const data = offerData[currentOfferSetIndex + i];
-                        
+
                         card.querySelector('h3').textContent = data[lang].title;
                         card.querySelector('p').textContent = data[lang].text;
                         card.querySelector('.icon').className = `${data[lang].icon} icon`;
                     }
-                    
+
                     offerCards.forEach(card => {
                         card.querySelector('p').style.opacity = 1;
                         card.querySelector('.icon').style.opacity = 1;
                     });
-                    
+
                     currentOfferSetIndex = (currentOfferSetIndex + 3) % offerData.length;
                 }, 500);
             }
@@ -839,14 +767,14 @@
                     }
                 });
             }
-            
+
             function scrollToSection(sectionId) {
                 const targetSection = document.getElementById(sectionId);
                 if (targetSection) {
-                    const headerOffset = 80; 
+                    const headerOffset = 80;
                     const elementPosition = targetSection.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                    
+                    const offsetPosition = elementPosition + window.pageYOffsets - headerOffset;
+
                     window.scrollTo({
                         top: offsetPosition,
                         behavior: 'smooth'
@@ -857,18 +785,18 @@
             filterButtons.forEach(button => {
                 button.addEventListener('click', (e) => {
                     e.preventDefault();
-                    
+
                     filterButtons.forEach(btn => {
                         btn.classList.remove('active');
                         btn.setAttribute('aria-pressed', 'false');
                     });
-                    
+
                     button.classList.add('active');
                     button.setAttribute('aria-pressed', 'true');
-                    
+
                     const filterValue = button.dataset.filter;
                     filterSections(filterValue);
-                    
+
                     if (filterValue !== 'all') {
                         const sectionId = sectionMap[filterValue];
                         scrollToSection(sectionId);
@@ -892,7 +820,7 @@
                     }
                 });
             }
-            
+
             function setLanguage(lang) {
                 const elementsToTranslate = document.querySelectorAll('[data-lang-en], [data-lang-bn]');
                 elementsToTranslate.forEach(el => {
@@ -915,7 +843,7 @@
                         btn.setAttribute('aria-pressed', 'true');
                     }
                 });
-                
+
                 const toolCards = document.querySelectorAll('.tool-card');
                 toolCards.forEach(card => {
                     const title = card.querySelector('h3');
@@ -927,12 +855,12 @@
                 currentTestimonialIndex = 0;
                 updateTestimonials(lang);
                 startTestimonialRotation();
-                
+
                 currentOfferSetIndex = 0;
                 rotateOffers();
                 startOfferRotation();
             }
-            
+
             function handleSearch() {
                 const searchTerm = searchInput.value.toLowerCase();
                 let resultsFound = false;
@@ -957,10 +885,10 @@
             }
 
             searchInput.addEventListener('input', handleSearch);
-            
+
             setLanguage('en');
             filterSections('all');
-            
+
             langButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const lang = button.dataset.lang;
@@ -974,7 +902,7 @@
                 clearTimeout(popupTimeout);
                 const currentLang = document.querySelector('.lang-btn.active').dataset.lang;
                 const popupText = ashiqurPopup.querySelector('span');
-                
+
                 if (currentLang === 'bn') {
                     popupText.textContent = popupText.dataset.langBn;
                 } else {
@@ -988,9 +916,17 @@
                     ashiqurPopup.classList.add('hide');
                 }, 3000);
             });
-            
+
             checkVisibility();
             window.addEventListener('scroll', checkVisibility);
+
+            // Coming soon functionality for new tool cards
+            comingSoonBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    alert("Coming Soon...");
+                });
+            });
         });
     </script>
 </body>
