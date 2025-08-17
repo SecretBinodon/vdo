@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-lang-en="NexTool Hub - Your Digital Toolbox" data-lang-bn="নেক্সটুল হাব - আপনার ডিজিটাল টুলবক্স">NexTool Hub - Your Digital Toolbox</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
@@ -101,7 +102,22 @@
         .ad-iframe-container { width: 100%; max-width: 728px; margin: 0 auto; display: flex; justify-content: center; }
 
         /* --- Hero Section with Paper Effect --- */
-        .hero-section { text-align: center; padding: 25px 20px; background-image: linear-gradient(135deg, var(--primary-color), #6B6EEA); color: #fff; margin-bottom: 25px; border-radius: var(--border-radius); box-shadow: var(--shadow-light); position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 250px; }
+        .hero-section {
+            text-align: center;
+            padding: 25px 20px;
+            background-image: linear-gradient(135deg, var(--primary-color), #6B6EEA);
+            color: #fff;
+            margin-bottom: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* উল্লম্বভাবে মাঝখানে আনতে যোগ করা হয়েছে */
+            align-items: center; /* আনুভূমিকভাবে মাঝখানে আনতে যোগ করা হয়েছে */
+            min-height: 250px;
+        }
         .hero-section .paper-pieces-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; overflow: hidden; }
         .paper-piece { position: absolute; background-color: var(--paper-color1); opacity: 0.8; will-change: transform, opacity; animation-iteration-count: infinite; animation-timing-function: linear; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1)); }
 
@@ -125,7 +141,16 @@
         }
 
         .hero-section h1, .hero-section p { position: relative; z-index: 2; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); line-height: 1.2; margin-top: 0; }
-        .hero-section h1 { font-size: 50px; margin-bottom: 20px; font-weight: 700; animation: fadeInDown 1s ease-out; }
+        
+        /* স্টাইলিশ h1-এর জন্য নতুন ক্লাস */
+        .hero-title { 
+            font-family: 'Great Vibes', cursive;
+            font-size: 60px; /* ফন্ট সাইজ বাড়ানো হয়েছে */
+            margin-bottom: 10px; /* দুটি লেখার মধ্যে গ্যাপ কমানো হয়েছে */
+            font-weight: 400; /* ফন্ট ওয়েট কমানো হয়েছে যাতে আরও স্টাইলিশ দেখায় */
+            animation: fadeInDown 1s ease-out;
+        }
+        
         .hero-section p { font-size: 18px; margin-bottom: 20px; opacity: 0.9; animation: fadeIn 1.5s ease-out; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -411,7 +436,7 @@
                 min-height: 150px; /* আগের 250px থেকে কমিয়ে 150px করা হয়েছে */
             }
             /* --- User Requested Changes End --- */
-            .hero-section h1 { font-size: 30px; }
+            .hero-title { font-size: 35px; } /* মোবাইলের জন্য স্টাইলিশ ফন্টের সাইজ */
             .hero-section p { font-size: 13px; }
             .filter-options { gap: 5px; flex-wrap: wrap; justify-content: center; }
             .filter-btn { padding: 6px 12px; font-size: 12px; }
@@ -518,7 +543,7 @@
             <div class="paper-piece square" style="left: 20%; top: -75%; width: 11px; height: 11px; background-color: var(--paper-color2); animation: diagonal-right 88s linear infinite; animation-delay: 2s;"></div>
         </div>
 
-        <h1 data-lang-en="Your Ultimate Digital Toolkit" data-lang-bn="আপনার ডিজিটাল কাজের সঙ্গী">Your Ultimate Digital Toolkit</h1>
+        <h1 class="hero-title" data-lang-en="Your Ultimate Digital Toolkit" data-lang-bn="আপনার ডিজিটাল কাজের সঙ্গী">Your Ultimate Digital Toolkit</h1>
         <p data-lang-en="Essential tools for quick and efficient work." data-lang-bn="দ্রুত এবং দক্ষ কাজের জন্য প্রয়োজনীয় টুলস।">Essential tools for quick and efficient work.</p>
     </section>
 
