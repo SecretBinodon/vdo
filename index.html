@@ -33,22 +33,8 @@
         body { font-family: 'Poppins', sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.6; }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
-        /* --- New Ad Styles --- */
-        .ad-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px 0;
-        }
-
-        /* --- New Addition for full-width ad --- */
-        html, body {
-            overflow-x: hidden;
-        }
-        
         /* --- Header --- */
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; flex-wrap: nowrap; }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; flex-wrap: nowrap; padding-bottom: 5px; } /* Added padding-bottom to reduce gap */
         .logo a { font-size: 28px; font-weight: 700; text-decoration: none; display: flex; align-items: center; }
         .logo a .nex-text { color: var(--primary-color); }
         .logo a .tool-text { color: var(--red-color); }
@@ -75,6 +61,32 @@
         .lang-btn { background-color: transparent; border: 1px solid #ccc; padding: 6px 12px; cursor: pointer; border-radius: 6px; font-size: 14px; font-weight: 600; transition: all 0.3s ease; margin-left: 8px; }
         .lang-btn.active { background-color: var(--primary-color); color: #fff; border-color: var(--primary-color); }
         .lang-btn:hover:not(.active) { background-color: #e0e0e0; }
+        
+        /* Ad Container Styles */
+        .ad-container {
+            width: 100%;
+            text-align: center;
+            margin: 0; /* Removed margin-top */
+        }
+
+        .ad-container.mobile-ad {
+            display: none;
+            width: 100%;
+            margin-bottom: 10px; /* Aligned with mobile ad gap */
+        }
+        
+        .ad-container.desktop-ad {
+            display: none;
+            margin-bottom: 15px; /* Aligned with desktop ad gap */
+        }
+        
+        .ad-iframe-container {
+            width: 100%;
+            max-width: 728px; /* Desktop ad max width */
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
         
         /* --- Hero Section with Paper Effect --- */
         .hero-section {
@@ -114,19 +126,19 @@
         }
 
         @keyframes falling {
-            0%, 100% { transform: translate(0, -100%) rotate(0deg); opacity: 0; }
+            0% { transform: translate(0, -100%) rotate(0deg); opacity: 0; }
             5% { opacity: 0.8; }
             95% { opacity: 0.8; }
             100% { transform: translate(0, 100vh) rotate(360deg); opacity: 0; }
         }
         @keyframes diagonal-left {
-            0%, 100% { transform: translate(10vw, -100%) rotate(0deg); opacity: 0; }
+            0% { transform: translate(10vw, -100%) rotate(0deg); opacity: 0; }
             5% { opacity: 0.6; }
             95% { opacity: 0.6; }
             100% { transform: translate(-10vw, 100vh) rotate(-360deg); opacity: 0; }
         }
         @keyframes diagonal-right {
-            0%, 100% { transform: translate(-10vw, -100%) rotate(0deg); opacity: 0; }
+            0% { transform: translate(-10vw, -100%) rotate(0deg); opacity: 0; }
             5% { opacity: 0.7; }
             95% { opacity: 0.7; }
             100% { transform: translate(10vw, 100vh) rotate(360deg); opacity: 0; }
@@ -304,8 +316,14 @@
 
         /* --- Mobile Responsiveness --- */
         @media (max-width: 768px) {
-            .hero-section { margin-bottom: 15px; min-height: 200px; }
-            .header { flex-direction: row; justify-content: space-between; align-items: center; }
+            .ad-container {
+                margin: 0; /* Adjusted for mobile to further reduce gap */
+            }
+
+            .header {
+                flex-direction: row; justify-content: space-between; align-items: center;
+                padding-bottom: 5px; /* Added padding-bottom to reduce gap */
+            }
             .logo a { font-size: 22px; }
             .logo-icon { font-size: 26px; }
             .header-right { flex-direction: row; justify-content: flex-end; gap: 10px; }
@@ -326,6 +344,19 @@
             .ashiqur-btn, .download-btn { padding: 6px 10px; font-size: 12px; }
             .footer a { font-size: 12px; padding: 6px 8px; }
             .ashiqur-popup { font-size: 14px; width: 90%; max-width: 300px; text-align: center; bottom: 120px; white-space: normal; }
+            
+            /* Show mobile ad only on mobile view */
+            .ad-container.mobile-ad {
+                display: block;
+                padding-left: 0;
+                padding-right: 0;
+            }
+            .ad-container.mobile-ad .ad-iframe-container {
+                max-width: 100%;
+                justify-content: center;
+                overflow: hidden;
+            }
+
         }
         
         /* --- Desktop Specific Styles --- */
@@ -358,6 +389,14 @@
             .ashiqur-btn-wrapper { margin-right: auto; }
             .download-btn-wrapper { margin-left: auto; }
             .ashiqur-popup { bottom: 80px; }
+
+            /* Show desktop ad only on desktop view */
+            .ad-container.desktop-ad {
+                display: block;
+            }
+            .ad-container.desktop-ad .ad-iframe-container {
+                 max-width: 728px;
+            }
         }
     </style>
 </head>
@@ -384,18 +423,36 @@
         </header>
     </div>
 
-    <div class="ad-container">
-        <script type="text/javascript">
-            atOptions = {
-                'key' : '3107b60e8baa0d0e886adf12d55fbd7e',
-                'format' : 'iframe',
-                'height' : 90,
-                'width' : 728,
-                'params' : {}
-            };
-        </script>
-        <script type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
+    <div class="ad-container desktop-ad">
+        <div class="ad-iframe-container">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '3107b60e8baa0d0e886adf12d55fbd7e',
+                    'format' : 'iframe',
+                    'height' : 90,
+                    'width' : 728,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
+        </div>
     </div>
+    
+    <div class="ad-container mobile-ad">
+        <div class="ad-iframe-container">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '02a9c12a5270a25efa5325c0e42ffc59',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
+        </div>
+    </div>
+    
     <section class="hero-section">
         <div class="paper-pieces-container">
             <div class="paper-piece square" style="left: 10%; top: -10%; width: 10px; height: 10px; background-color: var(--paper-color1); animation: falling 80s linear infinite;"></div>
