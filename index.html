@@ -405,7 +405,12 @@
             .language-switcher { display: flex; align-items: center; gap: 5px; }
             .lang-btn { padding: 4px 8px; font-size: 12px; margin-left: 0; }
             .mode-toggle { font-size: 18px; }
-            .hero-section { padding: 30px 15px; }
+            /* --- User Requested Changes Start: Reduced Hero Section padding and min-height for mobile --- */
+            .hero-section { 
+                padding: 20px 15px; /* আগের 30px প্যাডিং কমিয়ে 20px করা হয়েছে */
+                min-height: 150px; /* আগের 250px থেকে কমিয়ে 150px করা হয়েছে */
+            }
+            /* --- User Requested Changes End --- */
             .hero-section h1 { font-size: 30px; }
             .hero-section p { font-size: 13px; }
             .filter-options { gap: 5px; flex-wrap: wrap; justify-content: center; }
