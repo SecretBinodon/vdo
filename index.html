@@ -468,6 +468,73 @@
             .ad-container.desktop-ad, .native-ad-container { display: block; }
             .ad-container.desktop-ad .ad-iframe-container { max-width: 728px; }
         }
+        
+        /* --- START: Mobile Pop-up Styles (New Addition) --- */
+        .mobile-notification-overlay {
+            display: none; /* By default, hidden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 9999; /* Higher than any other element */
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .mobile-notification-box {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+            max-width: 320px;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .mobile-notification-overlay.show {
+            display: flex;
+        }
+
+        .mobile-notification-overlay.show .mobile-notification-box {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .mobile-notification-box h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .mobile-notification-box p {
+            font-size: 16px;
+            line-height: 1.5;
+            color: var(--secondary-text);
+            margin-bottom: 25px;
+        }
+
+        .notification-ok-btn {
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .notification-ok-btn:hover {
+            background-color: #2F6DB8;
+        }
+        /* --- END: Mobile Pop-up Styles --- */
     </style>
 </head>
 <body>
@@ -755,6 +822,13 @@
         </div>
     </footer>
 
+    <div id="mobile-notification-overlay" class="mobile-notification-overlay">
+        <div class="mobile-notification-box">
+            <h3 data-lang-en="Switch to Desktop Mode" data-lang-bn="ডেস্কটপ মোড চালু করুন">Switch to Desktop Mode</h3>
+            <p data-lang-en="For a better and smoother experience, please enable Desktop Mode on your browser." data-lang-bn="আরও ভালো অভিজ্ঞতার জন্য, আপনার ব্রাউজারে ডেস্কটপ মোড চালু করুন।">For a better and smoother experience, please enable Desktop Mode on your browser.</p>
+            <button id="notification-ok-btn" class="notification-ok-btn" data-lang-en="Continue" data-lang-bn="চালিয়ে যান">Continue</button>
+        </div>
+    </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const langButtons = document.querySelectorAll('.lang-btn');
@@ -766,6 +840,32 @@
             const toolCards = document.querySelectorAll('.tool-card');
             const noResultsMessage = document.querySelector('.no-results');
             const modeToggleBtn = document.querySelector('.mode-toggle');
+
+            // --- START: New Mobile Pop-up Logic ---
+            const mobileOverlay = document.getElementById('mobile-notification-overlay');
+            const okBtn = document.getElementById('notification-ok-btn');
+            const popupHasBeenShown = sessionStorage.getItem('popupShown');
+
+            // Check if it's a mobile device and the popup hasn't been shown yet
+            if (window.innerWidth <= 768 && !popupHasBeenShown) {
+                mobileOverlay.classList.add('show');
+            }
+
+            // Hide popup when "OK" button is clicked
+            okBtn.addEventListener('click', () => {
+                mobileOverlay.classList.remove('show');
+                sessionStorage.setItem('popupShown', 'true'); // Store in session to prevent repeat popups on same session
+            });
+
+            // Hide popup when clicking outside the box
+            mobileOverlay.addEventListener('click', (event) => {
+                if (event.target === mobileOverlay) {
+                    mobileOverlay.classList.remove('show');
+                    sessionStorage.setItem('popupShown', 'true');
+                }
+            });
+            // --- END: New Mobile Pop-up Logic ---
+
 
             const testimonials = [
                 { en: { text: "“I’ve shortened my long links with a custom alias. It’s a killer feature for my campaigns!”", author: "- Arif Chowdhury" }, bn: { text: "“আমি কাস্টম নাম দিয়ে আমার লম্বা লিঙ্কগুলো ছোট করতে পেরেছি। এটি আমার প্রচারণার জন্য একটি দারুণ ফিচার!”", author: "- আরিফ চৌধুরী" } },
