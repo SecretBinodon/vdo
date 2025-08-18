@@ -583,7 +583,22 @@
       .notification-ok-btn:hover {
           background-color: #2F6DB8;
       }
-      /* --- END: Mobile Pop-up Styles --- */
+
+      /* This is the new CSS rule that solves the problem.
+        The ad is now wrapped in a div with the class .offer-card-ad-mobile,
+        which is only visible on mobile screens.
+      */
+      .offer-card-ad-mobile {
+          display: none;
+          width: 100%;
+          margin-top: 5px; /* এই লাইনটি পরিবর্তন করা হয়েছে */
+          text-align: center;
+      }
+      @media (max-width: 768px) {
+          .offer-card-ad-mobile {
+              display: block;
+          }
+      }
   </style>
 </head>
 <body>
@@ -901,19 +916,19 @@
                       </script>
                       <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
                   </div>
-                  <div class="ad-container mobile-ad">
-                      <div class="ad-iframe-container">
-                          <script type="text/javascript">
-                              atOptions = {
-                                  'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
-                                  'format' : 'iframe',
-                                  'height' : 250,
-                                  'width' : 300,
-                                  'params' : {}
-                              };
-                          </script>
-                          <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
-                      </div>
+              </div>
+              <div class="offer-card-ad-mobile">
+                  <div class="ad-iframe-container">
+                      <script type="text/javascript">
+                          atOptions = {
+                              'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                              'format' : 'iframe',
+                              'height' : 250,
+                              'width' : 300,
+                              'params' : {}
+                          };
+                      </script>
+                      <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
                   </div>
               </div>
 
@@ -1190,7 +1205,7 @@
               if (offerIntervalId) {
                   clearInterval(offerIntervalId);
               }
-              offerIntervalId = setInterval(rotateOffers, 6000);
+              testimonialIntervalId = setInterval(rotateOffers, 6000);
           }
 
           const sectionMap = {
