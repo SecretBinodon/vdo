@@ -487,6 +487,14 @@
               align-items: center;
               margin-top: 20px;
           }
+          
+          /* START: New CSS for blog ad on mobile */
+          .blog-ad-mobile {
+              display: block;
+              margin-top: 25px;
+              text-align: center;
+          }
+          /* END: New CSS for blog ad on mobile */
       }
 
       /* --- Desktop Specific Styles --- */
@@ -520,6 +528,12 @@
           .offer-cards-grid {
               grid-template-columns: repeat(3, 1fr);
           }
+          
+          /* START: New CSS for blog ad on mobile (hidden on desktop) */
+          .blog-ad-mobile {
+              display: none;
+          }
+          /* END: New CSS for blog ad on mobile (hidden on desktop) */
       }
       
       /* --- START: Mobile Pop-up Styles (New Addition) --- */
@@ -966,6 +980,18 @@
                       <a href="" class="use-tool-btn" data-lang-en="Read More" data-lang-bn="আরও পড়ুন" target="_blank" rel="noopener noreferrer">Read More <i class="ri-arrow-right-line"></i></a>
                   </div>
               </div>
+              <div class="blog-ad-mobile">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                        'format' : 'iframe',
+                        'height' : 250,
+                        'width' : 300,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
+              </div>
           </div>
           <div class="ad-container desktop-ad-only" style="margin-top: 25px;">
               <div class="ad-iframe-container">
@@ -1089,7 +1115,7 @@
               { en: { text: "“The URL shortener is lightning-fast and the custom alias feature is a must-have for any marketer.”", author: "- Liam Johnson, Canada" }, bn: { text: "“URL শর্টনারটি বিদ্যুতের মতো দ্রুত কাজ করে এবং কাস্টম নামের ফিচারটি যেকোনো মার্কেটারের জন্য আবশ্যক।”", author: "- লিয়াম জনসন, কানাডা" } },
               { en: { text: "“Finally, a free tool for Facebook likes that actually works. Highly recommended!”", author: "- Olivia Davis, USA" }, bn: { text: "“অবশেষে, ফেসবুক লাইকের জন্য একটি ফ্রি টুল পেলাম যা সত্যিই কাজ করে। অত্যন্ত সুপারিশ করছি!”", author: "- অলিভিয়া ডেভিস, ইউএসএ" } },
               { en: { text: "“Your website is a treasure trove of useful tools. The BMI calculator is a nice touch!”", author: "- Noah Davis, Canada" }, bn: { text: "“আপনাদের ওয়েবসাইটটি দরকারী টুলের এক ভাণ্ডার। BMI ক্যালকুলেটরটি একটি চমৎকার সংযোজন!”", author: "- নোয়া ডেভিস, কানাডা" } },
-              { en: { text: "“The panel is so easy to navigate. I found exactly what I needed in seconds. Fantastic user experience.”", author: "- Sarah Parker, USA" }, bn: { text: "“এই প্যানেলটি ব্যবহার করা খুবই সহজ। আমি কয়েক সেকেন্ডের মধ্যে আমার প্রয়োজনীয় টুল খুঁজে পেয়েছি। দারুণ ইউজার এক্সপেরিয়েন্স!”", author: "- সারা পার্কার, ইউএসএ" } },
+              { en: { text: "“The panel is so easy to navigate. I found exactly what I needed in seconds. Fantastic user experience.”", author: "- Sarah Parker, USA" }, bn: { text: "“এই প্যানেলটি ব্যবহার করা খুবই সহজ। আমি কয়েক সেকেন্ডের মধ্যে আমার প্রয়োজনীয় টুল খুঁজে পেয়েছি। দারুণ ইউজার এক্সপেরিয়েন্স।”", author: "- সারা পার্কার, ইউএসএ" } },
               { en: { text: "“The Facebook follower tool helped me reach more people without any cost. I'm very impressed.”", author: "- Mark Evans, Canada" }, bn: { text: "“ফেসবুক ফলোয়ার টুলটি আমাকে কোনো খরচ ছাড়াই বেশি মানুষের কাছে পৌঁছাতে সাহায্য করেছে। আমি মুগ্ধ।”", author: "- মার্ক ইভান্স, কানাডা" } }
           ];
 
