@@ -85,7 +85,6 @@
           cursor: pointer;
           font-size: 20px;
           color: var(--secondary-text);
-          transition: color 0.3s ease;
           display: flex;
           align-items: center;
       }
@@ -198,9 +197,10 @@
       .tools-panel { padding-bottom: 25px; }
       .tools-panel h2 { text-align: center; margin-bottom: 40px; font-size: 36px; font-weight: 700; }
 
+      /* Start: User's Requested Change for Tool Card Size & Text Size */
       .tool-cards-grid {
           display: grid;
-          grid-template-columns: 1fr;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
           gap: 25px;
           justify-content: center;
       }
@@ -213,25 +213,35 @@
           text-align: center;
           animation: cardFadeIn 0.8s ease-out forwards;
           position: relative;
-          /* Update: Added transform for hover effect */
           transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          min-height: 250px;
+          min-height: 350px; /* Increased card height for larger size */
           border: 1px solid transparent;
       }
       .tool-card.hide { display: none; }
-      /* Update: Hover effect matching daily offer card */
       .tool-card:hover, .tool-card:focus {
           transform: translateY(-5px) scale(1.02);
           box-shadow: var(--shadow-hover);
       }
       @keyframes cardFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-      .tool-card .icon-wrapper { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; transition: all 0.3s ease; }
+      .tool-card .icon-wrapper {
+          width: 90px;
+          height: 90px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 20px;
+          transition: all 0.3s ease;
+      }
       .tool-card:hover .icon-wrapper, .tool-card:focus .icon-wrapper { background-color: var(--accent-color) !important; transform: rotate(15deg); }
-      .tool-card .icon { font-size: 50px; color: var(--accent-color); transition: color 0.3s ease; }
+      .tool-card .icon {
+          font-size: 60px; /* Increased icon size */
+          color: var(--accent-color);
+          transition: color 0.3s ease;
+      }
       .tool-card:hover .icon, .tool-card:focus .icon { color: #fff !important; }
       .tool-card:nth-child(1) .icon-wrapper { background-color: #E7F0FF; }
       .tool-card:nth-child(1) .icon { color: #4A90E2; }
@@ -260,9 +270,21 @@
       .dark-mode .tool-card:nth-child(7) .icon-wrapper { background-color: #4D2E2E; }
       .dark-mode .tool-card:nth-child(8) .icon-wrapper { background-color: #384D2E; }
       .dark-mode .tool-card:nth-child(9) .icon-wrapper { background-color: #442A4D; }
-
-      .tool-card h3 { font-size: 24px; font-weight: 600; margin-bottom: 10px; }
-      .tool-card p { font-size: 16px; color: var(--secondary-text); margin-bottom: 15px; padding: 0 10px; flex-grow: 1; display: flex; align-items: center; justify-content: center; }
+      .tool-card h3 {
+          font-size: 28px; /* Increased title font size */
+          font-weight: 600;
+          margin-bottom: 15px; /* Increased margin */
+      }
+      .tool-card p {
+          font-size: 18px; /* Increased description font size */
+          color: var(--secondary-text);
+          margin-bottom: 20px; /* Increased margin */
+          flex-grow: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
+      /* End: User's Requested Change for Tool Card Size & Text Size */
 
       .use-tool-btn, .action-btn { display: inline-block; background-color: var(--primary-color); color: #fff; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 16px; transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); cursor: pointer; border: none; }
       .use-tool-btn:hover, .action-btn:hover { background-color: #2F6DB8; }
@@ -284,7 +306,7 @@
       /* START: User's Requested Fix for Daily Offer Card Size */
       .offer-card {
           background-color: var(--background-color);
-          padding: 30px 20px;
+          padding: 40px 25px; /* Increased padding */
           border-radius: var(--border-radius);
           box-shadow: var(--shadow-light);
           text-align: center;
@@ -295,11 +317,10 @@
           width: 100%;
           
           /* Fixed Size Properties */
-          height: 320px;
-          min-height: 320px;
+          min-height: 400px; /* Increased card height */
       }
       .offer-card p {
-          font-size: 16px;
+          font-size: 20px; /* Increased text font size */
           color: var(--secondary-text);
           margin-bottom: 20px;
           flex-grow: 1;
@@ -318,10 +339,10 @@
       /* END: User's Requested Fix for Daily Offer Card Size */
 
       .offer-card:hover, .offer-card:focus { transform: translateY(-5px) scale(1.02); box-shadow: var(--shadow-hover); }
-      .offer-card .icon-wrapper { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; background-color: #e0f7fa; color: var(--primary-color); transition: all 0.5s ease-in-out; position: relative; }
-      .offer-card .icon { font-size: 50px; transition: all 0.5s ease-in-out; opacity: 1; }
+      .offer-card .icon-wrapper { width: 90px; height: 90px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; background-color: #e0f7fa; color: var(--primary-color); transition: all 0.5s ease-in-out; position: relative; }
+      .offer-card .icon { font-size: 60px; transition: all 0.5s ease-in-out; opacity: 1; }
       .offer-card:hover .icon, .offer-card:focus .icon { transform: scale(1.1); }
-      .offer-card h3 { font-size: 24px; font-weight: 600; margin-bottom: 10px; }
+      .offer-card h3 { font-size: 28px; font-weight: 600; margin-bottom: 15px; }
       .join-offer-btn {
           display: inline-block;
           background-color: var(--green-color); /* Default color green */
