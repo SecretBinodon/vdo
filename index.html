@@ -1,1497 +1,1468 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-lang-en="NexTool Hub - Your Digital Toolbox" data-lang-bn="নেক্সটুল হাব - আপনার ডিজিটাল টুলবক্স">NexTool Hub - Your Digital Toolbox</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <style>
-      /* --- Global Variables & Base Styles --- */
-      :root {
-          --primary-color: #4A90E2;
-          --accent-color: #E24A90;
-          --background-color: #F8F9FA;
-          --card-bg: #FFFFFF;
-          --text-color: #333;
-          --secondary-text: #666;
-          --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
-          --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
-          --border-radius: 12px;
-          --red-color: #FF0000;
-          --green-color: #28a745;
-          --orange-color: #fd7e14;
-          --paper-color1: #fff;
-          --paper-color2: #e0f7fa;
-          --paper-color3: #ffecb3;
-          --paper-color4: #d1c4e9;
-          --paper-color5: #ffccbc;
-      }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>নেক্সটুল হাব - আপনার ডিজিটাল টুলবক্স | NexTool Hub - Your Digital Toolbox</title>
+    <meta name="description" content="নেক্সটুল হাব হল একটি ডিজিটাল টুলবক্স যেখানে আপনি বিভিন্ন প্রয়োজনীয় টুলস খুঁজে পাবেন, যেমন URL শর্টনার, টেক্সট কাউন্টার, BMI ক্যালকুলেটর, এবং আরও অনেক কিছু। আপনার দৈনন্দিন কাজ দ্রুত এবং সহজে সম্পন্ন করুন। সম্পূর্ণ বিনামূল্যে!">
+    <meta name="keywords" content="নেক্সটুল, ডিজিটাল টুলস, URL শর্টনার, টেক্সট কাউন্টার, BMI ক্যালকুলেটর, অনলাইন টুলস, ফ্রি টুলস, NexTool Hub, Digital Toolbox, Free Online Tools, SEO tools, utilities">
+    <meta name="author" content="Ashikur Rahman Sultan">
 
-      /* --- Dark Mode Variables --- */
-      .dark-mode {
-          --primary-color: #6B6EEA;
-          --accent-color: #FF8C00;
-          --background-color: #121212;
-          --card-bg: #1E1E1E;
-          --text-color: #E0E0E0;
-          --secondary-text: #A0A0A0;
-          --shadow-light: 0 4px 12px rgba(255, 255, 255, 0.05);
-          --shadow-hover: 0 8px 24px rgba(255, 255, 255, 0.1);
-          --paper-color1: #333;
-          --paper-color2: #2E3A59;
-          --paper-color3: #4A3E2A;
-          --paper-color4: #3A324A;
-          --paper-color5: #4A3A35;
-      }
+    <meta property="og:title" content="NexTool Hub - Your Digital Toolbox">
+    <meta property="og:description" content="নেক্সটুল হাব হল একটি ডিজিটাল টুলবক্স যেখানে আপনি বিভিন্ন প্রয়োজনীয় টুলস খুঁজে পাবেন, যেমন URL শর্টনার, টেক্সট কাউন্টার, BMI ক্যালকুলেটর, এবং আরও অনেক কিছু। আপনার দৈনন্দিন কাজ দ্রুত এবং সহজে সম্পন্ন করুন। সম্পূর্ণ বিনামূল্যে!">
+    <meta property="og:image" content="https://example.com/images/og-image.jpg"> <meta property="og:url" content="https://example.com"> <meta property="og:type" content="website">
 
-      html { scroll-behavior: smooth; }
-      * { box-sizing: border-box; margin: 0; padding: 0; }
-      body { font-family: 'Poppins', sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.6; transition: background-color 0.3s ease, color 0.3s ease; }
-      .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    <link rel="canonical" href="https://example.com/">
 
-      /* --- Header --- */
-      .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; flex-wrap: nowrap; padding-bottom: 5px; }
-      .logo a { font-size: 28px; font-weight: 700; text-decoration: none; display: flex; align-items: center; }
-      .logo a .nex-text { color: var(--primary-color); }
-      .logo a .tool-text { color: var(--red-color); }
-      .logo a .hub-text { color: var(--primary-color); }
-      .logo-icon {
-          font-size: 32px;
-          color: var(--primary-color);
-          margin-right: 8px;
-          animation: bounce 2s infinite;
-      }
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-      @keyframes bounce {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-5px); }
-      }
+    <style>
+        /* --- Global Variables & Base Styles --- */
+        :root {
+            --primary-color: #4A90E2;
+            --accent-color: #E24A90;
+            --background-color: #F8F9FA;
+            --card-bg: #FFFFFF;
+            --text-color: #333;
+            --secondary-text: #666;
+            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --border-radius: 12px;
+            --red-color: #FF0000;
+            --green-color: #28a745;
+            --orange-color: #fd7e14;
+            --paper-color1: #fff;
+            --paper-color2: #e0f7fa;
+            --paper-color3: #ffecb3;
+            --paper-color4: #d1c4e9;
+            --paper-color5: #ffccbc;
+        }
 
-      .header-right { display: flex; align-items: center; gap: 20px; }
-      .social-links { display: flex; align-items: center; gap: 15px; }
-      .social-link { font-size: 20px; color: var(--secondary-text); transition: color 0.3s ease, transform 0.3s ease; text-decoration: none; }
-      .social-link:hover { color: var(--primary-color); transform: translateY(-2px); }
-      .language-switcher { display: flex; align-items: center; }
-      .lang-btn { background-color: transparent; border: 1px solid #ccc; padding: 6px 12px; cursor: pointer; border-radius: 6px; font-size: 14px; font-weight: 600; transition: all 0.3s ease; margin-left: 8px; color: var(--text-color); }
-      .lang-btn.active { background-color: var(--primary-color); color: #fff; border-color: var(--primary-color); }
-      .lang-btn:hover:not(.active) { background-color: var(--card-bg); }
-      
-      .mode-toggle {
-          background-color: transparent;
-          border: none;
-          cursor: pointer;
-          font-size: 20px;
-          color: var(--secondary-text);
-          display: flex;
-          align-items: center;
-      }
-      .mode-toggle:hover { color: var(--primary-color); }
-      .mode-toggle .ri-sun-line { display: block; }
-      .mode-toggle .ri-moon-line { display: none; }
-      body.dark-mode .mode-toggle .ri-sun-line { display: none; }
-      body.dark-mode .mode-toggle .ri-moon-line { display: block; }
+        /* --- Dark Mode Variables --- */
+        .dark-mode {
+            --primary-color: #6B6EEA;
+            --accent-color: #FF8C00;
+            --background-color: #121212;
+            --card-bg: #1E1E1E;
+            --text-color: #E0E0E0;
+            --secondary-text: #A0A0A0;
+            --shadow-light: 0 4px 12px rgba(255, 255, 255, 0.05);
+            --shadow-hover: 0 8px 24px rgba(255, 255, 255, 0.1);
+            --paper-color1: #333;
+            --paper-color2: #2E3A59;
+            --paper-color3: #4A3E2A;
+            --paper-color4: #3A324A;
+            --paper-color5: #4A3A35;
+        }
 
-      /* Ad Container Styles */
-      .ad-container { width: 100%; text-align: center; margin: 0; }
-      .ad-container.mobile-ad { display: none; width: 100%; margin-bottom: 10px; }
-      .ad-container.desktop-ad { display: none; margin-bottom: 15px; }
-      .ad-iframe-container { width: 100%; max-width: 728px; margin: 0 auto; display: flex; justify-content: center; }
-      .desktop-ad-inline {
-          display: none;
-          text-align: center;
-          margin: 20px auto;
-      }
-      
-      /* New Mobile Ad Specific Styles */
-      .mobile-ad-inline {
-          display: none; /* Initially hidden */
-          text-align: center;
-          margin: 20px auto;
-      }
-      @media (max-width: 768px) {
-          .mobile-ad-inline {
-              display: block; /* Show only on mobile */
-          }
-      }
+        html { scroll-behavior: smooth; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.6; transition: background-color 0.3s ease, color 0.3s ease; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
-      /* --- Hero Section with Paper Effect --- */
-      .hero-section {
-          text-align: center;
-          padding: 25px 20px;
-          background-image: linear-gradient(135deg, var(--primary-color), #6B6EEA);
-          color: #fff;
-          margin-bottom: 25px;
-          border-radius: var(--border-radius);
-          box-shadow: var(--shadow-light);
-          position: relative;
-          overflow: hidden;
-          display: flex;
-          flex-direction: column;
-          justify-content: center; /* উল্লম্বভাবে মাঝখানে আনতে যোগ করা হয়েছে */
-          align-items: center; /* আনুভূমিকভাবে মাঝখানে আনতে যোগ করা হয়েছে */
-          min-height: 250px;
-      }
-      .hero-section .paper-pieces-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; overflow: hidden; }
-      .paper-piece { position: absolute; background-color: var(--paper-color1); opacity: 0.8; will-change: transform, opacity; animation-iteration-count: infinite; animation-timing-function: linear; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1)); }
+        /* --- Header --- */
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; flex-wrap: nowrap; padding-bottom: 5px; }
+        .logo a { font-size: 28px; font-weight: 700; text-decoration: none; display: flex; align-items: center; }
+        .logo a .nex-text { color: var(--primary-color); }
+        .logo a .tool-text { color: var(--red-color); }
+        .logo a .hub-text { color: var(--primary-color); }
+        .logo-icon {
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-right: 8px;
+            animation: bounce 2s infinite;
+        }
 
-      @keyframes falling {
-          0% { transform: translate(0, -100%) rotate(0deg); opacity: 0; }
-          5% { opacity: 0.8; }
-          95% { opacity: 0.8; }
-          100% { transform: translate(0, 100vh) rotate(360deg); opacity: 0; }
-      }
-      @keyframes diagonal-left {
-          0% { transform: translate(10vw, -100%) rotate(0deg); opacity: 0; }
-          5% { opacity: 0.6; }
-          95% { opacity: 0.6; }
-          100% { transform: translate(-10vw, 100vh) rotate(-360deg); opacity: 0; }
-      }
-      @keyframes diagonal-right {
-          0% { transform: translate(-10vw, -100%) rotate(0deg); opacity: 0; }
-          5% { opacity: 0.7; }
-          95% { opacity: 0.7; }
-          100% { transform: translate(10vw, 100vh) rotate(360deg); opacity: 0; }
-      }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
 
-      .hero-section h1, .hero-section p { position: relative; z-index: 2; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); line-height: 1.2; margin-top: 0; }
-      
-      /* স্টাইলিশ h1-এর জন্য নতুন ক্লাস */
-      .hero-title { 
-          font-family: 'Great Vibes', cursive;
-          font-size: 60px; /* ফন্ট সাইজ বাড়ানো হয়েছে */
-          margin-bottom: 10px; /* দুটি লেখার মধ্যে গ্যাপ কমানো হয়েছে */
-          font-weight: 400; /* ফন্ট ওয়েট কমানো হয়েছে যাতে আরও স্টাইলিশ দেখায় */
-          animation: fadeInDown 1s ease-out;
-      }
-      
-      .hero-section p { font-size: 18px; margin-bottom: 20px; opacity: 0.9; animation: fadeIn 1.5s ease-out; }
+        .header-right { display: flex; align-items: center; gap: 20px; }
+        .social-links { display: flex; align-items: center; gap: 15px; }
+        .social-link { font-size: 20px; color: var(--secondary-text); transition: color 0.3s ease, transform 0.3s ease; text-decoration: none; }
+        .social-link:hover { color: var(--primary-color); transform: translateY(-2px); }
+        .language-switcher { display: flex; align-items: center; }
+        .lang-btn { background-color: transparent; border: 1px solid #ccc; padding: 6px 12px; cursor: pointer; border-radius: 6px; font-size: 14px; font-weight: 600; transition: all 0.3s ease; margin-left: 8px; color: var(--text-color); }
+        .lang-btn.active { background-color: var(--primary-color); color: #fff; border-color: var(--primary-color); }
+        .lang-btn:hover:not(.active) { background-color: var(--card-bg); }
+        
+        .mode-toggle {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--secondary-text);
+            display: flex;
+            align-items: center;
+        }
+        .mode-toggle:hover { color: var(--primary-color); }
+        .mode-toggle .ri-sun-line { display: block; }
+        .mode-toggle .ri-moon-line { display: none; }
+        body.dark-mode .mode-toggle .ri-sun-line { display: none; }
+        body.dark-mode .mode-toggle .ri-moon-line { display: block; }
 
-      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-      @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        /* Ad Container Styles */
+        .ad-container { width: 100%; text-align: center; margin: 0; }
+        .ad-container.mobile-ad { display: none; width: 100%; margin-bottom: 10px; }
+        .ad-container.desktop-ad { display: none; margin-bottom: 15px; }
+        .ad-iframe-container { width: 100%; max-width: 728px; margin: 0 auto; display: flex; justify-content: center; }
+        .desktop-ad-inline {
+            display: none;
+            text-align: center;
+            margin: 20px auto;
+        }
+        
+        /* New Mobile Ad Specific Styles */
+        .mobile-ad-inline {
+            display: none; /* Initially hidden */
+            text-align: center;
+            margin: 20px auto;
+        }
+        @media (max-width: 768px) {
+            .mobile-ad-inline {
+                display: block; /* Show only on mobile */
+            }
+        }
 
-      /* --- Search Bar & Filters --- */
-      .search-bar-container { text-align: center; margin-top: 20px; margin-bottom: 20px; position: relative; }
-      .search-input-wrapper { display: inline-block; width: 100%; max-width: 600px; position: relative; }
-      .search-input { width: 100%; padding: 12px 50px 12px 20px; border: 1px solid #ddd; border-radius: var(--border-radius); font-size: 16px; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); background-color: var(--card-bg); color: var(--text-color); }
-      .dark-mode .search-input { border-color: #444; }
-      .search-icon { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); font-size: 20px; color: var(--secondary-text); }
+        /* --- Hero Section with Paper Effect --- */
+        .hero-section {
+            text-align: center;
+            padding: 25px 20px;
+            background-image: linear-gradient(135deg, var(--primary-color), #6B6EEA);
+            color: #fff;
+            margin-bottom: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px;
+        }
+        .hero-section .paper-pieces-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; overflow: hidden; }
+        .paper-piece { position: absolute; background-color: var(--paper-color1); opacity: 0.8; will-change: transform, opacity; animation-iteration-count: infinite; animation-timing-function: linear; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1)); }
 
-      .filter-options { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 20px; margin-bottom: 20px; }
-      .filter-btn { background-color: transparent; border: none; padding: 8px 18px; font-size: 16px; font-weight: 600; color: var(--secondary-text); cursor: pointer; white-space: nowrap; transition: background-color 0.3s ease, color 0.3s ease; text-decoration: none; display: block; border-radius: 20px; }
-      .filter-btn:hover { color: var(--primary-color); }
-      .filter-btn.active { background-color: var(--primary-color); color: #fff; }
-      .filter-btn.active:hover { color: #fff; }
-      
-      /* --- Global Scroll Animation & Filtering Animation --- */
-      .on-scroll-animate { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; will-change: opacity, transform; }
-      .on-scroll-animate.is-visible { opacity: 1; transform: translateY(0); }
+        @keyframes falling {
+            0% { transform: translate(0, -100%) rotate(0deg); opacity: 0; }
+            5% { opacity: 0.8; }
+            95% { opacity: 0.8; }
+            100% { transform: translate(0, 100vh) rotate(360deg); opacity: 0; }
+        }
+        @keyframes diagonal-left {
+            0% { transform: translate(10vw, -100%) rotate(0deg); opacity: 0; }
+            5% { opacity: 0.6; }
+            95% { opacity: 0.6; }
+            100% { transform: translate(-10vw, 100vh) rotate(-360deg); opacity: 0; }
+        }
+        @keyframes diagonal-right {
+            0% { transform: translate(-10vw, -100%) rotate(0deg); opacity: 0; }
+            5% { opacity: 0.7; }
+            95% { opacity: 0.7; }
+            100% { transform: translate(10vw, 100vh) rotate(360deg); opacity: 0; }
+        }
 
-      .filterable-section { transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
-      .filterable-section.hidden { opacity: 0; transform: translateY(20px); pointer-events: none; position: absolute; left: -9999px; }
-      .filterable-section.visible { opacity: 1; transform: translateY(0); position: relative; left: 0; }
+        .hero-section h1, .hero-section p { position: relative; z-index: 2; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); line-height: 1.2; margin-top: 0; }
+        
+        /* স্টাইলিশ h1-এর জন্য নতুন ক্লাস */
+        .hero-title { 
+            font-family: 'Great Vibes', cursive;
+            font-size: 60px;
+            margin-bottom: 10px;
+            font-weight: 400;
+            animation: fadeInDown 1s ease-out;
+        }
+        
+        .hero-section p { font-size: 18px; margin-bottom: 20px; opacity: 0.9; animation: fadeIn 1.5s ease-out; }
 
-      /* --- Tools Panel --- */
-      .tools-panel { padding-bottom: 25px; }
-      .tools-panel h2 { text-align: center; margin-bottom: 40px; font-size: 36px; font-weight: 700; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 
-      /* Start: User's Requested Change for Tool Card Size & Text Size */
-      .tool-cards-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-          gap: 25px;
-          justify-content: center;
-      }
+        /* --- Search Bar & Filters --- */
+        .search-bar-container { text-align: center; margin-top: 20px; margin-bottom: 20px; position: relative; }
+        .search-input-wrapper { display: inline-block; width: 100%; max-width: 600px; position: relative; }
+        .search-input { width: 100%; padding: 12px 50px 12px 20px; border: 1px solid #ddd; border-radius: var(--border-radius); font-size: 16px; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); background-color: var(--card-bg); color: var(--text-color); }
+        .dark-mode .search-input { border-color: #444; }
+        .search-icon { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); font-size: 20px; color: var(--secondary-text); }
 
-      .tool-card {
-          background-color: var(--card-bg);
-          padding: 30px 20px;
-          border-radius: var(--border-radius);
-          box-shadow: var(--shadow-light);
-          text-align: center;
-          animation: cardFadeIn 0.8s ease-out forwards;
-          position: relative;
-          transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          min-height: 350px; /* Increased card height for larger size */
-          border: 1px solid transparent;
-      }
-      .tool-card.hide { display: none; }
-      .tool-card:hover, .tool-card:focus {
-          transform: translateY(-5px) scale(1.02);
-          box-shadow: var(--shadow-hover);
-      }
-      @keyframes cardFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-      .tool-card .icon-wrapper {
-          width: 90px;
-          height: 90px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin: 0 auto 20px;
-          transition: all 0.3s ease;
-      }
-      .tool-card:hover .icon-wrapper, .tool-card:focus .icon-wrapper { background-color: var(--accent-color) !important; transform: rotate(15deg); }
-      .tool-card .icon {
-          font-size: 60px; /* Increased icon size */
-          color: var(--accent-color);
-          transition: color 0.3s ease;
-      }
-      .tool-card:hover .icon, .tool-card:focus .icon { color: #fff !important; }
-      .tool-card:nth-child(1) .icon-wrapper { background-color: #E7F0FF; }
-      .tool-card:nth-child(1) .icon { color: #4A90E2; }
-      .tool-card:nth-child(2) .icon-wrapper { background-color: #EAE6FF; }
-      .tool-card:nth-child(2) .icon { color: #6C5CE7; }
-      .tool-card:nth-child(3) .icon-wrapper { background-color: #E0EBF4; }
-      .tool-card:nth-child(3) .icon { color: #1877F2; }
-      .tool-card:nth-child(4) .icon-wrapper { background-color: #FFF3E0; }
-      .tool-card:nth-child(4) .icon { color: #FF9800; }
-      .tool-card:nth-child(5) .icon-wrapper { background-color: #E8F5E9; }
-      .tool-card:nth-child(5) .icon { color: #4CAF50; }
-      .tool-card:nth-child(6) .icon-wrapper { background-color: #E1F5FE; }
-      .tool-card:nth-child(6) .icon { color: #03A9F4; }
-      .tool-card:nth-child(7) .icon-wrapper { background-color: #ffe8e8; }
-      .tool-card:nth-child(7) .icon { color: #ff5050; }
-      .tool-card:nth-child(8) .icon-wrapper { background-color: #d8f5d0; }
-      .tool-card:nth-child(8) .icon { color: #6cbf3d; }
-      .tool-card:nth-child(9) .icon-wrapper { background-color: #f7e1ff; }
-      .tool-card:nth-child(9) .icon { color: #9b59b6; }
-      .dark-mode .tool-card:nth-child(1) .icon-wrapper { background-color: #1A2E4D; }
-      .dark-mode .tool-card:nth-child(2) .icon-wrapper { background-color: #2A1F4D; }
-      .dark-mode .tool-card:nth-child(3) .icon-wrapper { background-color: #1A2B4D; }
-      .dark-mode .tool-card:nth-child(4) .icon-wrapper { background-color: #4D3A1A; }
-      .dark-mode .tool-card:nth-child(5) .icon-wrapper { background-color: #284D2E; }
-      .dark-mode .tool-card:nth-child(6) .icon-wrapper { background-color: #1A3E5D; }
-      .dark-mode .tool-card:nth-child(7) .icon-wrapper { background-color: #4D2E2E; }
-      .dark-mode .tool-card:nth-child(8) .icon-wrapper { background-color: #384D2E; }
-      .dark-mode .tool-card:nth-child(9) .icon-wrapper { background-color: #442A4D; }
-      .tool-card h3 {
-          font-size: 28px; /* Increased title font size */
-          font-weight: 600;
-          margin-bottom: 15px; /* Increased margin */
-      }
-      .tool-card p {
-          font-size: 18px; /* Increased description font size */
-          color: var(--secondary-text);
-          margin-bottom: 20px; /* Increased margin */
-          flex-grow: 1;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-      }
-      /* End: User's Requested Change for Tool Card Size & Text Size */
+        .filter-options { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 20px; margin-bottom: 20px; }
+        .filter-btn { background-color: transparent; border: none; padding: 8px 18px; font-size: 16px; font-weight: 600; color: var(--secondary-text); cursor: pointer; white-space: nowrap; transition: background-color 0.3s ease, color 0.3s ease; text-decoration: none; display: block; border-radius: 20px; }
+        .filter-btn:hover { color: var(--primary-color); }
+        .filter-btn.active { background-color: var(--primary-color); color: #fff; }
+        .filter-btn.active:hover { color: #fff; }
+        
+        /* --- Global Scroll Animation & Filtering Animation --- */
+        .on-scroll-animate { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; will-change: opacity, transform; }
+        .on-scroll-animate.is-visible { opacity: 1; transform: translateY(0); }
 
-      .use-tool-btn, .action-btn { display: inline-block; background-color: var(--primary-color); color: #fff; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 16px; transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); cursor: pointer; border: none; }
-      .use-tool-btn:hover, .action-btn:hover { background-color: #2F6DB8; }
-      .use-tool-btn:active, .action-btn:active { background-color: #28a745; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); transform: translateY(1px); }
+        .filterable-section { transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
+        .filterable-section.hidden { opacity: 0; transform: translateY(20px); pointer-events: none; position: absolute; left: -9999px; }
+        .filterable-section.visible { opacity: 1; transform: translateY(0); position: relative; left: 0; }
 
-      .no-results { text-align: center; margin-top: 50px; font-size: 20px; color: #777; display: none; }
+        /* --- Tools Panel --- */
+        .tools-panel { padding-bottom: 25px; }
+        .tools-panel h2 { text-align: center; margin-bottom: 40px; font-size: 36px; font-weight: 700; }
+        .tool-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            justify-content: center;
+        }
 
-      /* --- Daily Offer Section CSS --- */
-      .daily-offer-section { padding: 20px 20px; background-color: var(--card-bg); }
-      .daily-offer-section h2 { font-size: 32px; margin-bottom: 40px; text-align: center; color: var(--text-color); }
-      .offer-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; justify-content: center; }
-      .offer-card-wrapper {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          margin-bottom: 20px;
-      }
+        .tool-card {
+            background-color: var(--card-bg);
+            padding: 30px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            animation: cardFadeIn 0.8s ease-out forwards;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 350px;
+            border: 1px solid transparent;
+        }
+        .tool-card.hide { display: none; }
+        .tool-card:hover, .tool-card:focus {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+        }
+        @keyframes cardFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .tool-card .icon-wrapper {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            transition: all 0.3s ease;
+        }
+        .tool-card:hover .icon-wrapper, .tool-card:focus .icon-wrapper { background-color: var(--accent-color) !important; transform: rotate(15deg); }
+        .tool-card .icon {
+            font-size: 60px;
+            color: var(--accent-color);
+            transition: color 0.3s ease;
+        }
+        .tool-card:hover .icon, .tool-card:focus .icon { color: #fff !important; }
+        .tool-card:nth-child(1) .icon-wrapper { background-color: #E7F0FF; }
+        .tool-card:nth-child(1) .icon { color: #4A90E2; }
+        .tool-card:nth-child(2) .icon-wrapper { background-color: #EAE6FF; }
+        .tool-card:nth-child(2) .icon { color: #6C5CE7; }
+        .tool-card:nth-child(3) .icon-wrapper { background-color: #E0EBF4; }
+        .tool-card:nth-child(3) .icon { color: #1877F2; }
+        .tool-card:nth-child(4) .icon-wrapper { background-color: #FFF3E0; }
+        .tool-card:nth-child(4) .icon { color: #FF9800; }
+        .tool-card:nth-child(5) .icon-wrapper { background-color: #E8F5E9; }
+        .tool-card:nth-child(5) .icon { color: #4CAF50; }
+        .tool-card:nth-child(6) .icon-wrapper { background-color: #E1F5FE; }
+        .tool-card:nth-child(6) .icon { color: #03A9F4; }
+        .tool-card:nth-child(7) .icon-wrapper { background-color: #ffe8e8; }
+        .tool-card:nth-child(7) .icon { color: #ff5050; }
+        .tool-card:nth-child(8) .icon-wrapper { background-color: #d8f5d0; }
+        .tool-card:nth-child(8) .icon { color: #6cbf3d; }
+        .tool-card:nth-child(9) .icon-wrapper { background-color: #f7e1ff; }
+        .tool-card:nth-child(9) .icon { color: #9b59b6; }
+        .dark-mode .tool-card:nth-child(1) .icon-wrapper { background-color: #1A2E4D; }
+        .dark-mode .tool-card:nth-child(2) .icon-wrapper { background-color: #2A1F4D; }
+        .dark-mode .tool-card:nth-child(3) .icon-wrapper { background-color: #1A2B4D; }
+        .dark-mode .tool-card:nth-child(4) .icon-wrapper { background-color: #4D3A1A; }
+        .dark-mode .tool-card:nth-child(5) .icon-wrapper { background-color: #284D2E; }
+        .dark-mode .tool-card:nth-child(6) .icon-wrapper { background-color: #1A3E5D; }
+        .dark-mode .tool-card:nth-child(7) .icon-wrapper { background-color: #4D2E2E; }
+        .dark-mode .tool-card:nth-child(8) .icon-wrapper { background-color: #384D2E; }
+        .dark-mode .tool-card:nth-child(9) .icon-wrapper { background-color: #442A4D; }
+        .tool-card h3 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .tool-card p {
+            font-size: 18px;
+            color: var(--secondary-text);
+            margin-bottom: 20px;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .use-tool-btn, .action-btn { display: inline-block; background-color: var(--primary-color); color: #fff; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 16px; transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); cursor: pointer; border: none; }
+        .use-tool-btn:hover, .action-btn:hover { background-color: #2F6DB8; }
+        .use-tool-btn:active, .action-btn:active { background-color: #28a745; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); transform: translateY(1px); }
 
-      /* START: User's Requested Fix for Daily Offer Card Size */
-      .offer-card {
-          background-color: var(--background-color);
-          padding: 40px 25px; /* Increased padding */
-          border-radius: var(--border-radius);
-          box-shadow: var(--shadow-light);
-          text-align: center;
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          width: 100%;
-          
-          /* Fixed Size Properties */
-          min-height: 400px; /* Increased card height */
-      }
-      .offer-card p {
-          font-size: 20px; /* Increased text font size */
-          color: var(--secondary-text);
-          margin-bottom: 20px;
-          flex-grow: 1;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-          
-          /* Text Overflow Properties */
-          overflow: hidden;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-line-clamp: 3;
-          -webkit-box-orient: vertical;
-      }
-      /* END: User's Requested Fix for Daily Offer Card Size */
+        .no-results { text-align: center; margin-top: 50px; font-size: 20px; color: #777; display: none; }
 
-      .offer-card:hover, .offer-card:focus { transform: translateY(-5px) scale(1.02); box-shadow: var(--shadow-hover); }
-      .offer-card .icon-wrapper { width: 90px; height: 90px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; background-color: #e0f7fa; color: var(--primary-color); transition: all 0.5s ease-in-out; position: relative; }
-      .offer-card .icon { font-size: 60px; transition: all 0.5s ease-in-out; opacity: 1; }
-      .offer-card:hover .icon, .offer-card:focus .icon { transform: scale(1.1); }
-      .offer-card h3 { font-size: 28px; font-weight: 600; margin-bottom: 15px; }
-      .join-offer-btn {
-          display: inline-block;
-          background-color: var(--green-color); /* Default color green */
-          color: #fff;
-          padding: 12px 25px;
-          border-radius: 8px;
-          text-decoration: none;
-          font-weight: 700;
-          font-size: 16px;
-          transition: background-color 0.2s ease, box-shadow 0.2s ease;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-          cursor: pointer;
-          border: none;
-      }
-      .join-offer-btn:hover, .join-offer-btn:focus {
-          background-color: var(--primary-color); /* Hover color blue */
-      }
-      .join-offer-btn:active {
-          background-color: var(--primary-color); /* Click color blue */
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-          transform: translateY(1px);
-      }
-      .dark-mode .offer-card .icon-wrapper { background-color: #2E3A59; }
+        /* --- Daily Offer Section CSS --- */
+        .daily-offer-section { padding: 20px 20px; background-color: var(--card-bg); }
+        .daily-offer-section h2 { font-size: 32px; margin-bottom: 40px; text-align: center; color: var(--text-color); }
+        .offer-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; justify-content: center; }
+        .offer-card-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .offer-card {
+            background-color: var(--background-color);
+            padding: 40px 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 100%;
+            min-height: 400px;
+        }
+        .offer-card p {
+            font-size: 20px;
+            color: var(--secondary-text);
+            margin-bottom: 20px;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+        .offer-card:hover, .offer-card:focus { transform: translateY(-5px) scale(1.02); box-shadow: var(--shadow-hover); }
+        .offer-card .icon-wrapper { width: 90px; height: 90px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; background-color: #e0f7fa; color: var(--primary-color); transition: all 0.5s ease-in-out; position: relative; }
+        .offer-card .icon { font-size: 60px; transition: all 0.5s ease-in-out; opacity: 1; }
+        .offer-card:hover .icon, .offer-card:focus .icon { transform: scale(1.1); }
+        .offer-card h3 { font-size: 28px; font-weight: 600; margin-bottom: 15px; }
+        .join-offer-btn {
+            display: inline-block;
+            background-color: var(--green-color);
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            border: none;
+        }
+        .join-offer-btn:hover, .join-offer-btn:focus {
+            background-color: var(--primary-color);
+        }
+        .join-offer-btn:active {
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transform: translateY(1px);
+        }
+        .dark-mode .offer-card .icon-wrapper { background-color: #2E3A59; }
 
-      /* --- Blog Section CSS (Updated to reduce space) --- */
-      .blog-section {
-          padding-bottom: 20px;
-          padding-top: 30px;
-          background-color: var(--background-color);
-      }
-      .blog-section h2 { font-size: 32px; margin-bottom: 20px; text-align: center; color: var(--text-color); }
-      .blog-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
-      .blog-card {
-          background-color: var(--card-bg);
-          border-radius: var(--border-radius);
-          box-shadow: var(--shadow-light);
-          overflow: hidden;
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-          display: flex;
-          flex-direction: column;
-          margin-bottom: 0;
-      }
-      .blog-card:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); }
-      .blog-card-image { width: 100%; height: 200px; object-fit: cover; display: block; }
-      .blog-card-content { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
-      .blog-card h3 { font-size: 20px; font-weight: 600; margin-bottom: 10px; line-height: 1.4; }
-      .blog-card p { font-size: 14px; color: var(--secondary-text); flex-grow: 1; margin-bottom: 15px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
-      .read-more-btn { display: inline-block; color: var(--primary-color); font-weight: 600; text-decoration: none; transition: color 0.3s ease; align-self: flex-start; }
-      .read-more-btn:hover { text-decoration: underline; }
+        /* --- Blog Section CSS (Updated to reduce space) --- */
+        .blog-section {
+            padding-bottom: 20px;
+            padding-top: 30px;
+            background-color: var(--background-color);
+        }
+        .blog-section h2 { font-size: 32px; margin-bottom: 20px; text-align: center; color: var(--text-color); }
+        .blog-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+        .blog-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 0;
+        }
+        .blog-card:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); }
+        .blog-card-image { width: 100%; height: 200px; object-fit: cover; display: block; }
+        .blog-card-content { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+        .blog-card h3 { font-size: 20px; font-weight: 600; margin-bottom: 10px; line-height: 1.4; }
+        .blog-card p { font-size: 14px; color: var(--secondary-text); flex-grow: 1; margin-bottom: 15px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+        .read-more-btn { display: inline-block; color: var(--primary-color); font-weight: 600; text-decoration: none; transition: color 0.3s ease; align-self: flex-start; }
+        .read-more-btn:hover { text-decoration: underline; }
 
-      /* --- Testimonials Section (Updated to reduce space) --- */
-      .testimonials-section {
-          padding: 20px 20px;
-          text-align: center;
-          background-color: var(--card-bg);
-      }
-      .testimonials-section h2 { font-size: 32px; margin-bottom: 10px; }
-      .testimonial-cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 40px; justify-content: center; }
+        /* --- Testimonials Section (Updated to reduce space) --- */
+        .testimonials-section {
+            padding: 20px 20px;
+            text-align: center;
+            background-color: var(--card-bg);
+        }
+        .testimonials-section h2 { font-size: 32px; margin-bottom: 10px; }
+        .testimonial-cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 40px; justify-content: center; }
 
-      /* ------------------------------------- */
-      /* --- START: User Requested Changes --- */
-      /* ------------------------------------- */
-      .testimonial-card {
-          background-color: var(--background-color);
-          padding: 30px;
-          border-radius: var(--border-radius);
-          text-align: left;
-          border: 1px solid #e0e0e0;
-          transition: transform 0.3s ease, opacity 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
-          display: flex;
-          flex-direction: column;
-          justify-content: center; /* Vertically center content */
-          opacity: 1;
-          position: relative;
-          /* Changed from 250px to a minimum height for flexibility */
-          min-height: 250px;
-          overflow: hidden;
-          box-shadow: var(--shadow-light); /* Added box shadow for consistency */
-      }
+        /* ------------------------------------- */
+        /* --- START: User Requested Changes --- */
+        /* ------------------------------------- */
+        .testimonial-card {
+            background-color: var(--background-color);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            text-align: left;
+            border: 1px solid #e0e0e0;
+            transition: transform 0.3s ease, opacity 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 1;
+            position: relative;
+            min-height: 250px;
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+        }
 
-      .testimonial-card:hover { transform: translateY(-5px); }
+        .testimonial-card:hover { transform: translateY(-5px); }
 
-      .testimonial-card p {
-          font-style: italic;
-          color: #555;
-          margin-bottom: 15px;
-          /* Increased font size for better readability */
-          font-size: 18px;
-          line-height: 1.4;
-      }
+        .testimonial-card p {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 15px;
+            font-size: 18px;
+            line-height: 1.4;
+        }
 
-      /* Responsive font size for smaller screens */
-      @media (max-width: 768px) {
-          .testimonial-card p {
-              font-size: 16px;
-          }
-      }
-      
-      .testimonial-card h4 {
-          font-size: 16px;
-          font-weight: 600;
-          color: var(--primary-color);
-      }
-      /* ----------------------------------- */
-      /* --- END: User Requested Changes --- */
-      /* ----------------------------------- */
+        @media (max-width: 768px) {
+            .testimonial-card p {
+                font-size: 16px;
+            }
+        }
+        
+        .testimonial-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        .dark-mode .testimonial-card { border-color: #333; }
+        .glow-effect { animation: glow 1.5s ease-in-out infinite; }
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(74, 144, 226, 0.2), 0 0 10px rgba(74, 144, 226, 0.1); }
+            50% { box-shadow: 0 0 10px rgba(74, 144, 226, 0.4), 0 0 20px rgba(74, 144, 226, 0.2); }
+            100% { box-shadow: 0 0 5px rgba(74, 144, 226, 0.2), 0 0 10px rgba(74, 144, 226, 0.1); }
+        }
+        .dark-mode .glow-effect {
+            animation: glow-dark 1.5s ease-in-out infinite;
+        }
+        @keyframes glow-dark {
+            0% { box-shadow: 0 0 5px rgba(107, 110, 234, 0.2), 0 0 10px rgba(107, 110, 234, 0.1); }
+            50% { box-shadow: 0 0 10px rgba(107, 110, 234, 0.4), 0 0 20px rgba(107, 110, 234, 0.2); }
+            100% { box-shadow: 0 0 5px rgba(107, 110, 234, 0.2), 0 0 10px rgba(107, 110, 234, 0.1); }
+        }
 
-      .dark-mode .testimonial-card { border-color: #333; }
+        /* --- Why Choose Us Section --- */
+        .why-choose-us-section { padding: 50px 20px; text-align: center; }
+        .why-choose-us-section h2 { font-size: 32px; margin-bottom: 20px; }
+        .benefits-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 30px; }
+        .benefit-card { background-color: var(--card-bg); padding: 20px; border-radius: var(--border-radius); box-shadow: var(--shadow-light); text-align: center; transition: transform 0.3s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 150px; }
+        .benefit-card:hover { transform: translateY(-5px); }
+        .benefit-card .icon-wrapper { width: 40px; height: 40px; border-radius: 50%; background-color: var(--primary-color); display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+        .benefit-card .icon { font-size: 20px; color: #fff; }
+        .benefit-card h3 { font-size: 16px; margin-bottom: 5px; }
+        .benefit-card p { font-size: 12px; color: var(--secondary-text); margin-bottom: 0; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
 
-      .glow-effect { animation: glow 1.5s ease-in-out infinite; }
-      @keyframes glow {
-          0% { box-shadow: 0 0 5px rgba(74, 144, 226, 0.2), 0 0 10px rgba(74, 144, 226, 0.1); }
-          50% { box-shadow: 0 0 10px rgba(74, 144, 226, 0.4), 0 0 20px rgba(74, 144, 226, 0.2); }
-          100% { box-shadow: 0 0 5px rgba(74, 144, 226, 0.2), 0 0 10px rgba(74, 144, 226, 0.1); }
-      }
-      .dark-mode .glow-effect {
-          animation: glow-dark 1.5s ease-in-out infinite;
-      }
-      @keyframes glow-dark {
-          0% { box-shadow: 0 0 5px rgba(107, 110, 234, 0.2), 0 0 10px rgba(107, 110, 234, 0.1); }
-          50% { box-shadow: 0 0 10px rgba(107, 110, 234, 0.4), 0 0 20px rgba(107, 110, 234, 0.2); }
-          100% { box-shadow: 0 0 5px rgba(107, 110, 234, 0.2), 0 0 10px rgba(107, 110, 234, 0.1); }
-      }
+        /* --- Footer --- */
+        .footer { text-align: center; padding: 30px 20px; margin-top: 50px; background-color: var(--card-bg); border-top: 1px solid #e0e0e0; position: relative; }
+        .dark-mode .footer { border-color: #333; }
+        .footer-container { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 1px solid #e0e0e0; flex-wrap: wrap; gap: 20px; }
+        .dark-mode .footer-container { border-color: #333; }
+        .footer-links-group { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; width: 100%; }
+        .footer p { margin-top: 15px; font-size: 14px; color: #666; }
+        .footer a, .footer button { background-color: transparent; border: none; padding: 8px 12px; font-size: 14px; font-weight: 600; color: var(--secondary-text); cursor: pointer; white-space: nowrap; transition: color 0.3s ease, background-color 0.3s ease; text-decoration: none; border-radius: 8px; }
+        .footer a:hover, .footer button:hover { color: var(--primary-color); background-color: var(--background-color); }
+        .ashiqur-btn, .download-btn { background-color: var(--background-color); border: 1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .dark-mode .ashiqur-btn, .dark-mode .download-btn { border-color: #444; }
+        .ashiqur-btn:hover, .download-btn:hover { background-color: var(--background-color); }
 
-      /* --- Why Choose Us Section --- */
-      .why-choose-us-section { padding: 50px 20px; text-align: center; }
-      .why-choose-us-section h2 { font-size: 32px; margin-bottom: 20px; }
-      .benefits-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 30px; }
-      .benefit-card { background-color: var(--card-bg); padding: 20px; border-radius: var(--border-radius); box-shadow: var(--shadow-light); text-align: center; transition: transform 0.3s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 150px; }
-      .benefit-card:hover { transform: translateY(-5px); }
-      .benefit-card .icon-wrapper { width: 40px; height: 40px; border-radius: 50%; background-color: var(--primary-color); display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
-      .benefit-card .icon { font-size: 20px; color: #fff; }
-      .benefit-card h3 { font-size: 16px; margin-bottom: 5px; }
-      .benefit-card p { font-size: 12px; color: var(--secondary-text); margin-bottom: 0; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+        .ashiqur-popup { position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%); background-color: var(--primary-color); color: #fff; padding: 15px 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); font-size: 16px; font-weight: 500; opacity: 0; visibility: hidden; transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); z-index: 20; white-space: nowrap; max-width: 90%; text-align: center; }
+        .ashiqur-popup.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(-20px); }
+        .ashiqur-popup.hide { opacity: 0; visibility: hidden; transform: translateX(-50%) translateY(20px); }
 
-      /* --- Footer --- */
-      .footer { text-align: center; padding: 30px 20px; margin-top: 50px; background-color: var(--card-bg); border-top: 1px solid #e0e0e0; position: relative; }
-      .dark-mode .footer { border-color: #333; }
-      .footer-container { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 1px solid #e0e0e0; flex-wrap: wrap; gap: 20px; }
-      .dark-mode .footer-container { border-color: #333; }
-      .footer-links-group { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; width: 100%; }
-      .footer p { margin-top: 15px; font-size: 14px; color: #666; }
-      .footer a, .footer button { background-color: transparent; border: none; padding: 8px 12px; font-size: 14px; font-weight: 600; color: var(--secondary-text); cursor: pointer; white-space: nowrap; transition: color 0.3s ease, background-color 0.3s ease; text-decoration: none; border-radius: 8px; }
-      .footer a:hover, .footer button:hover { color: var(--primary-color); background-color: var(--background-color); }
-      .ashiqur-btn, .download-btn { background-color: var(--background-color); border: 1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-      .dark-mode .ashiqur-btn, .dark-mode .download-btn { border-color: #444; }
-      .ashiqur-btn:hover, .download-btn:hover { background-color: var(--background-color); }
+        /* --- Mobile Responsiveness --- */
+        @media (max-width: 768px) {
+            .ad-container { margin: 0; }
+            .header { flex-direction: row; justify-content: space-between; align-items: center; padding-bottom: 5px; }
+            .logo a { font-size: 20px; }
+            .logo-icon { font-size: 24px; margin-right: 5px; }
+            .header-right { flex-direction: row; justify-content: flex-end; gap: 8px; }
+            .social-links { gap: 8px; }
+            .social-link { font-size: 16px; }
+            .language-switcher { display: flex; align-items: center; gap: 5px; }
+            .lang-btn { padding: 4px 8px; font-size: 12px; margin-left: 0; }
+            .mode-toggle { font-size: 18px; }
+            .hero-section {
+                padding: 20px 15px;
+                min-height: 150px;
+            }
+            .hero-title { font-size: 35px; }
+            .hero-section p { font-size: 13px; }
+            .filter-options { gap: 5px; flex-wrap: wrap; justify-content: center; }
+            .filter-btn { padding: 6px 12px; font-size: 12px; }
+            .tool-cards-grid, .testimonials-cards-grid, .benefits-grid, .blog-cards-grid, .offer-cards-grid { grid-template-columns: 1fr; }
+            .testimonial-card { height: auto; min-height: 200px; padding: 20px; }
+            .testimonial-card p { font-size: 14px; }
+            .footer-container { flex-direction: column; align-items: center; gap: 10px; }
+            .footer-links-group { order: 2; gap: 5px; }
+            .footer-buttons-wrapper { width: 100%; display: flex; justify-content: space-between; order: 1; }
+            .ashiqur-btn, .download-btn { padding: 6px 10px; font-size: 12px; }
+            .footer a { font-size: 12px; padding: 6px 8px; }
+            .ashiqur-popup { font-size: 14px; width: 90%; max-width: 300px; text-align: center; bottom: 120px; white-space: normal; }
+            .ad-container.mobile-ad { display: block; padding-left: 0; padding-right: 0; }
+            .ad-container.mobile-ad .ad-iframe-container { max-width: 100%; justify-content: center; overflow: hidden; }
+            .desktop-ad-inline {
+                display: none;
+            }
+            .desktop-ad-only { display: none; }
+            .offer-card-ad-mobile-wrapper {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 20px;
+            }
+            .blog-ad-mobile {
+                display: block;
+                margin-top: 25px;
+                text-align: center;
+            }
+        }
 
-      .ashiqur-popup { position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%); background-color: var(--primary-color); color: #fff; padding: 15px 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); font-size: 16px; font-weight: 500; opacity: 0; visibility: hidden; transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); z-index: 20; white-space: nowrap; max-width: 90%; text-align: center; }
-      .ashiqur-popup.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(-20px); }
-      .ashiqur-popup.hide { opacity: 0; visibility: hidden; transform: translateX(-50%) translateY(20px); }
+        /* --- Desktop Specific Styles --- */
+        @media (min-width: 769px) {
+            .tools-panel .tool-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+            .native-ad-container { grid-column: 1 / -1; width: 100%; text-align: center; margin: 0; display: block; }
+            .header-right { gap: 20px; }
+            .footer-container { flex-direction: row; justify-content: space-between; align-items: center; }
+            .footer-buttons-wrapper { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+            .footer-links-group { display: flex; flex-wrap: nowrap; justify-content: center; flex-grow: 1; gap: 20px; order: initial; }
+            .ashiqur-btn-wrapper, .download-btn-wrapper { flex-grow: 0; }
+            .ashiqur-btn-wrapper { margin-right: auto; }
+            .download-btn-wrapper { margin-left: auto; }
+            .ashiqur-popup { bottom: 80px; }
+            .ad-container.desktop-ad, .native-ad-container { display: block; }
+            .ad-container.desktop-ad .ad-iframe-container { max-width: 728px; }
+            .desktop-ad-inline {
+                display: block;
+            }
+            .desktop-ad-only { display: block; }
+            .offer-card-ad-desktop-wrapper {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 20px;
+            }
+            .offer-cards-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .blog-ad-mobile {
+                display: none;
+            }
+        }
+        
+        /* --- START: Mobile Pop-up Styles (New Addition) --- */
+        .mobile-notification-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-      /* --- Mobile Responsiveness --- */
-      @media (max-width: 768px) {
-          .ad-container { margin: 0; }
-          .header { flex-direction: row; justify-content: space-between; align-items: center; padding-bottom: 5px; }
-          /* Update: Small adjustments for mobile header to fit the new button */
-          .logo a { font-size: 20px; }
-          .logo-icon { font-size: 24px; margin-right: 5px; }
-          .header-right { flex-direction: row; justify-content: flex-end; gap: 8px; }
-          .social-links { gap: 8px; }
-          .social-link { font-size: 16px; }
-          .language-switcher { display: flex; align-items: center; gap: 5px; }
-          .lang-btn { padding: 4px 8px; font-size: 12px; margin-left: 0; }
-          .mode-toggle { font-size: 18px; }
-          /* --- User Requested Changes Start: Reduced Hero Section padding and min-height for mobile --- */
-          .hero-section { 
-              padding: 20px 15px; /* আগের 30px প্যাডিং কমিয়ে 20px করা হয়েছে */
-              min-height: 150px; /* আগের 250px থেকে কমিয়ে 150px করা হয়েছে */
-          }
-          /* --- User Requested Changes End --- */
-          .hero-title { font-size: 35px; } /* মোবাইলের জন্য স্টাইলিশ ফন্টের সাইজ */
-          .hero-section p { font-size: 13px; }
-          .filter-options { gap: 5px; flex-wrap: wrap; justify-content: center; }
-          .filter-btn { padding: 6px 12px; font-size: 12px; }
-          .tool-cards-grid, .testimonials-cards-grid, .benefits-grid, .blog-cards-grid, .offer-cards-grid { grid-template-columns: 1fr; }
-          .testimonial-card { height: auto; min-height: 200px; padding: 20px; } /* Adjust padding and height for mobile */
-          .testimonial-card p { font-size: 14px; } /* Further adjustment for mobile font size */
-          .footer-container { flex-direction: column; align-items: center; gap: 10px; }
-          .footer-links-group { order: 2; gap: 5px; }
-          .footer-buttons-wrapper { width: 100%; display: flex; justify-content: space-between; order: 1; }
-          .ashiqur-btn, .download-btn { padding: 6px 10px; font-size: 12px; }
-          .footer a { font-size: 12px; padding: 6px 8px; }
-          .ashiqur-popup { font-size: 14px; width: 90%; max-width: 300px; text-align: center; bottom: 120px; white-space: normal; }
-          .ad-container.mobile-ad { display: block; padding-left: 0; padding-right: 0; }
-          .ad-container.mobile-ad .ad-iframe-container { max-width: 100%; justify-content: center; overflow: hidden; }
-          /* Hide inline desktop ads on mobile */
-          .desktop-ad-inline {
-              display: none;
-          }
-          /* Hide desktop-only banner ads on mobile */
-          .desktop-ad-only { display: none; }
+        .mobile-notification-box {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+            max-width: 320px;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
 
-          /* Mobile ad specific styles for the third card */
-          .offer-card-ad-mobile-wrapper {
-              display: flex; /* মোবাইল ভিউতে দেখানোর জন্য */
-              flex-direction: column;
-              align-items: center;
-              margin-top: 20px;
-          }
-          
-          /* START: New CSS for blog ad on mobile */
-          .blog-ad-mobile {
-              display: block;
-              margin-top: 25px;
-              text-align: center;
-          }
-          /* END: New CSS for blog ad on mobile */
-      }
+        .mobile-notification-overlay.show {
+            display: flex;
+        }
 
-      /* --- Desktop Specific Styles --- */
-      @media (min-width: 769px) {
-          .tools-panel .tool-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
-          .native-ad-container { grid-column: 1 / -1; width: 100%; text-align: center; margin: 0; display: block; }
-          .header-right { gap: 20px; }
-          .footer-container { flex-direction: row; justify-content: space-between; align-items: center; }
-          .footer-buttons-wrapper { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-          .footer-links-group { display: flex; flex-wrap: nowrap; justify-content: center; flex-grow: 1; gap: 20px; order: initial; }
-          .ashiqur-btn-wrapper, .download-btn-wrapper { flex-grow: 0; }
-          .ashiqur-btn-wrapper { margin-right: auto; }
-          .download-btn-wrapper { margin-left: auto; }
-          .ashiqur-popup { bottom: 80px; }
-          .ad-container.desktop-ad, .native-ad-container { display: block; }
-          .ad-container.desktop-ad .ad-iframe-container { max-width: 728px; }
-          /* Show inline desktop ads on desktop */
-          .desktop-ad-inline {
-              display: block;
-          }
-          /* Show desktop-only banner ads on desktop */
-          .desktop-ad-only { display: block; }
+        .mobile-notification-overlay.show .mobile-notification-box {
+            transform: scale(1);
+            opacity: 1;
+        }
 
-          /* Desktop ad specific styles for the three cards */
-          .offer-card-ad-desktop-wrapper {
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              margin-top: 20px;
-          }
-          .offer-cards-grid {
-              grid-template-columns: repeat(3, 1fr);
-          }
-          
-          /* START: New CSS for blog ad on mobile (hidden on desktop) */
-          .blog-ad-mobile {
-              display: none;
-          }
-          /* END: New CSS for blog ad on mobile (hidden on desktop) */
-      }
-      
-      /* --- START: Mobile Pop-up Styles (New Addition) --- */
-      .mobile-notification-overlay {
-          display: none; /* By default, hidden */
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-color: rgba(0, 0, 0, 0.7);
-          z-index: 9999; /* Higher than any other element */
-          justify-content: center;
-          align-items: center;
-          padding: 20px;
-      }
+        .mobile-notification-box h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .mobile-notification-box p {
+            font-size: 16px;
+            line-height: 1.5;
+            color: var(--secondary-text);
+            margin-bottom: 25px;
+        }
 
-      .mobile-notification-box {
-          background-color: var(--card-bg);
-          color: var(--text-color);
-          padding: 30px;
-          border-radius: 12px;
-          text-align: center;
-          box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
-          max-width: 320px;
-          transform: scale(0.9);
-          opacity: 0;
-          transition: transform 0.3s ease, opacity 0.3s ease;
-      }
+        .notification-ok-btn {
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .notification-ok-btn:hover {
+            background-color: #2F6DB8;
+        }
 
-      .mobile-notification-overlay.show {
-          display: flex;
-      }
-
-      .mobile-notification-overlay.show .mobile-notification-box {
-          transform: scale(1);
-          opacity: 1;
-      }
-
-      .mobile-notification-box h3 {
-          font-size: 22px;
-          font-weight: 700;
-          margin-bottom: 10px;
-      }
-      
-      .mobile-notification-box p {
-          font-size: 16px;
-          line-height: 1.5;
-          color: var(--secondary-text);
-          margin-bottom: 25px;
-      }
-
-      .notification-ok-btn {
-          background-color: var(--primary-color);
-          color: #fff;
-          border: none;
-          padding: 12px 30px;
-          border-radius: 8px;
-          font-size: 16px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: background-color 0.2s ease;
-      }
-      
-      .notification-ok-btn:hover {
-          background-color: #2F6DB8;
-      }
-
-      /* This is the new CSS rule that solves the problem.
-        The ad is now wrapped in a div with the class .offer-card-ad-mobile,
-        which is only visible on mobile screens.
-      */
-      .offer-card-ad-mobile {
-          display: none;
-          width: 100%;
-          margin-top: 5px; /* এই লাইনটি পরিবর্তন করা হয়েছে */
-          text-align: center;
-      }
-      @media (max-width: 768px) {
-          .offer-card-ad-mobile {
-              display: block;
-          }
-      }
-  </style>
+        .offer-card-ad-mobile {
+            display: none;
+            width: 100%;
+            margin-top: 5px;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .offer-card-ad-mobile {
+                display: block;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-      <header class="header">
-          <div class="logo">
-              <a href="#">
-                  <i class="ri-rocket-2-line logo-icon"></i>
-                  <span class="nex-text">Nex</span><span class="tool-text">Tool</span> <span class="hub-text">Hub</span>
-              </a>
-          </div>
-          <div class="header-right">
-              <div class="social-links">
-                  <a href="#" class="social-link" aria-label="Facebook"><i class="ri-facebook-box-fill"></i></a>
-                  <a href="#" class="social-link" aria-label="Twitter"><i class="ri-twitter-x-fill"></i></a>
-                  <a href="#" class="social-link" aria-label="WhatsApp"><i class="ri-whatsapp-line"></i></a>
-              </div>
-              <button class="mode-toggle" aria-label="Toggle Dark/Light Mode">
-                  <i class="ri-sun-line"></i>
-                  <i class="ri-moon-line"></i>
-              </button>
-              <div class="language-switcher">
-                  <button class="lang-btn" data-lang="en" aria-label="Switch to English">EN</button>
-                  <button class="lang-btn" data-lang="bn" aria-label="Switch to Bengali">BN</button>
-              </div>
-          </div>
-      </header>
-  </div>
-
-  <div class="ad-container desktop-ad">
-      <div class="ad-iframe-container">
-          <script type="text/javascript">
-              atOptions = {
-                  'key' : '3107b60e8baa0d0e886adf12d55fbd7e',
-                  'format' : 'iframe',
-                  'height' : 90,
-                  'width' : 728,
-                  'params' : {}
-              };
-          </script>
-          <script type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
-      </div>
-  </div>
-
-  <div class="ad-container mobile-ad">
-      <div class="ad-iframe-container">
-          <script type="text/javascript">
-              atOptions = {
-                  'key' : '02a9c12a5270a25efa5325c0e42ffc59',
-                  'format' : 'iframe',
-                  'height' : 50,
-                  'width' : 320,
-                  'params' : {}
-              };
-          </script>
-          <script type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
-      </div>
-  </div>
-
-  <section class="hero-section">
-      <div class="paper-pieces-container">
-          <div class="paper-piece square" style="left: 10%; top: -10%; width: 10px; height: 10px; background-color: var(--paper-color1); animation: falling 80s linear infinite;"></div>
-          <div class="paper-piece triangle" style="left: 25%; top: -20%; width: 12px; height: 12px; background-color: var(--paper-color2); animation: diagonal-left 90s linear infinite;"></div>
-          <div class="paper-piece diamond" style="left: 40%; top: -5%; width: 8px; height: 8px; background-color: var(--paper-color3); animation: falling 70s linear infinite; animation-delay: 1s;"></div>
-          <div class="paper-piece square" style="left: 55%; top: -30%; width: 15px; height: 15px; background-color: var(--paper-color4); animation: diagonal-right 100s linear infinite; animation-delay: 2s;"></div>
-          <div class="paper-piece triangle" style="left: 70%; top: -15%; width: 10px; height: 10px; background-color: var(--paper-color5); animation: falling 85s linear infinite; animation-delay: 3s;"></div>
-          <div class="paper-piece diamond" style="left: 85%; top: -25%; width: 11px; height: 11px; background-color: var(--paper-color1); animation: diagonal-left 75s linear infinite; animation-delay: 0.5s;"></div>
-          <div class="paper-piece square" style="left: 35%; top: -5%; width: 9px; height: 9px; background-color: var(--paper-color2); animation: diagonal-right 95s linear infinite; animation-delay: 1.5s;"></div>
-          <div class="paper-piece triangle" style="left: 60%; top: -40%; width: 14px; height: 14px; background-color: var(--paper-color3); animation: falling 80s linear infinite; animation-delay: 2.5s;"></div>
-          <div class="paper-piece square" style="left: 15%; top: -45%; width: 7px; height: 7px; background-color: var(--paper-color4); animation: falling 65s linear infinite; animation-delay: 4s;"></div>
-          <div class="paper-piece diamond" style="left: 80%; top: -50%; width: 10px; height: 10px; background-color: var(--paper-color5); animation: diagonal-left 90s linear infinite; animation-delay: 3.5s;"></div>
-          <div class="paper-piece triangle" style="left: 45%; top: -60%; width: 13px; height: 13px; background-color: var(--paper-color1); animation: falling 78s linear infinite; animation-delay: 1s;"></div>
-          <div class="paper-piece square" style="left: 20%; top: -75%; width: 11px; height: 11px; background-color: var(--paper-color2); animation: diagonal-right 88s linear infinite; animation-delay: 2s;"></div>
-      </div>
-
-      <h1 class="hero-title" data-lang-en="Your Ultimate Digital Toolkit" data-lang-bn="আপনার ডিজিটাল কাজের সঙ্গী">Your Ultimate Digital Toolkit</h1>
-      <p data-lang-en="Essential tools for quick and efficient work." data-lang-bn="দ্রুত এবং দক্ষ কাজের জন্য প্রয়োজনীয় টুলস।">Essential tools for quick and efficient work.</p>
-  </section>
-
-  <div class="container">
-      <div class="search-bar-container">
-          <div class="search-input-wrapper">
-              <input type="text" id="search-input" class="search-input" data-lang-en="Search for any tool..." data-lang-bn="যেকোনো টুল খুঁজুন..." placeholder="Search for any tool..." aria-label="Search for tools">
-              <i class="ri-search-line search-icon"></i>
-          </div>
-      </div>
-
-      <div class="filter-options">
-          <button class="filter-btn all-btn active" data-lang-en="All" data-lang-bn="সব" data-filter="all" aria-pressed="true">All</button>
-          <button class="filter-btn" data-lang-en="Your Tools" data-lang-bn="আপনার টুলস" data-filter="tools" aria-pressed="false">Your Tools</button>
-          <button class="filter-btn" data-lang-en="Daily Offer" data-lang-bn="দিনের সেরা অফার" data-filter="daily-offer" aria-pressed="false">Daily Offer</button>
-          <button class="filter-btn" data-lang-en="Our Blog" data-lang-bn="আমাদের ব্লগ" data-filter="blog" aria-pressed="false">Our Blog</button>
-          <button class="filter-btn" data-lang-en="Testimonials" data-lang-bn="সাক্ষ্য" data-filter="testimonials" aria-pressed="false">Testimonials</button>
-          <button class="filter-btn" data-lang-en="Why Us?" data-lang-bn="কেন আমরা?" data-filter="why-us" aria-pressed="false">Why Us?</button>
-      </div>
-
-      <section id="tools-panel" class="tools-panel filterable-section visible">
-          <h2 class="on-scroll-animate" data-lang-en="Your Tools" data-lang-bn="আপনার টুলস">Your Tools</h2>
-          <div class="tool-cards-grid on-scroll-animate">
-              <div class="tool-card" tabindex="0" data-category="developer" data-lang-en-title="URL Shortener" data-lang-bn-title="URL শর্টনার" data-lang-en-desc="Shorten your long URLs with a custom alias for easy sharing." data-lang-bn-desc="আপনার লম্বা URL-কে কাস্টম নাম সহ ছোট করুন।">
-                  <div class="icon-wrapper"> <i class="ri-link-m icon"></i> </div>
-                  <h3 data-lang-en="URL Shortener" data-lang-bn="URL শর্টনার">URL Shortener</h3>
-                  <p data-lang-en="Shorten your long URLs with a custom alias for easy sharing." data-lang-bn="আপনার লম্বা URL-কে কাস্টম নাম সহ ছোট করুন।">Shorten your long URLs with a custom alias for easy sharing.</p>
-                  <a href="url_shortener.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
-              </div>
-              
-              <div class="mobile-ad-inline">
-                  <script type="text/javascript">
-                      atOptions = {
-                          'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
-                          'format' : 'iframe',
-                          'height' : 250,
-                          'width' : 300,
-                          'params' : {}
-                      };
-                  </script>
-                  <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
-              </div>
-              <div class="tool-card" tabindex="0" data-category="calculators" data-lang-en-title="Niche Calculators" data-lang-bn-title="নির্দিষ্ট ক্যালকুলেটর" data-lang-en-desc="A collection of specialized calculators like BMI, EMI, and more." data-lang-bn-desc="BMI, EMI, এবং অন্যান্য প্রয়োজনীয় ক্যালকুলেটর ব্যবহার করুন।">
-                  <div class="icon-wrapper"> <i class="ri-calculator-line icon"></i> </div>
-                  <h3 data-lang-en="Niche Calculators" data-lang-bn="নির্দিষ্ট ক্যালকুলেটর">Niche Calculators</h3>
-                  <p data-lang-en="A collection of specialized calculators like BMI, EMI, and more." data-lang-bn="BMI, EMI, এবং অন্যান্য প্রয়োজনীয় ক্যালকুলেটর ব্যবহার করুন।">A collection of specialized calculators like BMI, EMI, and more.</p>
-                  <a href="calculators.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
-              </div>
-              <div class="tool-card" tabindex="0" data-category="social" data-lang-en-title="Facebook Free Like Follow" data-lang-bn-title="ফেসবুক ফ্রি লাইক ফলো" data-lang-en-desc="Boost your Facebook page's likes and followers for free." data-lang-bn-desc="আপনার ফেসবুক পেজের লাইক এবং ফলোয়ার বিনামূল্যে বাড়ান।">
-                  <div class="icon-wrapper"> <i class="ri-facebook-fill icon"></i> </div>
-                  <h3 data-lang-en="Facebook Free Like Follow" data-lang-bn="ফেসবুক ফ্রি লাইক ফলো">Facebook Free Like Follow</h3>
-                  <p data-lang-en="Boost your Facebook page's likes and followers for free." data-lang-bn="আপনার ফেসবুক পেজের লাইক এবং ফলোয়ার বিনামূল্যে বাড়ান।">Boost your Facebook page's likes and followers for free.</p>
-                  <a href="facebook_likes.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
-              </div>
-
-              <div class="native-ad-container">
-                  <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script>
-                  <div id="container-45718544708b185acff6d14248cc94cd"></div>
-              </div>
-
-              <div class="tool-card" tabindex="0" data-category="utilities" data-lang-en-title="Text Counter" data-lang-bn-title="টেক্সট কাউন্টার" data-lang-en-desc="Count words, characters, and sentences in your text instantly." data-lang-bn-desc="আপনার লেখার শব্দ, অক্ষর এবং বাক্য দ্রুত গণনা করুন।">
-                  <div class="icon-wrapper"> <i class="ri-file-text-line icon"></i> </div>
-                  <h3 data-lang-en="Text Counter" data-lang-bn="টেক্সট কাউন্টার">Text Counter</h3>
-                  <p data-lang-en="Count words, characters, and sentences in your text instantly." data-lang-bn="আপনার লেখার শব্দ, অক্ষর এবং বাক্য দ্রুত গণনা করুন।">Count words, characters, and sentences in your text instantly.</p>
-                  <a href="text_counter.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
-              </div>
-              <div class="tool-card" tabindex="0" data-category="utilities" data-lang-en-title="Timer & Stopwatch" data-lang-bn-title="টাইমার ও স্টপওয়াচ" data-lang-en-desc="A simple and effective timer and stopwatch for all your needs." data-lang-bn-desc="আপনার সব প্রয়োজনের জন্য একটি সহজ এবং কার্যকরী টাইমার এবং স্টপওয়াচ।">
-                  <div class="icon-wrapper"> <i class="ri-timer-line icon"></i> </div>
-                  <h3 data-lang-en="Timer & Stopwatch" data-lang-bn="টাইমার ও স্টপওয়াচ">Timer & Stopwatch</h3>
-                  <p data-lang-en="A simple and effective timer and stopwatch for all your needs." data-lang-bn="আপনার সব প্রয়োজনের জন্য একটি সহজ এবং কার্যকরী টাইমার এবং স্টপওয়াচ।">A simple and effective timer and stopwatch for all your needs.</p>
-                  <a href="timer_stopwatch.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
-              </div>
-              <div class="tool-card" tabindex="0" data-category="calculators" data-lang-en-title="Unit Converter" data-lang-bn-title="ইউনিট কনভার্টার" data-lang-en-desc="Convert units of length, weight, temperature, and more effortlessly." data-lang-bn-desc="দৈর্ঘ্য, ওজন, তাপমাত্রা এবং আরও অনেক কিছুর একক সহজেই রূপান্তর করুন।">
-                  <div class="icon-wrapper"> <i class="ri-scales-3-line icon"></i> </div>
-                  <h3 data-lang-en="Unit Converter" data-lang-bn="ইউনিট কনভার্টার">Unit Converter</h3>
-                  <p data-lang-en="Convert units of length, weight, temperature, and more effortlessly." data-lang-bn="দৈর্ঘ্য, ওজন, তাপমাত্রা এবং আরও অনেক কিছুর একক সহজেই রূপান্তর করুন।">Convert units of length, weight, temperature, and more effortlessly.</p>
-                  <a href="unit_converter.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
-              </div>
-
-              <div class="mobile-ad-inline">
-                  <script type="text/javascript">
-                      atOptions = {
-                          'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
-                          'format' : 'iframe',
-                          'height' : 250,
-                          'width' : 300,
-                          'params' : {}
-                      };
-                  </script>
-                  <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
-              </div>
-              <div class="tool-card" tabindex="0" data-category="image-converter" data-lang-en-title="Image to PDF" data-lang-bn-title="ছবি থেকে PDF" data-lang-en-desc="Convert multiple images to a single PDF document easily." data-lang-bn-desc="একাধিক ছবিকে সহজেই একটি PDF ডকুমেন্টে রূপান্তর করুন।">
-                  <div class="icon-wrapper"> <i class="ri-file-image-line icon"></i> </div>
-                  <h3 data-lang-en="Image to PDF" data-lang-bn="ছবি থেকে PDF">Image to PDF</h3>
-                  <p data-lang-en="Convert multiple images to a single PDF document easily." data-lang-bn="একাধিক ছবিকে সহজেই একটি PDF ডকুমেন্টে রূপান্তর করুন।">Convert multiple images to a single PDF document easily.</p>
-                  <a href="image_to_pdf.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
-              </div>
-
-              <div class="tool-card" tabindex="0" data-category="utilities" data-lang-en-title="QR Code Generator" data-lang-bn-title="QR কোড জেনারেটর" data-lang-en-desc="Create scannable QR codes from text, links, or contacts." data-lang-bn-desc="টেক্সট, লিংক বা যোগাযোগ থেকে স্ক্যানযোগ্য QR কোড তৈরি করুন।">
-                  <div class="icon-wrapper"> <i class="ri-qr-code-line icon"></i> </div>
-                  <h3 data-lang-en="QR Code Generator" data-lang-bn="QR কোড জেনারেটর">QR Code Generator</h3>
-                  <p data-lang-en="Create scannable QR codes from text, links, or contacts." data-lang-bn="টেক্সট, লিংক বা যোগাযোগ থেকে স্ক্যানযোগ্য QR কোড তৈরি করুন।">Create scannable QR codes from text, links, or contacts.</p>
-                  <a href="qr_code_generator.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
-              </div>
-
-              <div class="tool-card" tabindex="0" data-category="security" data-lang-en-title="Password Generator" data-lang-bn-title="পাসওয়ার্ড জেনারেটর" data-lang-en-desc="Generate strong, secure, and unique passwords instantly." data-lang-bn-desc="শক্তিশালী, সুরক্ষিত এবং অনন্য পাসওয়ার্ড দ্রুত তৈরি করুন।">
-                  <div class="icon-wrapper"> <i class="ri-lock-password-line icon"></i> </div>
-                  <h3 data-lang-en="Password Generator" data-lang-bn="পাসওয়ার্ড জেনারেটর">Password Generator</h3>
-                  <p data-lang-en="Generate strong, secure, and unique passwords instantly." data-lang-bn="শক্তিশালী, সুরক্ষিত এবং অনন্য পাসওয়ার্ড দ্রুত তৈরি করুন।">Generate strong, secure, and unique passwords instantly.</p>
-                  <a href="password_generator.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
-              </div>
-              
-              <div class="desktop-ad-inline">
-                  <script type="text/javascript">
-                      atOptions = {
-                          'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
-                          'format' : 'iframe',
-                          'height' : 250,
-                          'width' : 300,
-                          'params' : {}
-                      };
-                  </script>
-                  <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
-              </div>
-              
-              <div class="desktop-ad-inline">
-                  <script type="text/javascript">
-                      atOptions = {
-                          'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
-                          'format' : 'iframe',
-                          'height' : 250,
-                          'width' : 300,
-                          'params' : {}
-                      };
-                  </script>
-                  <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
-              </div>
-
-              <div class="offer-card-wrapper">
-                  <div class="desktop-ad-inline">
-                      <script type="text/javascript">
-                          atOptions = {
-                              'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
-                              'format' : 'iframe',
-                              'height' : 250,
-                              'width' : 300,
-                              'params' : {}
-                          };
-                      </script>
-                      <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
-                  </div>
-                  <div class="ad-container mobile-ad">
-                      <div class="ad-iframe-container">
-                          <script type="text/javascript">
-                              atOptions = {
-                                  'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
-                                  'format' : 'iframe',
-                                  'height' : 250,
-                                  'width' : 300,
-                                  'params' : {}
-                              };
-                          </script>
-                          <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
-                      </div>
-                  </div>
-              </div>
-              </div>
-          <p class="no-results" data-align-en="center" data-lang-en="No tools found for your search." data-lang-bn="আপনার অনুসন্ধানের জন্য কোনো টুল পাওয়া যায়নি।">No tools found for your search.</p>
-      </section>
-
-      <section id="daily-offer-section" class="daily-offer-section filterable-section visible">
-          <h2 class="on-scroll-animate" data-lang-en="Daily Offer" data-lang-bn="দিনের সেরা অফার">Daily Offer</h2>
-          <div class="offer-cards-grid on-scroll-animate">
-
-              <div class="offer-card-wrapper">
-                  <div class="offer-card" data-card-index="0" tabindex="0">
-                      <div class="icon-wrapper">
-                          <i class="ri-money-dollar-circle-line icon"></i>
-                      </div>
-                      <h3 data-lang-en="Income" data-lang-bn="ইনকাম">Income</h3>
-                      <p data-lang-en="Earn $100 daily from home." data-lang-bn="ঘরে বসে রোজ $100 আয় করুন।">Earn $100 daily from home.</p>
-                      <a href="" class="join-offer-btn" data-lang-en="Join Offer" data-lang-bn="অফারে যোগ দিন" target="_blank" rel="noopener noreferrer">Join Offer</a>
-                  </div>
-                  <div class="desktop-ad-inline">
-                      <script type="text/javascript">
-                          atOptions = {
-                              'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
-                              'format' : 'iframe',
-                              'height' : 250,
-                              'width' : 300,
-                              'params' : {}
-                          };
-                      </script>
-                      <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
-                  </div>
-              </div>
-
-              <div class="offer-card-wrapper">
-                  <div class="offer-card" data-card-index="1" tabindex="0">
-                      <div class="icon-wrapper">
-                          <i class="ri-task-line icon"></i>
-                      </div>
-                      <h3 data-lang-en="Tasks" data-lang-bn="কাজ">Tasks</h3>
-                      <p data-lang-en="Make money with simple online tasks." data-lang-bn="সহজ অনলাইন কাজ করে টাকা আয় করুন।">Make money with simple online tasks.</p>
-                      <a href="" class="join-offer-btn" data-lang-en="Join Offer" data-lang-bn="অফারে যোগ দিন" target="_blank" rel="noopener noreferrer">Join Offer</a>
-                  </div>
-                  <div class="desktop-ad-inline">
-                      <script type="text/javascript">
-                          atOptions = {
-                              'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
-                              'format' : 'iframe',
-                              'height' : 250,
-                              'width' : 300,
-                              'params' : {}
-                          };
-                      </script>
-                      <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
-                  </div>
-              </div>
-
-              <div class="offer-card-wrapper">
-                  <div class="offer-card" data-card-index="2" tabindex="0">
-                      <div class="icon-wrapper">
-                          <i class="ri-team-line icon"></i>
-                      </div>
-                      <h3 data-lang-en="Community" data-lang-bn="কমিউনিটি">Community</h3>
-                      <p data-lang-en="Start your online business with us." data-lang-bn="আমাদের সাথে আপনার অনলাইন ব্যবসা শুরু করুন।">Start your online business with us.</p>
-                      <a href="" class="join-offer-btn" data-lang-en="Join Offer" data-lang-bn="অফারে যোগ দিন" target="_blank" rel="noopener noreferrer">Join Offer</a>
-                  </div>
-                  <div class="desktop-ad-inline">
-                      <script type="text/javascript">
-                          atOptions = {
-                              'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
-                              'format' : 'iframe',
-                              'height' : 250,
-                              'width' : 300,
-                              'params' : {}
-                          };
-                      </script>
-                      <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
-                  </div>
-              </div>
-              <div class="offer-card-ad-mobile">
-                  <div class="ad-iframe-container">
-                      <script type="text/javascript">
-                          atOptions = {
-                              'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
-                              'format' : 'iframe',
-                              'height' : 250,
-                              'width' : 300,
-                              'params' : {}
-                          };
-                      </script>
-                      <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
-                  </div>
-              </div>
-
-          </div>
-      </section>
-
-      <section id="new-blog-section" class="blog-section filterable-section visible">
-          <h2 class="on-scroll-animate" data-lang-en="Latest from Our Blog" data-lang-bn="আমাদের ব্লগ থেকে নতুন লেখা">Latest from Our Blog</h2>
-          <div class="blog-cards-grid on-scroll-animate">
-              <div class="blog-card">
-                  <img src="http://googleusercontent.com/generated_image_content/0" alt="A futuristic digital workstation with a laptop, glowing charts, a holographic calendar, and a glowing digital assistant icon, representing secret productivity hacks." class="blog-card-image">
-                  <div class="blog-card-content">
-                      <h3 data-lang-en="Unleash Your Productivity: 7 Secret Hacks for Digital Success" data-lang-bn="আপনার উৎপাদনশীলতা বাড়ান: ডিজিটাল সাফল্যের ৭ গোপন কৌশল">Unleash Your Productivity: 7 Secret Hacks for Digital Success</h3>
-                      <p data-lang-en="Discover the ultimate techniques to supercharge your daily workflow and save hours of time. These simple tricks will change how you work forever." data-lang-bn="আপনার দৈনন্দিন কাজের গতি বাড়াতে এবং মূল্যবান সময় বাঁচাতে দারুণ কিছু কৌশল আবিষ্কার করুন। এই সাধারণ কৌশলগুলি আপনার কাজ করার পদ্ধতি চিরতরে বদলে দেবে।">Discover the ultimate techniques to supercharge your daily workflow and save hours of time. These simple tricks will change how you work forever.</p>
-                      <a href="" class="use-tool-btn" data-lang-en="Read More" data-lang-bn="আরও পড়ুন" target="_blank" rel="noopener noreferrer">Read More <i class="ri-arrow-right-line"></i></a>
-                  </div>
-              </div>
-              <div class="blog-card">
-                  <img src="http://googleusercontent.com/generated_image_content/1" alt="A vibrant image of a Facebook logo with a rapidly ascending growth chart, with the year 2025 and social media icons, symbolizing a guide to gaining free followers." class="blog-card-image">
-                  <div class="blog-card-content">
-                      <h3 data-lang-en="The Ultimate Guide to Gaining Free Facebook Followers in 2025" data-lang-bn="২০২৫ সালে বিনামূল্যে ফেসবুক ফলোয়ার পাওয়ার সেরা গাইড">The Ultimate Guide to Gaining Free Facebook Followers in 2025</h3>
-                      <p data-lang-en="Want to grow your Facebook page without spending a dime? Our step-by-step guide reveals the best free methods that actually work." data-lang-bn="কোনো খরচ ছাড়াই আপনার ফেসবুক পেজ বড় করতে চান? আমাদের ধাপে ধাপে নির্দেশিকাটি এমন কিছু সেরা বিনামূল্যে পদ্ধতি প্রকাশ করবে যা সত্যিই কাজ করে।">Want to grow your Facebook page without spending a dime? Our step-by-step guide reveals the best free methods that actually work.</p>
-                      <a href="" class="use-tool-btn" data-lang-en="Read More" data-lang-bn="আরও পড়ুন" target="_blank" rel="noopener noreferrer">Read More <i class="ri-arrow-right-line"></i></a>
-                  </div>
-              </div>
-              <div class="blog-card">
-                  <img src="http://googleusercontent.com/generated_image_content/2" alt="A dramatic image showing a tangled, long URL chain transforming into a clean, short, and glowing link, with a golden key, representing professional branding with a URL shortener." class="blog-card-image">
-                  <div class="blog-card-content">
-                      <h3 data-lang-en="Why You Need a URL Shortener: The Key to Professional Branding" data-lang-bn="কেন আপনার URL শর্টনার প্রয়োজন: পেশাদার ব্র্যান্ডিংয়ের মূল চাবিকাঠি">Why You Need a URL Shortener: The Key to Professional Branding</h3>
-                      <p data-lang-en="Learn how a simple URL shortener can transform your branding and improve your marketing campaigns. It's more than just a short link." data-lang-bn="একটি সাধারণ URL শর্টনার কীভাবে আপনার ব্র্যান্ডিংকে উন্নত করতে এবং আপনার বিপণন প্রচারাভিযানকে আরও কার্যকরী করতে পারে তা জানুন।">Learn how a simple URL shortener can transform your branding and improve your marketing campaigns. It's more than just a short link.</p>
-                      <a href="" class="use-tool-btn" data-lang-en="Read More" data-lang-bn="আরও পড়ুন" target="_blank" rel="noopener noreferrer">Read More <i class="ri-arrow-right-line"></i></a>
-                  </div>
-              </div>
-              <div class="blog-ad-mobile">
-                <script type="text/javascript">
-                    atOptions = {
-                        'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
-                        'format' : 'iframe',
-                        'height' : 250,
-                        'width' : 300,
-                        'params' : {}
-                    };
-                </script>
-                <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
-              </div>
-          </div>
-          <div class="ad-container desktop-ad-only" style="margin-top: 25px;">
-              <div class="ad-iframe-container">
-                  <script type="text/javascript"> 	atOptions = { 		'key' : '3107b60e8baa0d0e886adf12d55fbd7e', 		'format' : 'iframe', 		'height' : 90, 		'width' : 728, 		'params' : {} 	}; </script>
-                  <script type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
-              </div>
-          </div>
-      </section>
-      <section id="testimonials-section" class="testimonials-section filterable-section visible">
-          <h2 class="on-scroll-animate" data-lang-en="What Our Users Say" data-lang-bn="ব্যবহারকারীরা যা বলেন">What Our Users Say</h2>
-          <div class="testimonial-cards-grid on-scroll-animate">
-              <div class="testimonial-card" id="testimonial-card-0">
-                  <p class="testimonial-text"></p>
-                  <h4 class="testimonial-author"></h4>
-              </div>
-              <div class="testimonial-card" id="testimonial-card-1">
-                  <p class="testimonial-text"></p>
-                  <h4 class="testimonial-author"></h4>
-              </div>
-          </div>
-      </section>
-
-      <section id="why-choose-us-section" class="why-choose-us-section filterable-section visible">
-          <h2 class="on-scroll-animate" data-lang-en="Why Choose Our Tools?" data-lang-bn="কেন আমাদের টুল ব্যবহার করবেন?">Why Choose Our Tools?</h2>
-          <div class="benefits-grid on-scroll-animate">
-              <div class="benefit-card">
-                  <div class="icon-wrapper"> <i class="ri-flashlight-line icon"></i> </div>
-                  <h3 data-lang-en="Fast & Efficient" data-lang-bn="দ্রুত এবং কার্যকরী">Fast & Efficient</h3>
-                  <p data-lang-en="Our tools are designed to work instantly, helping you save time and boost productivity." data-lang-bn="আমাদের টুলগুলো দ্রুত কাজ করার জন্য তৈরি, যা আপনার সময় বাঁচায় এবং উৎপাদনশীলতা বাড়ায়।">Our tools are designed to work instantly, helping you save time and boost productivity.</p>
-              </div>
-              <div class="benefit-card">
-                  <div class="icon-wrapper"> <i class="ri-shield-check-line icon"></i> </div>
-                  <h3 data-lang-en="Secure & Private" data-lang-bn="সুরক্ষিত এবং ব্যক্তিগত">Secure & Private</h3>
-                  <p data-lang-en="Your data is processed locally in your browser, ensuring complete privacy." data-lang-bn="আপনার ডেটা আপনার ব্রাউজারে স্থানীয়ভাবে প্রক্রিয়াকরণ করা হয়, যা সম্পূর্ণ গোপনীয়তা নিশ্চিত করে।">Your data is processed locally in your browser, ensuring complete privacy.</p>
-              </div>
-              <div class="benefit-card">
-                  <div class="icon-wrapper"> <i class="ri-wallet-3-line icon"></i> </div>
-                  <h3 data-lang-en="Completely Free" data-lang-bn="সম্পূর্ণ বিনামূল্যে">Completely Free</h3>
-                  <p data-lang-en="All our tools are free to use without any hidden costs or subscriptions." data-lang-bn="আমাদের সমস্ত টুল কোনো লুকানো খরচ বা সাবস্ক্রিপশন ছাড়াই বিনামূল্যে ব্যবহার করা যায়।">All our tools are free to use without any hidden costs or subscriptions.</p>
-              </div>
-          </div>
-      </section>
-  </div>
-
-  <footer class="footer">
-      <div class="container footer-container">
-          <div class="footer-buttons-wrapper">
-              <div class="ashiqur-btn-wrapper">
-                  <button class="ashiqur-btn" data-lang-en="ASHIQUR" data-lang-bn="আশিকুর">ASHIQUR</button>
-              </div>
-              <div class="download-btn-wrapper">
-                  <a href="http://download.com/" class="download-btn" data-lang-en="Download" data-lang-bn="ডাউনলোড" target="_blank" rel="noopener noreferrer">Download</a>
-              </div>
-          </div>
-
-          <div class="footer-links-group">
-              <a href="#" data-lang-en="About Us" data-lang-bn="আমাদের সম্পর্কে">About Us</a>
-              <a href="#" data-lang-en="Contact" data-lang-bn="যোগাযোগ">Contact</a>
-              <a href="#" data-lang-en="Terms" data-lang-bn="শর্তাবলী">Terms</a>
-              <a href="#" data-lang-en="Privacy" data-lang-bn="গোপনীয়তা">Privacy</a>
-          </div>
-      </div>
-      <p data-lang-en="&copy; 2025 NexTool Hub. All rights reserved." data-lang-bn="&copy; 2025 নেক্সটুল হাব। সর্বস্বত্ব সংরক্ষিত।">&copy; 2025 NexTool Hub. All rights reserved.</p>
-
-      <div class="ashiqur-popup" id="ashiqur-popup">
-          <span data-lang-bn="আমার নাম আশিকুর রহমান সুলতান। আমি আমার পক্ষ থেকে আপনাকে জানাই 'স্বাগতম'" data-lang-en="My name is Ashikur Rahman Sultan. I welcome you on my behalf."></span>
-      </div>
-  </footer>
-
-  <div id="mobile-notification-overlay" class="mobile-notification-overlay">
-      <div class="mobile-notification-box">
-          <h3 data-lang-en="Switch to Desktop Mode" data-lang-bn="ডেস্কটপ মোড চালু করুন">Switch to Desktop Mode</h3>
-          <p data-lang-en="For a better and smoother experience, please enable Desktop Mode on your browser." data-lang-bn="আরও ভালো অভিজ্ঞতার জন্য, আপনার ব্রাউজারে ডেস্কটপ মোড চালু করুন।">For a better and smoother experience, please enable Desktop Mode on your browser.</p>
-          <button id="notification-ok-btn" class="notification-ok-btn" data-lang-en="Continue" data-lang-bn="চালিয়ে যান">Continue</button>
-      </div>
-  </div>
-  <script>
-      document.addEventListener('DOMContentLoaded', () => {
-          const langButtons = document.querySelectorAll('.lang-btn');
-          const filterButtons = document.querySelectorAll('.filter-btn');
-          const sections = document.querySelectorAll('.filterable-section');
-          const ashiqurBtn = document.querySelector('.ashiqur-btn');
-          const ashiqurPopup = document.getElementById('ashiqur-popup');
-          const searchInput = document.getElementById('search-input');
-          const toolCards = document.querySelectorAll('.tool-card');
-          const noResultsMessage = document.querySelector('.no-results');
-          const modeToggleBtn = document.querySelector('.mode-toggle');
-
-          // --- START: New Mobile Pop-up Logic ---
-          const mobileOverlay = document.getElementById('mobile-notification-overlay');
-          const okBtn = document.getElementById('notification-ok-btn');
-          const popupHasBeenShown = sessionStorage.getItem('popupShown');
-
-          // Check if it's a mobile device and the popup hasn't been shown yet
-          if (window.innerWidth <= 768 && !popupHasBeenShown) {
-              mobileOverlay.classList.add('show');
-          }
-
-          // Hide popup when "OK" button is clicked
-          okBtn.addEventListener('click', () => {
-              mobileOverlay.classList.remove('show');
-              sessionStorage.setItem('popupShown', 'true'); // Store in session to prevent repeat popups on same session
-          });
-
-          // Hide popup when clicking outside the box
-          mobileOverlay.addEventListener('click', (event) => {
-              if (event.target === mobileOverlay) {
-                  mobileOverlay.classList.remove('show');
-                  sessionStorage.setItem('popupShown', 'true');
-              }
-          });
-          // --- END: New Mobile Pop-up Logic ---
-
-
-          const testimonials = [
-              { en: { text: "“I’ve shortened my long links with a custom alias. It’s a killer feature for my campaigns!”", author: "- Arif Chowdhury" }, bn: { text: "“আমি কাস্টম নাম দিয়ে আমার লম্বা লিঙ্কগুলো ছোট করতে পেরেছি। এটি আমার প্রচারণার জন্য একটি দারুণ ফিচার!”", author: "- আরিফ চৌধুরী" } },
-              { en: { text: "“This URL shortener is a game-changer! My links look professional now. Absolutely brilliant.”", author: "- Nabila Haque" }, bn: { text: "“এই URL শর্টনারটি অসাধারণ! আমার লিঙ্কগুলো এখন অনেক পেশাদার লাগছে। সত্যিই দুর্দান্ত।”", author: "- নাবিলা হক" } },
-              { en: { text: "“The free Facebook likes and follows tool is incredible! I've seen a huge boost in my page engagement.”", author: "- John Smith, USA" }, bn: { text: "“এই ফ্রি ফেসবুক লাইক এবং ফলো টুলটি অসাধারণ! আমার পেজের এনগেজমেন্ট অনেক বেড়ে গেছে।”", author: "- জন স্মিথ, ইউএসএ" } },
-              { en: { text: "“I use the niche calculators daily for my business. They are accurate and easy to use. Great work!”", author: "- Emily Chen, Canada" }, bn: { text: "“আমার ব্যবসার জন্য আমি প্রতিদিন এই ক্যালকুলেটরগুলো ব্যবহার করি। এগুলি খুবই সঠিক এবং ব্যবহার করা সহজ। দারুণ কাজ!”", author: "- এমিলি চেন, কানাডা" } },
-              { en: { text: "“I love the clean design and the variety of tools on this panel. It's my go-to for daily tasks.”", author: "- David Williams, USA" }, bn: { text: "“এই প্যানেলের পরিষ্কার ডিজাইন এবং বিভিন্ন টুল আমার খুব ভালো লাগে। প্রতিদিনের কাজের জন্য এটিই আমার প্রথম পছন্দ।”", author: "- ডেভিড উইলিয়ামস, ইউএসএ" } },
-              { en: { text: "“The URL shortener is lightning-fast and the custom alias feature is a must-have for any marketer.”", author: "- Liam Johnson, Canada" }, bn: { text: "“URL শর্টনারটি বিদ্যুতের মতো দ্রুত কাজ করে এবং কাস্টম নামের ফিচারটি যেকোনো মার্কেটারের জন্য আবশ্যক।”", author: "- লিয়াম জনসন, কানাডা" } },
-              { en: { text: "“Finally, a free tool for Facebook likes that actually works. Highly recommended!”", author: "- Olivia Davis, USA" }, bn: { text: "“অবশেষে, ফেসবুক লাইকের জন্য একটি ফ্রি টুল পেলাম যা সত্যিই কাজ করে। অত্যন্ত সুপারিশ করছি!”", author: "- অলিভিয়া ডেভিস, ইউএসএ" } },
-              { en: { text: "“Your website is a treasure trove of useful tools. The BMI calculator is a nice touch!”", author: "- Noah Davis, Canada" }, bn: { text: "“আপনাদের ওয়েবসাইটটি দরকারী টুলের এক ভাণ্ডার। BMI ক্যালকুলেটরটি একটি চমৎকার সংযোজন!”", author: "- নোয়া ডেভিস, কানাডা" } },
-              { en: { text: "“The panel is so easy to navigate. I found exactly what I needed in seconds. Fantastic user experience.”", author: "- Sarah Parker, USA" }, bn: { text: "“এই প্যানেলটি ব্যবহার করা খুবই সহজ। আমি কয়েক সেকেন্ডের মধ্যে আমার প্রয়োজনীয় টুল খুঁজে পেয়েছি। দারুণ ইউজার এক্সপেরিয়েন্স।”", author: "- সারা পার্কার, ইউএসএ" } },
-              { en: { text: "“The Facebook follower tool helped me reach more people without any cost. I'm very impressed.”", author: "- Mark Evans, Canada" }, bn: { text: "“ফেসবুক ফলোয়ার টুলটি আমাকে কোনো খরচ ছাড়াই বেশি মানুষের কাছে পৌঁছাতে সাহায্য করেছে। আমি মুগ্ধ।”", author: "- মার্ক ইভান্স, কানাডা" } }
-          ];
-
-          const testimonialCards = document.querySelectorAll('.testimonial-card');
-          const testimonialTexts = document.querySelectorAll('.testimonial-text');
-          const testimonialAuthors = document.querySelectorAll('.testimonial-author');
-          let currentTestimonialIndex = 0;
-          let cardToUpdateIndex = 0;
-          let testimonialIntervalId;
-
-          function updateTestimonials(lang) {
-              if (testimonialTexts[0] && testimonials[0][lang]) {
-                  testimonialTexts[0].textContent = testimonials[0][lang].text;
-                  testimonialAuthors[0].textContent = testimonials[0][lang].author;
-              }
-              if (testimonialTexts[1] && testimonials[1][lang]) {
-                  testimonialTexts[1].textContent = testimonials[1][lang].text;
-                  testimonialAuthors[1].textContent = testimonials[1][lang].author;
-              }
-          }
-
-          function rotateTestimonials() {
-              const lang = document.querySelector('.lang-btn.active').dataset.lang;
-
-              const cardToUpdate = testimonialCards[cardToUpdateIndex];
-              const staticCard = testimonialCards[1 - cardToUpdateIndex];
-
-              cardToUpdate.style.opacity = 0;
-              staticCard.classList.add('glow-effect');
-
-              setTimeout(() => {
-                  currentTestimonialIndex = (currentTestimonialIndex + 1) % testimonials.length;
-                  const nextTestimonial = testimonials[currentTestimonialIndex];
-
-                  testimonialTexts[cardToUpdateIndex].textContent = nextTestimonial[lang].text;
-                  testimonialAuthors[cardToUpdateIndex].textContent = nextTestimonial[lang].author;
-
-                  cardToUpdate.style.opacity = 1;
-                  staticCard.classList.remove('glow-effect');
-
-                  cardToUpdateIndex = 1 - cardToUpdateIndex;
-              }, 500);
-          }
-
-          function startTestimonialRotation() {
-              if (testimonialIntervalId) {
-                  clearInterval(testimonialIntervalId);
-              }
-              testimonialIntervalId = setInterval(rotateTestimonials, 5000);
-          }
-
-          const offerData = [
-              {
-                  en: { title: "Income", text: "Earn $100 daily from home.", icon: "ri-money-dollar-circle-line" },
-                  bn: { title: "ইনকাম", text: "ঘরে বসে রোজ $100 আয় করুন।", icon: "ri-money-dollar-circle-line" }
-              },
-              {
-                  en: { title: "Tasks", text: "Make money with simple online tasks.", icon: "ri-task-line" },
-                  bn: { title: "কাজ", text: "সহজ অনলাইন কাজ করে টাকা আয় করুন।", icon: "ri-task-line" }
-              },
-              {
-                  en: { title: "Community", text: "Start your online business with us.", icon: "ri-team-line" },
-                  bn: { title: "কমিউনিটি", text: "আমাদের সাথে আপনার অনলাইন ব্যবসা শুরু করুন।", icon: "ri-team-line" }
-              },
-              {
-                  en: { title: "Freedom", text: "Your first step to financial freedom.", icon: "ri-hand-coin-line" },
-                  bn: { title: "স্বাধীনতা", text: "আর্থিক স্বাধীনতার পথে আপনার প্রথম ধাপ।", icon: "ri-hand-coin-line" }
-              },
-              {
-                  en: { title: "Profit", text: "Turn your spare time into profit.", icon: "ri-pie-chart-2-line" },
-                  bn: { title: "লাভ", text: "আপনার অতিরিক্ত সময়কে আয়ে পরিণত করুন।", icon: "ri-pie-chart-2-line" }
-              },
-              {
-                  en: { title: "Cash", text: "Daily payouts, instant cash.", icon: "ri-wallet-3-line" },
-                  bn: { title: "ক্যাশ", text: "প্রতিদিনের পেমেন্ট, সাথে সাথে টাকা।", icon: "ri-wallet-3-line" }
-              },
-              {
-                  en: { title: "Unlock", text: "Unlock a new income stream.", icon: "ri-key-2-line" },
-                  bn: { title: "সুযোগ", text: "আয় করার নতুন রাস্তা খুলে নিন।", icon: "ri-key-2-line" }
-              },
-              {
-                  en: { title: "Secrets", text: "Passive income secrets revealed.", icon: "ri-sparkling-2-line" },
-                  bn: { title: "গোপন", text: "প্যাসিভ ইনকামের গোপন রহস্য জানুন।", icon: "ri-sparkling-2-line" }
-              },
-              {
-                  en: { title: "Success", text: "Join the millionaire's club.", icon: "ri-medal-line" },
-                  bn: { title: "সাফল্য", text: "মিলিয়নেয়ারদের ক্লাবে যোগ দিন।", icon: "ri-medal-line" }
-              }
-          ];
-
-          const offerCards = document.querySelectorAll('.offer-card');
-          let currentOfferSetIndex = 0;
-          let offerIntervalId;
-
-          function rotateOffers() {
-              const lang = document.querySelector('.lang-btn.active').dataset.lang;
-
-              offerCards.forEach(card => {
-                  card.querySelector('p').style.opacity = 0;
-                  card.querySelector('.icon').style.opacity = 0;
-              });
-
-              setTimeout(() => {
-                  for (let i = 0; i < 3; i++) {
-                      const card = offerCards[i];
-                      const data = offerData[currentOfferSetIndex + i];
-
-                      card.querySelector('h3').textContent = data[lang].title;
-                      card.querySelector('p').textContent = data[lang].text;
-                      card.querySelector('.icon').className = `${data[lang].icon} icon`;
-                  }
-
-                  offerCards.forEach(card => {
-                      card.querySelector('p').style.opacity = 1;
-                      card.querySelector('.icon').style.opacity = 1;
-                  });
-
-                  currentOfferSetIndex = (currentOfferSetIndex + 3) % offerData.length;
-              }, 500);
-          }
-
-          function startOfferRotation() {
-              if (offerIntervalId) {
-                  clearInterval(offerIntervalId);
-              }
-              testimonialIntervalId = setInterval(rotateOffers, 6000);
-          }
-
-          const sectionMap = {
-              'tools': 'tools-panel',
-              'daily-offer': 'daily-offer-section',
-              'blog': 'new-blog-section',
-              'testimonials': 'testimonials-section',
-              'why-us': 'why-choose-us-section'
-          };
-
-          function filterSections(filter) {
-              sections.forEach(section => {
-                  const sectionId = section.id;
-                  const isVisible = (filter === 'all' || sectionId === sectionMap[filter]);
-
-                  if (isVisible) {
-                      section.classList.remove('hidden');
-                      section.classList.add('visible');
-                  } else {
-                      section.classList.add('hidden');
-                      section.classList.remove('visible');
-                  }
-              });
-          }
-
-          function scrollToSection(sectionId) {
-              const targetSection = document.getElementById(sectionId);
-              if (targetSection) {
-                  const headerOffset = 80;
-                  const elementPosition = targetSection.getBoundingClientRect().top;
-                  const offsetPosition = elementPosition + window.pageYOffsets - headerOffset;
-
-                  window.scrollTo({
-                      top: offsetPosition,
-                      behavior: 'smooth'
-                  });
-              }
-          }
-
-          filterButtons.forEach(button => {
-              button.addEventListener('click', (e) => {
-                  e.preventDefault();
-
-                  filterButtons.forEach(btn => {
-                      btn.classList.remove('active');
-                      btn.setAttribute('aria-pressed', 'false');
-                  });
-
-                  button.classList.add('active');
-                  button.setAttribute('aria-pressed', 'true');
-
-                  const filterValue = button.dataset.filter;
-                  filterSections(filterValue);
-
-                  if (filterValue !== 'all') {
-                      const sectionId = sectionMap[filterValue];
-                      scrollToSection(sectionId);
-                  } else {
-                        window.scrollTo({
-                          top: 0,
-                          behavior: 'smooth'
-                      });
-                  }
-              });
-          });
-
-          const animatedElements = document.querySelectorAll('.on-scroll-animate');
-
-          function checkVisibility() {
-              animatedElements.forEach(element => {
-                  const rect = element.getBoundingClientRect();
-                  const isVisible = (rect.top >= 0 && rect.top <= window.innerHeight) || (rect.bottom >= 0 && rect.bottom <= window.innerHeight);
-                  if (isVisible) {
-                      element.classList.add('is-visible');
-                  }
-              });
-          }
-
-          function setLanguage(lang) {
-              const elementsToTranslate = document.querySelectorAll('[data-lang-en], [data-lang-bn]');
-              elementsToTranslate.forEach(el => {
-                  const textContent = el.dataset[lang === 'en' ? 'langEn' : 'langBn'];
-                  if (textContent) {
-                      el.textContent = textContent;
-                  }
-              });
-
-              const searchInput = document.querySelector('.search-input');
-              if (searchInput) {
-                  searchInput.placeholder = searchInput.dataset[lang === 'en' ? 'langEn' : 'langBn'];
-              }
-
-              langButtons.forEach(btn => {
-                  btn.classList.remove('active');
-                  btn.setAttribute('aria-pressed', 'false');
-                  if (btn.dataset.lang === lang) {
-                      btn.classList.add('active');
-                      btn.setAttribute('aria-pressed', 'true');
-                  }
-              });
-
-              const toolCards = document.querySelectorAll('.tool-card');
-              toolCards.forEach(card => {
-                  const title = card.querySelector('h3');
-                  const desc = card.querySelector('p');
-                  if (title) title.textContent = card.dataset[lang === 'en' ? 'langEnTitle' : 'langBnTitle'];
-                  if (desc) desc.textContent = card.dataset[lang === 'en' ? 'langEnDesc' : 'langBnDesc'];
-              });
-
-              currentTestimonialIndex = 0;
-              updateTestimonials(lang);
-              startTestimonialRotation();
-
-              currentOfferSetIndex = 0;
-              rotateOffers();
-              startOfferRotation();
-          }
-
-          function handleSearch() {
-              const searchTerm = searchInput.value.toLowerCase();
-              let resultsFound = false;
-
-              toolCards.forEach(card => {
-                  const cardTitle = card.querySelector('h3').textContent.toLowerCase();
-                  const cardDesc = card.querySelector('p').textContent.toLowerCase();
-
-                  if (cardTitle.includes(searchTerm) || cardDesc.includes(searchTerm)) {
-                      card.style.display = 'block';
-                      resultsFound = true;
-                  } else {
-                      card.style.display = 'none';
-                  }
-              });
-
-              if (resultsFound) {
-                  noResultsMessage.style.display = 'none';
-              } else {
-                  noResultsMessage.style.display = 'block';
-              }
-          }
-
-          searchInput.addEventListener('input', handleSearch);
-
-          setLanguage('en');
-          filterSections('all');
-
-          langButtons.forEach(button => {
-              button.addEventListener('click', () => {
-                  const lang = button.dataset.lang;
-                  setLanguage(lang);
-              });
-          });
-
-          let popupTimeout;
-
-          ashiqurBtn.addEventListener('click', () => {
-              clearTimeout(popupTimeout);
-              const currentLang = document.querySelector('.lang-btn.active').dataset.lang;
-              const popupText = ashiqurPopup.querySelector('span');
-
-              if (currentLang === 'bn') {
-                  popupText.textContent = popupText.dataset.langBn;
-              } else {
-                  popupText.textContent = popupText.dataset.langEn;
-              }
-
-              ashiqurPopup.classList.remove('hide');
-              ashiqurPopup.classList.add('show');
-              popupTimeout = setTimeout(() => {
-                  ashiqurPopup.classList.remove('show');
-                  ashiqurPopup.classList.add('hide');
-              }, 3000);
-          });
-
-          checkVisibility();
-          window.addEventListener('scroll', checkVisibility);
-
-          // Dark/Light Mode Toggle functionality
-          modeToggleBtn.addEventListener('click', () => {
-              document.body.classList.toggle('dark-mode');
-              // Save the current mode to localStorage
-              if (document.body.classList.contains('dark-mode')) {
-                  localStorage.setItem('theme', 'dark');
-              } else {
-                  localStorage.setItem('theme', 'light');
-              }
-          });
-
-          // Check for saved theme preference on page load
-          const savedTheme = localStorage.getItem('theme');
-          if (savedTheme === 'dark') {
-              document.body.classList.add('dark-mode');
-          }
-      });
-  </script>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <a href="#">
+                    <i class="ri-rocket-2-line logo-icon"></i>
+                    <span class="nex-text">Nex</span><span class="tool-text">Tool</span> <span class="hub-text">Hub</span>
+                </a>
+            </div>
+            <div class="header-right">
+                <div class="social-links">
+                    <a href="#" class="social-link" aria-label="Facebook"><i class="ri-facebook-box-fill"></i></a>
+                    <a href="#" class="social-link" aria-label="Twitter"><i class="ri-twitter-x-fill"></i></a>
+                    <a href="#" class="social-link" aria-label="WhatsApp"><i class="ri-whatsapp-line"></i></a>
+                </div>
+                <button class="mode-toggle" aria-label="Toggle Dark/Light Mode">
+                    <i class="ri-sun-line"></i>
+                    <i class="ri-moon-line"></i>
+                </button>
+                <div class="language-switcher">
+                    <button class="lang-btn" data-lang="en" aria-label="Switch to English">EN</button>
+                    <button class="lang-btn" data-lang="bn" aria-label="Switch to Bengali">BN</button>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <div class="ad-container desktop-ad">
+        <div class="ad-iframe-container">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '3107b60e8baa0d0e886adf12d55fbd7e',
+                    'format' : 'iframe',
+                    'height' : 90,
+                    'width' : 728,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
+        </div>
+    </div>
+
+    <div class="ad-container mobile-ad">
+        <div class="ad-iframe-container">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '02a9c12a5270a25efa5325c0e42ffc59',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
+        </div>
+    </div>
+
+    <section class="hero-section">
+        <div class="paper-pieces-container">
+            <div class="paper-piece square" style="left: 10%; top: -10%; width: 10px; height: 10px; background-color: var(--paper-color1); animation: falling 80s linear infinite;"></div>
+            <div class="paper-piece triangle" style="left: 25%; top: -20%; width: 12px; height: 12px; background-color: var(--paper-color2); animation: diagonal-left 90s linear infinite;"></div>
+            <div class="paper-piece diamond" style="left: 40%; top: -5%; width: 8px; height: 8px; background-color: var(--paper-color3); animation: falling 70s linear infinite; animation-delay: 1s;"></div>
+            <div class="paper-piece square" style="left: 55%; top: -30%; width: 15px; height: 15px; background-color: var(--paper-color4); animation: diagonal-right 100s linear infinite; animation-delay: 2s;"></div>
+            <div class="paper-piece triangle" style="left: 70%; top: -15%; width: 10px; height: 10px; background-color: var(--paper-color5); animation: falling 85s linear infinite; animation-delay: 3s;"></div>
+            <div class="paper-piece diamond" style="left: 85%; top: -25%; width: 11px; height: 11px; background-color: var(--paper-color1); animation: diagonal-left 75s linear infinite; animation-delay: 0.5s;"></div>
+            <div class="paper-piece square" style="left: 35%; top: -5%; width: 9px; height: 9px; background-color: var(--paper-color2); animation: diagonal-right 95s linear infinite; animation-delay: 1.5s;"></div>
+            <div class="paper-piece triangle" style="left: 60%; top: -40%; width: 14px; height: 14px; background-color: var(--paper-color3); animation: falling 80s linear infinite; animation-delay: 2.5s;"></div>
+            <div class="paper-piece square" style="left: 15%; top: -45%; width: 7px; height: 7px; background-color: var(--paper-color4); animation: falling 65s linear infinite; animation-delay: 4s;"></div>
+            <div class="paper-piece diamond" style="left: 80%; top: -50%; width: 10px; height: 10px; background-color: var(--paper-color5); animation: diagonal-left 90s linear infinite; animation-delay: 3.5s;"></div>
+            <div class="paper-piece triangle" style="left: 45%; top: -60%; width: 13px; height: 13px; background-color: var(--paper-color1); animation: falling 78s linear infinite; animation-delay: 1s;"></div>
+            <div class="paper-piece square" style="left: 20%; top: -75%; width: 11px; height: 11px; background-color: var(--paper-color2); animation: diagonal-right 88s linear infinite; animation-delay: 2s;"></div>
+        </div>
+
+        <h1 class="hero-title" data-lang-en="Your Ultimate Digital Toolkit" data-lang-bn="আপনার ডিজিটাল কাজের সঙ্গী">Your Ultimate Digital Toolkit</h1>
+        <p data-lang-en="Essential tools for quick and efficient work." data-lang-bn="দ্রুত এবং দক্ষ কাজের জন্য প্রয়োজনীয় টুলস।">Essential tools for quick and efficient work.</p>
+    </section>
+
+    <div class="container">
+        <div class="search-bar-container">
+            <div class="search-input-wrapper">
+                <input type="text" id="search-input" class="search-input" data-lang-en="Search for any tool..." data-lang-bn="যেকোনো টুল খুঁজুন..." placeholder="Search for any tool..." aria-label="Search for tools">
+                <i class="ri-search-line search-icon"></i>
+            </div>
+        </div>
+
+        <div class="filter-options">
+            <button class="filter-btn all-btn active" data-lang-en="All" data-lang-bn="সব" data-filter="all" aria-pressed="true">All</button>
+            <button class="filter-btn" data-lang-en="Your Tools" data-lang-bn="আপনার টুলস" data-filter="tools" aria-pressed="false">Your Tools</button>
+            <button class="filter-btn" data-lang-en="Daily Offer" data-lang-bn="দিনের সেরা অফার" data-filter="daily-offer" aria-pressed="false">Daily Offer</button>
+            <button class="filter-btn" data-lang-en="Our Blog" data-lang-bn="আমাদের ব্লগ" data-filter="blog" aria-pressed="false">Our Blog</button>
+            <button class="filter-btn" data-lang-en="Testimonials" data-lang-bn="সাক্ষ্য" data-filter="testimonials" aria-pressed="false">Testimonials</button>
+            <button class="filter-btn" data-lang-en="Why Us?" data-lang-bn="কেন আমরা?" data-filter="why-us" aria-pressed="false">Why Us?</button>
+        </div>
+
+        <section id="tools-panel" class="tools-panel filterable-section visible">
+            <h2 class="on-scroll-animate" data-lang-en="Your Tools" data-lang-bn="আপনার টুলস">Your Tools</h2>
+            <div class="tool-cards-grid on-scroll-animate">
+                <div class="tool-card" tabindex="0" data-category="developer" data-lang-en-title="URL Shortener" data-lang-bn-title="URL শর্টনার" data-lang-en-desc="Shorten your long URLs with a custom alias for easy sharing." data-lang-bn-desc="আপনার লম্বা URL-কে কাস্টম নাম সহ ছোট করুন।">
+                    <div class="icon-wrapper"> <i class="ri-link-m icon"></i> </div>
+                    <h3>URL Shortener</h3>
+                    <p>Shorten your long URLs with a custom alias for easy sharing.</p>
+                    <a href="url_shortener.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
+                </div>
+                
+                <div class="mobile-ad-inline">
+                    <script type="text/javascript">
+                        atOptions = {
+                            'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                            'format' : 'iframe',
+                            'height' : 250,
+                            'width' : 300,
+                            'params' : {}
+                        };
+                    </script>
+                    <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
+                </div>
+                <div class="tool-card" tabindex="0" data-category="calculators" data-lang-en-title="Niche Calculators" data-lang-bn-title="নির্দিষ্ট ক্যালকুলেটর" data-lang-en-desc="A collection of specialized calculators like BMI, EMI, and more." data-lang-bn-desc="BMI, EMI, এবং অন্যান্য প্রয়োজনীয় ক্যালকুলেটর ব্যবহার করুন।">
+                    <div class="icon-wrapper"> <i class="ri-calculator-line icon"></i> </div>
+                    <h3>Niche Calculators</h3>
+                    <p>A collection of specialized calculators like BMI, EMI, and more.</p>
+                    <a href="calculators.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
+                </div>
+                <div class="tool-card" tabindex="0" data-category="social" data-lang-en-title="Facebook Free Like Follow" data-lang-bn-title="ফেসবুক ফ্রি লাইক ফলো" data-lang-en-desc="Boost your Facebook page's likes and followers for free." data-lang-bn-desc="আপনার ফেসবুক পেজের লাইক এবং ফলোয়ার বিনামূল্যে বাড়ান।">
+                    <div class="icon-wrapper"> <i class="ri-facebook-fill icon"></i> </div>
+                    <h3>Facebook Free Like Follow</h3>
+                    <p>Boost your Facebook page's likes and followers for free.</p>
+                    <a href="facebook_likes.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
+                </div>
+
+                <div class="native-ad-container">
+                    <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script>
+                    <div id="container-45718544708b185acff6d14248cc94cd"></div>
+                </div>
+
+                <div class="tool-card" tabindex="0" data-category="utilities" data-lang-en-title="Text Counter" data-lang-bn-title="টেক্সট কাউন্টার" data-lang-en-desc="Count words, characters, and sentences in your text instantly." data-lang-bn-desc="আপনার লেখার শব্দ, অক্ষর এবং বাক্য দ্রুত গণনা করুন।">
+                    <div class="icon-wrapper"> <i class="ri-file-text-line icon"></i> </div>
+                    <h3>Text Counter</h3>
+                    <p>Count words, characters, and sentences in your text instantly.</p>
+                    <a href="text_counter.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
+                </div>
+                <div class="tool-card" tabindex="0" data-category="utilities" data-lang-en-title="Timer & Stopwatch" data-lang-bn-title="টাইমার ও স্টপওয়াচ" data-lang-en-desc="A simple and effective timer and stopwatch for all your needs." data-lang-bn-desc="আপনার সব প্রয়োজনের জন্য একটি সহজ এবং কার্যকরী টাইমার এবং স্টপওয়াচ।">
+                    <div class="icon-wrapper"> <i class="ri-timer-line icon"></i> </div>
+                    <h3>Timer & Stopwatch</h3>
+                    <p>A simple and effective timer and stopwatch for all your needs.</p>
+                    <a href="timer_stopwatch.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
+                </div>
+                <div class="tool-card" tabindex="0" data-category="calculators" data-lang-en-title="Unit Converter" data-lang-bn-title="ইউনিট কনভার্টার" data-lang-en-desc="Convert units of length, weight, temperature, and more effortlessly." data-lang-bn-desc="দৈর্ঘ্য, ওজন, তাপমাত্রা এবং আরও অনেক কিছুর একক সহজেই রূপান্তর করুন।">
+                    <div class="icon-wrapper"> <i class="ri-scales-3-line icon"></i> </div>
+                    <h3>Unit Converter</h3>
+                    <p>Convert units of length, weight, temperature, and more effortlessly.</p>
+                    <a href="unit_converter.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
+                </div>
+
+                <div class="mobile-ad-inline">
+                    <script type="text/javascript">
+                        atOptions = {
+                            'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                            'format' : 'iframe',
+                            'height' : 250,
+                            'width' : 300,
+                            'params' : {}
+                        };
+                    </script>
+                    <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
+                </div>
+                <div class="tool-card" tabindex="0" data-category="image-converter" data-lang-en-title="Image to PDF" data-lang-bn-title="ছবি থেকে PDF" data-lang-en-desc="Convert multiple images to a single PDF document easily." data-lang-bn-desc="একাধিক ছবিকে সহজেই একটি PDF ডকুমেন্টে রূপান্তর করুন।">
+                    <div class="icon-wrapper"> <i class="ri-file-image-line icon"></i> </div>
+                    <h3>Image to PDF</h3>
+                    <p>Convert multiple images to a single PDF document easily.</p>
+                    <a href="image_to_pdf.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
+                </div>
+
+                <div class="tool-card" tabindex="0" data-category="utilities" data-lang-en-title="QR Code Generator" data-lang-bn-title="QR কোড জেনারেটর" data-lang-en-desc="Create scannable QR codes from text, links, or contacts." data-lang-bn-desc="টেক্সট, লিংক বা যোগাযোগ থেকে স্ক্যানযোগ্য QR কোড তৈরি করুন।">
+                    <div class="icon-wrapper"> <i class="ri-qr-code-line icon"></i> </div>
+                    <h3>QR Code Generator</h3>
+                    <p>Create scannable QR codes from text, links, or contacts.</p>
+                    <a href="qr_code_generator.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
+                </div>
+
+                <div class="tool-card" tabindex="0" data-category="security" data-lang-en-title="Password Generator" data-lang-bn-title="পাসওয়ার্ড জেনারেটর" data-lang-en-desc="Generate strong, secure, and unique passwords instantly." data-lang-bn-desc="শক্তিশালী, সুরক্ষিত এবং অনন্য পাসওয়ার্ড দ্রুত তৈরি করুন।">
+                    <div class="icon-wrapper"> <i class="ri-lock-password-line icon"></i> </div>
+                    <h3>Password Generator</h3>
+                    <p>Generate strong, secure, and unique passwords instantly.</p>
+                    <a href="password_generator.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
+                </div>
+                
+                <div class="desktop-ad-inline">
+                    <script type="text/javascript">
+                        atOptions = {
+                            'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                            'format' : 'iframe',
+                            'height' : 250,
+                            'width' : 300,
+                            'params' : {}
+                        };
+                    </script>
+                    <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
+                </div>
+                
+                <div class="desktop-ad-inline">
+                    <script type="text/javascript">
+                        atOptions = {
+                            'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                            'format' : 'iframe',
+                            'height' : 250,
+                            'width' : 300,
+                            'params' : {}
+                        };
+                    </script>
+                    <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
+                </div>
+
+                <div class="offer-card-wrapper">
+                    <div class="desktop-ad-inline">
+                        <script type="text/javascript">
+                            atOptions = {
+                                'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                                'format' : 'iframe',
+                                'height' : 250,
+                                'width' : 300,
+                                'params' : {}
+                            };
+                        </script>
+                        <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
+                    </div>
+                    <div class="ad-container mobile-ad">
+                        <div class="ad-iframe-container">
+                            <script type="text/javascript">
+                                atOptions = {
+                                    'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                                    'format' : 'iframe',
+                                    'height' : 250,
+                                    'width' : 300,
+                                    'params' : {}
+                                };
+                            </script>
+                            <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            <p class="no-results" data-align-en="center" data-lang-en="No tools found for your search." data-lang-bn="আপনার অনুসন্ধানের জন্য কোনো টুল পাওয়া যায়নি।">No tools found for your search.</p>
+        </section>
+
+        <section id="daily-offer-section" class="daily-offer-section filterable-section visible">
+            <h2 class="on-scroll-animate" data-lang-en="Daily Offer" data-lang-bn="দিনের সেরা অফার">Daily Offer</h2>
+            <div class="offer-cards-grid on-scroll-animate">
+
+                <div class="offer-card-wrapper">
+                    <div class="offer-card" data-card-index="0" tabindex="0">
+                        <div class="icon-wrapper">
+                            <i class="ri-money-dollar-circle-line icon"></i>
+                        </div>
+                        <h3>Income</h3>
+                        <p>Earn $100 daily from home.</p>
+                        <a href="" class="join-offer-btn" data-lang-en="Join Offer" data-lang-bn="অফারে যোগ দিন" target="_blank" rel="noopener noreferrer">Join Offer</a>
+                    </div>
+                    <div class="desktop-ad-inline">
+                        <script type="text/javascript">
+                            atOptions = {
+                                'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                                'format' : 'iframe',
+                                'height' : 250,
+                                'width' : 300,
+                                'params' : {}
+                            };
+                        </script>
+                        <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
+                    </div>
+                </div>
+
+                <div class="offer-card-wrapper">
+                    <div class="offer-card" data-card-index="1" tabindex="0">
+                        <div class="icon-wrapper">
+                            <i class="ri-task-line icon"></i>
+                        </div>
+                        <h3>Tasks</h3>
+                        <p>Make money with simple online tasks.</p>
+                        <a href="" class="join-offer-btn" data-lang-en="Join Offer" data-lang-bn="অফারে যোগ দিন" target="_blank" rel="noopener noreferrer">Join Offer</a>
+                    </div>
+                    <div class="desktop-ad-inline">
+                        <script type="text/javascript">
+                            atOptions = {
+                                'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                                'format' : 'iframe',
+                                'height' : 250,
+                                'width' : 300,
+                                'params' : {}
+                            };
+                        </script>
+                        <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
+                    </div>
+                </div>
+
+                <div class="offer-card-wrapper">
+                    <div class="offer-card" data-card-index="2" tabindex="0">
+                        <div class="icon-wrapper">
+                            <i class="ri-team-line icon"></i>
+                        </div>
+                        <h3>Community</h3>
+                        <p>Start your online business with us.</p>
+                        <a href="" class="join-offer-btn" data-lang-en="Join Offer" data-lang-bn="অফারে যোগ দিন" target="_blank" rel="noopener noreferrer">Join Offer</a>
+                    </div>
+                    <div class="desktop-ad-inline">
+                        <script type="text/javascript">
+                            atOptions = {
+                                'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                                'format' : 'iframe',
+                                'height' : 250,
+                                'width' : 300,
+                                'params' : {}
+                            };
+                        </script>
+                        <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
+                    </div>
+                </div>
+                <div class="offer-card-ad-mobile">
+                    <div class="ad-iframe-container">
+                        <script type="text/javascript">
+                            atOptions = {
+                                'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                                'format' : 'iframe',
+                                'height' : 250,
+                                'width' : 300,
+                                'params' : {}
+                            };
+                        </script>
+                        <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="new-blog-section" class="blog-section filterable-section visible">
+            <h2 class="on-scroll-animate" data-lang-en="Latest from Our Blog" data-lang-bn="আমাদের ব্লগ থেকে নতুন লেখা">Latest from Our Blog</h2>
+            <div class="blog-cards-grid on-scroll-animate">
+                <div class="blog-card">
+                    <img src="http://googleusercontent.com/generated_image_content/0" alt="A futuristic digital workstation with a laptop, glowing charts, a holographic calendar, and a glowing digital assistant icon, representing secret productivity hacks." class="blog-card-image">
+                    <div class="blog-card-content">
+                        <h3>Unleash Your Productivity: 7 Secret Hacks for Digital Success</h3>
+                        <p>Discover the ultimate techniques to supercharge your daily workflow and save hours of time. These simple tricks will change how you work forever.</p>
+                        <a href="" class="use-tool-btn" data-lang-en="Read More" data-lang-bn="আরও পড়ুন" target="_blank" rel="noopener noreferrer">Read More <i class="ri-arrow-right-line"></i></a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <img src="http://googleusercontent.com/generated_image_content/1" alt="A vibrant image of a Facebook logo with a rapidly ascending growth chart, with the year 2025 and social media icons, symbolizing a guide to gaining free followers." class="blog-card-image">
+                    <div class="blog-card-content">
+                        <h3>The Ultimate Guide to Gaining Free Facebook Followers in 2025</h3>
+                        <p>Want to grow your Facebook page without spending a dime? Our step-by-step guide reveals the best free methods that actually work.</p>
+                        <a href="" class="use-tool-btn" data-lang-en="Read More" data-lang-bn="আরও পড়ুন" target="_blank" rel="noopener noreferrer">Read More <i class="ri-arrow-right-line"></i></a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <img src="http://googleusercontent.com/generated_image_content/2" alt="A dramatic image showing a tangled, long URL chain transforming into a clean, short, and glowing link, with a golden key, representing professional branding with a URL shortener." class="blog-card-image">
+                    <div class="blog-card-content">
+                        <h3>Why You Need a URL Shortener: The Key to Professional Branding</h3>
+                        <p>Learn how a simple URL shortener can transform your branding and improve your marketing campaigns. It's more than just a short link.</p>
+                        <a href="" class="use-tool-btn" data-lang-en="Read More" data-lang-bn="আরও পড়ুন" target="_blank" rel="noopener noreferrer">Read More <i class="ri-arrow-right-line"></i></a>
+                    </div>
+                </div>
+                <div class="blog-ad-mobile">
+                    <script type="text/javascript">
+                        atOptions = {
+                            'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                            'format' : 'iframe',
+                            'height' : 250,
+                            'width' : 300,
+                            'params' : {}
+                        };
+                    </script>
+                    <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
+                </div>
+            </div>
+            <div class="ad-container desktop-ad-only" style="margin-top: 25px;">
+                <div class="ad-iframe-container">
+                    <script type="text/javascript"> 	atOptions = { 		'key' : '3107b60e8baa0d0e886adf12d55fbd7e', 		'format' : 'iframe', 		'height' : 90, 		'width' : 728, 		'params' : {} 	}; </script>
+                    <script type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
+                </div>
+            </div>
+        </section>
+        <section id="testimonials-section" class="testimonials-section filterable-section visible">
+            <h2 class="on-scroll-animate" data-lang-en="What Our Users Say" data-lang-bn="ব্যবহারকারীরা যা বলেন">What Our Users Say</h2>
+            <div class="testimonial-cards-grid on-scroll-animate">
+                <div class="testimonial-card" id="testimonial-card-0">
+                    <p class="testimonial-text"></p>
+                    <h4 class="testimonial-author"></h4>
+                </div>
+                <div class="testimonial-card" id="testimonial-card-1">
+                    <p class="testimonial-text"></p>
+                    <h4 class="testimonial-author"></h4>
+                </div>
+            </div>
+        </section>
+
+        <section id="why-choose-us-section" class="why-choose-us-section filterable-section visible">
+            <h2 class="on-scroll-animate" data-lang-en="Why Choose Our Tools?" data-lang-bn="কেন আমাদের টুল ব্যবহার করবেন?">Why Choose Our Tools?</h2>
+            <div class="benefits-grid on-scroll-animate">
+                <div class="benefit-card">
+                    <div class="icon-wrapper"> <i class="ri-flashlight-line icon"></i> </div>
+                    <h3>Fast & Efficient</h3>
+                    <p>Our tools are designed to work instantly, helping you save time and boost productivity.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="icon-wrapper"> <i class="ri-shield-check-line icon"></i> </div>
+                    <h3>Secure & Private</h3>
+                    <p>Your data is processed locally in your browser, ensuring complete privacy.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="icon-wrapper"> <i class="ri-wallet-3-line icon"></i> </div>
+                    <h3>Completely Free</h3>
+                    <p>All our tools are free to use without any hidden costs or subscriptions.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-buttons-wrapper">
+                <div class="ashiqur-btn-wrapper">
+                    <button class="ashiqur-btn" data-lang-en="ASHIQUR" data-lang-bn="আশিকুর">ASHIQUR</button>
+                </div>
+                <div class="download-btn-wrapper">
+                    <a href="http://download.com/" class="download-btn" data-lang-en="Download" data-lang-bn="ডাউনলোড" target="_blank" rel="noopener noreferrer">Download</a>
+                </div>
+            </div>
+
+            <div class="footer-links-group">
+                <a href="#" data-lang-en="About Us" data-lang-bn="আমাদের সম্পর্কে">About Us</a>
+                <a href="#" data-lang-en="Contact" data-lang-bn="যোগাযোগ">Contact</a>
+                <a href="#" data-lang-en="Terms" data-lang-bn="শর্তাবলী">Terms</a>
+                <a href="#" data-lang-en="Privacy" data-lang-bn="গোপনীয়তা">Privacy</a>
+            </div>
+        </div>
+        <p>&copy; 2025 NexTool Hub. All rights reserved.</p>
+
+        <div class="ashiqur-popup" id="ashiqur-popup">
+            <span data-lang-bn="আমার নাম আশিকুর রহমান সুলতান। আমি আমার পক্ষ থেকে আপনাকে জানাই 'স্বাগতম'" data-lang-en="My name is Ashikur Rahman Sultan. I welcome you on my behalf."></span>
+        </div>
+    </footer>
+
+    <div id="mobile-notification-overlay" class="mobile-notification-overlay">
+        <div class="mobile-notification-box">
+            <h3>Switch to Desktop Mode</h3>
+            <p>For a better and smoother experience, please enable Desktop Mode on your browser.</p>
+            <button id="notification-ok-btn" class="notification-ok-btn" data-lang-en="Continue" data-lang-bn="চালিয়ে যান">Continue</button>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const langButtons = document.querySelectorAll('.lang-btn');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const sections = document.querySelectorAll('.filterable-section');
+            const ashiqurBtn = document.querySelector('.ashiqur-btn');
+            const ashiqurPopup = document.getElementById('ashiqur-popup');
+            const searchInput = document.getElementById('search-input');
+            const toolCards = document.querySelectorAll('.tool-card');
+            const noResultsMessage = document.querySelector('.no-results');
+            const modeToggleBtn = document.querySelector('.mode-toggle');
+
+            // --- START: New Mobile Pop-up Logic ---
+            const mobileOverlay = document.getElementById('mobile-notification-overlay');
+            const okBtn = document.getElementById('notification-ok-btn');
+            const popupHasBeenShown = sessionStorage.getItem('popupShown');
+
+            // Check if it's a mobile device and the popup hasn't been shown yet
+            if (window.innerWidth <= 768 && !popupHasBeenShown) {
+                mobileOverlay.classList.add('show');
+            }
+
+            // Hide popup when "OK" button is clicked
+            okBtn.addEventListener('click', () => {
+                mobileOverlay.classList.remove('show');
+                sessionStorage.setItem('popupShown', 'true'); // Store in session to prevent repeat popups on same session
+            });
+
+            // Hide popup when clicking outside the box
+            mobileOverlay.addEventListener('click', (event) => {
+                if (event.target === mobileOverlay) {
+                    mobileOverlay.classList.remove('show');
+                    sessionStorage.setItem('popupShown', 'true');
+                }
+            });
+            // --- END: New Mobile Pop-up Logic ---
+
+
+            const testimonials = [
+                { en: { text: "“I’ve shortened my long links with a custom alias. It’s a killer feature for my campaigns!”", author: "- Arif Chowdhury" }, bn: { text: "“আমি কাস্টম নাম দিয়ে আমার লম্বা লিঙ্কগুলো ছোট করতে পেরেছি। এটি আমার প্রচারণার জন্য একটি দারুণ ফিচার!”", author: "- আরিফ চৌধুরী" } },
+                { en: { text: "“This URL shortener is a game-changer! My links look professional now. Absolutely brilliant.”", author: "- Nabila Haque" }, bn: { text: "“এই URL শর্টনারটি অসাধারণ! আমার লিঙ্কগুলো এখন অনেক পেশাদার লাগছে। সত্যিই দুর্দান্ত।”", author: "- নাবিলা হক" } },
+                { en: { text: "“The free Facebook likes and follows tool is incredible! I've seen a huge boost in my page engagement.”", author: "- John Smith, USA" }, bn: { text: "“এই ফ্রি ফেসবুক লাইক এবং ফলো টুলটি অসাধারণ! আমার পেজের এনগেজমেন্ট অনেক বেড়ে গেছে।”", author: "- জন স্মিথ, ইউএসএ" } },
+                { en: { text: "“I use the niche calculators daily for my business. They are accurate and easy to use. Great work!”", author: "- Emily Chen, Canada" }, bn: { text: "“আমার ব্যবসার জন্য আমি প্রতিদিন এই ক্যালকুলেটরগুলো ব্যবহার করি। এগুলি খুবই সঠিক এবং ব্যবহার করা সহজ। দারুণ কাজ!”", author: "- এমিলি চেন, কানাডা" } },
+                { en: { text: "“I love the clean design and the variety of tools on this panel. It's my go-to for daily tasks.”", author: "- David Williams, USA" }, bn: { text: "“এই প্যানেলের পরিষ্কার ডিজাইন এবং বিভিন্ন টুল আমার খুব ভালো লাগে। প্রতিদিনের কাজের জন্য এটিই আমার প্রথম পছন্দ।”", author: "- ডেভিড উইলিয়ামস, ইউএসএ" } },
+                { en: { text: "“The URL shortener is lightning-fast and the custom alias feature is a must-have for any marketer.”", author: "- Liam Johnson, Canada" }, bn: { text: "“URL শর্টনারটি বিদ্যুতের মতো দ্রুত কাজ করে এবং কাস্টম নামের ফিচারটি যেকোনো মার্কেটারের জন্য আবশ্যক।”", author: "- লিয়াম জনসন, কানাডা" } },
+                { en: { text: "“Finally, a free tool for Facebook likes that actually works. Highly recommended!”", author: "- Olivia Davis, USA" }, bn: { text: "“অবশেষে, ফেসবুক লাইকের জন্য একটি ফ্রি টুল পেলাম যা সত্যিই কাজ করে। অত্যন্ত সুপারিশ করছি!”", author: "- অলিভিয়া ডেভিস, ইউএসএ" } },
+                { en: { text: "“Your website is a treasure trove of useful tools. The BMI calculator is a nice touch!”", author: "- Noah Davis, Canada" }, bn: { text: "“আপনাদের ওয়েবসাইটটি দরকারী টুলের এক ভাণ্ডার। BMI ক্যালকুলেটরটি একটি চমৎকার সংযোজন!”", author: "- নোয়া ডেভিস, কানাডা" } },
+                { en: { text: "“The panel is so easy to navigate. I found exactly what I needed in seconds. Fantastic user experience.”", author: "- Sarah Parker, USA" }, bn: { text: "“এই প্যানেলটি ব্যবহার করা খুবই সহজ। আমি কয়েক সেকেন্ডের মধ্যে আমার প্রয়োজনীয় টুল খুঁজে পেয়েছি। দারুণ ইউজার এক্সপেরিয়েন্স।”", author: "- সারা পার্কার, ইউএসএ" } },
+                { en: { text: "“The Facebook follower tool helped me reach more people without any cost. I'm very impressed.”", author: "- Mark Evans, Canada" }, bn: { text: "“ফেসবুক ফলোয়ার টুলটি আমাকে কোনো খরচ ছাড়াই বেশি মানুষের কাছে পৌঁছাতে সাহায্য করেছে। আমি মুগ্ধ।”", author: "- মার্ক ইভান্স, কানাডা" } }
+            ];
+
+            const testimonialCards = document.querySelectorAll('.testimonial-card');
+            const testimonialTexts = document.querySelectorAll('.testimonial-text');
+            const testimonialAuthors = document.querySelectorAll('.testimonial-author');
+            let currentTestimonialIndex = 0;
+            let cardToUpdateIndex = 0;
+            let testimonialIntervalId;
+
+            function updateTestimonials(lang) {
+                if (testimonialTexts[0] && testimonials[0][lang]) {
+                    testimonialTexts[0].textContent = testimonials[0][lang].text;
+                    testimonialAuthors[0].textContent = testimonials[0][lang].author;
+                }
+                if (testimonialTexts[1] && testimonials[1][lang]) {
+                    testimonialTexts[1].textContent = testimonials[1][lang].text;
+                    testimonialAuthors[1].textContent = testimonials[1][lang].author;
+                }
+            }
+
+            function rotateTestimonials() {
+                const lang = document.querySelector('.lang-btn.active').dataset.lang;
+
+                const cardToUpdate = testimonialCards[cardToUpdateIndex];
+                const staticCard = testimonialCards[1 - cardToUpdateIndex];
+
+                cardToUpdate.style.opacity = 0;
+                staticCard.classList.add('glow-effect');
+
+                setTimeout(() => {
+                    currentTestimonialIndex = (currentTestimonialIndex + 1) % testimonials.length;
+                    const nextTestimonial = testimonials[currentTestimonialIndex];
+
+                    testimonialTexts[cardToUpdateIndex].textContent = nextTestimonial[lang].text;
+                    testimonialAuthors[cardToUpdateIndex].textContent = nextTestimonial[lang].author;
+
+                    cardToUpdate.style.opacity = 1;
+                    staticCard.classList.remove('glow-effect');
+
+                    cardToUpdateIndex = 1 - cardToUpdateIndex;
+                }, 500);
+            }
+
+            function startTestimonialRotation() {
+                if (testimonialIntervalId) {
+                    clearInterval(testimonialIntervalId);
+                }
+                testimonialIntervalId = setInterval(rotateTestimonials, 5000);
+            }
+
+            const offerData = [
+                {
+                    en: { title: "Income", text: "Earn $100 daily from home.", icon: "ri-money-dollar-circle-line" },
+                    bn: { title: "ইনকাম", text: "ঘরে বসে রোজ $100 আয় করুন।", icon: "ri-money-dollar-circle-line" }
+                },
+                {
+                    en: { title: "Tasks", text: "Make money with simple online tasks.", icon: "ri-task-line" },
+                    bn: { title: "কাজ", text: "সহজ অনলাইন কাজ করে টাকা আয় করুন।", icon: "ri-task-line" }
+                },
+                {
+                    en: { title: "Community", text: "Start your online business with us.", icon: "ri-team-line" },
+                    bn: { title: "কমিউনিটি", text: "আমাদের সাথে আপনার অনলাইন ব্যবসা শুরু করুন।", icon: "ri-team-line" }
+                },
+                {
+                    en: { title: "Freedom", text: "Your first step to financial freedom.", icon: "ri-hand-coin-line" },
+                    bn: { title: "স্বাধীনতা", text: "আর্থিক স্বাধীনতার পথে আপনার প্রথম ধাপ।", icon: "ri-hand-coin-line" }
+                },
+                {
+                    en: { title: "Profit", text: "Turn your spare time into profit.", icon: "ri-pie-chart-2-line" },
+                    bn: { title: "লাভ", text: "আপনার অতিরিক্ত সময়কে আয়ে পরিণত করুন।", icon: "ri-pie-chart-2-line" }
+                },
+                {
+                    en: { title: "Cash", text: "Daily payouts, instant cash.", icon: "ri-wallet-3-line" },
+                    bn: { title: "ক্যাশ", text: "প্রতিদিনের পেমেন্ট, সাথে সাথে টাকা।", icon: "ri-wallet-3-line" }
+                },
+                {
+                    en: { title: "Unlock", text: "Unlock a new income stream.", icon: "ri-key-2-line" },
+                    bn: { title: "সুযোগ", text: "আয় করার নতুন রাস্তা খুলে নিন।", icon: "ri-key-2-line" }
+                },
+                {
+                    en: { title: "Secrets", text: "Passive income secrets revealed.", icon: "ri-sparkling-2-line" },
+                    bn: { title: "গোপন", text: "প্যাসিভ ইনকামের গোপন রহস্য জানুন।", icon: "ri-sparkling-2-line" }
+                },
+                {
+                    en: { title: "Success", text: "Join the millionaire's club.", icon: "ri-medal-line" },
+                    bn: { title: "সাফল্য", text: "মিলিয়নেয়ারদের ক্লাবে যোগ দিন।", icon: "ri-medal-line" }
+                }
+            ];
+
+            const offerCards = document.querySelectorAll('.offer-card');
+            let currentOfferSetIndex = 0;
+            let offerIntervalId;
+
+            function rotateOffers() {
+                const lang = document.querySelector('.lang-btn.active').dataset.lang;
+
+                offerCards.forEach(card => {
+                    card.querySelector('p').style.opacity = 0;
+                    card.querySelector('.icon').style.opacity = 0;
+                });
+
+                setTimeout(() => {
+                    for (let i = 0; i < 3; i++) {
+                        const card = offerCards[i];
+                        const data = offerData[currentOfferSetIndex + i];
+
+                        card.querySelector('h3').textContent = data[lang].title;
+                        card.querySelector('p').textContent = data[lang].text;
+                        card.querySelector('.icon').className = `${data[lang].icon} icon`;
+                    }
+
+                    offerCards.forEach(card => {
+                        card.querySelector('p').style.opacity = 1;
+                        card.querySelector('.icon').style.opacity = 1;
+                    });
+
+                    currentOfferSetIndex = (currentOfferSetIndex + 3) % offerData.length;
+                }, 500);
+            }
+
+            function startOfferRotation() {
+                if (offerIntervalId) {
+                    clearInterval(offerIntervalId);
+                }
+                testimonialIntervalId = setInterval(rotateOffers, 6000);
+            }
+
+            const sectionMap = {
+                'tools': 'tools-panel',
+                'daily-offer': 'daily-offer-section',
+                'blog': 'new-blog-section',
+                'testimonials': 'testimonials-section',
+                'why-us': 'why-choose-us-section'
+            };
+
+            function filterSections(filter) {
+                sections.forEach(section => {
+                    const sectionId = section.id;
+                    const isVisible = (filter === 'all' || sectionId === sectionMap[filter]);
+
+                    if (isVisible) {
+                        section.classList.remove('hidden');
+                        section.classList.add('visible');
+                    } else {
+                        section.classList.add('hidden');
+                        section.classList.remove('visible');
+                    }
+                });
+            }
+
+            function scrollToSection(sectionId) {
+                const targetSection = document.getElementById(sectionId);
+                if (targetSection) {
+                    const headerOffset = 80;
+                    const elementPosition = targetSection.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffsets - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.setAttribute('aria-pressed', 'false');
+                    });
+
+                    button.classList.add('active');
+                    button.setAttribute('aria-pressed', 'true');
+
+                    const filterValue = button.dataset.filter;
+                    filterSections(filterValue);
+
+                    if (filterValue !== 'all') {
+                        const sectionId = sectionMap[filterValue];
+                        scrollToSection(sectionId);
+                    } else {
+                            window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            const animatedElements = document.querySelectorAll('.on-scroll-animate');
+
+            function checkVisibility() {
+                animatedElements.forEach(element => {
+                    const rect = element.getBoundingClientRect();
+                    const isVisible = (rect.top >= 0 && rect.top <= window.innerHeight) || (rect.bottom >= 0 && rect.bottom <= window.innerHeight);
+                    if (isVisible) {
+                        element.classList.add('is-visible');
+                    }
+                });
+            }
+
+            function setLanguage(lang) {
+                const elementsToTranslate = document.querySelectorAll('[data-lang-en], [data-lang-bn]');
+                elementsToTranslate.forEach(el => {
+                    const textContent = el.dataset[lang === 'en' ? 'langEn' : 'langBn'];
+                    if (textContent) {
+                        el.textContent = textContent;
+                    }
+                });
+
+                const searchInput = document.querySelector('.search-input');
+                if (searchInput) {
+                    searchInput.placeholder = searchInput.dataset[lang === 'en' ? 'langEn' : 'langBn'];
+                }
+
+                langButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-pressed', 'false');
+                    if (btn.dataset.lang === lang) {
+                        btn.classList.add('active');
+                        btn.setAttribute('aria-pressed', 'true');
+                    }
+                });
+
+                const toolCards = document.querySelectorAll('.tool-card');
+                toolCards.forEach(card => {
+                    const title = card.querySelector('h3');
+                    const desc = card.querySelector('p');
+                    if (title) title.textContent = card.dataset[lang === 'en' ? 'langEnTitle' : 'langBnTitle'];
+                    if (desc) desc.textContent = card.dataset[lang === 'en' ? 'langEnDesc' : 'langBnDesc'];
+                });
+
+                currentTestimonialIndex = 0;
+                updateTestimonials(lang);
+                startTestimonialRotation();
+
+                currentOfferSetIndex = 0;
+                rotateOffers();
+                startOfferRotation();
+            }
+
+            function handleSearch() {
+                const searchTerm = searchInput.value.toLowerCase();
+                let resultsFound = false;
+
+                toolCards.forEach(card => {
+                    const cardTitle = card.querySelector('h3').textContent.toLowerCase();
+                    const cardDesc = card.querySelector('p').textContent.toLowerCase();
+
+                    if (cardTitle.includes(searchTerm) || cardDesc.includes(searchTerm)) {
+                        card.style.display = 'block';
+                        resultsFound = true;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                if (resultsFound) {
+                    noResultsMessage.style.display = 'none';
+                } else {
+                    noResultsMessage.style.display = 'block';
+                }
+            }
+
+            searchInput.addEventListener('input', handleSearch);
+
+            setLanguage('en');
+            filterSections('all');
+
+            langButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const lang = button.dataset.lang;
+                    setLanguage(lang);
+                });
+            });
+
+            let popupTimeout;
+
+            ashiqurBtn.addEventListener('click', () => {
+                clearTimeout(popupTimeout);
+                const currentLang = document.querySelector('.lang-btn.active').dataset.lang;
+                const popupText = ashiqurPopup.querySelector('span');
+
+                if (currentLang === 'bn') {
+                    popupText.textContent = popupText.dataset.langBn;
+                } else {
+                    popupText.textContent = popupText.dataset.langEn;
+                }
+
+                ashiqurPopup.classList.remove('hide');
+                ashiqurPopup.classList.add('show');
+                popupTimeout = setTimeout(() => {
+                    ashiqurPopup.classList.remove('show');
+                    ashiqurPopup.classList.add('hide');
+                }, 3000);
+            });
+
+            checkVisibility();
+            window.addEventListener('scroll', checkVisibility);
+
+            // Dark/Light Mode Toggle functionality
+            modeToggleBtn.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                // Save the current mode to localStorage
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+
+            // Check for saved theme preference on page load
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+        });
+    </script>
 </body>
 </html>
