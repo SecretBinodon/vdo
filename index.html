@@ -280,13 +280,48 @@
           align-items: center;
           margin-bottom: 20px;
       }
-      .offer-card { background-color: var(--background-color); padding: 30px 20px; border-radius: var(--border-radius); box-shadow: var(--shadow-light); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; justify-content: space-between; min-height: 250px; width: 100%; }
+
+      /* START: User's Requested Fix for Daily Offer Card Size */
+      .offer-card {
+          background-color: var(--background-color);
+          padding: 30px 20px;
+          border-radius: var(--border-radius);
+          box-shadow: var(--shadow-light);
+          text-align: center;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          width: 100%;
+          
+          /* Fixed Size Properties */
+          height: 320px;
+          min-height: 320px;
+      }
+      .offer-card p {
+          font-size: 16px;
+          color: var(--secondary-text);
+          margin-bottom: 20px;
+          flex-grow: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+          
+          /* Text Overflow Properties */
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+      }
+      /* END: User's Requested Fix for Daily Offer Card Size */
+
       .offer-card:hover, .offer-card:focus { transform: translateY(-5px) scale(1.02); box-shadow: var(--shadow-hover); }
       .offer-card .icon-wrapper { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; background-color: #e0f7fa; color: var(--primary-color); transition: all 0.5s ease-in-out; position: relative; }
       .offer-card .icon { font-size: 50px; transition: all 0.5s ease-in-out; opacity: 1; }
       .offer-card:hover .icon, .offer-card:focus .icon { transform: scale(1.1); }
       .offer-card h3 { font-size: 24px; font-weight: 600; margin-bottom: 10px; }
-      .offer-card p { font-size: 16px; color: var(--secondary-text); margin-bottom: 20px; flex-grow: 1; display: flex; align-items: center; justify-content: center; transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; }
       .join-offer-btn {
           display: inline-block;
           background-color: var(--green-color); /* Default color green */
