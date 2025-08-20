@@ -449,7 +449,7 @@
             display: inline-block;
             background-color: var(--green-color);
             color: #fff;
-            padding: 12px 25px;
+            padding: 1-2px 25px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 700;
@@ -699,6 +699,25 @@
         .ashiqur-popup { position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%); background-color: var(--primary-color); color: #fff; padding: 15px 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); font-size: 16px; font-weight: 500; opacity: 0; visibility: hidden; transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); z-index: 20; white-space: nowrap; max-width: 90%; text-align: center; }
         .ashiqur-popup.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(-20px); }
         .ashiqur-popup.hide { opacity: 0; visibility: hidden; transform: translateX(-50%) translateY(20px); }
+        
+        /* --- Mobile Only Ad Placement --- */
+        .ad-container-mobile {
+            display: none; /* Hide by default */
+            margin: 20px auto;
+            text-align: center;
+        }
+        .ad-container-mobile iframe {
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Show the ad only on screens up to 768px wide */
+        @media (max-width: 768px) {
+            .ad-container-mobile {
+                display: block;
+            }
+        }
+
 
         /* --- Mobile Responsiveness --- */
         @media (max-width: 768px) {
@@ -814,13 +833,37 @@
                 grid-template-columns: repeat(2, 1fr);
                 gap: 15px;
             }
-            /* Style for the facebook card to match the daily offer single card */
+
+            /*
+            *
+            * UPDATED CSS FOR MOBILE
+            *
+            */
+            
             .tool-card.facebook-card {
                 grid-column: 1 / -1;
-                order: 3;
-                min-height: 200px; 
+                order: 3; /* Ensure it's placed after the ad */
+                min-height: 200px;
                 padding: 15px 10px;
             }
+            
+            /* The mobile ad container */
+            .ad-container-mobile {
+                grid-column: 1 / -1; /* Spans across the full width */
+                order: 2; /* Position it correctly between the tools and Facebook card */
+                margin: 10px auto; /* Adjust margin for proper spacing */
+            }
+
+            /* Reset the order for the first two cards */
+            .tool-card:nth-child(1) {
+                order: 1;
+            }
+            .tool-card:nth-child(2) {
+                order: 1;
+            }
+            
+            /* --- END OF UPDATED MOBILE CSS --- */
+
             .tool-card.facebook-card .icon-wrapper {
                 width: 50px;
                 height: 50px;
@@ -842,12 +885,6 @@
             .tool-card.facebook-card .use-tool-btn {
                 font-size: 12px;
                 padding: 8px 15px;
-            }
-            .tool-card:nth-child(2) {
-                order: 1;
-            }
-            .tool-card:nth-child(3) {
-                order: 2;
             }
             
             /* -- Daily Offer Cards -- */
@@ -1156,6 +1193,18 @@
         </header>
     </div>
 
+    <div class="ad-container-mobile">
+        <script type="text/javascript">
+            atOptions = {
+                'key' : '02a9c12a5270a25efa5325c0e42ffc59',
+                'format' : 'iframe',
+                'height' : 50,
+                'width' : 320,
+                'params' : {}
+            };
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
+    </div>
     <div class="banner-ad-container">
         <script type="text/javascript">
             atOptions = {
@@ -1222,7 +1271,19 @@
                     <p>A collection of specialized calculators like BMI, EMI, and more.</p>
                     <a href="calculators.html" class="use-tool-btn" data-lang-en="Use Tool" data-lang-bn="টুল ব্যবহার করুন" target="_blank" rel="noopener noreferrer">Use Tool</a>
                 </div>
-
+                
+                <div class="ad-container-mobile">
+                    <script type="text/javascript">
+                        atOptions = {
+                            'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                            'format' : 'iframe',
+                            'height' : 250,
+                            'width' : 300,
+                            'params' : {}
+                        };
+                    </script>
+                    <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
+                </div>
                 <div class="tool-card facebook-card" tabindex="0" data-category="social" data-lang-en-title="Facebook Free Like Follow" data-lang-bn-title="ফেসবুক ফ্রি লাইক ফলো" data-lang-en-desc="Boost your Facebook page with free likes and followers. No charge." data-lang-bn-desc="কোনো খরচ ছাড়াই আপনার ফেসবুক পেজে লাইক এবং ফলোয়ার বাড়ান।">
                     <div class="icon-wrapper"> <i class="ri-facebook-circle-fill icon"></i> </div>
                     <h3>Facebook Free Like Follow</h3>
@@ -1286,7 +1347,19 @@
                         <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
                     </div>
                 </div>
-
+                
+                <div class="ad-container-mobile">
+                    <script type="text/javascript">
+                        atOptions = {
+                            'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                            'format' : 'iframe',
+                            'height' : 250,
+                            'width' : 300,
+                            'params' : {}
+                        };
+                    </script>
+                    <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
+                </div>
                 <div class="offer-card-wrapper">
                     <div class="offer-card" data-card-index="2" tabindex="0">
                         <div class="icon-wrapper">
@@ -1321,6 +1394,18 @@
                 <h3 data-lang-en="Welcome to NexTool Hub: Your Ultimate Digital Toolbox" data-lang-bn="নেক্সটুল হাবে স্বাগতম: আপনার ডিজিটাল টুলবক্স">Welcome to NexTool Hub: Your Ultimate Digital Toolbox</h3>
                 <p data-lang-en="Discover the power of our all-in-one digital toolkit, designed to simplify your everyday tasks. From shortening URLs and performing complex calculations to managing your social media, NexTool Hub provides a wide range of free and efficient tools. Our mission is to make your digital life easier and more productive. Dive into our blog to learn more about our tools and how they can help you achieve your goals." data-lang-bn="আপনার দৈনন্দিন কাজগুলোকে সহজ করার জন্য তৈরি আমাদের অল-ইন-ওয়ান ডিজিটাল টুলকিটের ক্ষমতা আবিষ্কার করুন। URL ছোট করা, জটিল গণনা করা থেকে শুরু করে আপনার সোশ্যাল মিডিয়া পরিচালনা করা পর্যন্ত, নেক্সটুল হাব বিনামূল্যে এবং কার্যকর টুলের একটি বিস্তৃত পরিসর সরবরাহ করে। আমাদের লক্ষ্য হল আপনার ডিজিটাল জীবনকে আরও সহজ এবং উৎপাদনশীল করে তোলা। আমাদের টুল সম্পর্কে এবং কীভাবে তারা আপনাকে আপনার লক্ষ্য অর্জনে সহায়তা করতে পারে সে সম্পর্কে আরও জানতে আমাদের ব্লগে ডুব দিন।">Discover the power of our all-in-one digital toolkit, designed to simplify your everyday tasks. From shortening URLs and performing complex calculations to managing your social media, NexTool Hub provides a wide range of free and efficient tools. Our mission is to make your digital life easier and more productive. Dive into our blog to learn more about our tools and how they can help you achieve your goals.</p>
                 <a href="#" class="read-more-btn" data-lang-en="Read More" data-lang-bn="আরও পড়ুন" target="_blank" rel="noopener noreferrer">Read More</a>
+            </div>
+            <div class="ad-container-mobile">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '02a9c12a5270a25efa5325c0e42ffc59',
+                        'format' : 'iframe',
+                        'height' : 50,
+                        'width' : 320,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
             </div>
             <div class="ad-container-desktop">
                 <script type="text/javascript">
@@ -1368,6 +1453,18 @@
                     <h3>Completely Free</h3>
                     <p>All our tools are free to use without any hidden costs or subscriptions.</p>
                 </div>
+            </div>
+            <div class="ad-container-mobile">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '02a9c12a5270a25efa5325c0e42ffc59',
+                        'format' : 'iframe',
+                        'height' : 50,
+                        'width' : 320,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
             </div>
             <div class="ad-container-desktop">
                 <script type="text/javascript">
