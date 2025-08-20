@@ -716,454 +716,105 @@
             .ad-container-mobile {
                 display: block;
             }
-        }
 
-
-        /* --- Mobile Responsiveness --- */
-        @media (max-width: 768px) {
-            body {
-                font-size: 14px;
-            }
-
-            .container {
-                padding: 0 10px;
-            }
-
-            .header {
-                justify-content: space-between;
-                flex-wrap: wrap;
-                padding-top: 10px;
-                padding-bottom: 10px;
-            }
-
-            .header-right {
-                flex-wrap: nowrap;
-                justify-content: flex-end;
-                gap: 5px; 
-            }
-
-            .logo a {
-                font-size: 20px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-            .logo-icon {
-                font-size: 24px;
-                margin-right: 4px;
-            }
-            .social-links {
-                gap: 5px;
-            }
-            .social-link {
-                font-size: 16px;
-            }
-            .lang-btn {
-                padding: 4px 8px;
-                font-size: 10px;
-            }
-            .mode-toggle {
-                font-size: 16px;
-            }
-
-            /* --- Hero Section Mobile View Changes --- */
-            .hero-section {
-                padding: 20px 0;
-                min-height: auto;
-                margin-bottom: 15px;
-            }
-            .hero-title {
-                font-size: 28px;
-                line-height: 1.1;
-                margin: 0;
-            }
-            .hero-section p {
-                font-size: 10px; /* Adjusted to be smaller */
-                margin: 5px 0 0 0;
-                text-align: center;
-                width: 100%;
-            }
-            .hero-section .paper-pieces-container {
-                display: none;
-            }
-
-            .search-bar-container {
-                margin-top: 10px;
-                margin-bottom: 10px;
-            }
-            .search-input {
-                font-size: 14px;
-                width: 100%;
-                max-width: 100%;
-                padding: 10px 40px 10px 15px;
-            }
-            .search-input-wrapper {
-                width: 95%;
-                margin: 0 auto;
-            }
-            .search-icon {
-                right: 25px;
-                font-size: 18px;
-            }
-
-            /* Fix: Center alignment for buttons and allow wrapping */
-            .filter-options {
-                flex-wrap: wrap; 
-                justify-content: center; 
-                gap: 10px;
-                margin-top: 10px;
-                margin-bottom: 10px;
-                padding: 0 5px;
-                overflow-x: hidden; 
-            }
-            
-            .filter-btn {
-                padding: 6px 10px;
-                font-size: 10px;
-                flex-shrink: 0;
-            }
-
-            .tools-panel h2, .daily-offer-section h2, .blog-section h2, .testimonials-section h2, .why-choose-us-section h2 {
-                font-size: 24px;
-                margin-bottom: 20px;
-            }
-            
-            .tool-cards-grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-
-            /*
-            *
-            * UPDATED CSS FOR MOBILE
-            *
-            */
-            
-            .tool-card.facebook-card {
-                grid-column: 1 / -1;
-                order: 3; /* Ensure it's placed after the ad */
-                min-height: 200px;
-                padding: 15px 10px;
-            }
-            
-            /* The mobile ad container */
-            .ad-container-mobile {
-                grid-column: 1 / -1; /* Spans across the full width */
-                order: 2; /* Position it correctly between the tools and Facebook card */
-                margin: 10px auto; /* Adjust margin for proper spacing */
-            }
-
-            /* Reset the order for the first two cards */
-            .tool-card:nth-child(1) {
-                order: 1;
-            }
-            .tool-card:nth-child(2) {
-                order: 1;
-            }
-            
-            /* --- END OF UPDATED MOBILE CSS --- */
-
-            .tool-card.facebook-card .icon-wrapper {
-                width: 50px;
-                height: 50px;
-                margin-bottom: 10px;
-            }
-            .tool-card.facebook-card .icon {
-                font-size: 30px;
-            }
-            .tool-card.facebook-card h3 {
-                font-size: 16px;
-                margin-bottom: 5px;
-            }
-            .tool-card.facebook-card p {
-                font-size: 12px;
-                min-height: 40px;
-                -webkit-line-clamp: 2;
-                margin-bottom: 10px;
-            }
-            .tool-card.facebook-card .use-tool-btn {
-                font-size: 12px;
-                padding: 8px 15px;
-            }
-            
-            /* -- Daily Offer Cards -- */
-            .daily-offer-section {
-                padding: 20px 10px;
-            }
-            .offer-cards-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-            .offer-card-wrapper:last-child {
-                grid-column: 1 / -1;
-            }
-            
-            /* Adjustments for the full-width card on mobile */
-            .daily-offer-section .offer-card-wrapper.full-width h3 {
-                font-size: 18px; 
-            }
-            
-            .daily-offer-section .offer-card-wrapper.full-width p {
-                font-size: 14px; 
-                -webkit-line-clamp: 2;
-            }
-
-            /* -- Blog Section -- */
-            .blog-section {
-                padding: 20px 10px;
-            }
-            .blog-post-card {
-                padding: 15px;
-            }
-            /* New Styles for Blog Image on Mobile */
-            .blog-image-container {
-                height: 150px; /* Smaller height for mobile */
-                margin-bottom: 15px;
-            }
-            .blog-post-card h3 {
-                font-size: 18px;
-            }
-            .blog-post-card p {
-                font-size: 14px;
-                -webkit-line-clamp: 3;
-            }
-
-            /* -- Testimonial Cards -- */
-            .testimonials-section {
-                padding: 20px 10px;
-            }
-            .testimonials-section h2 {
-                margin-bottom: 10px;
-            }
-            .testimonial-cards-grid {
-                grid-template-columns: repeat(2, 1fr); 
-                gap: 10px;
-                margin-top: 10px;
-            }
-            
-            .testimonial-card {
-                min-height: 180px; 
-                padding: 15px;
-                box-shadow: var(--shadow-light);
-            }
-            .testimonial-card p {
-                font-size: 10px;
-                margin-bottom: 10px;
-                -webkit-line-clamp: 5;
-            }
-            .testimonial-card h4 {
-                font-size: 9px;
-            }
-            
-            /* -- Why Choose Us Section -- */
-            .why-choose-us-section { 
-                padding-top: 20px; 
-                padding-bottom: 10px; 
-                margin-bottom: 0; 
-            }
-            .why-choose-us-section h2 {
-                margin-bottom: 10px; 
-            }
-            .benefits-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 5px; 
-                margin-top: 10px; 
-            }
-            .benefit-card {
-                min-height: 100px;
-                padding: 8px;
-            }
-            .benefit-card .icon-wrapper {
-                width: 25px;
-                height: 25px;
-                margin-bottom: 5px;
-            }
-            .benefit-card .icon {
-                font-size: 14px;
-            }
-            .benefit-card h3 {
-                font-size: 10px;
-                margin-bottom: 2px;
-            }
-            .benefit-card p {
-                font-size: 8px;
-                -webkit-line-clamp: 3;
-            }
-
-            .tool-card {
-                min-height: 250px;
-                padding: 15px 10px;
-            }
-            .tool-card .icon-wrapper {
-                width: 60px;
-                height: 60px;
-                margin-bottom: 10px;
-            }
-            .tool-card .icon {
-                font-size: 30px;
-            }
-            .tool-card h3, .offer-card h3 {
-                font-size: 16px;
-                margin-bottom: 5px;
-            }
-            .tool-card p, .offer-card p {
-                font-size: 12px;
-                margin-bottom: 10px;
-            }
-            
-            /* Updated styles for offer cards */
-            .offer-card {
-                min-height: 200px;
-                padding: 15px 10px;
-            }
-            .offer-card .icon-wrapper {
-                width: 50px;
-                height: 50px;
-                margin-bottom: 10px;
-            }
-            .offer-card .icon {
-                font-size: 30px;
-            }
-            .offer-card h3 {
-                font-size: 16px;
-                margin-bottom: 5px;
-            }
-            .offer-card p {
-                font-size: 12px;
-                min-height: 40px;
-                -webkit-line-clamp: 2;
-                margin-bottom: 10px;
-            }
-
-            .use-tool-btn, .join-offer-btn {
-                font-size: 12px;
-                padding: 8px 15px;
-            }
-            
-            .offer-card-wrapper {
-                margin-bottom: 0;
-            }
-            
-            .footer {
-                margin-top: 0;
-                padding-top: 20px;
-                padding-bottom: 20px;
-                padding: 20px 10px;
-            }
-            
-            /* Mobile Footer: all elements on one line, centered */
-            .footer-container {
-                flex-direction: row;
-                justify-content: space-between;
-                flex-wrap: nowrap;
-                gap: 5px; 
-                padding-bottom: 10px;
-            }
-            
-            /* Adjust padding and font size for all footer links and buttons on mobile */
-            .footer a, .footer button {
-                padding: 4px 6px;
-                font-size: 8px;
-            }
-
-            .ashiqur-popup {
-                font-size: 12px;
-                white-space: normal;
-                width: 90%;
-                bottom: 60px;
-            }
+            body { font-size: 14px; }
+            .container { padding: 0 10px; }
+            .header { justify-content: space-between; flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; }
+            .header-right { flex-wrap: nowrap; justify-content: flex-end; gap: 5px; }
+            .logo a { font-size: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .logo-icon { font-size: 24px; margin-right: 4px; }
+            .social-links { gap: 5px; }
+            .social-link { font-size: 16px; }
+            .lang-btn { padding: 4px 8px; font-size: 10px; }
+            .mode-toggle { font-size: 16px; }
+            .hero-section { padding: 20px 0; min-height: auto; margin-bottom: 15px; }
+            .hero-title { font-size: 28px; line-height: 1.1; margin: 0; }
+            .hero-section p { font-size: 10px; margin: 5px 0 0 0; text-align: center; width: 100%; }
+            .hero-section .paper-pieces-container { display: none; }
+            .search-bar-container { margin-top: 10px; margin-bottom: 10px; }
+            .search-input { font-size: 14px; width: 100%; max-width: 100%; padding: 10px 40px 10px 15px; }
+            .search-input-wrapper { width: 95%; margin: 0 auto; }
+            .search-icon { right: 25px; font-size: 18px; }
+            .filter-options { flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 10px; margin-bottom: 10px; padding: 0 5px; overflow-x: hidden; }
+            .filter-btn { padding: 6px 10px; font-size: 10px; flex-shrink: 0; }
+            .tools-panel h2, .daily-offer-section h2, .blog-section h2, .testimonials-section h2, .why-choose-us-section h2 { font-size: 24px; margin-bottom: 20px; }
+            .tool-cards-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .tool-card.facebook-card { grid-column: 1 / -1; order: 3; min-height: 200px; padding: 15px 10px; }
+            .ad-container-mobile { grid-column: 1 / -1; order: 2; margin: 10px auto; }
+            .tool-card:nth-child(1) { order: 1; }
+            .tool-card:nth-child(2) { order: 1; }
+            .tool-card.facebook-card .icon-wrapper { width: 50px; height: 50px; margin-bottom: 10px; }
+            .tool-card.facebook-card .icon { font-size: 30px; }
+            .tool-card.facebook-card h3 { font-size: 16px; margin-bottom: 5px; }
+            .tool-card.facebook-card p { font-size: 12px; min-height: 40px; -webkit-line-clamp: 2; margin-bottom: 10px; }
+            .tool-card.facebook-card .use-tool-btn { font-size: 12px; padding: 8px 15px; }
+            .daily-offer-section { padding: 20px 10px; }
+            .offer-cards-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .offer-card-wrapper:last-child { grid-column: 1 / -1; }
+            .daily-offer-section .offer-card-wrapper.full-width h3 { font-size: 18px; }
+            .daily-offer-section .offer-card-wrapper.full-width p { font-size: 14px; -webkit-line-clamp: 2; }
+            .blog-section { padding: 20px 10px; }
+            .blog-post-card { padding: 15px; }
+            .blog-image-container { height: 150px; margin-bottom: 15px; }
+            .blog-post-card h3 { font-size: 18px; }
+            .blog-post-card p { font-size: 14px; -webkit-line-clamp: 3; }
+            .testimonials-section { padding: 20px 10px; }
+            .testimonials-section h2 { margin-bottom: 10px; }
+            .testimonial-cards-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
+            .testimonial-card { min-height: 180px; padding: 15px; box-shadow: var(--shadow-light); }
+            .testimonial-card p { font-size: 10px; margin-bottom: 10px; -webkit-line-clamp: 5; }
+            .testimonial-card h4 { font-size: 9px; }
+            .why-choose-us-section { padding-top: 20px; padding-bottom: 10px; margin-bottom: 0; }
+            .why-choose-us-section h2 { margin-bottom: 10px; }
+            .benefits-grid { grid-template-columns: repeat(3, 1fr); gap: 5px; margin-top: 10px; }
+            .benefit-card { min-height: 100px; padding: 8px; }
+            .benefit-card .icon-wrapper { width: 25px; height: 25px; margin-bottom: 5px; }
+            .benefit-card .icon { font-size: 14px; }
+            .benefit-card h3 { font-size: 10px; margin-bottom: 2px; }
+            .benefit-card p { font-size: 8px; -webkit-line-clamp: 3; }
+            .tool-card { min-height: 250px; padding: 15px 10px; }
+            .tool-card .icon-wrapper { width: 60px; height: 60px; margin-bottom: 10px; }
+            .tool-card .icon { font-size: 30px; }
+            .tool-card h3, .offer-card h3 { font-size: 16px; margin-bottom: 5px; }
+            .tool-card p, .offer-card p { font-size: 12px; margin-bottom: 10px; }
+            .offer-card { min-height: 200px; padding: 15px 10px; }
+            .offer-card .icon-wrapper { width: 50px; height: 50px; margin-bottom: 10px; }
+            .offer-card .icon { font-size: 30px; }
+            .offer-card h3 { font-size: 16px; margin-bottom: 5px; }
+            .offer-card p { font-size: 12px; min-height: 40px; -webkit-line-clamp: 2; margin-bottom: 10px; }
+            .use-tool-btn, .join-offer-btn { font-size: 12px; padding: 8px 15px; }
+            .offer-card-wrapper { margin-bottom: 0; }
+            .footer { margin-top: 0; padding-top: 20px; padding-bottom: 20px; padding: 20px 10px; }
+            .footer-container { flex-direction: row; justify-content: space-between; flex-wrap: nowrap; gap: 5px; padding-bottom: 10px; }
+            .footer a, .footer button { padding: 4px 6px; font-size: 8px; }
+            .ashiqur-popup { font-size: 12px; white-space: normal; width: 90%; bottom: 60px; }
         }
 
         /* --- Desktop Specific Styles (Updated) --- */
         @media (min-width: 769px) {
-            /* 1. Tools একশন কার্ড: এক লাইনে দেখানোর জন্য */
-            .tools-panel .tool-cards-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .tool-card.facebook-card {
-                grid-column: auto; /* আগের কলাম স্প্যান বাতিল করে */
-            }
-
-            /* ডেস্কটপ ভিউ-এর জন্য টুল কার্ডের সাইজ ঠিক করা (2x3 অনুপাত) */
-            .tool-card {
-                padding: 20px;
-                min-height: 350px;
-            }
-            .tool-card .icon-wrapper {
-                width: 80px;
-                height: 80px;
-            }
-            .tool-card .icon {
-                font-size: 50px;
-            }
-            .tool-card h3 {
-                font-size: 24px;
-            }
-            .tool-card p {
-                font-size: 16px;
-                padding: 0 10px;
-                -webkit-line-clamp: 3;
-            }
-            .use-tool-btn {
-                font-size: 16px;
-                padding: 10px 20px;
-            }
-
-
-            /* 2. Daily Offer কার্ড: এক লাইনে দেখানোর জন্য */
-            .offer-cards-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 25px;
-            }
-            .offer-card-wrapper.full-width {
-                grid-column: auto; /* আগের কলাম স্প্যান বাতিল করে */
-            }
-
-            /* ডেস্কটপ ভিউ-এর জন্য ডেইলি অফার কার্ডের সাইজ ঠিক করা (টুল কার্ডের মতোই) */
-            .offer-card {
-                min-height: 350px; /* টুল কার্ডের উচ্চতার সমান */
-                padding: 30px 20px; /* টুল কার্ডের প্যাডিং এর সমান */
-            }
-            .offer-card .icon-wrapper { 
-                width: 90px; 
-                height: 90px;
-                margin: 0 auto 20px;
-            }
-            .offer-card .icon { 
-                font-size: 60px;
-            }
-            .offer-card h3 {
-                font-size: 28px;
-                margin-bottom: 15px;
-            }
-            .offer-card p {
-                font-size: 18px;
-                margin-bottom: 20px;
-                -webkit-line-clamp: unset;
-                text-align: center;
-                display: block;
-            }
-            .join-offer-btn {
-                font-size: 16px;
-                padding: 12px 25px;
-                max-width: 200px;
-            }
-
-
-            /* 3. ফুটার কপিরাইট টেক্সট: ফন্ট সাইজ বড় করার জন্য */
-            .footer p {
-                font-size: 20px;
-            }
-
-            /* অন্যান্য ডেস্কটপ স্টাইল */
+            .tools-panel .tool-cards-grid { grid-template-columns: repeat(3, 1fr); }
+            .tool-card.facebook-card { grid-column: auto; }
+            .tool-card { padding: 20px; min-height: 350px; }
+            .tool-card .icon-wrapper { width: 80px; height: 80px; }
+            .tool-card .icon { font-size: 50px; }
+            .tool-card h3 { font-size: 24px; }
+            .tool-card p { font-size: 16px; padding: 0 10px; -webkit-line-clamp: 3; }
+            .use-tool-btn { font-size: 16px; padding: 10px 20px; }
+            .offer-cards-grid { grid-template-columns: repeat(3, 1fr); gap: 25px; }
+            .offer-card-wrapper.full-width { grid-column: auto; }
+            .offer-card { min-height: 350px; padding: 30px 20px; }
+            .offer-card .icon-wrapper { width: 90px; height: 90px; margin: 0 auto 20px; }
+            .offer-card .icon { font-size: 60px; }
+            .offer-card h3 { font-size: 28px; margin-bottom: 15px; }
+            .offer-card p { font-size: 18px; margin-bottom: 20px; -webkit-line-clamp: unset; text-align: center; display: block; }
+            .join-offer-btn { font-size: 16px; padding: 12px 25px; max-width: 200px; }
+            .footer p { font-size: 20px; }
             .header-right { gap: 20px; }
             .footer-container { flex-direction: row; justify-content: space-between; align-items: center; }
             .footer-buttons-wrapper { display: contents; } 
             .footer-links-group { display: contents; } 
             .ashiqur-popup { bottom: 80px; }
         }
-        
     </style>
 </head>
 <body>
