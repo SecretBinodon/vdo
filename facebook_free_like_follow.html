@@ -328,6 +328,11 @@
             transition: border-color 0.3s, box-shadow 0.3s;
         }
         
+        .viralpro-form input.invalid {
+            border-color: var(--red-color);
+            box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+        }
+
         .viralpro-form select {
             width: 100%;
             padding: 0.6rem 0.8rem;
@@ -855,6 +860,7 @@
                     <div id="viralpro-form-fields">
                         <label for="postUrl" id="urlLabel" data-lang-en="Paste your Facebook Post or Page URL" data-lang-bn="আপনার ফেসবুক পোস্ট বা পেজের URL পেস্ট করুন">Paste your Facebook Post or Page URL</label>
                         <input type="text" id="viralpro-postUrl" name="postUrl" placeholder="https://www.facebook.com/..." required />
+                        <span id="viralpro-url-error" style="color: var(--red-color); font-size: 0.8rem; margin-top: 5px; display: none;"></span>
 
                         <div id="like-options">
                             <label for="reactionLimit" data-lang-en="Select Reaction Limit" data-lang-bn="রিয়াকশনের লিমিট সিলেক্ট করুন">Select Reaction Limit</label>
@@ -977,7 +983,8 @@
                     shareSuccessMessage: "Your share to 10 people was successful.",
                     congratulationTitle: "Congratulations!",
                     linkConnectSuccessMessage: "Your link has been successfully connected.<br>Click Done to complete the task.",
-                    fillAllFields: "Please fill out all fields"
+                    fillAllFields: "Please fill out all fields",
+                    invalidUrl: "Please enter a valid Facebook URL."
                 },
                 bn: {
                     shareInstruction: "১০ জনকে শেয়ার করুন",
@@ -990,7 +997,8 @@
                     shareSuccessMessage: "আপনার ১০ জনকে শেয়ার করা সাকসেসফুল হয়েছে।",
                     congratulationTitle: "কংগ্রাচুলেশন!",
                     linkConnectSuccessMessage: "আপনার লিংক কানেক্ট সফল হয়েছে।<br>Done বাটনে ক্লিক করে কাজটি সম্পন্ন করুন।",
-                    fillAllFields: "অনুগ্রহ করে সব ফিল্ড পূরণ করুন"
+                    fillAllFields: "অনুগ্রহ করে সব ফিল্ড পূরণ করুন",
+                    invalidUrl: "অনুগ্রহ করে একটি সঠিক ফেসবুক লিংক দিন।"
                 }
             };
             
@@ -1012,6 +1020,8 @@
             const taskTypeContainer = document.getElementById('taskTypeContainer');
             const reactionLimitSelect = document.getElementById('viralpro-reactionLimit');
             const followLimitSelect = document.getElementById('viralpro-followLimit');
+            const viralproPostUrlInput = document.getElementById('viralpro-postUrl');
+            const viralproUrlError = document.getElementById('viralpro-url-error');
 
             const premiumPlanBtn = document.querySelector('.premium-plan');
             const comingSoonMessage = document.getElementById('coming-soon-message');
@@ -1030,7 +1040,7 @@
                 const savedState = localStorage.getItem('viralproAppState');
                 return savedState ? JSON.parse(savedState) : { step: 'initial', taskType: 'like' };
             }
-            
+
             function viralproShowPopup(title, message, buttonText, onButtonClick) {
                 viralproNotificationContent.innerHTML = `<h3>${title}</h3><p>${message}</p>`;
                 viralproOverlayButton.textContent = buttonText;
@@ -1153,12 +1163,25 @@
                 e.preventDefault();
 
                 const taskType = viralproTaskTypeSelect.value;
-                const postUrl = document.getElementById('viralpro-postUrl').value.trim();
+                const postUrl = viralproPostUrlInput.value.trim();
                 let reactionLimit = '';
                 let reactionType = '';
                 let followLimit = '';
                 
                 const texts = translations[currentLang];
+
+                // URL validation
+                const facebookUrlRegex = /^(https?:\/\/)?(www\.)?facebook\.com\/(?![a-zA-Z0-9-]+\/plugins\/)(?:(?:profile\.php\?id=)|[a-zA-Z0-9\.\-]+\/|groups\/[a-zA-Z0-9\.\-]+\/?(?:[?&].*)?|photo.php\?fbid=|events\/|posts\/|notes\/|pg\/|story.php\?story_fbid=).*$/;
+                
+                if (!facebookUrlRegex.test(postUrl)) {
+                    viralproPostUrlInput.classList.add('invalid');
+                    viralproUrlError.textContent = texts.invalidUrl;
+                    viralproUrlError.style.display = 'block';
+                    return;
+                } else {
+                    viralproPostUrlInput.classList.remove('invalid');
+                    viralproUrlError.style.display = 'none';
+                }
 
                 if (taskType === 'like') {
                     reactionLimit = document.getElementById('viralpro-reactionLimit').value;
