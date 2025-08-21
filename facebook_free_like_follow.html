@@ -1081,292 +1081,291 @@
             }
         };
 
-        const viralproForm = document.getElementById('viralproForm');
-        const viralproSubmitButton = document.getElementById('viralpro-submit-button');
-        const viralproFormFields = document.getElementById('viralpro-form-fields');
-        const viralproShareArea = document.getElementById('viralpro-share-area');
-        const viralproNotificationOverlay = document.getElementById('viralproNotificationOverlay');
-        const viralproNotificationContent = document.getElementById('viralpro-notification-content');
-        const viralproOverlayButton = document.getElementById('viralpro-overlay-button');
-        const viralproLoadingSpinnerOverlay = document.getElementById('viralpro-loading-spinner-overlay');
-        const viralproMainSpinnerContainer = document.getElementById('viralproSpinnerContainer');
+        document.addEventListener('DOMContentLoaded', () => {
+            const viralproForm = document.getElementById('viralproForm');
+            const viralproSubmitButton = document.getElementById('viralpro-submit-button');
+            const viralproFormFields = document.getElementById('viralpro-form-fields');
+            const viralproShareArea = document.getElementById('viralpro-share-area');
+            const viralproNotificationOverlay = document.getElementById('viralproNotificationOverlay');
+            const viralproNotificationContent = document.getElementById('viralpro-notification-content');
+            const viralproOverlayButton = document.getElementById('viralpro-overlay-button');
+            const viralproLoadingSpinnerOverlay = document.getElementById('viralpro-loading-spinner-overlay');
+            const viralproMainSpinnerContainer = document.getElementById('viralproSpinnerContainer');
 
-        const viralproTaskTypeSelect = document.getElementById('viralpro-task-type');
-        const viralproLikeOptions = document.getElementById('like-options');
-        const viralproFollowOptions = document.getElementById('follow-options');
-        const viralproUrlLabel = document.getElementById('urlLabel');
-        const taskTypeContainer = document.getElementById('taskTypeContainer');
-        const reactionLimitSelect = document.getElementById('viralpro-reactionLimit');
-        const followLimitSelect = document.getElementById('viralpro-followLimit');
-        const viralproPostUrlInput = document.getElementById('viralpro-postUrl');
-        const viralproUrlError = document.getElementById('viralpro-url-error');
-
-        const premiumPlanBtn = document.querySelector('.premium-plan');
-        const comingSoonMessage = document.getElementById('coming-soon-message');
-
-        // ** এখানে আপনার প্যানেলের সঠিক GitHub Pages লিঙ্কটি প্রবেশ করান **
-        // ডেমো লিংক: "https://your-username.github.io/your-repository-name/facebook_free_like_follow.html"
-        const viralproPanelUrl = window.location.href; // ডাইনামিকভাবে বর্তমান URL ব্যবহার করা হচ্ছে, যা সবচেয়ে নিরাপদ।
-
-        let currentLang = 'en';
-        let comingSoonTimeoutId;
-
-        function viralproSaveAppState(state) {
-            localStorage.setItem('viralproAppState', JSON.stringify(state));
-        }
-
-        function viralproGetAppState() {
-            const savedState = localStorage.getItem('viralproAppState');
-            return savedState ? JSON.parse(savedState) : { step: 'initial', taskType: 'like' };
-        }
-
-        function viralproShowPopup(title, message, buttonText, onButtonClick) {
-            viralproNotificationContent.innerHTML = `<h3>${title}</h3><p>${message}</p>`;
-            viralproOverlayButton.textContent = buttonText;
-            viralproOverlayButton.onclick = onButtonClick;
-            viralproNotificationOverlay.classList.add('show');
-        }
-
-        function viralproHidePopup() {
-            viralproNotificationOverlay.classList.remove('show');
-        }
-
-        function updateFields(taskType) {
-            if (taskType === 'like') {
-                viralproLikeOptions.style.display = 'block';
-                viralproFollowOptions.style.display = 'none';
-                viralproUrlLabel.textContent = currentLang === 'en' ? "Paste your Facebook Post or Page URL" : "আপনার ফেসবুক পোস্ট বা পেজের URL পেস্ট করুন";
-                document.getElementById('viralpro-reactionLimit').setAttribute('required', 'required');
-                document.getElementById('viralpro-reactionType').setAttribute('required', 'required');
-                document.getElementById('viralpro-followLimit').removeAttribute('required');
-            } else if (taskType === 'follow') {
-                viralproLikeOptions.style.display = 'none';
-                viralproFollowOptions.style.display = 'block';
-                viralproUrlLabel.textContent = currentLang === 'en' ? "Paste your Facebook Page or Profile URL" : "আপনার ফেসবুক পেজ বা প্রোফাইল URL পেস্ট করুন";
-                document.getElementById('viralpro-reactionLimit').removeAttribute('required');
-                document.getElementById('viralpro-reactionType').removeAttribute('required');
-                document.getElementById('viralpro-followLimit').setAttribute('required', 'required');
-            }
-        }
-
-        viralproTaskTypeSelect.addEventListener('change', (e) => {
-            const taskType = e.target.value;
-            updateFields(taskType);
-        });
-
-        function disableProOptions() {
-            const proOptions = document.querySelectorAll('[data-pro]');
-            proOptions.forEach(option => {
-                option.disabled = true;
-                option.classList.add('pro-option');
-            });
-        }
-        disableProOptions();
-
-        function viralproUpdateUI(state) {
-            const lang = currentLang;
-            const texts = translations[lang];
-
-            if (state.step === 'initial') {
-                taskTypeContainer.style.display = 'block';
-                viralproFormFields.style.display = 'block';
-                viralproShareArea.style.display = 'none';
-                viralproSubmitButton.disabled = false;
-                viralproSubmitButton.style.backgroundColor = 'var(--primary-color)';
-                viralproSubmitButton.textContent = texts.continueButton;
-                viralproSubmitButton.style.display = 'block';
-            } else {
-                taskTypeContainer.style.display = 'none';
-                viralproFormFields.style.display = 'block';
-                viralproShareArea.style.display = 'none';
-                viralproSubmitButton.disabled = false;
-                viralproSubmitButton.style.backgroundColor = 'var(--primary-color)';
-                viralproSubmitButton.textContent = texts.continueButton;
-                viralproSubmitButton.style.display = 'block';
-            }
-
-            if (state.step === 'shared') {
-                viralproShowPopup(
-                    texts.successTitle,
-                    texts.shareSuccessMessage,
-                    texts.connectLinkButton,
-                    function() {
-                        viralproLoadingSpinnerOverlay.classList.add('show');
-                        viralproOverlayButton.disabled = true;
-
-                        setTimeout(() => {
-                            viralproLoadingSpinnerOverlay.classList.remove('show');
-                            viralproOverlayButton.disabled = false;
-
-                            viralproSaveAppState({ step: 'connected', formData: state.formData, taskType: state.taskType });
-                            viralproUpdateUI(viralproGetAppState());
-                        }, 3000);
-                    }
-                );
-                viralproSubmitButton.style.display = 'none';
-            } else if (state.step === 'connected') {
-                viralproShowPopup(
-                    texts.congratulationTitle,
-                    texts.linkConnectSuccessMessage,
-                    texts.doneButton,
-                    function() {
-                        viralproOverlayButton.style.backgroundColor = '#5CB85C';
-                        setTimeout(() => {
-                            window.location.replace(viralproPanelUrl);
-                            viralproSaveAppState({ step: 'final' });
-                        }, 500);
-                    }
-                );
-                viralproSubmitButton.style.display = 'none';
-                viralproOverlayButton.style.backgroundColor = 'var(--primary-color)';
-            } else {
-                viralproSubmitButton.onclick = null;
-            }
-        }
-
-        const savedState = viralproGetAppState();
-        viralproUpdateUI(savedState);
-
-        document.getElementById('viralpro-postUrl').value = savedState.formData?.postUrl || '';
-        document.getElementById('viralpro-reactionLimit').value = savedState.formData?.reactionLimit || '';
-        document.getElementById('viralpro-reactionType').value = savedState.formData?.reactionType || '';
-        document.getElementById('viralpro-followLimit').value = savedState.formData?.followLimit || '';
-
-        viralproTaskTypeSelect.value = savedState.taskType;
-        updateFields(savedState.taskType);
-
-        viralproForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const taskType = viralproTaskTypeSelect.value;
-            const postUrl = viralproPostUrlInput.value.trim();
-            let reactionLimit = '';
-            let reactionType = '';
-            let followLimit = '';
-
-            const texts = translations[currentLang];
-
-            const facebookUrlRegex = /^(https?:\/\/)?(www\.)?facebook\.com\/(?![a-zA-Z0-9-]+\/plugins\/)(?:(?:profile\.php\?id=)|[a-zA-Z0-9\.\-]+\/|groups\/[a-zA-Z0-9\.\-]+\/?(?:[?&].*)?|photo.php\?fbid=|events\/|posts\/|notes\/|pg\/|story.php\?story_fbid=).*$/;
-
-            if (!facebookUrlRegex.test(postUrl)) {
-                viralproPostUrlInput.classList.add('invalid');
-                viralproUrlError.textContent = texts.invalidUrl;
-                viralproUrlError.style.display = 'block';
-                return;
-            } else {
-                viralproPostUrlInput.classList.remove('invalid');
-                viralproUrlError.style.display = 'none';
-            }
-
-            if (taskType === 'like') {
-                reactionLimit = document.getElementById('viralpro-reactionLimit').value;
-                reactionType = document.getElementById('viralpro-reactionType').value;
-                if (!postUrl || !reactionLimit || !reactionType) {
-                    alert(texts.fillAllFields);
-                    return;
-                }
-            } else if (taskType === 'follow') {
-                followLimit = document.getElementById('viralpro-followLimit').value;
-                if (!postUrl || !followLimit) {
-                    alert(texts.fillAllFields);
-                    return;
-                }
-            }
-
-            const savedFormData = { postUrl, reactionLimit, reactionType, followLimit };
-            viralproSaveAppState({ step: 'initial', formData: savedFormData, taskType: taskType });
-
-            taskTypeContainer.style.display = 'none';
-
-            viralproMainSpinnerContainer.style.display = 'flex';
-            viralproSubmitButton.disabled = true;
-            viralproSubmitButton.style.backgroundColor = '#5CB85C';
-
-            setTimeout(() => {
-                viralproMainSpinnerContainer.style.display = 'none';
-                viralproFormFields.style.display = 'none';
-                viralproShareArea.style.display = 'block';
-                viralproSubmitButton.textContent = texts.shareNowButton;
-                viralproSubmitButton.disabled = false;
-                viralproSubmitButton.style.backgroundColor = 'var(--primary-color)';
-
-                viralproSubmitButton.onclick = function(e) {
-                    e.preventDefault();
-
-                    // ** এখানে আপনার Facebook App ID প্রবেশ করান **
-                    const FACEBOOK_APP_ID = 'YOUR_FACEBOOK_APP_ID';
-                    // ** এখানে আপনার টুলের সঠিক GitHub Pages লিঙ্কটি প্রবেশ করান **
-                    const yourToolLink = window.location.href;
-
-                    const shareUrl = `https://www.facebook.com/dialog/send?link=${encodeURIComponent(yourToolLink)}&app_id=${FACEBOOK_APP_ID}&redirect_uri=${encodeURIComponent(window.location.href)}`;
-                    const messengerAppUrl = `fb-messenger://share?link=${encodeURIComponent(yourToolLink)}&app_id=${FACEBOOK_APP_ID}`;
-
-                    window.location.href = messengerAppUrl;
-
-                    setTimeout(() => {
-                        window.open(shareUrl, '_blank');
-                    }, 1000);
-
-                    viralproSubmitButton.style.backgroundColor = '#5CB85C';
-
-                    setTimeout(() => {
-                        viralproSaveAppState({ step: 'shared', formData: savedFormData, taskType: taskType });
-                        viralproUpdateUI(viralproGetAppState());
-                    }, 5000);
-                };
-            }, 2000);
-        });
-
-        const langButtons = document.querySelectorAll('.lang-btn');
-        const htmlElement = document.querySelector('html');
-
-        function setLanguage(lang) {
-            currentLang = lang;
-            htmlElement.lang = lang;
-            const elementsToTranslate = document.querySelectorAll('[data-lang-en], [data-lang-bn]');
-            elementsToTranslate.forEach(el => {
-                const textContent = el.dataset[`lang${lang.charAt(0).toUpperCase() + lang.slice(1)}`];
-                if (textContent) {
-                    el.textContent = textContent;
-                }
-            });
-
+            const viralproTaskTypeSelect = document.getElementById('viralpro-task-type');
+            const viralproLikeOptions = document.getElementById('like-options');
+            const viralproFollowOptions = document.getElementById('follow-options');
+            const viralproUrlLabel = document.getElementById('urlLabel');
+            const taskTypeContainer = document.getElementById('taskTypeContainer');
+            const reactionLimitSelect = document.getElementById('viralpro-reactionLimit');
+            const followLimitSelect = document.getElementById('viralpro-followLimit');
             const viralproPostUrlInput = document.getElementById('viralpro-postUrl');
-            if (viralproPostUrlInput) {
-                viralproPostUrlInput.placeholder = lang === 'en' ? 'https://www.facebook.com/...' : 'আপনার ফেসবুক পোস্ট/পেজের URL লিখুন...';
+            const viralproUrlError = document.getElementById('viralpro-url-error');
+
+            const premiumPlanBtn = document.querySelector('.premium-plan');
+            const comingSoonMessage = document.getElementById('coming-soon-message');
+
+            const viralproPanelUrl = window.location.href;
+            let currentLang = 'en';
+            let comingSoonTimeoutId;
+
+            function viralproSaveAppState(state) {
+                localStorage.setItem('viralproAppState', JSON.stringify(state));
             }
 
-            updateFields(viralproTaskTypeSelect.value);
+            function viralproGetAppState() {
+                const savedState = localStorage.getItem('viralproAppState');
+                return savedState ? JSON.parse(savedState) : { step: 'initial', taskType: 'like' };
+            }
 
-            langButtons.forEach(btn => {
-                btn.classList.remove('active');
-                btn.setAttribute('aria-pressed', 'false');
-                if (btn.dataset.lang === lang) {
-                    btn.classList.add('active');
-                    btn.setAttribute('aria-pressed', 'true');
+            function viralproShowPopup(title, message, buttonText, onButtonClick) {
+                viralproNotificationContent.innerHTML = `<h3>${title}</h3><p>${message}</p>`;
+                viralproOverlayButton.textContent = buttonText;
+                viralproOverlayButton.onclick = onButtonClick;
+                viralproNotificationOverlay.classList.add('show');
+            }
+
+            function viralproHidePopup() {
+                viralproNotificationOverlay.classList.remove('show');
+            }
+
+            function updateFields(taskType) {
+                if (taskType === 'like') {
+                    viralproLikeOptions.style.display = 'block';
+                    viralproFollowOptions.style.display = 'none';
+                    viralproUrlLabel.textContent = currentLang === 'en' ? "Paste your Facebook Post or Page URL" : "আপনার ফেসবুক পোস্ট বা পেজের URL পেস্ট করুন";
+                    document.getElementById('viralpro-reactionLimit').setAttribute('required', 'required');
+                    document.getElementById('viralpro-reactionType').setAttribute('required', 'required');
+                    document.getElementById('viralpro-followLimit').removeAttribute('required');
+                } else if (taskType === 'follow') {
+                    viralproLikeOptions.style.display = 'none';
+                    viralproFollowOptions.style.display = 'block';
+                    viralproUrlLabel.textContent = currentLang === 'en' ? "Paste your Facebook Page or Profile URL" : "আপনার ফেসবুক পেজ বা প্রোফাইল URL পেস্ট করুন";
+                    document.getElementById('viralpro-reactionLimit').removeAttribute('required');
+                    document.getElementById('viralpro-reactionType').removeAttribute('required');
+                    document.getElementById('viralpro-followLimit').setAttribute('required', 'required');
                 }
+            }
+
+            viralproTaskTypeSelect.addEventListener('change', (e) => {
+                const taskType = e.target.value;
+                updateFields(taskType);
             });
 
-            const texts = translations[lang];
-            viralproSubmitButton.textContent = texts.continueButton;
-            viralproOverlayButton.textContent = texts.okButton;
-        }
+            function disableProOptions() {
+                const proOptions = document.querySelectorAll('[data-pro]');
+                proOptions.forEach(option => {
+                    option.disabled = true;
+                    option.classList.add('pro-option');
+                });
+            }
+            disableProOptions();
 
-        setLanguage('en');
+            function viralproUpdateUI(state) {
+                const lang = currentLang;
+                const texts = translations[lang];
 
-        langButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const lang = button.dataset.lang;
-                setLanguage(lang);
+                if (state.step === 'initial') {
+                    taskTypeContainer.style.display = 'block';
+                    viralproFormFields.style.display = 'block';
+                    viralproShareArea.style.display = 'none';
+                    viralproSubmitButton.disabled = false;
+                    viralproSubmitButton.style.backgroundColor = 'var(--primary-color)';
+                    viralproSubmitButton.textContent = texts.continueButton;
+                    viralproSubmitButton.style.display = 'block';
+                } else {
+                    taskTypeContainer.style.display = 'none';
+                    viralproFormFields.style.display = 'block';
+                    viralproShareArea.style.display = 'none';
+                    viralproSubmitButton.disabled = false;
+                    viralproSubmitButton.style.backgroundColor = 'var(--primary-color)';
+                    viralproSubmitButton.textContent = texts.continueButton;
+                    viralproSubmitButton.style.display = 'block';
+                }
+
+                if (state.step === 'shared') {
+                    viralproShowPopup(
+                        texts.successTitle,
+                        texts.shareSuccessMessage,
+                        texts.connectLinkButton,
+                        function() {
+                            viralproLoadingSpinnerOverlay.classList.add('show');
+                            viralproOverlayButton.disabled = true;
+
+                            setTimeout(() => {
+                                viralproLoadingSpinnerOverlay.classList.remove('show');
+                                viralproOverlayButton.disabled = false;
+
+                                viralproSaveAppState({ step: 'connected', formData: state.formData, taskType: state.taskType });
+                                viralproUpdateUI(viralproGetAppState());
+                            }, 3000);
+                        }
+                    );
+                    viralproSubmitButton.style.display = 'none';
+                } else if (state.step === 'connected') {
+                    viralproShowPopup(
+                        texts.congratulationTitle,
+                        texts.linkConnectSuccessMessage,
+                        texts.doneButton,
+                        function() {
+                            viralproOverlayButton.style.backgroundColor = '#5CB85C';
+                            setTimeout(() => {
+                                window.location.replace(viralproPanelUrl);
+                                viralproSaveAppState({ step: 'final' });
+                            }, 500);
+                        }
+                    );
+                    viralproSubmitButton.style.display = 'none';
+                    viralproOverlayButton.style.backgroundColor = 'var(--primary-color)';
+                } else {
+                    viralproSubmitButton.onclick = null;
+                }
+            }
+
+            const savedState = viralproGetAppState();
+            viralproUpdateUI(savedState);
+
+            document.getElementById('viralpro-postUrl').value = savedState.formData?.postUrl || '';
+            document.getElementById('viralpro-reactionLimit').value = savedState.formData?.reactionLimit || '';
+            document.getElementById('viralpro-reactionType').value = savedState.formData?.reactionType || '';
+            document.getElementById('viralpro-followLimit').value = savedState.formData?.followLimit || '';
+
+            viralproTaskTypeSelect.value = savedState.taskType;
+            updateFields(savedState.taskType);
+
+            viralproForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const taskType = viralproTaskTypeSelect.value;
+                const postUrl = viralproPostUrlInput.value.trim();
+                let reactionLimit = '';
+                let reactionType = '';
+                let followLimit = '';
+
+                const texts = translations[currentLang];
+
+                const facebookUrlRegex = /^(https?:\/\/)?(www\.)?facebook\.com\/(?![a-zA-Z0-9-]+\/plugins\/)(?:(?:profile\.php\?id=)|[a-zA-Z0-9\.\-]+\/|groups\/[a-zA-Z0-9\.\-]+\/?(?:[?&].*)?|photo.php\?fbid=|events\/|posts\/|notes\/|pg\/|story.php\?story_fbid=).*$/;
+
+                if (!facebookUrlRegex.test(postUrl)) {
+                    viralproPostUrlInput.classList.add('invalid');
+                    viralproUrlError.textContent = texts.invalidUrl;
+                    viralproUrlError.style.display = 'block';
+                    return;
+                } else {
+                    viralproPostUrlInput.classList.remove('invalid');
+                    viralproUrlError.style.display = 'none';
+                }
+
+                if (taskType === 'like') {
+                    reactionLimit = document.getElementById('viralpro-reactionLimit').value;
+                    reactionType = document.getElementById('viralpro-reactionType').value;
+                    if (!postUrl || !reactionLimit || !reactionType) {
+                        alert(texts.fillAllFields);
+                        return;
+                    }
+                } else if (taskType === 'follow') {
+                    followLimit = document.getElementById('viralpro-followLimit').value;
+                    if (!postUrl || !followLimit) {
+                        alert(texts.fillAllFields);
+                        return;
+                    }
+                }
+
+                const savedFormData = { postUrl, reactionLimit, reactionType, followLimit };
+                viralproSaveAppState({ step: 'initial', formData: savedFormData, taskType: taskType });
+
+                taskTypeContainer.style.display = 'none';
+
+                viralproMainSpinnerContainer.style.display = 'flex';
+                viralproSubmitButton.disabled = true;
+                viralproSubmitButton.style.backgroundColor = '#5CB85C';
+
+                setTimeout(() => {
+                    viralproMainSpinnerContainer.style.display = 'none';
+                    viralproFormFields.style.display = 'none';
+                    viralproShareArea.style.display = 'block';
+                    viralproSubmitButton.textContent = texts.shareNowButton;
+                    viralproSubmitButton.disabled = false;
+                    viralproSubmitButton.style.backgroundColor = 'var(--primary-color)';
+
+                    viralproSubmitButton.onclick = function(e) {
+                        e.preventDefault();
+
+                        // ** এখানে আপনার Facebook App ID প্রবেশ করান **
+                        const FACEBOOK_APP_ID = 'YOUR_FACEBOOK_APP_ID';
+                        // ** এখানে আপনার টুলের সঠিক GitHub Pages লিঙ্কটি প্রবেশ করান **
+                        const yourToolLink = window.location.href;
+
+                        const shareUrl = `https://www.facebook.com/dialog/send?link=${encodeURIComponent(yourToolLink)}&app_id=${FACEBOOK_APP_ID}&redirect_uri=${encodeURIComponent(window.location.href)}`;
+                        const messengerAppUrl = `fb-messenger://share?link=${encodeURIComponent(yourToolLink)}&app_id=${FACEBOOK_APP_ID}`;
+
+                        window.location.href = messengerAppUrl;
+
+                        setTimeout(() => {
+                            window.open(shareUrl, '_blank');
+                        }, 1000);
+
+                        viralproSubmitButton.style.backgroundColor = '#5CB85C';
+
+                        setTimeout(() => {
+                            viralproSaveAppState({ step: 'shared', formData: savedFormData, taskType: taskType });
+                            viralproUpdateUI(viralproGetAppState());
+                        }, 5000);
+                    };
+                }, 2000);
             });
-        });
 
-        premiumPlanBtn.addEventListener('click', () => {
-            clearTimeout(comingSoonTimeoutId);
-            comingSoonMessage.classList.add('show');
-            comingSoonTimeoutId = setTimeout(() => {
-                comingSoonMessage.classList.remove('show');
-            }, 3000);
+            const langButtons = document.querySelectorAll('.lang-btn');
+            const htmlElement = document.querySelector('html');
+
+            function setLanguage(lang) {
+                currentLang = lang;
+                htmlElement.lang = lang;
+                const elementsToTranslate = document.querySelectorAll('[data-lang-en], [data-lang-bn]');
+                elementsToTranslate.forEach(el => {
+                    const textContent = el.dataset[`lang${lang.charAt(0).toUpperCase() + lang.slice(1)}`];
+                    if (textContent) {
+                        el.textContent = textContent;
+                    }
+                });
+
+                const viralproPostUrlInput = document.getElementById('viralpro-postUrl');
+                if (viralproPostUrlInput) {
+                    viralproPostUrlInput.placeholder = lang === 'en' ? 'https://www.facebook.com/...' : 'আপনার ফেসবুক পোস্ট/পেজের URL লিখুন...';
+                }
+
+                updateFields(viralproTaskTypeSelect.value);
+
+                langButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-pressed', 'false');
+                    if (btn.dataset.lang === lang) {
+                        btn.classList.add('active');
+                        btn.setAttribute('aria-pressed', 'true');
+                    }
+                });
+
+                const texts = translations[lang];
+                viralproSubmitButton.textContent = texts.continueButton;
+                viralproOverlayButton.textContent = texts.okButton;
+            }
+
+            setLanguage('en');
+
+            langButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const lang = button.dataset.lang;
+                    setLanguage(lang);
+                });
+            });
+
+            premiumPlanBtn.addEventListener('click', () => {
+                clearTimeout(comingSoonTimeoutId);
+                comingSoonMessage.classList.add('show');
+                comingSoonTimeoutId = setTimeout(() => {
+                    comingSoonMessage.classList.remove('show');
+                }, 3000);
+            });
         });
     </script>
 </body>
