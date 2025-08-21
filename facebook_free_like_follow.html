@@ -1,998 +1,1345 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Facebook Reaction Landing Page</title>
-<style>
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f0f2f5;
-    margin: 0; padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    position: relative;
-    box-sizing: border-box;
-    padding-top: 50px;
-  }
-  .top-banner {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: #28a745;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 15px;
-    box-sizing: border-box;
-    z-index: 10;
-  }
-  .about-button-container,
-  .top-banner-right-group {
-    margin: 0;
-    display: flex;
-    align-items: center;
-  }
-  .about-button-container a {
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 14px;
-    padding: 5px 8px;
-    border-radius: 4px;
-    background: rgba(255, 255, 255, 0.2);
-    transition: background-color 0.3s;
-  }
-  .about-button-container a:hover {
-    background: rgba(255, 255, 255, 0.4);
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="description" content="Your chance to go viral! Boost your Facebook posts with thousands of real likes, followers & reactions instantly. It's 100% free and super fast!">
+    <meta name="keywords" content="free facebook likes, facebook followers, free reactions, viralpro, nextool hub, social media booster, get free likes, facebook boost, viral, how to get likes">
+    <meta name="author" content="NexTool Hub">
 
-  /* Header Social Links and Language Switch Group */
-  .top-banner-right-group {
-    gap: 15px;
-  }
-  .header-social-links {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-  .header-social-links a {
-    color: white;
-    font-size: 20px;
-    transition: transform 0.3s ease;
-  }
-  .header-social-links a:hover {
-    transform: scale(1.2);
-  }
+    <meta property="og:title" content="Shocking! Get 5000+ Free Likes & Followers in 1 Minute! ✨">
+    <meta property="og:description" content="Your chance to go viral! Boost your Facebook posts with thousands of real likes, followers & reactions instantly. It's 100% free and super fast!">
+    <meta property="og:type" content="website">
+    
+    <meta property="og:url" content="https://nextoolhub.github.io/NexToolHub/facebook_free_like_follow.html">
+    <meta property="og:image" content="https://raw.githubusercontent.com/NexToolHub/NexToolHub/refs/heads/main/images/IMG_20250821_194704.jpg">
 
-  .ad-banner-section {
-    max-width: 728px;
-    width: 100%;
-    margin: 65px auto 15px;
-    background-color: #f7f7f7;
-    text-align: center;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    overflow: hidden;
-  }
-  .ad-banner-section iframe {
-    display: block;
-  }
-  
-  /* --- সোশ্যাল বার অ্যাড সেকশনের স্টাইল --- */
-  .social-bar-ad {
-    margin-top: 25px;
-    text-align: center;
-  }
-  /* --- সোশ্যাল বার অ্যাড সেকশনের স্টাইল শেষ --- */
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Shocking! Get 5000+ Free Likes & Followers in 1 Minute! ✨">
+    <meta name="twitter:description" content="Your chance to go viral! Boost your Facebook posts with thousands of real likes, followers & reactions instantly. It's 100% free and super fast!">
+    
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/NexToolHub/NexToolHub/refs/heads/main/images/IMG_20250821_194704.jpg">
 
-  /* --- নতুন নেটিভ ব্যানার অ্যাডের স্টাইল --- */
-  .native-banner-container {
-    display: flex;
-    justify-content: center;
-    gap: 5px;
-    margin-top: 25px;
-    padding: 10px 0;
-  }
-  /* --- নেটিভ ব্যানার অ্যাডের স্টাইল শেষ --- */
+    <title data-lang-en="Viral Like & Follower Generator - NexTool Hub" data-lang-bn="ভাইরাল লাইক ও ফলোয়ার জেনারেটর - নেক্সটুল হাব">Viral Like & Follower Generator - NexTool Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* --- Global Variables & Base Styles --- */
+        :root {
+            --primary-color: #4A90E2;
+            --accent-color: #E24A90;
+            --background-color: #F8F9FA;
+            --card-bg: #FFFFFF;
+            --text-color: #333;
+            --secondary-text: #666;
+            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --border-radius: 12px;
+            --red-color: #FF0000;
+        }
 
-  .container {
-    background: #fff;
-    max-width: 400px;
-    width: 100%;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    padding: 30px 30px 0 30px;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-    margin: 5px auto 0;
-  }
-  .language-switch {
-    display: flex;
-    gap: 5px;
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 5px;
-    padding: 5px;
-    font-size: 14px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
-  }
-  .language-switch span {
-    cursor: pointer;
-    padding: 3px 8px;
-    border-radius: 4px;
-    transition: background-color 0.3s, color 0.3s;
-    font-weight: 500;
-  }
-  .language-switch span.active {
-    background-color: #1877f2;
-    color: white;
-  }
-  h2 {
-    margin-bottom: 20px;
-    font-weight: 700;
-    margin-top: 0;
-  }
-  .reaction-circle {
-    position: relative;
-    width: 220px;
-    height: 220px;
-    margin: 0 auto 30px;
-    perspective: 800px;
-  }
-  .facebook-logo {
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 70px; height: 70px;
-    background: #1877f2;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-weight: 900;
-    font-size: 36px;
-    user-select: none;
-    transform-style: preserve-3d;
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0);
-    box-shadow: 0 0 10px rgba(24, 119, 242, 0.5);
-  }
-  .reaction {
-    position: absolute;
-    top: 50%; left: 50%;
-    font-size: 40px;
-    user-select: none;
-    cursor: default;
-    background: transparent !important;
-    box-shadow: none !important;
-    border-radius: 50%;
-    opacity: 0;
-    transform-style: preserve-3d;
-    backface-visibility: hidden;
-    filter: drop-shadow(0 0 5px rgba(255,255,255,0.7));
-  }
-  form {
-    text-align: left;
-  }
-  .main-headline-container {
-    background-color: rgba(0, 0, 0, 0.05);
-    padding: 10px 15px;
-    border-radius: 8px;
-    margin-bottom: 25px;
-    text-align: center;
-  }
-  .main-headline {
-    font-size: 18px;
-    font-weight: 600;
-    color: #333;
-    margin: 0;
-  }
-  label {
-    font-weight: 500;
-    margin-top: 15px;
-    display: block;
-  }
-  input, select {
-    width: 100%;
-    padding: 8px 12px;
-    margin-top: 6px;
-    border: 1.5px solid #ddd;
-    border-radius: 6px;
-    font-size: 15px;
-    box-sizing: border-box;
-  }
-  select {
-    cursor: pointer;
-  }
-  button {
-    margin-top: 25px;
-    background: #1877f2;
-    border: none;
-    color: white;
-    font-size: 18px;
-    padding: 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    width: 100%;
-    font-weight: 700;
-    transition: background-color 0.5s ease;
-  }
-  button:disabled {
-    background: #999;
-    cursor: not-allowed;
-  }
-  .btn-success {
-    background-color: #28a745 !important;
-  }
-  /* New CSS for dimmed state */
-  .btn-dimmed {
-    background-color: #a4c9f1 !important; /* Lighter blue */
-    opacity: 0.7;
-    cursor: not-allowed;
-  }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-  .loading {
-    margin-top: 15px;
-    color: #1877f2;
-    font-weight: 600;
-    display: none;
-    text-align: center;
-  }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 10vh;
+        }
 
-  #successNotification {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    text-align: center;
-    display: none; /* Initially hidden */
-  }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
 
-  /* Congrats Animation/Notification */
-  #congrats-notification {
-    display: none;
-    padding: 20px;
-    background-color: #28a745;
-    color: white;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    animation: fadeIn 0.5s ease-out;
-    position: relative;
-    overflow: hidden;
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+        /* --- Header --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            flex-wrap: wrap;
+            position: relative;
+        }
 
-  /* Confetti Animation */
-  .confetti {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background-color: #ffeb3b; /* Yellow */
-    border-radius: 50%;
-    opacity: 0;
-    top: 50%;
-    left: 50%;
-    transform-origin: center;
-    animation: confetti-fall 2s ease-out forwards;
-    z-index: 1001;
-  }
-  @keyframes confetti-fall {
-    0% { transform: scale(0) translate(0, 0); opacity: 1; }
-    50% { transform: scale(1) translate(0, -100px); opacity: 1; }
-    100% { transform: scale(0.5) translate(var(--x), var(--y)); opacity: 0; }
-  }
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
 
-  /* New Share Instruction and Copy Button Section */
-  .share-options-container {
-    text-align: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    display: none; /* Initially hidden */
-  }
-  #copy-message-btn {
-    display: inline-block;
-    color: #1877f2;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 5px;
-    transition: color 0.3s;
-  }
-  #copy-message-btn i {
-    margin-right: 5px;
-  }
-  #copy-message-btn:hover {
-    color: #0b5cb4;
-  }
-  #copy-message-btn::before {
-    content: '→';
-    display: inline-block;
-    margin-right: 8px;
-    font-size: 18px;
-  }
-  #shareInstruction {
-    color: #333;
-    font-weight: 600;
-    margin: 0;
-  }
-  
-  /* Media query for mobile-first approach */
-  @media (max-width: 599px) {
-    .container {
-      width: 90%;
-      border-radius: 0;
-      box-shadow: none;
-    }
-    .top-banner {
-        flex-wrap: wrap;
-        align-items: center;
-    }
-    .top-banner-right-group {
-        width: 100%;
-        justify-content: center;
-        margin-top: 5px;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-    .header-social-links {
-        justify-content: center;
-    }
-    .ad-banner-section {
-        margin-top: 60px;
-    }
-    /* মোবাইল ডিভাইসে ব্যানারগুলো উপর-নিচ করে সাজানো হয়েছে */
-    .native-banner-container {
-      flex-direction: column;
-    }
-  }
+        .home-btn {
+            background-color: var(--card-bg);
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+            margin-right: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            text-decoration: none;
+        }
 
-  /* Modal/Popup Styles */
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  .modal {
-    background-color: white;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    max-width: 350px;
-    width: 90%;
-    position: relative;
-    transform: scale(0);
-    opacity: 0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-  }
-  .modal.active {
-    transform: scale(1);
-    opacity: 1;
-  }
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-  .modal-header h3 {
-    margin: 0;
-    font-size: 20px;
-  }
-  .modal-header .close-btn {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: #555;
-    transition: color 0.2s;
-  }
-  .modal-header .close-btn:hover {
-    color: #333;
-  }
-  .modal-body p {
-    margin: 0;
-    line-height: 1.6;
-    color: #444;
-  }
-  /* Import Font Awesome */
-  @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
-</style>
+        .home-btn:hover {
+            background-color: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo a {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo a .tool-text {
+            color: var(--red-color);
+        }
+
+        .logo a .hub-text {
+            color: var(--primary-color);
+        }
+
+        .language-switcher {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        /* --- New container for Premium Plan & Coming Soon --- */
+        .premium-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .premium-plan {
+            background-color: var(--card-bg);
+            border: 1px solid #ffcc00;
+            color: #cc9900;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-right: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn {
+            background-color: transparent;
+            border: 1px solid #ccc;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-left: 8px;
+        }
+
+        .lang-btn.active {
+            background-color: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
+        }
+
+        .lang-btn:hover:not(.active) {
+            background-color: #e0e0e0;
+        }
+
+        /* --- Coming Soon styles --- */
+        .coming-soon-message {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            color: #cc9900;
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid #ffcc00;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 10;
+            
+            /* Initial state */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            white-space: nowrap;
+        }
+
+        .coming-soon-message.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* --- Hero Section --- */
+        .hero-section {
+            text-align: center;
+            background-image: linear-gradient(135deg, var(--primary-color), #6B6EEA);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100px;
+        }
+
+        /* Hero section specific styles for full width */
+        .hero-section-full-width {
+            width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            border-radius: 0;
+            padding: 20px 0;
+            margin-bottom: 25px;
+        }
+
+        /* Hero সেকশন h1 স্টাইল */
+        .hero-section-full-width h1 {
+            font-size: 30px;
+            margin-bottom: 0;
+            font-weight: 700;
+            line-height: 1.2;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.4s forwards;
+        }
+
+        .hero-section p {
+            display: none;
+        }
+
+        /* --- Tool Content (ViralPro) --- */
+        .tool-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px 40px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.6s forwards;
+            position: relative;
+        }
+        
+        .tool-card {
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow-light);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            position: relative;
+            box-sizing: border-box;
+            width: 100%;
+            max-width: 600px;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: filter 0.3s ease;
+        }
+        
+        @media (min-width: 768px) {
+            .tool-card {
+                padding: 40px;
+            }
+        }
+
+        .viralpro-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .viralpro-logo {
+            font-size: 2rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        .tool-card h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            color: var(--text-color);
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .viralpro-sub-headline {
+            font-size: 0.9rem;
+            color: var(--secondary-text);
+            margin-bottom: 1.5rem;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .viralpro-form {
+            text-align: left;
+            width: 100%;
+        }
+
+        .viralpro-form label {
+            font-weight: 500;
+            margin-top: 1rem;
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-color);
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        .viralpro-form input {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            margin-top: 0.3rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .viralpro-form input.invalid {
+            border-color: var(--red-color);
+            box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+        }
+
+        .viralpro-form select {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            margin-top: 0.3rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            background-size: 16px;
+        }
+        
+        #viralpro-task-type {
+            text-align: center;
+            text-align-last: center;
+        }
+
+        @media (max-width: 767px) {
+            .viralpro-form select {
+                max-height: 250px;
+                overflow-y: auto;
+            }
+        }
+        
+        .viralpro-form input:focus, .viralpro-form select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 5px rgba(24, 119, 242, 0.2);
+        }
+
+        .viralpro-form select:invalid {
+            color: #999;
+        }
+
+        .viralpro-form select option {
+            color: var(--text-color);
+        }
+        
+        .viralpro-form select option[disabled] {
+            color: #999;
+        }
+        
+        .pro-option {
+            color: #ccc;
+            font-weight: bold;
+        }
+
+        .viralpro-form button {
+            margin-top: 1.5rem;
+            background-color: var(--primary-color);
+            border: none;
+            color: white;
+            font-size: 1rem;
+            padding: 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+
+        .viralpro-form button:hover {
+            background-color: #2F6DB8;
+        }
+
+        .viralpro-form button:active {
+            background-color: #245A9B;
+        }
+
+        .viralpro-form button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .viralpro-notification-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .viralpro-notification-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .viralpro-notification-box {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            max-width: 90%;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        
+        .viralpro-notification-overlay.show .viralpro-notification-box {
+            transform: scale(1);
+        }
+        
+        .viralpro-notification-box h3 {
+            font-size: 1.3rem;
+            color: #5CB85C;
+            margin: 0 0 0.8rem;
+        }
+
+        .viralpro-notification-box p {
+            font-size: 0.95rem;
+            color: var(--text-color);
+            line-height: 1.4;
+        }
+
+        .viralpro-notification-box .viralpro-notification-button {
+            margin-top: 1rem;
+            padding: 0.6rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .viralpro-notification-box .viralpro-notification-button.success-btn {
+            background-color: #5CB85C;
+            color: white;
+            border: none;
+        }
+
+        .viralpro-notification-box .viralpro-notification-button.success-btn:hover {
+            background-color: #449d44;
+        }
+
+        .viralpro-share-area {
+            display: none;
+            text-align: center;
+            padding: 1.5rem 0;
+        }
+        
+        .viralpro-share-area p {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1.2;
+            margin: 0 0 0.8rem;
+        }
+        
+        .viralpro-share-area span {
+            font-size: 0.9rem;
+            color: var(--secondary-text);
+            cursor: pointer;
+            display: block;
+            margin-top: 0.3rem;
+        }
+
+        .viralpro-loading-spinner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .viralpro-loading-spinner-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .viralpro-loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .viralpro-main-spinner-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 99;
+        }
+
+        .viralpro-main-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        /* --- New Article Styles (Full Screen) --- */
+        .article-container {
+            width: 100%;
+            background-color: var(--background-color); /* No card background */
+            padding: 30px 20px;
+            margin-top: 30px;
+            box-sizing: border-box;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.8s forwards;
+        }
+
+        .article-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .article-content h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .article-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+
+        .article-content p {
+            font-size: 1rem;
+            color: var(--secondary-text);
+            margin-bottom: 20px;
+        }
+
+        .article-content ul {
+            list-style-type: disc;
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        .article-content li {
+            font-size: 1rem;
+            color: var(--secondary-text);
+            margin-bottom: 8px;
+        }
+        
+        /* --- Footer --- */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: auto;
+            background-color: var(--card-bg);
+            border-top: 1px solid #e0e0e0;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.8s forwards;
+        }
+
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer p {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* --- Ad Styles for Mobile View --- */
+        .mobile-ad-container-1, .mobile-ad-container-2 {
+            display: none; /* Hide by default */
+        }
+        
+        /* --- Ad Styles for Desktop View --- */
+        .desktop-ad-container {
+            display: none; /* Hidden on mobile */
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        /* New ad style for full screen width */
+        .full-width-ad {
+            width: 100%;
+            margin-top: 25px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .ads-flex-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 10px;
+        }
+
+        @media (min-width: 768px) {
+            .desktop-ad-container {
+                display: block; /* Show only on desktop devices */
+            }
+        }
+
+        @media (max-width: 767px) {
+            .mobile-ad-container-1, .mobile-ad-container-2 {
+                display: block; /* Show only on mobile devices */
+                margin: 10px 0;
+                text-align: center;
+                width: 100%;
+            }
+            .mobile-ad-container-2 {
+                margin: 5px 0; /* Reduced space */
+            }
+            .tool-content {
+                padding-bottom: 10px; /* Reduced space below tool card */
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- Mobile Styles --- */
+        @media (max-width: 767px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .header {
+                padding: 10px 0;
+            }
+
+            .home-btn {
+                padding: 3px 6px;
+                font-size: 12px;
+                margin-right: 5px;
+                box-shadow: none;
+            }
+            
+            .logo a {
+                font-size: 18px;
+            }
+
+            .language-switcher {
+                display: flex;
+                align-items: center;
+            }
+            
+            .premium-plan {
+                font-size: 10px;
+                padding: 3px 6px;
+                margin-right: 5px;
+            }
+
+            .lang-btn {
+                padding: 3px 6px;
+                font-size: 11px;
+            }
+
+            .hero-section-full-width {
+                margin-bottom: 5px;
+                min-height: auto;
+                padding: 15px 0;
+            }
+
+            .hero-section h1 {
+                font-size: 20px;
+                padding: 0 15px;
+                white-space: nowrap; 
+                overflow: hidden;
+                text-overflow: ellipsis; 
+            }
+            
+            .tool-card {
+                padding: 10px;
+                margin-top: 5px;
+                min-height: auto;
+                justify-content: flex-start;
+            }
+            
+            .viralpro-header {
+                margin-bottom: 0.8rem;
+            }
+
+            .viralpro-logo {
+                font-size: 1.3rem;
+            }
+            
+            .tool-card h2 {
+                font-size: 1rem;
+            }
+
+            .viralpro-sub-headline {
+                font-size: 0.7rem;
+                margin-bottom: 0.8rem;
+            }
+            
+            .viralpro-form label {
+                margin-top: 0.6rem;
+                font-size: 0.6rem; 
+            }
+            
+            .viralpro-form input, .viralpro-form select {
+                padding: 0.4rem 0.6rem;
+                font-size: 0.7rem;
+            }
+
+            .viralpro-form select {
+                background-position: right 5px center;
+                background-size: 12px;
+            }
+            
+            .viralpro-form select option {
+                font-size: 0.8rem;
+            }
+
+            .viralpro-form input::placeholder {
+                text-align: left;
+                font-size: 0.7rem;
+            }
+
+            #viralpro-task-type {
+                text-align: center;
+                text-align-last: center;
+            }
+            
+            .viralpro-form button {
+                margin-top: 0.8rem;
+                font-size: 0.8rem;
+                padding: 0.6rem;
+            }
+            
+            .viralpro-notification-box h3 {
+                font-size: 1rem;
+            }
+            
+            .viralpro-notification-box p {
+                font-size: 0.8rem;
+            }
+            
+            .viralpro-notification-box .viralpro-notification-button {
+                padding: 0.4rem 1rem;
+                font-size: 0.8rem;
+            }
+            
+            .viralpro-share-area p {
+                font-size: 1.2rem;
+            }
+
+            .article-container {
+                padding: 20px 15px;
+                margin-top: 15px;
+            }
+
+            .article-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .article-content h3 {
+                font-size: 1.2rem;
+            }
+
+            .article-content p, .article-content li {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="top-banner">
-    <div class="about-button-container">
-        <a href="#" id="about-btn">About</a>
-    </div>
-    <div class="top-banner-right-group">
-      <div class="header-social-links">
-          <a href="https://www.facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="https://twitter.com" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-          <a href="https://www.instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="https://www.youtube.com" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-      </div>
-      <div class="language-switch">
-        <span id="lang-bn">বাংলা</span>
-        <span id="lang-en" class="active">English</span>
-      </div>
-    </div>
-  </div>
 
-  <div class="ad-banner-section">
-    <script type="text/javascript">
-      atOptions = {
-        'key' : '0f2748c6375d2f82ce24ad527b0e48cd',
-        'format' : 'iframe',
-        'height' : 90,
-        'width' : 728,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/0f2748c6375d2f82ce24ad527b0e48cd/invoke.js"></script>
-  </div>
-
-  <div class="container">
-    <h2 id="main-title">Viral in one hour 🧑‍🚀</h2>
-    <div class="reaction-circle" aria-label="Facebook Reactions Animation">
-      <div class="facebook-logo">f</div>
-      <div class="reaction" data-reaction="like" title="Like">👍</div>
-      <div class="reaction" data-reaction="love" title="Love">❤️</div>
-      <div class="reaction" data-reaction="haha" title="Haha">😂</div>
-      <div class="reaction" data-reaction="wow" title="Wow">😮</div>
-      <div class="reaction" data-reaction="sad" title="Sad">😢</div>
-      <div class="reaction" data-reaction="angry" title="😡">😡</div>
+    <div class="container">
+        <header class="header">
+            <div class="logo-container">
+                <a href="https://nextoolhub.github.io/NexToolHub/" class="home-btn" data-lang-en="Home" data-lang-bn="হোম"><i class="ri-home-4-line"></i></a>
+                <div class="logo">
+                    <a href="../../index.html">Nex<span class="tool-text">Tool</span> <span class="hub-text">Hub</span></a>
+                </div>
+            </div>
+            <div class="language-switcher">
+                <div class="premium-container">
+                    <div class="premium-plan">Premium Plan</div>
+                    <div id="coming-soon-message" class="coming-soon-message">
+                        Coming Soon!
+                    </div>
+                </div>
+                <button class="lang-btn" data-lang="en" aria-label="Switch to English">EN</button>
+                <button class="lang-btn" data-lang="bn" aria-label="Switch to Bengali">BN</button>
+            </div>
+        </header>
     </div>
 
-    <div id="congrats-notification">
-        <span id="congrats-text"></span>
+    <div class="desktop-ad-container">
+        <script type="text/javascript">
+            atOptions = {
+                'key' : '3107b60e8baa0d0e886adf12d55fbd7e',
+                'format' : 'iframe',
+                'height' : 90,
+                'width' : 728,
+                'params' : {}
+            };
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
     </div>
 
-    <div id="successNotification">
-        <i class="fas fa-check-circle" style="color: green; margin-right: 10px;"></i>
-        <span id="notificationMessage"></span>
+    <div class="mobile-ad-container-1">
+        <script type="text/javascript">
+            atOptions = {
+                'key' : '02a9c12a5270a25efa5325c0e42ffc59',
+                'format' : 'iframe',
+                'height' : 50,
+                'width' : 320,
+                'params' : {}
+            };
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
     </div>
 
-    <form id="viralForm">
-      <div class="main-headline-container">
-        <p id="sub-headline" class="main-headline">📣 Get unlimited reactions or followers for your Facebook post or page. 😍🔥</p>
-      </div>
-      <label id="url-label" for="postUrl">Paste your Facebook post or page URL</label>
-      <input type="text" id="postUrl" name="postUrl" placeholder="https://www.facebook.com/..." required />
-      <label id="limit-label" for="reactionLimit">Select Reaction Limit</label>
-      <select id="reactionLimit" name="reactionLimit" required>
-        <option value="" disabled selected>Select Limit</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
-        <option value="200">200</option>
-        <option value="500">500</option>
-        <option value="1000">1000</option>
-        <option value="2000">2000</option>
-        <option value="3000">3000</option>
-        <option value="4000">4000</option>
-        <option value="5000">5000</option>
-      </select>
-      <label id="type-label" for="reactionType">Select Reaction Type</label>
-      <select id="reactionType" name="reactionType" required>
-        <option value="" disabled selected>Select Reaction</option>
-        <option value="like">👍 Like</option>
-        <option value="love">❤️ Love</option>
-        <option value="haha">😂 Haha</option>
-        <option value="wow">😮 Wow</option>
-        <option value="sad">😢 Sad</option>
-        <option value="angry">😡 Angry</option>
-      </select>
-      <button type="submit" id="submit-button">Continue</button>
-      
-      <div class="share-options-container">
-          <p id="copy-message-btn"><i class="fas fa-copy"></i> <span id="copy-text"></span></p>
-          <p id="shareInstruction"></p>
-      </div>
+    <section class="hero-section hero-section-full-width">
+        <h1 data-lang-en="Facebook Free Like & Follow" data-lang-bn="ফেসবুক ফ্রি লাইক ও ফলো">Facebook Free Like & Follow</h1>
+        <p data-lang-en="" data-lang-bn=""></p>
+    </section>
 
-      <div class="loading" id="loadingText">Please wait...</div>
-    </form>
-    <div class="social-bar-ad">
-      <script type='text/javascript' src='//pl27313467.profitableratecpm.com/c6/a3/a9/c6a3a9a6dc5edc0b8b5a9c67b3e1a8cd.js'></script>
+    <div class="container">
+        <section class="tool-content">
+            <div class="tool-card">
+                <div id="viralproSpinnerContainer" class="viralpro-main-spinner-container">
+                    <div class="viralpro-main-spinner"></div>
+                </div>
+                
+                <div class="viralpro-header">
+                    <div class="viralpro-logo">
+                        <i class="fas fa-rocket"></i>
+                        ViralPro
+                        <i class="fab fa-facebook-f" style="color: #4267B2;"></i>
+                    </div>
+                </div>
+
+                <h2 data-lang-en="Go viral in minutes ✨" data-lang-bn="কয়েক মিনিটের মধ্যে ভাইরাল হন ✨">Go viral in minutes ✨</h2>
+                <p class="viralpro-sub-headline" data-lang-en="Boost your Facebook post or page with real reactions and followers. It's fast, free and safe!" data-lang-bn="আপনার ফেসবুক পোস্ট বা পেজকে রিয়েল রিঅ্যাকশন এবং ফলোয়ার দিয়ে বুস্ট করুন। এটা দ্রুত, বিনামূল্যে এবং নিরাপদ!">Boost your Facebook post or page with real reactions and followers. It's fast, free and safe!</p>
+                
+                <form id="viralproForm" class="viralpro-form">
+                    <div id="taskTypeContainer"> 
+                        <label for="viralpro-task-type" data-lang-en="What do you want to get?" data-lang-bn="আপনি কি চান?">What do you want to get?</label>
+                        <select id="viralpro-task-type" name="taskType" required>
+                            <option value="like" data-lang-en="Likes & Reactions" data-lang-bn="লাইক ও রিঅ্যাকশন">Likes & Reactions</option>
+                            <option value="follow" data-lang-en="Followers" data-lang-bn="ফলোয়ার">Followers</option>
+                        </select>
+                    </div>
+
+                    <div id="viralpro-form-fields">
+                        <label for="postUrl" id="urlLabel" data-lang-en="Paste your Facebook Post or Page URL" data-lang-bn="আপনার ফেসবুক পোস্ট বা পেজের URL পেস্ট করুন">Paste your Facebook Post or Page URL</label>
+                        <input type="text" id="viralpro-postUrl" name="postUrl" placeholder="https://www.facebook.com/..." required />
+                        <span id="viralpro-url-error" style="color: var(--red-color); font-size: 0.8rem; margin-top: 5px; display: none;"></span>
+
+                        <div id="like-options">
+                            <label for="reactionLimit" data-lang-en="Select Reaction Limit" data-lang-bn="রিঅ্যাকশন এর পরিমাণ সিলেক্ট করুন">Select Reaction Limit</label>
+                            <select id="viralpro-reactionLimit" name="reactionLimit" required>
+                                <option value="" disabled selected data-lang-en="Select Limit" data-lang-bn="পরিমাণ সিলেক্ট করুন">Select Limit</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="200">200</option>
+                                <option value="500">500</option>
+                                <option value="1000">1000</option>
+                                <option value="2000" data-pro>2000 (Pro)</option>
+                                <option value="3000" data-pro>3000 (Pro)</option>
+                                <option value="4000" data-pro>4000 (Pro)</option>
+                                <option value="5000" data-pro>5000 (Pro)</option>
+                            </select>
+
+                            <label for="reactionType" data-lang-en="Select Reaction Type" data-lang-bn="রিঅ্যাকশন টাইপ সিলেক্ট করুন">Select Reaction Type</label>
+                            <select id="viralpro-reactionType" name="reactionType" required>
+                                <option value="" disabled selected data-lang-en="Select Reaction" data-lang-bn="রিঅ্যাকশন সিলেক্ট করুন">Select Reaction</option>
+                                <option value="like">👍 Like</option>
+                                <option value="love">❤️ Love</option>
+                                <option value="haha">😂 Haha</option>
+                                <option value="wow">😮 Wow</option>
+                                <option value="sad">😢 Sad</option>
+                                <option value="angry">😡 Angry</option>
+                            </select>
+                        </div>
+
+                        <div id="follow-options" style="display: none;">
+                            <label for="followLimit" data-lang-en="Select Follower Limit" data-lang-bn="ফলোয়ার এর পরিমাণ সিলেক্ট করুন">Select Follower Limit</label>
+                            <select id="viralpro-followLimit" name="followLimit" required>
+                                <option value="" disabled selected data-lang-en="Select Limit" data-lang-bn="পরিমাণ সিলেক্ট করুন">Select Limit</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="200">200</option>
+                                <option value="500">500</option>
+                                <option value="1000">1000</option>
+                                <option value="2000" data-pro>2000 (Pro)</option>
+                                <option value="3000" data-pro>3000 (Pro)</option>
+                                <option value="4000" data-pro>4000 (Pro)</option>
+                                <option value="5000" data-pro>5000 (Pro)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div id="viralpro-share-area" class="viralpro-share-area">
+                        <p id="viralpro-shareInstruction" data-lang-en="Share to 10 People" data-lang-bn="১০ জনকে শেয়ার করুন">Share to 10 People</p>
+                    </div>
+
+                    <button type="submit" id="viralpro-submit-button" data-lang-en="Continue" data-lang-bn="কন্টিনিউ">Continue</button>
+                </form>
+
+                <div id="viralproNotificationOverlay" class="viralpro-notification-overlay">
+                    <div class="viralpro-notification-box">
+                        <div id="viralpro-loading-spinner-overlay" class="viralpro-loading-spinner-overlay">
+                            <div class="viralpro-loading-spinner"></div>
+                        </div>
+                        <div id="viralpro-notification-content"></div>
+                        <button class="viralpro-notification-button success-btn" id="viralpro-overlay-button" data-lang-en="Ok" data-lang-bn="ওকে ঠিক আছে">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-
-    <div class="native-banner-container">
-      <script async="async" data-cfasync="false" src="//pl27318448.profitableratecpm.com/6db1dcca521a7de73e5ad72e8244766b/invoke.js"></script>
-      <div id="container-6db1dcca521a7de73e5ad72e8244766b"></div>
-    </div>
-    </div>
-
-  <div id="aboutModalOverlay" class="modal-overlay">
-    <div id="aboutModal" class="modal">
-      <div class="modal-header">
-        <h3 id="modal-title"></h3>
-        <button id="close-modal-btn" class="close-btn">×</button>
-      </div>
-      <div class="modal-body">
-        <p id="modal-text"></p>
-      </div>
-    </div>
-  </div>
-
-<script>
-  const form = document.getElementById('viralForm');
-  const loadingText = document.getElementById('loadingText');
-  const submitButton = document.getElementById('submit-button');
-  const fbLogo = document.querySelector('.facebook-logo');
-  const reactions = document.querySelectorAll('.reaction');
-  const bnBtn = document.getElementById('lang-bn');
-  const enBtn = document.getElementById('lang-en');
-  const shareOptionsContainer = document.querySelector('.share-options-container');
-  const copyMessageBtn = document.getElementById('copy-message-btn');
-  const copyTextSpan = document.getElementById('copy-text');
-  const shareInstruction = document.getElementById('shareInstruction');
-  const successNotification = document.getElementById('successNotification');
-  const notificationMessage = document.getElementById('notificationMessage');
-  const congratsNotification = document.getElementById('congrats-notification');
-  const congratsText = document.getElementById('congrats-text');
-
-  const translations = {
-    bn: {
-      'main-title': 'এক ঘন্টায় ভাইরাল 🧑‍🚀',
-      'sub-headline': '📣 আপনার ফেসবুক পোস্ট বা পেজের জন্য আনলিমিটেড রিঅ্যাকশন বা ফলোয়ার নিন। 😍🔥',
-      'url-label': 'ফেসবুক পোস্ট বা পেজের URL পেস্ট করুন',
-      'limit-label': 'রিয়াকশনের লিমিট সিলেক্ট করুন',
-      'type-label': 'রিয়াকশন টাইপ সিলেক্ট করুন',
-      'submit-button': 'কন্টিনিউ',
-      'loadingText': 'অনুগ্রহ করে অপেক্ষা করুন...',
-      'select-limit-default': 'লিমিট সিলেক্ট করুন',
-      'select-type-default': 'রিয়াকশন সিলেক্ট করুন',
-      'placeholder': 'https://www.facebook.com/...',
-      'about-title': 'আশিকুর - এর টুল সম্পর্কে',
-      'about-text': 'আমাদের এই টুলের মাধ্যমে আপনি খুব সহজে এবং দ্রুত আপনার ফেসবুক পোস্ট বা পেজের জন্য রিয়েল রিঅ্যাকশন ও ফলোয়ার পেতে পারেন। এটি ব্যবহার করা খুবই সহজ এবং সম্পূর্ণ নিরাপদ। এটি আপনার অনলাইন উপস্থিতি বাড়াতে এবং আপনার কন্টেন্টকে আরও বেশি মানুষের কাছে পৌঁছে দিতে সাহায্য করবে। আমাদের টুলটি ব্যবহার করার জন্য আপনাকে ধন্যবাদ।',
-      'share-instruction-text': '১০ জনকে শেয়ার করুন',
-      'copy-text': 'এখানে ক্লিক করে কপি করুন',
-      'share-button': 'শেয়ার নাও',
-      'success-message': 'আপনার ১০ জনকে শেয়ার করা সাকসেসফুল হয়েছে।',
-      'final-button': 'লিংক কানেক্ট করুন',
-      'congrats-message': 'কংগ্রাচুলেশন! লিংক কানেক্ট সাকসেসফুল',
-      'done-button': 'Done ✅'
-    },
-    en: {
-      'main-title': 'Viral in one hour 🧑‍🚀',
-      'sub-headline': '📣 Get unlimited reactions or followers for your Facebook post or page. 😍🔥',
-      'url-label': 'Paste your Facebook post or page URL',
-      'limit-label': 'Select Reaction Limit',
-      'type-label': 'Select Reaction Type',
-      'submit-button': 'Continue',
-      'loadingText': 'Please wait...',
-      'select-limit-default': 'Select Limit',
-      'select-type-default': 'Select Reaction',
-      'placeholder': 'https://www.facebook.com/...',
-      'about-title': 'About Ashikur\'s Tool',
-      'about-text': 'With our tool, you can easily and quickly get real reactions and followers for your Facebook posts or pages. It is very simple to use and completely safe. It will help you grow your online presence and get your content to more people. Thank you for using our tool.',
-      'share-instruction-text': 'Share with 10 people',
-      'copy-text': 'Click here to copy',
-      'share-button': 'Share Now',
-      'success-message': 'Your sharing with 10 people was successful.',
-      'final-button': 'Connect Link',
-      'congrats-message': 'Congratulations! Link Connect Successful',
-      'done-button': 'Done ✅'
-    }
-  };
-
-  const panelUrl = "https://www.profitableratecpm.com/bxpys4w3p1?key=548da758e411d97dc9752aa68d0a7502"; // এই ইমোজিগুলো সম্পূর্ণ মুছে ফেলে আপনার ডাইরেক্ট লিংকটি এখানে বসিয়ে দিন
-  const shareMessage = {
-    bn: `🔥 দুর্দান্ত অফার! এখন সম্পূর্ণ বিনামূল্যে আপনার ফেসবুক পোস্ট, পেজ এবং আইডিতে আনলিমিটেড লাইক, ফলো, কমেন্ট এবং শেয়ার বাড়ান! কোনো খরচ নেই, কোনো ঝামেলা নেই। এই সুযোগটি হাতছাড়া করবেন না! এখনই ভিজিট করুন: ${panelUrl}`,
-    en: `🔥 Great offer! Now increase unlimited likes, followers, comments, and shares on your Facebook post, page, and ID for free! No cost, no hassle. Do not miss this opportunity! Visit now: ${panelUrl}`
-  };
-  
-  function setLanguage(lang) {
-    if (lang === 'bn') {
-      bnBtn.classList.add('active');
-      enBtn.classList.remove('active');
-      document.documentElement.lang = 'bn';
-      // Set texts for Bengali
-      document.getElementById('main-title').textContent = translations['bn']['main-title'];
-      document.getElementById('sub-headline').textContent = translations['bn']['sub-headline'];
-      document.getElementById('url-label').textContent = translations['bn']['url-label'];
-      document.getElementById('limit-label').textContent = translations['bn']['limit-label'];
-      document.getElementById('type-label').textContent = translations['bn']['type-label'];
-      document.getElementById('submit-button').textContent = translations['bn']['submit-button'];
-      document.getElementById('loadingText').textContent = translations['bn']['loadingText'];
-      document.querySelector('#reactionLimit option[value=""]').textContent = translations['bn']['select-limit-default'];
-      document.querySelector('#reactionType option[value=""]').textContent = translations['bn']['select-type-default'];
-      document.getElementById('postUrl').placeholder = translations['bn']['placeholder'];
-      document.getElementById('modal-title').textContent = translations['bn']['about-title'];
-      document.getElementById('modal-text').textContent = translations['bn']['about-text'];
-      shareInstruction.textContent = translations['bn']['share-instruction-text'];
-      copyTextSpan.textContent = translations['bn']['copy-text'];
-      congratsText.textContent = translations['bn']['congrats-message'];
-      notificationMessage.textContent = translations['bn']['success-message'];
-
-
-    } else {
-      enBtn.classList.add('active');
-      bnBtn.classList.remove('active');
-      document.documentElement.lang = 'en';
-      // Set texts for English
-      document.getElementById('main-title').textContent = translations['en']['main-title'];
-      document.getElementById('sub-headline').textContent = translations['en']['sub-headline'];
-      document.getElementById('url-label').textContent = translations['en']['url-label'];
-      document.getElementById('limit-label').textContent = translations['en']['limit-label'];
-      document.getElementById('type-label').textContent = translations['en']['type-label'];
-      document.getElementById('submit-button').textContent = translations['en']['submit-button'];
-      document.getElementById('loadingText').textContent = translations['en']['loadingText'];
-      document.querySelector('#reactionLimit option[value=""]').textContent = translations['en']['select-limit-default'];
-      document.querySelector('#reactionType option[value=""]').textContent = translations['en']['select-type-default'];
-      document.getElementById('postUrl').placeholder = translations['en']['placeholder'];
-      document.getElementById('modal-title').textContent = translations['en']['about-title'];
-      document.getElementById('modal-text').textContent = translations['en']['about-text'];
-      shareInstruction.textContent = translations['en']['share-instruction-text'];
-      copyTextSpan.textContent = translations['en']['copy-text'];
-      congratsText.textContent = translations['en']['congrats-message'];
-      notificationMessage.textContent = translations['en']['success-message'];
-
-    }
-  }
-
-  bnBtn.addEventListener('click', () => setLanguage('bn'));
-  enBtn.addEventListener('click', () => setLanguage('en'));
-  
-  const radius = 90;
-  
-  const positionsDegrees = [270, 330, 30, 90, 150, 210];
-  
-  function getPosition(deg) {
-    const rad = deg * Math.PI / 180;
-    return {
-      x: Math.cos(rad) * radius,
-      y: Math.sin(rad) * radius
-    };
-  }
-  
-  const totalDuration = 7500;
-  
-  let animationStartTime = null;
-  
-  function animate(time) {
-    if (!animationStartTime) animationStartTime = time;
-    const elapsed = (time - animationStartTime) % totalDuration;
-  
-    const glowAndExpandDuration = 1500;
-    const logoEnterDuration = 1000;
-    const holdAndSpinDuration = 2500;
-    const collapseDuration = 2000;
-    const logoExitDuration = 500;
     
-    if (elapsed < glowAndExpandDuration) {
-      const progress = elapsed / glowAndExpandDuration;
-      reactions.forEach((emoji, i) => {
-        const pos = getPosition(positionsDegrees[i]);
-        const x = pos.x * progress;
-        const y = pos.y * progress;
-        const scale = 1.2 * progress;
-        emoji.style.opacity = progress;
-        emoji.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${scale}) rotateX(0deg) rotateY(0deg)`;
-      });
-      fbLogo.style.opacity = 0;
-    }
-    else if (elapsed < glowAndExpandDuration + logoEnterDuration) {
-        const progress = (elapsed - glowAndExpandDuration) / logoEnterDuration;
-        fbLogo.style.opacity = progress;
-        fbLogo.style.transform = `translate(-50%, -50%) scale(${progress})`;
-        reactions.forEach((emoji, i) => {
-            const pos = getPosition(positionsDegrees[i]);
-            emoji.style.opacity = 1;
-            emoji.style.transform = `translate(calc(-50% + ${pos.x}px), calc(-50% + ${pos.y}px)) scale(1.2) rotateX(0deg) rotateY(0deg)`;
+    <div class="full-width-ad">
+        <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script>
+        <div id="container-45718544708b185acff6d14248cc94cd"></div>
+    </div>
+
+    <section class="article-container">
+        <div class="article-content">
+            <h2 data-lang-en="How to Get Free Facebook Likes and Followers: The Ultimate Guide" data-lang-bn="কিভাবে ফ্রি ফেসবুক লাইক ও ফলোয়ার পাবেন: দ্য আলটিমেট গাইড">How to Get Free Facebook Likes and Followers: The Ultimate Guide</h2>
+            <p data-lang-en="In today's digital world, Facebook is more than just a social platform. It's a powerful tool for personal branding and business growth. But to stand out, you need engagement. High numbers of likes, reactions, and followers are crucial for boosting your credibility and making your content go viral. This is where a reliable tool can be a game-changer. Here is the ultimate guide to getting **free Facebook likes and followers** and how NexTool Hub's **ViralPro** can help you achieve your goals." data-lang-bn="আজকের ডিজিটাল জগতে, ফেসবুক শুধু একটি সোশ্যাল প্ল্যাটফর্ম নয়, এটি একটি শক্তিশালী টুল যা ব্যক্তিগত ব্র্যান্ডিং এবং ব্যবসায়িক বৃদ্ধির জন্য অপরিহার্য। কিন্তু অন্যদের থেকে আলাদা হতে হলে, আপনার প্রয়োজন এঙ্গেজমেন্ট। লাইক, রিঅ্যাকশন এবং ফলোয়ারের উচ্চ সংখ্যা আপনার বিশ্বাসযোগ্যতা বাড়াতে এবং আপনার কনটেন্টকে ভাইরাল করতে খুবই গুরুত্বপূর্ণ। এখানেই একটি নির্ভরযোগ্য টুল আপনার জন্য গেম-চেঞ্জার হতে পারে। নিচে **ফ্রি ফেসবুক লাইক ও ফলোয়ার** পাওয়ার চূড়ান্ত গাইড এবং NexTool Hub-এর **ViralPro** আপনাকে কিভাবে আপনার লক্ষ্যে পৌঁছাতে সাহায্য করতে পারে তা বলা হলো।">In today's digital world, Facebook is more than just a social platform. It's a powerful tool for personal branding and business growth. But to stand out, you need engagement. High numbers of likes, reactions, and followers are crucial for boosting your credibility and making your content go viral. This is where a reliable tool can be a game-changer. Here is the ultimate guide to getting **free Facebook likes and followers** and how NexTool Hub's **ViralPro** can help you achieve your goals.</p>
+
+            <h3 data-lang-en="Why Facebook Likes & Followers are Crucial?" data-lang-bn="ফেসবুক লাইক ও ফলোয়ার কেন এত গুরুত্বপূর্ণ?">Why Facebook Likes & Followers are Crucial?</h3>
+            <p data-lang-en="Having a high number of likes and followers is not just about popularity. It serves a strategic purpose in the Facebook algorithm." data-lang-bn="ফেসবুকে বেশি লাইক এবং ফলোয়ার থাকা শুধু জনপ্রিয়তার জন্য নয়। এটা ফেসবুক অ্যালগরিদমের একটি কৌশলগত উদ্দেশ্য পূরণ করে।">Having a high number of likes and followers is not just about popularity. It serves a strategic purpose in the Facebook algorithm.</p>
+            <ul>
+                <li data-lang-en="Social Proof: A post with thousands of likes is more likely to be seen as valuable and trustworthy. People are more inclined to engage with content that already has high engagement." data-lang-bn="**সোশ্যাল প্রুফ (Social Proof):** হাজার হাজার লাইক থাকা পোস্টকে বেশি মূল্যবান এবং বিশ্বাসযোগ্য মনে করা হয়। মানুষ এমন কনটেন্টের সাথে যুক্ত হতে বেশি আগ্রহী হয় যাতে ইতিমধ্যে বেশি এঙ্গেজমেন্ট আছে।">**Social Proof:** A post with thousands of likes is more likely to be seen as valuable and trustworthy. People are more inclined to engage with content that already has high engagement.</li>
+                <li data-lang-en="Increased Reach: Facebook's algorithm prioritizes content with high engagement. The more likes and reactions your post gets, the more Facebook will show it to new users, increasing its reach exponentially." data-lang-bn="**রিচ বৃদ্ধি:** ফেসবুকের অ্যালগরিদম বেশি এঙ্গেজমেন্ট থাকা কনটেন্টকে গুরুত্ব দেয়। আপনার পোস্টে যত বেশি লাইক ও রিঅ্যাকশন থাকে, তত বেশি ফেসবুক এটি নতুন ব্যবহারকারীদের কাছে দেখাবে, যার ফলে এর রিচ বহুগুণে বেড়ে যাবে।">**Increased Reach:** Facebook's algorithm prioritizes content with high engagement. The more likes and reactions your post gets, the more Facebook will show it to new users, increasing its reach exponentially.</li>
+                <li data-lang-en="Attracting New Followers: When your page has a high follower count, it appears more professional and established. This encourages new visitors to hit the 'Follow' button without hesitation." data-lang-bn="**নতুন ফলোয়ার আকর্ষণ:** যখন আপনার পেজে বেশি ফলোয়ার থাকে, তখন এটি আরও পেশাদার এবং প্রতিষ্ঠিত দেখায়। এটি নতুন দর্শকদের কোনো দ্বিধা ছাড়াই 'ফলো' বাটনে ক্লিক করতে উৎসাহিত করে।">**Attracting New Followers:** When your page has a high follower count, it appears more professional and established. This encourages new visitors to hit the 'Follow' button without hesitation.</li>
+            </ul>
+            
+            <h3 data-lang-en="Introducing ViralPro: Your Ultimate Solution!" data-lang-bn="ভাইরালপ্রো-এর পরিচয়: আপনার চূড়ান্ত সমাধান!">Introducing ViralPro: Your Ultimate Solution!</h3>
+            <p data-lang-en="At NexTool Hub, we understand the challenges of gaining organic reach. That's why we built ViralPro —a free Facebook like and follower tool that helps you boost your social presence quickly and safely. Unlike other tools that use fake accounts or bots, ViralPro is designed to provide real, high-quality engagement." data-lang-bn="NexTool Hub-এ, আমরা অর্গানিক রিচ পাওয়ার চ্যালেঞ্জগুলো বুঝি। তাই আমরা ViralPro তৈরি করেছি—একটি বিনামূল্যের ফেসবুক লাইক এবং ফলোয়ার টুল যা আপনাকে দ্রুত এবং নিরাপদে আপনার সামাজিক উপস্থিতি বাড়াতে সাহায্য করে। অন্য টুলগুলোর মতো যা নকল অ্যাকাউন্ট বা বট ব্যবহার করে, ViralPro বাস্তব, উচ্চ-মানের এঙ্গেজমেন্ট প্রদানের জন্য ডিজাইন করা হয়েছে।">At NexTool Hub, we understand the challenges of gaining organic reach. That's why we built ViralPro —a free Facebook like and follower tool that helps you boost your social presence quickly and safely. Unlike other tools that use fake accounts or bots, ViralPro is designed to provide real, high-quality engagement.</p>
+            
+            <h3 data-lang-en="How to Use ViralPro in 3 Easy Steps" data-lang-bn="৩ সহজ ধাপে ভাইরালপ্রো ব্যবহার করবেন কিভাবে">How to Use ViralPro in 3 Easy Steps</h3>
+            <p data-lang-en="Our tool is designed to be simple and user-friendly. Just follow these quick steps to get started:" data-lang-bn="আমাদের টুলটি সহজ এবং ব্যবহারকারী-বান্ধব হতে ডিজাইন করা হয়েছে। শুরু করার জন্য এই দ্রুত ধাপগুলো অনুসরণ করুন:">Our tool is designed to be simple and user-friendly. Just follow these quick steps to get started:</p>
+            <ol>
+                <li data-lang-en="Step 1: Copy and paste the URL of your Facebook post or page into the tool above." data-lang-bn="ধাপ ১: উপরের টুলে আপনার ফেসবুক পোস্ট বা পেজের URL কপি করে পেস্ট করুন।">Step 1: Copy and paste the URL of your Facebook post or page into the tool above.</li>
+                <li data-lang-en="Step 2: Choose the number of likes, reactions, or followers you want to receive." data-lang-bn="ধাপ ২: আপনি পেতে চান এমন লাইক, রিঅ্যাকশন বা ফলোয়ারের সংখ্যা নির্বাচন করুন।">**Step 2:** Choose the number of likes, reactions, or followers you want to receive.</li>
+                <li data-lang-en="Step 3: Complete a quick verification step to start the process instantly." data-lang-bn="ধাপ ৩: একটি দ্রুত যাচাইকরণ ধাপ সম্পূর্ণ করুন এবং আপনার কাজটি অবিলম্বে শুরু হবে।">**Step 3:** Complete a quick verification step to start the process instantly.</li>
+            </ol>
+
+            <h3 data-lang-en="FAQs: Your Questions Answered" data-lang-bn="FAQ: আপনার প্রশ্নের উত্তর">FAQs: Your Questions Answered</h3>
+            <p data-lang-en="We believe in full transparency. Here are answers to some of the most common questions about our tool." data-lang-bn="আমরা সম্পূর্ণ স্বচ্ছতায় বিশ্বাস করি। এখানে আমাদের টুল সম্পর্কে কিছু সাধারণ প্রশ্নের উত্তর দেওয়া হলো:">We believe in full transparency. Here are answers to some of the most common questions about our tool.</p>
+            <p data-lang-en="Is this tool safe to use? Yes. We do not require any of your personal information, like your password or personal data. Your account remains completely secure." data-lang-bn="**এই টুল কি নিরাপদ?** হ্যাঁ। আমরা আপনার কোনো ব্যক্তিগত তথ্য, যেমন আপনার পাসওয়ার্ড বা ব্যক্তিগত ডেটা চাই না। আপনার অ্যাকাউন্ট সম্পূর্ণ সুরক্ষিত থাকে।">**Is this tool safe to use?** Yes. We do not require any of your personal information, like your password or personal data. Your account remains completely secure.</p>
+            <p data-lang-en="How long does it take to get likes and followers? Our system is designed for speed. You will see a significant boost in a very short amount of time, usually within a few minutes." data-lang-bn="**লাইক ও ফলোয়ার পেতে কতক্ষণ লাগে?** আমাদের সিস্টেম দ্রুততার জন্য ডিজাইন করা হয়েছে। আপনি খুব অল্প সময়ের মধ্যে একটি উল্লেখযোগ্য বুস্ট দেখতে পাবেন, সাধারণত কয়েক মিনিটের মধ্যে।">**How long does it take to get likes and followers?** Our system is designed for speed. You will see a significant boost in a very short amount of time, usually within a few minutes.</p>
+
+            <p data-lang-en="Ready to see your Facebook page or post go viral? Get started with our **free Facebook like and follower tool** now!" data-lang-bn="আপনার ফেসবুক পেজ বা পোস্ট ভাইরাল দেখতে প্রস্তুত? তাহলে আমাদের **ফ্রি ফেসবুক লাইক ও ফলোয়ার টুল** ব্যবহার করা শুরু করুন!">Ready to see your Facebook page or post go viral? Get started with our **free Facebook like and follower tool** now!</p>
+        </div>
+    </section>
+    
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#" data-lang-en="About Us" data-lang-bn="আমাদের সম্পর্কে">About Us</a>
+            <a href="#" data-lang-en="Contact" data-lang-bn="যোগাযোগ">Contact</a>
+            <a href="#" data-lang-en="Terms" data-lang-bn="শর্তাবলী">Terms</a>
+            <a href="#" data-lang-en="Privacy" data-lang-bn="গোপনীয়তা">Privacy</a>
+        </div>
+        <p data-lang-en="&copy; 2025 NexTool Hub. All rights reserved." data-lang-bn="&copy; 2025 নেক্সটুল হাব। সর্বস্বত্ব সংরক্ষিত।">&copy; 2025 NexTool Hub. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                const translations = {
+                    en: {
+                        shareInstruction: "Share to 10 People",
+                        continueButton: "Continue",
+                        shareNowButton: "Share Now",
+                        okButton: "Ok",
+                        connectLinkButton: "Connect Link",
+                        doneButton: "Done ✅",
+                        successTitle: "Success!",
+                        shareSuccessMessage: "Your share to 10 people was successful.",
+                        congratulationTitle: "Congratulations!",
+                        linkConnectSuccessMessage: "Your link has been successfully connected.<br>Click Done to complete the task.",
+                        fillAllFields: "Please fill out all fields",
+                        invalidUrl: "Please enter a valid Facebook URL."
+                    },
+                    bn: {
+                        shareInstruction: "১০ জনকে শেয়ার করুন",
+                        continueButton: "কন্টিনিউ",
+                        shareNowButton: "শেয়ার করুন",
+                        okButton: "ওকে ঠিক আছে",
+                        connectLinkButton: "লিঙ্ক কানেক্ট করুন",
+                        doneButton: "Done ✅",
+                        successTitle: "সফল হয়েছে!",
+                        shareSuccessMessage: "আপনার ১০ জনকে শেয়ার করা সফল হয়েছে।",
+                        congratulationTitle: "অভিনন্দন!",
+                        linkConnectSuccessMessage: "আপনার লিঙ্ক সফল ভাবে কানেক্ট হয়েছে।<br>Done ক্লিক করে কাজটি সম্পন্ন করুন।",
+                        fillAllFields: "দয়া করে সব ফিল্ড পূরণ করুন",
+                        invalidUrl: "দয়া করে একটি সঠিক ফেসবুক লিঙ্ক দিন।"
+                    }
+                };
+    
+                const viralproForm = document.getElementById('viralproForm');
+                const viralproSubmitButton = document.getElementById('viralpro-submit-button');
+                const viralproFormFields = document.getElementById('viralpro-form-fields');
+                const viralproShareArea = document.getElementById('viralpro-share-area');
+                const viralproNotificationOverlay = document.getElementById('viralproNotificationOverlay');
+                const viralproNotificationContent = document.getElementById('viralpro-notification-content');
+                const viralproOverlayButton = document.getElementById('viralpro-overlay-button');
+                const viralproLoadingSpinnerOverlay = document.getElementById('viralpro-loading-spinner-overlay');
+                const viralproMainSpinnerContainer = document.getElementById('viralproSpinnerContainer');
+    
+                const viralproTaskTypeSelect = document.getElementById('viralpro-task-type');
+                const viralproLikeOptions = document.getElementById('like-options');
+                const viralproFollowOptions = document.getElementById('follow-options');
+                const viralproUrlLabel = document.getElementById('urlLabel');
+                const taskTypeContainer = document.getElementById('taskTypeContainer');
+                const reactionLimitSelect = document.getElementById('viralpro-reactionLimit');
+                const followLimitSelect = document.getElementById('viralpro-followLimit');
+                const viralproPostUrlInput = document.getElementById('viralpro-postUrl');
+                const viralproUrlError = document.getElementById('viralpro-url-error');
+    
+                const premiumPlanBtn = document.querySelector('.premium-plan');
+                const comingSoonMessage = document.getElementById('coming-soon-message');
+    
+                const viralproPanelUrl = https://www.profitableratecpm.com/gpbenjxu?key=bebb9ec59e6fe86414605a44c4b0ad9f ;
+    
+                let currentLang = 'en';
+                let comingSoonTimeoutId;
+                let appState = { step: 'initial', taskType: 'like' };
+    
+                function viralproShowPopup(title, message, buttonText, onButtonClick) {
+                    viralproNotificationContent.innerHTML = `<h3>${title}</h3><p>${message}</p>`;
+                    viralproOverlayButton.textContent = buttonText;
+                    viralproOverlayButton.onclick = onButtonClick;
+                    viralproNotificationOverlay.classList.add('show');
+                }
+    
+                function viralproHidePopup() {
+                    viralproNotificationOverlay.classList.remove('show');
+                }
+    
+                function updateFields(taskType) {
+                    if (taskType === 'like') {
+                        viralproLikeOptions.style.display = 'block';
+                        viralproFollowOptions.style.display = 'none';
+                        viralproUrlLabel.textContent = currentLang === 'en' ? "Paste your Facebook Post or Page URL" : "আপনার ফেসবুক পোস্ট বা পেজের URL পেস্ট করুন";
+                        document.getElementById('viralpro-reactionLimit').setAttribute('required', 'required');
+                        document.getElementById('viralpro-reactionType').setAttribute('required', 'required');
+                        document.getElementById('viralpro-followLimit').removeAttribute('required');
+                    } else if (taskType === 'follow') {
+                        viralproLikeOptions.style.display = 'none';
+                        viralproFollowOptions.style.display = 'block';
+                        viralproUrlLabel.textContent = currentLang === 'en' ? "Paste your Facebook Page or Profile URL" : "আপনার ফেসবুক পেজ বা প্রোফাইল URL পেস্ট করুন";
+                        document.getElementById('viralpro-reactionLimit').removeAttribute('required');
+                        document.getElementById('viralpro-reactionType').removeAttribute('required');
+                        document.getElementById('viralpro-followLimit').setAttribute('required', 'required');
+                    }
+                }
+    
+                viralproTaskTypeSelect.addEventListener('change', (e) => {
+                    const taskType = e.target.value;
+                    updateFields(taskType);
+                });
+    
+                function disableProOptions() {
+                    const proOptions = document.querySelectorAll('[data-pro]');
+                    proOptions.forEach(option => {
+                        option.disabled = true;
+                        option.classList.add('pro-option');
+                    });
+                }
+                disableProOptions();
+    
+                function viralproUpdateUI(state) {
+                    const lang = currentLang;
+                    const texts = translations[lang];
+    
+                    if (state.step === 'initial') {
+                        taskTypeContainer.style.display = 'block';
+                        viralproFormFields.style.display = 'block';
+                        viralproShareArea.style.display = 'none';
+                        viralproSubmitButton.disabled = false;
+                        viralproSubmitButton.style.backgroundColor = 'var(--primary-color)';
+                        viralproSubmitButton.textContent = texts.continueButton;
+                        viralproSubmitButton.style.display = 'block';
+                    } else if (state.step === 'shared') {
+                        viralproShowPopup(
+                            texts.successTitle,
+                            texts.shareSuccessMessage,
+                            texts.connectLinkButton,
+                            function() {
+                                viralproLoadingSpinnerOverlay.classList.add('show');
+                                viralproOverlayButton.disabled = true;
+    
+                                setTimeout(() => {
+                                    viralproLoadingSpinnerOverlay.classList.remove('show');
+                                    viralproOverlayButton.disabled = false;
+                                    appState.step = 'connected';
+                                    viralproUpdateUI(appState);
+                                }, 3000);
+                            }
+                        );
+                        viralproSubmitButton.style.display = 'none';
+                    } else if (state.step === 'connected') {
+                        viralproShowPopup(
+                            texts.congratulationTitle,
+                            texts.linkConnectSuccessMessage,
+                            texts.doneButton,
+                            function() {
+                                viralproOverlayButton.style.backgroundColor = '#5CB85C';
+                                setTimeout(() => {
+                                    window.location.replace(viralproPanelUrl);
+                                }, 500);
+                            }
+                        );
+                        viralproSubmitButton.style.display = 'none';
+                        viralproOverlayButton.style.backgroundColor = 'var(--primary-color)';
+                    }
+                }
+    
+                viralproUpdateUI(appState);
+    
+                viralproForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+    
+                    const taskType = viralproTaskTypeSelect.value;
+                    const postUrl = viralproPostUrlInput.value.trim();
+                    let reactionLimit = '';
+                    let reactionType = '';
+                    let followLimit = '';
+    
+                    const texts = translations[currentLang];
+    
+                    const facebookUrlRegex = /^(https?:\/\/)?(www\.)?facebook\.com\/(?![a-zA-Z0-9-]+\/plugins\/)(?:(?:profile\.php\?id=)|[a-zA-Z0-9\.\-]+\/|groups\/[a-zA-Z0-9\.\-]+\/?(?:[?&].*)?|photo.php\?fbid=|events\/|posts\/|notes\/|pg\/|story.php\?story_fbid=).*$/;
+    
+                    if (!facebookUrlRegex.test(postUrl)) {
+                        viralproPostUrlInput.classList.add('invalid');
+                        viralproUrlError.textContent = texts.invalidUrl;
+                        viralproUrlError.style.display = 'block';
+                        return;
+                    } else {
+                        viralproPostUrlInput.classList.remove('invalid');
+                        viralproUrlError.style.display = 'none';
+                    }
+    
+                    if (taskType === 'like') {
+                        reactionLimit = document.getElementById('viralpro-reactionLimit').value;
+                        reactionType = document.getElementById('viralpro-reactionType').value;
+                        if (!postUrl || !reactionLimit || !reactionType) {
+                            alert(texts.fillAllFields);
+                            return;
+                        }
+                    } else if (taskType === 'follow') {
+                        followLimit = document.getElementById('viralpro-followLimit').value;
+                        if (!postUrl || !followLimit) {
+                            alert(texts.fillAllFields);
+                            return;
+                        }
+                    }
+    
+                    appState.taskType = taskType;
+                    
+                    taskTypeContainer.style.display = 'none';
+    
+                    viralproMainSpinnerContainer.style.display = 'flex';
+                    viralproSubmitButton.disabled = true;
+                    viralproSubmitButton.style.backgroundColor = '#5CB85C';
+    
+                    setTimeout(() => {
+                        viralproMainSpinnerContainer.style.display = 'none';
+                        viralproFormFields.style.display = 'none';
+                        viralproShareArea.style.display = 'block';
+                        viralproSubmitButton.textContent = texts.shareNowButton;
+                        viralproSubmitButton.disabled = false;
+                        viralproSubmitButton.style.backgroundColor = 'var(--primary-color)';
+    
+                        viralproSubmitButton.onclick = function(e) {
+                            e.preventDefault();
+    
+                            // ** এখানে আপনার Facebook App ID প্রবেশ করান **
+                            const FACEBOOK_APP_ID = 'YOUR_FACEBOOK_APP_ID';
+    
+                            const shareUrl = `https://www.facebook.com/dialog/send?link=${encodeURIComponent(viralproPanelUrl)}&app_id=${FACEBOOK_APP_ID}&redirect_uri=${encodeURIComponent(window.location.href)}`;
+                            const messengerAppUrl = `fb-messenger://share?link=${encodeURIComponent(viralproPanelUrl)}&app_id=${FACEBOOK_APP_ID}`;
+    
+                            window.location.href = messengerAppUrl;
+    
+                            setTimeout(() => {
+                                window.open(shareUrl, '_blank');
+                            }, 1000);
+    
+                            viralproSubmitButton.style.backgroundColor = '#5CB85C';
+    
+                            setTimeout(() => {
+                                appState.step = 'shared';
+                                viralproUpdateUI(appState);
+                            }, 5000);
+                        };
+                    }, 2000);
+                });
+    
+                const langButtons = document.querySelectorAll('.lang-btn');
+                const htmlElement = document.querySelector('html');
+    
+                function setLanguage(lang) {
+                    currentLang = lang;
+                    htmlElement.lang = lang;
+                    const elementsToTranslate = document.querySelectorAll('[data-lang-en], [data-lang-bn]');
+                    elementsToTranslate.forEach(el => {
+                        const textContent = el.dataset[`lang${lang.charAt(0).toUpperCase() + lang.slice(1)}`];
+                        if (textContent) {
+                            el.textContent = textContent;
+                        }
+                    });
+    
+                    const viralproPostUrlInput = document.getElementById('viralpro-postUrl');
+                    if (viralproPostUrlInput) {
+                        viralproPostUrlInput.placeholder = lang === 'en' ? 'https://www.facebook.com/...' : 'আপনার ফেসবুক পোস্ট/পেজের URL লিখুন...';
+                    }
+    
+                    updateFields(viralproTaskTypeSelect.value);
+    
+                    langButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.setAttribute('aria-pressed', 'false');
+                        if (btn.dataset.lang === lang) {
+                            btn.classList.add('active');
+                            btn.setAttribute('aria-pressed', 'true');
+                        }
+                    });
+    
+                    const texts = translations[lang];
+                    viralproSubmitButton.textContent = texts.continueButton;
+                    viralproOverlayButton.textContent = texts.okButton;
+                }
+    
+                setLanguage('en');
+    
+                langButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const lang = button.dataset.lang;
+                        setLanguage(lang);
+                    });
+                });
+    
+                premiumPlanBtn.addEventListener('click', () => {
+                    clearTimeout(comingSoonTimeoutId);
+                    comingSoonMessage.classList.add('show');
+                    comingSoonTimeoutId = setTimeout(() => {
+                        comingSoonMessage.classList.remove('show');
+                    }, 3000);
+                });
+            } catch (e) {
+                console.error("Critical JavaScript Error:", e);
+                // এটি একটি অতিরিক্ত বার্তা যা যদি কোনো বড় ত্রুটি হয় তবে দেখানো হবে
+                alert("দুঃখিত! একটি বড় সমস্যা হয়েছে। ব্রাউজার কনসোল চেক করুন।");
+            }
         });
-    }
-    else if (elapsed < glowAndExpandDuration + logoEnterDuration + holdAndSpinDuration) {
-      const progress = (elapsed - (glowAndExpandDuration + logoEnterDuration)) / holdAndSpinDuration;
-      const rotationY = 360 * progress;
-      const rotationX = 360 * progress;
-      fbLogo.style.opacity = 1;
-      fbLogo.style.transform = `translate(-50%, -50%) scale(1)`;
-      reactions.forEach((emoji, i) => {
-        const pos = getPosition(positionsDegrees[i]);
-        const x = pos.x;
-        const y = pos.y;
-        emoji.style.opacity = 1;
-        emoji.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(1.2) rotateY(${rotationY}deg) rotateX(${rotationX}deg)`;
-      });
-    }
-    else if (elapsed < totalDuration - logoExitDuration) {
-      const startOfCollapse = glowAndExpandDuration + logoEnterDuration + holdAndSpinDuration;
-      const progress = (elapsed - startOfCollapse) / collapseDuration;
-      const reverseProgress = 1 - progress;
-      
-      fbLogo.style.opacity = 1;
-      fbLogo.style.transform = `translate(-50%, -50%) scale(1)`;
-      
-      reactions.forEach((emoji, i) => {
-        const pos = getPosition(positionsDegrees[i]);
-        const x = pos.x * reverseProgress;
-        const y = pos.y * reverseProgress;
-        const scale = 1.2 * reverseProgress;
-        emoji.style.opacity = reverseProgress;
-        emoji.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${scale}) rotateY(${360 * reverseProgress}deg) rotateX(${360 * reverseProgress}deg)`;
-      });
-    }
-    else {
-      const startOfExit = totalDuration - logoExitDuration;
-      const progress = (elapsed - startOfExit) / logoExitDuration;
-      const reverseProgress = 1 - progress;
-      
-      fbLogo.style.opacity = reverseProgress;
-      fbLogo.style.transform = `translate(-50%, -50%) scale(${reverseProgress})`;
-      
-      reactions.forEach(emoji => {
-        emoji.style.opacity = 0;
-      });
-    }
-    
-    requestAnimationFrame(animate);
-  }
-  
-  requestAnimationFrame(animate);
-
-  function createConfetti(container) {
-    const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4caf50', '#8bc34a', '#cddc39', '#ffeb3b', '#ffc107', '#ff9800', '#ff5722'];
-    const count = 50;
-    for (let i = 0; i < count; i++) {
-        const confetti = document.createElement('div');
-        confetti.className = 'confetti';
-        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.left = `${Math.random() * 100}%`;
-        confetti.style.animationDelay = `${Math.random() * 0.5}s`;
-        confetti.style.setProperty('--x', `${(Math.random() - 0.5) * 200}px`);
-        confetti.style.setProperty('--y', `${(Math.random() - 0.5) * 200}px`);
-        container.appendChild(confetti);
-    }
-    setTimeout(() => {
-        container.querySelectorAll('.confetti').forEach(c => c.remove());
-    }, 2000);
-  }
-
-  function saveAppState(state) {
-    localStorage.setItem('viralAppState', JSON.stringify(state));
-  }
-
-  function getAppState() {
-    const savedState = localStorage.getItem('viralAppState');
-    return savedState ? JSON.parse(savedState) : { step: 'initial' };
-  }
-
-  function updateUI(state) {
-    const currentLang = document.documentElement.lang;
-    if (state.step === 'shared') {
-      // Hide form fields and show share options
-      form.style.display = 'block';
-      submitButton.textContent = translations[currentLang]['final-button'];
-      shareOptionsContainer.style.display = 'none';
-      successNotification.style.display = 'block';
-      notificationMessage.textContent = translations[currentLang]['success-message'];
-      submitButton.disabled = false;
-      submitButton.classList.remove('btn-dimmed');
-      submitButton.classList.remove('btn-success');
-      submitButton.style.backgroundColor = '#1877f2';
-      
-      submitButton.onclick = function(e) {
-        e.preventDefault();
-        window.open(panelUrl, '_blank');
-        
-        setTimeout(() => {
-            loadingText.style.display = 'none';
-            congratsText.textContent = translations[currentLang]['congrats-message'];
-            congratsNotification.style.display = 'block';
-            createConfetti(congratsNotification); // Start confetti animation
-            submitButton.textContent = translations[currentLang]['done-button'];
-            submitButton.disabled = true;
-            submitButton.classList.add('btn-success');
-            successNotification.style.display = 'none';
-            saveAppState({ step: 'connected' });
-        }, 1500); // Wait for the user to potentially return
-      };
-
-    } else if (state.step === 'connected') {
-      // Hide form fields and show success message
-      form.style.display = 'block';
-      congratsText.textContent = translations[currentLang]['congrats-message'];
-      congratsNotification.style.display = 'block';
-      submitButton.textContent = translations[currentLang]['done-button'];
-      submitButton.disabled = true;
-      submitButton.classList.add('btn-success');
-      shareOptionsContainer.style.display = 'none';
-      successNotification.style.display = 'none';
-    } else {
-      // Default initial state
-      form.style.display = 'block';
-      submitButton.textContent = translations[currentLang]['submit-button'];
-      shareOptionsContainer.style.display = 'none';
-      successNotification.style.display = 'none';
-      congratsNotification.style.display = 'none';
-      submitButton.disabled = false;
-      submitButton.classList.remove('btn-dimmed');
-      submitButton.classList.remove('btn-success');
-      submitButton.style.backgroundColor = '#1877f2';
-    }
-  }
-
-  // Initial page load logic
-  document.addEventListener('DOMContentLoaded', () => {
-    setLanguage('en'); // Default language
-    const savedState = getAppState();
-    updateUI(savedState);
-  });
-  
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-  
-    const postUrl = document.getElementById('postUrl').value.trim();
-    const reactionLimit = document.getElementById('reactionLimit').value;
-    const reactionType = document.getElementById('reactionType').value;
-  
-    if(!postUrl || !reactionLimit || !reactionType){
-      const currentLang = document.documentElement.lang;
-      if (currentLang === 'bn') {
-        alert('অনুগ্রহ করে সব ফিল্ড পূরণ করুন');
-      } else {
-        alert('Please fill out all fields');
-      }
-      return;
-    }
-  
-    loadingText.style.display = 'block';
-    submitButton.style.transition = 'background-color 1s ease';
-    submitButton.classList.add('btn-success');
-    submitButton.disabled = true;
-  
-    setTimeout(() => {
-      loadingText.style.display = 'none';
-      const currentLang = document.documentElement.lang;
-      
-      submitButton.textContent = translations[currentLang]['share-button'];
-      shareOptionsContainer.style.display = 'block'; // Show new share options
-      
-      // Initially disable the Share Now button until copy is done
-      submitButton.disabled = true;
-      submitButton.classList.add('btn-dimmed'); // Apply dimmed style
-      
-      submitButton.classList.remove('btn-success');
-      
-      // New logic for 'Share Now' button
-      submitButton.onclick = function(e) {
-        e.preventDefault();
-        
-        const currentLang = document.documentElement.lang;
-        const encodedMessage = encodeURIComponent(shareMessage[currentLang]);
-        const messengerShareUrl = `https://m.me/?text=${encodedMessage}`;
-        
-        window.open(messengerShareUrl, '_blank');
-        
-        submitButton.disabled = true;
-        submitButton.classList.add('btn-dimmed');
-
-        setTimeout(() => {
-          notificationMessage.textContent = translations[currentLang]['success-message'];
-          successNotification.style.display = 'block';
-          
-          submitButton.textContent = translations[currentLang]['final-button'];
-          submitButton.disabled = false;
-          submitButton.classList.remove('btn-dimmed'); // Remove dimmed style
-          shareOptionsContainer.style.display = 'none'; // Hide the share options
-          
-          saveAppState({ step: 'shared' }); // Save state
-          
-          submitButton.onclick = function(e) {
-            e.preventDefault();
-            window.open(panelUrl, '_blank');
-
-            setTimeout(() => {
-                loadingText.style.display = 'none';
-                congratsText.textContent = translations[currentLang]['congrats-message'];
-                congratsNotification.style.display = 'block';
-                createConfetti(congratsNotification); // Start confetti animation
-                submitButton.textContent = translations[currentLang]['done-button'];
-                submitButton.disabled = true;
-                submitButton.classList.add('btn-success');
-                successNotification.style.display = 'none';
-                saveAppState({ step: 'connected' });
-            }, 1500);
-          };
-
-        }, 7000);
-      };
-
-    }, 2000);
-  });
-  
-  // Copy to clipboard function
-  copyMessageBtn.addEventListener('click', function() {
-    const currentLang = document.documentElement.lang;
-    const messageToCopy = shareMessage[currentLang];
-    
-    // Create a temporary textarea element
-    const tempTextarea = document.createElement('textarea');
-    tempTextarea.value = messageToCopy;
-    document.body.appendChild(tempTextarea);
-    
-    // Select and copy the text
-    tempTextarea.select();
-    tempTextarea.setSelectionRange(0, 99999); // For mobile devices
-    document.execCommand('copy');
-    
-    // Remove the temporary element
-    document.body.removeChild(tempTextarea);
-    
-    // Provide user feedback and enable the Share Now button
-    alert(currentLang === 'bn' ? 'মেসেজটি কপি করা হয়েছে! এখন শেয়ার করুন।' : 'Message copied to clipboard! Now share.');
-    
-    // Enable the Share Now button
-    submitButton.disabled = false;
-    submitButton.classList.remove('btn-dimmed');
-  });
-
-
-  // Modal Script
-  const aboutBtn = document.getElementById('about-btn');
-  const aboutModalOverlay = document.getElementById('aboutModalOverlay');
-  const aboutModal = document.getElementById('aboutModal');
-  const closeModalBtn = document.getElementById('close-modal-btn');
-
-  function openModal() {
-    aboutModalOverlay.style.display = 'flex';
-    setTimeout(() => {
-      aboutModal.classList.add('active');
-    }, 10);
-  }
-
-  function closeModal() {
-    aboutModal.classList.remove('active');
-    setTimeout(() => {
-      aboutModalOverlay.style.display = 'none';
-    }, 300); // Wait for the transition to finish
-  }
-
-  aboutBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    openModal();
-  });
-
-  closeModalBtn.addEventListener('click', closeModal);
-  aboutModalOverlay.addEventListener('click', (e) => {
-    if (e.target === aboutModalOverlay) {
-      closeModal();
-    }
-  });
-
-  // Language switch functionality needs to be updated to load saved state
-  bnBtn.addEventListener('click', () => {
-      setLanguage('bn');
-      updateUI(getAppState());
-  });
-  enBtn.addEventListener('click', () => {
-      setLanguage('en');
-      updateUI(getAppState());
-  });
-
-  // Call setLanguage and updateUI on initial page load
-  setLanguage('en');
-  updateUI(getAppState());
-
-</script>
+    </script>
 </body>
 </html>
