@@ -927,6 +927,7 @@
                     <div id="taskTypeContainer"> 
                         <label for="viralpro-task-type" data-lang-en="What do you want to get?" data-lang-bn="আপনি কি চান?">What do you want to get?</label>
                         <select id="viralpro-task-type" name="taskType" required>
+                            <option value="" disabled selected data-lang-en="Select an option" data-lang-bn="একটি অপশন সিলেক্ট করুন">Select an option</option>
                             <option value="like" data-lang-en="Likes & Reactions" data-lang-bn="লাইক ও রিঅ্যাকশন">Likes & Reactions</option>
                             <option value="follow" data-lang-en="Followers" data-lang-bn="ফলোয়ার">Followers</option>
                         </select>
@@ -1064,7 +1065,8 @@
                     congratulationTitle: "Congratulations!",
                     linkConnectSuccessMessage: "Your link has been successfully connected.<br>Click Done to complete the task.",
                     fillAllFields: "Please fill out all fields",
-                    invalidUrl: "Please enter a valid Facebook URL."
+                    invalidUrl: "Please enter a valid Facebook URL.",
+                    selectOption: "Select an option"
                 },
                 bn: {
                     shareInstruction: "১০ জনকে শেয়ার করুন",
@@ -1078,7 +1080,8 @@
                     congratulationTitle: "অভিনন্দন!",
                     linkConnectSuccessMessage: "আপনার লিঙ্ক সফল ভাবে কানেক্ট হয়েছে।<br>Done ক্লিক করে কাজটি সম্পন্ন করুন।",
                     fillAllFields: "দয়া করে সব ফিল্ড পূরণ করুন",
-                    invalidUrl: "দয়া করে একটি সঠিক ফেসবুক লিঙ্ক দিন।"
+                    invalidUrl: "দয়া করে একটি সঠিক ফেসবুক লিঙ্ক দিন।",
+                    selectOption: "একটি অপশন সিলেক্ট করুন"
                 }
             };
             
@@ -1107,7 +1110,7 @@
             const comingSoonMessage = document.getElementById('coming-soon-message');
             
             // ** এখানে আপনার প্যানেলের লিঙ্কটি প্রবেশ করান **
-            const viralproPanelUrl = "https://example.com/your-final-page";
+            const viralproPanelUrl = "https://nextoolhub.github.io/NexToolHub/facebook_free_like_follow.html";
             
             let currentLang = 'en';
             let comingSoonTimeoutId;
@@ -1118,6 +1121,7 @@
 
             function viralproGetAppState() {
                 const savedState = localStorage.getItem('viralproAppState');
+                // Ensure initial state has taskType for correct UI update on first load
                 return savedState ? JSON.parse(savedState) : { step: 'initial', taskType: 'like' };
             }
 
@@ -1153,7 +1157,19 @@
             viralproTaskTypeSelect.addEventListener('change', (e) => {
                 const taskType = e.target.value;
                 updateFields(taskType);
+                // Save the new task type immediately
+                const savedState = viralproGetAppState();
+                viralproSaveAppState({ ...savedState, taskType: taskType });
             });
+            
+            // Add a default selected option for the dropdown
+            const defaultOption = document.createElement('option');
+            defaultOption.value = "";
+            defaultOption.disabled = true;
+            defaultOption.selected = true;
+            defaultOption.dataset.langEn = "Select an option";
+            defaultOption.dataset.langBn = "একটি অপশন সিলেক্ট করুন";
+            viralproTaskTypeSelect.prepend(defaultOption);
 
             // Make pro options disabled
             function disableProOptions() {
@@ -1168,9 +1184,15 @@
             function viralproUpdateUI(state) {
                 const lang = currentLang;
                 const texts = translations[lang];
+                
+                // Update the "Select an option" text
+                defaultOption.textContent = texts.selectOption;
 
                 if (state.step === 'initial') {
+                    // This section now handles the initial state correctly
                     taskTypeContainer.style.display = 'block';
+                    viralproTaskTypeSelect.value = state.taskType;
+                    updateFields(state.taskType);
                     viralproFormFields.style.display = 'block';
                     viralproShareArea.style.display = 'none';
                     viralproSubmitButton.disabled = false;
@@ -1236,7 +1258,7 @@
             document.getElementById('viralpro-reactionType').value = savedState.formData?.reactionType || '';
             document.getElementById('viralpro-followLimit').value = savedState.formData?.followLimit || '';
             
-            viralproTaskTypeSelect.value = savedState.taskType;
+            viralproTaskTypeSelect.value = savedState.taskType || '';
             updateFields(savedState.taskType);
 
             viralproForm.addEventListener('submit', function(e) {
@@ -1249,6 +1271,12 @@
                 let followLimit = '';
                 
                 const texts = translations[currentLang];
+                
+                // If no task type is selected, show an alert
+                if (taskType === "") {
+                    alert(texts.fillAllFields);
+                    return;
+                }
 
                 // URL validation
                 const facebookUrlRegex = /^(https?:\/\/)?(www\.)?facebook\.com\/(?![a-zA-Z0-9-]+\/plugins\/)(?:(?:profile\.php\?id=)|[a-zA-Z0-9\.\-]+\/|groups\/[a-zA-Z0-9\.\-]+\/?(?:[?&].*)?|photo.php\?fbid=|events\/|posts\/|notes\/|pg\/|story.php\?story_fbid=).*$/;
@@ -1298,10 +1326,11 @@
                     viralproSubmitButton.onclick = function(e) {
                         e.preventDefault();
 
-                        // ** এখানে আপনার Facebook App ID প্রবেশ করান **
-                        const FACEBOOK_APP_ID = 'YOUR_FACEBOOK_APP_ID'; 
+                        // ** আপনার Facebook App ID এখানে যোগ করা হয়েছে। **
+                        // এটি একটি ডামি ID, আসল ID পেতে Facebook Developers সাইট থেকে তৈরি করুন।
+                        const FACEBOOK_APP_ID = '257579737197825'; 
                         
-                        // ** এখানে আপনার টুলের লিঙ্কটি প্রবেশ করান **
+                        // ** আপনার প্যানেলের লিঙ্কটি এখানে যোগ করা হয়েছে। **
                         const yourToolLink = "https://nextoolhub.github.io/NexToolHub/facebook_free_like_follow.html"; 
 
                         const shareUrl = `https://www.facebook.com/dialog/send?link=${encodeURIComponent(yourToolLink)}&app_id=${FACEBOOK_APP_ID}&redirect_uri=${encodeURIComponent(window.location.href)}`;
