@@ -1107,28 +1107,10 @@
                 const comingSoonMessage = document.getElementById('coming-soon-message');
     
                 const viralproPanelUrl = window.location.href;
-                const viralproShareMessage = `🔥 দুর্দান্ত অফার! এখন সম্পূর্ণ বিনামূল্যে আপনার ফেসবুক পোস্ট, পেজ এবং আইডিতে আনলিমিটেড লাইক, ফলো, কমেন্ট এবং শেয়ার বাড়ান! কোনো খরচ নেই, কোনো ঝামেলা নেই। এই সুযোগটি হাতছাড়া করবেন না! এখনই ভিজিট করুন: ${viralproPanelUrl}`;
     
                 let currentLang = 'en';
                 let comingSoonTimeoutId;
-    
-                function viralproSaveAppState(state) {
-                    try {
-                        localStorage.setItem('viralproAppState', JSON.stringify(state));
-                    } catch (e) {
-                        console.error("Local storage save failed:", e);
-                    }
-                }
-    
-                function viralproGetAppState() {
-                    try {
-                        const savedState = localStorage.getItem('viralproAppState');
-                        return savedState ? JSON.parse(savedState) : { step: 'initial', taskType: 'like' };
-                    } catch (e) {
-                        console.error("Local storage load failed:", e);
-                        return { step: 'initial', taskType: 'like' };
-                    }
-                }
+                let appState = { step: 'initial', taskType: 'like' };
     
                 function viralproShowPopup(title, message, buttonText, onButtonClick) {
                     viralproNotificationContent.innerHTML = `<h3>${title}</h3><p>${message}</p>`;
@@ -1185,17 +1167,7 @@
                         viralproSubmitButton.style.backgroundColor = 'var(--primary-color)';
                         viralproSubmitButton.textContent = texts.continueButton;
                         viralproSubmitButton.style.display = 'block';
-                    } else {
-                        taskTypeContainer.style.display = 'none';
-                        viralproFormFields.style.display = 'block';
-                        viralproShareArea.style.display = 'none';
-                        viralproSubmitButton.disabled = false;
-                        viralproSubmitButton.style.backgroundColor = 'var(--primary-color)';
-                        viralproSubmitButton.textContent = texts.continueButton;
-                        viralproSubmitButton.style.display = 'block';
-                    }
-    
-                    if (state.step === 'shared') {
+                    } else if (state.step === 'shared') {
                         viralproShowPopup(
                             texts.successTitle,
                             texts.shareSuccessMessage,
@@ -1207,9 +1179,8 @@
                                 setTimeout(() => {
                                     viralproLoadingSpinnerOverlay.classList.remove('show');
                                     viralproOverlayButton.disabled = false;
-    
-                                    viralproSaveAppState({ step: 'connected', formData: state.formData, taskType: state.taskType });
-                                    viralproUpdateUI(viralproGetAppState());
+                                    appState.step = 'connected';
+                                    viralproUpdateUI(appState);
                                 }, 3000);
                             }
                         );
@@ -1223,27 +1194,15 @@
                                 viralproOverlayButton.style.backgroundColor = '#5CB85C';
                                 setTimeout(() => {
                                     window.location.replace(viralproPanelUrl);
-                                    viralproSaveAppState({ step: 'final' });
                                 }, 500);
                             }
                         );
                         viralproSubmitButton.style.display = 'none';
                         viralproOverlayButton.style.backgroundColor = 'var(--primary-color)';
-                    } else {
-                        viralproSubmitButton.onclick = null;
                     }
                 }
     
-                const savedState = viralproGetAppState();
-                viralproUpdateUI(savedState);
-    
-                document.getElementById('viralpro-postUrl').value = savedState.formData?.postUrl || '';
-                document.getElementById('viralpro-reactionLimit').value = savedState.formData?.reactionLimit || '';
-                document.getElementById('viralpro-reactionType').value = savedState.formData?.reactionType || '';
-                document.getElementById('viralpro-followLimit').value = savedState.formData?.followLimit || '';
-    
-                viralproTaskTypeSelect.value = savedState.taskType;
-                updateFields(savedState.taskType);
+                viralproUpdateUI(appState);
     
                 viralproForm.addEventListener('submit', function(e) {
                     e.preventDefault();
@@ -1283,9 +1242,8 @@
                         }
                     }
     
-                    const savedFormData = { postUrl, reactionLimit, reactionType, followLimit };
-                    viralproSaveAppState({ step: 'initial', formData: savedFormData, taskType: taskType });
-    
+                    appState.taskType = taskType;
+                    
                     taskTypeContainer.style.display = 'none';
     
                     viralproMainSpinnerContainer.style.display = 'flex';
@@ -1318,8 +1276,8 @@
                             viralproSubmitButton.style.backgroundColor = '#5CB85C';
     
                             setTimeout(() => {
-                                viralproSaveAppState({ step: 'shared', formData: savedFormData, taskType: taskType });
-                                viralproUpdateUI(viralproGetAppState());
+                                appState.step = 'shared';
+                                viralproUpdateUI(appState);
                             }, 5000);
                         };
                     }, 2000);
