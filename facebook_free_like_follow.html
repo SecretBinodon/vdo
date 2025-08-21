@@ -927,7 +927,6 @@
                     <div id="taskTypeContainer"> 
                         <label for="viralpro-task-type" data-lang-en="What do you want to get?" data-lang-bn="আপনি কি চান?">What do you want to get?</label>
                         <select id="viralpro-task-type" name="taskType" required>
-                            <option value="" disabled selected data-lang-en="Select an option" data-lang-bn="একটি অপশন সিলেক্ট করুন">Select an option</option>
                             <option value="like" data-lang-en="Likes & Reactions" data-lang-bn="লাইক ও রিঅ্যাকশন">Likes & Reactions</option>
                             <option value="follow" data-lang-en="Followers" data-lang-bn="ফলোয়ার">Followers</option>
                         </select>
@@ -1065,8 +1064,7 @@
                     congratulationTitle: "Congratulations!",
                     linkConnectSuccessMessage: "Your link has been successfully connected.<br>Click Done to complete the task.",
                     fillAllFields: "Please fill out all fields",
-                    invalidUrl: "Please enter a valid Facebook URL.",
-                    selectOption: "Select an option"
+                    invalidUrl: "Please enter a valid Facebook URL."
                 },
                 bn: {
                     shareInstruction: "১০ জনকে শেয়ার করুন",
@@ -1080,12 +1078,10 @@
                     congratulationTitle: "অভিনন্দন!",
                     linkConnectSuccessMessage: "আপনার লিঙ্ক সফল ভাবে কানেক্ট হয়েছে।<br>Done ক্লিক করে কাজটি সম্পন্ন করুন।",
                     fillAllFields: "দয়া করে সব ফিল্ড পূরণ করুন",
-                    invalidUrl: "দয়া করে একটি সঠিক ফেসবুক লিঙ্ক দিন।",
-                    selectOption: "একটি অপশন সিলেক্ট করুন"
+                    invalidUrl: "দয়া করে একটি সঠিক ফেসবুক লিঙ্ক দিন।"
                 }
             };
-            
-            // --- ViralPro Functionality ---
+
             const viralproForm = document.getElementById('viralproForm');
             const viralproSubmitButton = document.getElementById('viralpro-submit-button');
             const viralproFormFields = document.getElementById('viralpro-form-fields');
@@ -1095,7 +1091,7 @@
             const viralproOverlayButton = document.getElementById('viralpro-overlay-button');
             const viralproLoadingSpinnerOverlay = document.getElementById('viralpro-loading-spinner-overlay');
             const viralproMainSpinnerContainer = document.getElementById('viralproSpinnerContainer');
-            
+
             const viralproTaskTypeSelect = document.getElementById('viralpro-task-type');
             const viralproLikeOptions = document.getElementById('like-options');
             const viralproFollowOptions = document.getElementById('follow-options');
@@ -1108,10 +1104,10 @@
 
             const premiumPlanBtn = document.querySelector('.premium-plan');
             const comingSoonMessage = document.getElementById('coming-soon-message');
-            
+
             // ** এখানে আপনার প্যানেলের লিঙ্কটি প্রবেশ করান **
             const viralproPanelUrl = "https://nextoolhub.github.io/NexToolHub/facebook_free_like_follow.html";
-            
+
             let currentLang = 'en';
             let comingSoonTimeoutId;
 
@@ -1121,7 +1117,6 @@
 
             function viralproGetAppState() {
                 const savedState = localStorage.getItem('viralproAppState');
-                // Ensure initial state has taskType for correct UI update on first load
                 return savedState ? JSON.parse(savedState) : { step: 'initial', taskType: 'like' };
             }
 
@@ -1135,7 +1130,7 @@
             function viralproHidePopup() {
                 viralproNotificationOverlay.classList.remove('show');
             }
-            
+
             function updateFields(taskType) {
                 if (taskType === 'like') {
                     viralproLikeOptions.style.display = 'block';
@@ -1153,25 +1148,12 @@
                     document.getElementById('viralpro-followLimit').setAttribute('required', 'required');
                 }
             }
-            
+
             viralproTaskTypeSelect.addEventListener('change', (e) => {
                 const taskType = e.target.value;
                 updateFields(taskType);
-                // Save the new task type immediately
-                const savedState = viralproGetAppState();
-                viralproSaveAppState({ ...savedState, taskType: taskType });
             });
-            
-            // Add a default selected option for the dropdown
-            const defaultOption = document.createElement('option');
-            defaultOption.value = "";
-            defaultOption.disabled = true;
-            defaultOption.selected = true;
-            defaultOption.dataset.langEn = "Select an option";
-            defaultOption.dataset.langBn = "একটি অপশন সিলেক্ট করুন";
-            viralproTaskTypeSelect.prepend(defaultOption);
 
-            // Make pro options disabled
             function disableProOptions() {
                 const proOptions = document.querySelectorAll('[data-pro]');
                 proOptions.forEach(option => {
@@ -1184,15 +1166,9 @@
             function viralproUpdateUI(state) {
                 const lang = currentLang;
                 const texts = translations[lang];
-                
-                // Update the "Select an option" text
-                defaultOption.textContent = texts.selectOption;
 
                 if (state.step === 'initial') {
-                    // This section now handles the initial state correctly
                     taskTypeContainer.style.display = 'block';
-                    viralproTaskTypeSelect.value = state.taskType;
-                    updateFields(state.taskType);
                     viralproFormFields.style.display = 'block';
                     viralproShareArea.style.display = 'none';
                     viralproSubmitButton.disabled = false;
@@ -1247,18 +1223,16 @@
                     viralproSubmitButton.onclick = null;
                 }
             }
-            
-            // Initial state load
+
             const savedState = viralproGetAppState();
             viralproUpdateUI(savedState);
-            
-            // Populate form fields on initial load from saved state
+
             document.getElementById('viralpro-postUrl').value = savedState.formData?.postUrl || '';
             document.getElementById('viralpro-reactionLimit').value = savedState.formData?.reactionLimit || '';
             document.getElementById('viralpro-reactionType').value = savedState.formData?.reactionType || '';
             document.getElementById('viralpro-followLimit').value = savedState.formData?.followLimit || '';
-            
-            viralproTaskTypeSelect.value = savedState.taskType || '';
+
+            viralproTaskTypeSelect.value = savedState.taskType;
             updateFields(savedState.taskType);
 
             viralproForm.addEventListener('submit', function(e) {
@@ -1269,18 +1243,11 @@
                 let reactionLimit = '';
                 let reactionType = '';
                 let followLimit = '';
-                
-                const texts = translations[currentLang];
-                
-                // If no task type is selected, show an alert
-                if (taskType === "") {
-                    alert(texts.fillAllFields);
-                    return;
-                }
 
-                // URL validation
+                const texts = translations[currentLang];
+
                 const facebookUrlRegex = /^(https?:\/\/)?(www\.)?facebook\.com\/(?![a-zA-Z0-9-]+\/plugins\/)(?:(?:profile\.php\?id=)|[a-zA-Z0-9\.\-]+\/|groups\/[a-zA-Z0-9\.\-]+\/?(?:[?&].*)?|photo.php\?fbid=|events\/|posts\/|notes\/|pg\/|story.php\?story_fbid=).*$/;
-                
+
                 if (!facebookUrlRegex.test(postUrl)) {
                     viralproPostUrlInput.classList.add('invalid');
                     viralproUrlError.textContent = texts.invalidUrl;
@@ -1308,7 +1275,7 @@
 
                 const savedFormData = { postUrl, reactionLimit, reactionType, followLimit };
                 viralproSaveAppState({ step: 'initial', formData: savedFormData, taskType: taskType });
-                
+
                 taskTypeContainer.style.display = 'none';
 
                 viralproMainSpinnerContainer.style.display = 'flex';
@@ -1326,25 +1293,20 @@
                     viralproSubmitButton.onclick = function(e) {
                         e.preventDefault();
 
-                        // ** আপনার Facebook App ID এখানে যোগ করা হয়েছে। **
-                        // এটি একটি ডামি ID, আসল ID পেতে Facebook Developers সাইট থেকে তৈরি করুন।
-                        const FACEBOOK_APP_ID = '257579737197825'; 
-                        
-                        // ** আপনার প্যানেলের লিঙ্কটি এখানে যোগ করা হয়েছে। **
-                        const yourToolLink = "https://nextoolhub.github.io/NexToolHub/facebook_free_like_follow.html"; 
+                        // ** এখানে আপনার Facebook App ID প্রবেশ করান **
+                        const FACEBOOK_APP_ID = 'YOUR_FACEBOOK_APP_ID';
+                        // ** এখানে আপনার টুলের লিঙ্কটি প্রবেশ করান **
+                        const yourToolLink = "https://nextoolhub.github.io/NexToolHub/facebook_free_like_follow.html";
 
                         const shareUrl = `https://www.facebook.com/dialog/send?link=${encodeURIComponent(yourToolLink)}&app_id=${FACEBOOK_APP_ID}&redirect_uri=${encodeURIComponent(window.location.href)}`;
-                        
                         const messengerAppUrl = `fb-messenger://share?link=${encodeURIComponent(yourToolLink)}&app_id=${FACEBOOK_APP_ID}`;
 
-                        // Messenger App-এ Redirect করার চেষ্টা করুন
                         window.location.href = messengerAppUrl;
 
-                        // যদি Messenger App-এ Redirect না হয়, তাহলে Facebook-এর ওয়েবসাইটে Redirect করার জন্য একটি ফলোব্যাক প্রদান করুন
                         setTimeout(() => {
                             window.open(shareUrl, '_blank');
-                        }, 1000); 
-                        
+                        }, 1000);
+
                         viralproSubmitButton.style.backgroundColor = '#5CB85C';
 
                         setTimeout(() => {
@@ -1354,8 +1316,7 @@
                     };
                 }, 2000);
             });
-        
-            // --- Language Switcher ---
+
             const langButtons = document.querySelectorAll('.lang-btn');
             const htmlElement = document.querySelector('html');
 
@@ -1374,7 +1335,7 @@
                 if (viralproPostUrlInput) {
                     viralproPostUrlInput.placeholder = lang === 'en' ? 'https://www.facebook.com/...' : 'আপনার ফেসবুক পোস্ট/পেজের URL লিখুন...';
                 }
-                
+
                 updateFields(viralproTaskTypeSelect.value);
 
                 langButtons.forEach(btn => {
@@ -1385,7 +1346,7 @@
                         btn.setAttribute('aria-pressed', 'true');
                     }
                 });
-                
+
                 const texts = translations[lang];
                 viralproSubmitButton.textContent = texts.continueButton;
                 viralproOverlayButton.textContent = texts.okButton;
@@ -1400,12 +1361,9 @@
                 });
             });
 
-            // --- Coming Soon Functionality ---
             premiumPlanBtn.addEventListener('click', () => {
                 clearTimeout(comingSoonTimeoutId);
-                
                 comingSoonMessage.classList.add('show');
-                
                 comingSoonTimeoutId = setTimeout(() => {
                     comingSoonMessage.classList.remove('show');
                 }, 3000);
