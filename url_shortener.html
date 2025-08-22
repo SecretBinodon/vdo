@@ -49,8 +49,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
-            opacity: 0; /* Add this */
-            animation: fadeInUp 0.8s ease-out 0.2s forwards; /* Add this */
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.2s forwards;
         }
 
         .logo-container {
@@ -135,8 +135,8 @@
             box-shadow: var(--shadow-light);
             position: relative;
             overflow: hidden;
-            opacity: 0; /* Add this */
-            animation: fadeInUp 0.8s ease-out 0.4s forwards; /* Add this */
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.4s forwards;
         }
 
         .hero-section h1, .hero-section p {
@@ -166,8 +166,9 @@
             justify-content: center;
             text-align: center;
             padding: 40px 20px;
-            opacity: 0; /* Add this */
-            animation: fadeInUp 0.8s ease-out 0.6s forwards; /* Add this */
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.6s forwards;
+            margin-top: 20px;
         }
 
         .tool-card {
@@ -177,7 +178,6 @@
             box-shadow: var(--shadow-light);
             width: 100%;
             max-width: 600px;
-            margin-top: 20px;
         }
 
         .tool-content h1 {
@@ -308,6 +308,70 @@
             transform: scale(0.98);
         }
 
+        /* --- Ad containers --- */
+        .ad-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px 0; /* Reduced margin */
+            text-align: center;
+        }
+        
+        .ad-container.desktop-only {
+            display: none; /* Default hide for mobile */
+        }
+
+        .ad-container.mobile-only {
+            display: none; /* Default hide for desktop */
+        }
+        
+        .ad-mobile-bottom {
+            margin-top: 15px; /* Added slight top margin to prevent overlap */
+            margin-bottom: 20px;
+        }
+
+        /* --- Article Section --- */
+        .article-section {
+            margin-top: 40px;
+            padding: 0 20px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.8s forwards;
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+
+        .article-section h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .article-section p {
+            font-size: 16px;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .article-section ul {
+            list-style-type: disc;
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        .article-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .article-section h3 {
+            font-size: 22px;
+            color: var(--text-color);
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
         /* --- Footer --- */
         .footer {
             text-align: center;
@@ -315,10 +379,16 @@
             margin-top: auto;
             background-color: var(--card-bg);
             border-top: 1px solid #e0e0e0;
-            opacity: 0; /* Add this */
-            animation: fadeInUp 0.8s ease-out 0.8s forwards; /* Add this */
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.8s forwards;
         }
 
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
         .footer-links a {
             color: #666;
             text-decoration: none;
@@ -348,6 +418,131 @@
                 transform: translateY(0);
             }
         }
+
+        /* --- Mobile-specific styles (max-width: 768px) --- */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 10px;
+            }
+
+            .header {
+                padding: 10px 0;
+            }
+
+            .logo a {
+                font-size: 16px;
+            }
+
+            .home-btn {
+                padding: 3px 6px;
+                font-size: 10px;
+                margin-right: 5px;
+            }
+
+            .logo-container {
+                flex: 1;
+                justify-content: flex-start;
+            }
+
+            .language-switcher {
+                flex: 1;
+                justify-content: flex-end;
+            }
+
+            .lang-btn {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
+
+            .hero-section {
+                padding: 20px 10px;
+                margin-bottom: 20px;
+                border-radius: 0;
+            }
+
+            .hero-section h1 {
+                font-size: 16px;
+                margin-bottom: 5px;
+                line-height: 1.2;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .hero-section p {
+                font-size: 8px;
+                margin-bottom: 0;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 100%;
+            }
+
+            .tool-content {
+                padding: 20px 10px;
+                margin-top: -20px;
+            }
+
+            .tool-card {
+                padding: 20px;
+            }
+
+            .footer-links {
+                flex-wrap: nowrap;
+                justify-content: space-around;
+            }
+
+            .footer-links a {
+                font-size: 10px;
+                margin: 0 5px;
+            }
+
+            .article-section h2 {
+                font-size: 20px;
+            }
+
+            .article-section h3 {
+                font-size: 18px;
+            }
+            
+            .article-section p, .article-section li {
+                font-size: 12px;
+            }
+
+            .ad-container.mobile-only {
+                display: flex;
+            }
+
+            .ad-container.desktop-only {
+                display: none;
+            }
+        }
+        
+        /* --- Desktop-specific styles (min-width: 769px) --- */
+        @media (min-width: 769px) {
+            .hero-section {
+                width: 100vw;
+                margin-left: calc(-50vw + 50%);
+                border-radius: 0;
+                padding-top: 40px;
+                padding-bottom: 40px;
+                margin-bottom: 20px;
+            }
+            
+            .tool-content {
+                margin-top: 20px;
+            }
+
+            .ad-container.desktop-only {
+                display: flex;
+                margin-top: 10px; /* Reduced gap */
+                margin-bottom: 20px;
+            }
+
+            .ad-container.mobile-only {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -365,6 +560,32 @@
                 <button class="lang-btn" data-lang="bn" aria-label="Switch to Bengali">BN</button>
             </div>
         </header>
+        
+        <div class="ad-container mobile-only">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '02a9c12a5270a25efa5325c0e42ffc59',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
+        </div>
+
+        <div class="ad-container desktop-only">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '3107b60e8baa0d0e886adf12d55fbd7e',
+                    'format' : 'iframe',
+                    'height' : 90,
+                    'width' : 728,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
+        </div>
 
         <section class="hero-section">
             <h1 data-lang-en="Shorten Your URLs, Instantly." data-lang-bn="আপনার URL-কে এক নিমিষে ছোট করুন।">Shorten Your URLs, Instantly.</h1>
@@ -394,7 +615,65 @@
 
                 <a href="../../index.html" class="view-btn" data-lang-en="View All Tools" data-lang-bn="সব টুল দেখুন">View All Tools</a>
             </div>
+
+            <div class="ad-container mobile-only ad-mobile-bottom">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                        'format' : 'iframe',
+                        'height' : 250,
+                        'width' : 300,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
+            </div>
+            
+            <div class="ad-container desktop-only">
+                <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script> <div id="container-45718544708b185acff6d14248cc94cd"></div>
+            </div>
         </section>
+        
+        <section class="article-section">
+            <h2 data-lang-en="Why Use a URL Shortener?" data-lang-bn="কেন URL শর্টনার ব্যবহার করবেন?">Why Use a URL Shortener?</h2>
+            <p data-lang-en="In the digital world, long and complex URLs can be a hassle. They look messy, are difficult to share, and can even hurt your brand's credibility. This is where a **URL shortener** comes in. Our **free URL shortener** tool from **NexTool Hub** helps you transform long URLs into clean, manageable, and professional-looking links in just a few seconds." data-lang-bn="ডিজিটাল বিশ্বে, লম্বা এবং জটিল URL গুলো অনেক ঝামেলাপূর্ণ হতে পারে। সেগুলো দেখতে বিশ্রী লাগে, শেয়ার করা কঠিন, এবং এমনকি আপনার ব্র্যান্ডের বিশ্বাসযোগ্যতাও নষ্ট করতে পারে। এখানেই একটি **URL শর্টনার**-এর প্রয়োজন হয়। আমাদের **নেক্সটুল হাব**-এর **বিনামূল্যে ইউআরএল শর্টনার** টুলটি আপনাকে লম্বা URL গুলোকে মাত্র কয়েক সেকেন্ডের মধ্যে পরিষ্কার, সহজ এবং পেশাদার দেখতে লিংকে রূপান্তরিত করতে সাহায্য করে।">In the digital world, long and complex URLs can be a hassle. They look messy, are difficult to share, and can even hurt your brand's credibility. This is where a **URL shortener** comes in. Our **free URL shortener** tool from **NexTool Hub** helps you transform long URLs into clean, manageable, and professional-looking links in just a few seconds.</p>
+            
+            <h3 data-lang-en="Key Benefits of Link Shortening" data-lang-bn="লিংক ছোট করার প্রধান সুবিধা">Key Benefits of Link Shortening</h3>
+            <ul>
+                <li data-lang-en-text="Improved Aesthetics: Short links are visually appealing and easy to remember." data-lang-bn-text="আকর্ষণীয়তা বৃদ্ধি: ছোট লিংক দেখতে সুন্দর এবং সহজে মনে রাখা যায়।"></li>
+                <li data-lang-en-text="Easy Sharing: They are perfect for social media posts, emails, or text messages, where character limits are often a concern." data-lang-bn-text="সহজ শেয়ারিং: সামাজিক মাধ্যম, ইমেল বা টেক্সট মেসেজে যেখানে ক্যারেক্টার লিমিট থাকে, সেখানে এই লিংকগুলো খুবই উপযোগী।"></li>
+                <li data-lang-en-text="Enhanced Trust: A clean, branded link looks more professional and trustworthy to your audience." data-lang-bn-text="বিশ্বাসযোগ্যতা বৃদ্ধি: একটি পরিষ্কার, ব্র্যান্ডেড লিংক আপনার দর্শকদের কাছে আরও পেশাদার এবং বিশ্বাসযোগ্য মনে হয়।"></li>
+                <li data-lang-en-text="Tracking & Analytics: Shortened links can often be tracked to monitor click rates and user engagement." data-lang-bn-text="ট্র্যাকিং ও অ্যানালিটিক্স: ছোট করা লিংকগুলো প্রায়শই ট্র্যাক করা যায়, যার মাধ্যমে ক্লিক রেট এবং ব্যবহারকারীদের অংশগ্রহণ পর্যবেক্ষণ করা যায়।"></li>
+            </ul>
+            
+            <p data-lang-en="At **NexTool Hub**, our mission is to provide simple, fast, and **reliable tools** for everyday needs. Our **URL shortener** is just one example of our commitment to helping you work smarter, not harder. You can start using our tool right now to **shorten any link** without any registration or hidden fees. Make your links neat and tidy, and share them with confidence!" data-lang-bn="**নেক্সটুল হাব**-এ, আমাদের লক্ষ্য হল দৈনন্দিন প্রয়োজনের জন্য সহজ, দ্রুত এবং নির্ভরযোগ্য টুল সরবরাহ করা। আমাদের **ইউআরএল শর্টনার** তারই একটি উদাহরণ, যা আপনাকে আরও স্মার্টভাবে কাজ করতে সাহায্য করে। আপনি এখনই আমাদের টুলটি ব্যবহার শুরু করতে পারেন কোনো রেজিস্ট্রেশন বা লুকানো ফি ছাড়াই। আপনার লিংকগুলো পরিচ্ছন্ন করুন এবং আত্মবিশ্বাসের সাথে শেয়ার করুন!">At **NexTool Hub**, our mission is to provide simple, fast, and **reliable tools** for everyday needs. Our **URL shortener** is just one example of our commitment to helping you work smarter, not harder. You can start using our tool right now to **shorten any link** without any registration or hidden fees. Make your links neat and tidy, and share them with confidence!</p>
+        </section>
+
+        <div class="ad-container desktop-only">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '3107b60e8baa0d0e886adf12d55fbd7e',
+                    'format' : 'iframe',
+                    'height' : 90,
+                    'width' : 728,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
+        </div>
+
+        <div class="ad-container mobile-only">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '02a9c12a5270a25efa5325c0e42ffc59',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
+        </div>
 
     </div>
 
@@ -417,7 +696,6 @@
             const shortenedUrlSpan = resultContainer.querySelector('span');
             const copyBtn = document.getElementById('copyBtn');
             const statusMessage = document.getElementById('statusMessage');
-            const viewBtn = document.querySelector('.view-btn');
             
             // --- Language Switcher Functionality ---
             function setLanguage(lang) {
@@ -426,6 +704,24 @@
                     const textContent = el.dataset[lang === 'en' ? 'langEn' : 'langBn'];
                     if (textContent) {
                         el.textContent = textContent;
+                    }
+                });
+
+                const articleElements = document.querySelectorAll('.article-section p, .article-section h2, .article-section h3');
+                articleElements.forEach(el => {
+                    const langData = el.dataset[lang === 'en' ? 'langEn' : 'langBn'];
+                    if (langData) {
+                        const htmlContent = langData.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                        el.innerHTML = htmlContent;
+                    }
+                });
+
+                const liElements = document.querySelectorAll('.article-section li');
+                liElements.forEach(li => {
+                    const textContent = li.dataset[lang === 'en' ? 'langEnText' : 'langBnText'];
+                    if (textContent) {
+                        const htmlContent = textContent.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                        li.innerHTML = htmlContent;
                     }
                 });
 
@@ -532,5 +828,10 @@
             }
         });
     </script>
+
+<script type='text/javascript' src='//pl27444202.profitableratecpm.com/f7/be/3d/f7be3da0a62cf03c9a315bdc6f0e403e.js'></script>
+
+<script type='text/javascript' src='//pl27408564.profitableratecpm.com/6f/9e/55/6f9e557cf4f6d1ad34e52bf37ab2156a.js'></script>
+    
 </body>
 </html>
