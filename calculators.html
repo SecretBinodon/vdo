@@ -57,11 +57,13 @@
         .article-section h3 { font-size: 22px; color: var(--text-color); margin-top: 25px; margin-bottom: 10px; }
         .article-section ul { list-style-type: disc; margin-left: 25px; margin-bottom: 20px; }
         .article-section ul li { margin-bottom: 10px; }
-        
+
         /* --- Ad Styles (NEW) --- */
         .ad-container { margin: 20px auto; text-align: center; }
         .mobile-ad, .desktop-ad { opacity: 0; animation: fadeInUp 0.8s ease-out 0.4s forwards; }
         .desktop-ad { display: none; }
+        .full-width-ad-wrapper { width: 100vw; margin-left: calc(-50vw + 50%); margin-bottom: 20px; }
+        
         @media (min-width: 769px) {
             .mobile-ad { display: none; }
             .desktop-ad { display: block; }
@@ -183,21 +185,13 @@
                 </div>
             </div>
 
-            <div class="ad-container">
-
-            
-                
-                <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
-            </div>
-
             <div class="tool-card health-calculator">
                 <h2 data-lang-en="BMI Calculator" data-lang-bn="BMI ক্যালকুলেটর">BMI Calculator</h2>
                 <p data-lang-en="Calculate your Body Mass Index to assess your health status. A useful tool for health-conscious users." data-lang-bn="আপনার স্বাস্থ্য পরিস্থিতি মূল্যায়ন করতে আপনার বডি মাস ইনডেক্স গণনা করুন।">Calculate your Body Mass Index to assess your health status. A useful tool for health-conscious users.</p>
                 <div class="calculator">
                     <div class="form-group">
                         <label for="bmi-weight" data-lang-en="Weight (in kg)" data-lang-bn="ওজন (কেজি-তে)">Weight (in kg)</label>
-
-                    <input type="number" id="bmi-weight" placeholder="e.g., 70" step="0.1">
+                        <input type="number" id="bmi-weight" placeholder="e.g., 70" step="0.1">
                     </div>
                     <div class="form-group">
                         <label for="bmi-height" data-lang-en="Height (in cm)" data-lang-bn="উচ্চতা (সেমি-তে)">Height (in cm)</label>
@@ -244,10 +238,9 @@
                 </div>
             </div>
 
-            <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script>
-<div id="container-45718544708b185acff6d14248cc94cd"></div>
-            
-                <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
+            <div class="full-width-ad-wrapper">
+                <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script>
+                <div id="container-45718544708b185acff6d14248cc94cd"></div>
             </div>
         </section>
 
@@ -316,14 +309,18 @@
                 }
 
                 elementsToTranslate.forEach(el => {
+                    // skip inputs/placeholders here — handled separately
                     if (el.hasAttribute('placeholder')) return;
+
                     const textContent = el.dataset[lang === 'en' ? 'langEn' : 'langBn'];
                     if (typeof textContent !== 'undefined') {
+                        // use innerHTML so embedded tags like <strong> remain DOM elements
                         const htmlContent = textContent.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
                         el.innerHTML = htmlContent;
                     }
                 });
                 
+                // Special handling for list items
                 const liElements = document.querySelectorAll('.article-section li');
                 liElements.forEach(li => {
                     const textContent = li.dataset[lang === 'en' ? 'langEn' : 'langBn'];
@@ -378,6 +375,7 @@
                 const profitMargin = (sellingPrice === 0) ? 0 : (profitAmount / sellingPrice) * 100;
                 const markup = (cost === 0) ? 0 : (profitAmount / cost) * 100;
 
+                // Inject language-specific breakdown (ensures spans exist)
                 if (lang === 'en') {
                     profitResultContainer.querySelector('.result-breakdown').innerHTML =
                         `<p>Profit Amount: <span>₹${profitAmount.toFixed(2)}</span></p>
