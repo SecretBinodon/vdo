@@ -7,12 +7,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <style>
-        /* (যে CSS তুমি পাঠিয়েছিলে সেটাই 그대로 আছে — নিরাপদে কপি করে রেখেছি) */
         :root { --primary-color: #4A90E2; --business-color: #00BFA5; --health-color: #F44336; --finance-color: #6B6EEA; --background-color: #F8F9FA; --card-bg: #FFFFFF; --text-color: #333; --secondary-text: #666; --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08); --border-radius: 12px; --red-color: #FF0000; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Poppins', sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; }
         .container { max-width: 1100px; margin: 0 auto; padding: 20px; width: 100%; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* --- Header --- */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; opacity: 0; animation: fadeInUp 0.8s ease-out 0.2s forwards; }
         .logo-container { display:flex; align-items:center; }
         .home-btn { background-color: var(--card-bg); border: 1px solid #ddd; padding: 8px 12px; border-radius: var(--border-radius); margin-right: 15px; font-size: 16px; font-weight: 600; color: var(--text-color); cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.05); text-decoration: none; }
@@ -22,10 +23,14 @@
         .language-switcher { display:flex; align-items:center; }
         .lang-btn { background-color: transparent; border: 1px solid #ccc; padding: 6px 12px; cursor:pointer; border-radius:6px; font-size:14px; font-weight:600; transition: all 0.3s ease; margin-left:8px; }
         .lang-btn.active { background-color: var(--primary-color); color: #fff; border-color: var(--primary-color); }
-        .hero-section { text-align:center; padding:80px 20px; background-image: linear-gradient(135deg, var(--primary-color), var(--finance-color)); color:#fff; margin-bottom:50px; border-radius:var(--border-radius); box-shadow:var(--shadow-light); position:relative; overflow:hidden; opacity:0; animation: fadeInUp 0.8s ease-out 0.4s forwards; }
+
+        /* --- Hero Section --- */
+        .hero-section { text-align:center; padding:80px 20px; background-image: linear-gradient(135deg, var(--primary-color), var(--finance-color)); color:#fff; margin-bottom: 20px; border-radius:var(--border-radius); box-shadow:var(--shadow-light); position:relative; overflow:hidden; opacity:0; animation: fadeInUp 0.8s ease-out 0.4s forwards; }
         .hero-section h1 { font-size:52px; margin-bottom:10px; font-weight:700; line-height:1.2; }
         .hero-section p { font-size:18px; margin-bottom:20px; opacity:0.9; }
-        .tool-content { flex-grow:1; display:flex; flex-direction:column; align-items:center; padding:40px 20px; }
+        
+        /* --- Tool Content --- */
+        .tool-content { flex-grow:1; display:flex; flex-direction:column; align-items:center; padding: 20px 20px 40px; }
         .tool-card { background-color: var(--card-bg); padding:40px; border-radius:var(--border-radius); box-shadow:var(--shadow-light); width:100%; max-width:800px; margin-bottom:40px; opacity:0; animation: fadeInUp 0.8s ease-out forwards; }
         .tool-card:nth-of-type(1) { animation-delay:0.6s; } .tool-card:nth-of-type(2) { animation-delay:0.8s; } .tool-card:nth-of-type(3) { animation-delay:1.0s; }
         .form-group { margin-bottom:20px; }
@@ -44,11 +49,66 @@
         .result-breakdown { margin-top:20px; padding:15px; background-color:#f1f3f5; border-radius:8px; text-align:left; font-size:1rem; }
         .bmi-category-box { margin-top:15px; padding:10px; border-radius:8px; color:#fff; font-size:1.2rem; font-weight:700; }
         .underweight { background-color:#89CFF0; } .normal { background-color:#7BC043; } .overweight { background-color:#FFC107; } .obesity { background-color:#D32F2F; }
-        .view-btn { background-color: var(--primary-color); color:#fff; padding:12px 24px; border-radius:8px; border:none; font-size:16px; font-weight:600; cursor:pointer; transition: background-color 0.3s ease, transform 0.2s ease; width:100%; margin-top:30px; text-decoration:none; display:block; text-align:center; }
-        .view-btn:hover { background-color:#2F6DB8; transform: translateY(-2px); } .view-btn:active { transform: scale(0.98); }
+
+        /* --- Article Section --- */
+        .article-section { margin-top: 40px; padding: 0 20px; opacity: 0; animation: fadeInUp 0.8s ease-out 1.2s forwards; }
+        .article-section h2 { font-size: 28px; font-weight: 700; color: var(--primary-color); margin-bottom: 15px; text-align: center; }
+        .article-section p { font-size: 16px; color: var(--text-color); margin-bottom: 20px; text-align: justify; }
+        .article-section h3 { font-size: 22px; color: var(--text-color); margin-top: 25px; margin-bottom: 10px; }
+        .article-section ul { list-style-type: disc; margin-left: 25px; margin-bottom: 20px; }
+        .article-section ul li { margin-bottom: 10px; }
+        
+        /* --- Ad Styles (NEW) --- */
+        .ad-container { margin: 20px auto; text-align: center; }
+        .mobile-ad, .desktop-ad { opacity: 0; animation: fadeInUp 0.8s ease-out 0.4s forwards; }
+        .desktop-ad { display: none; }
+        @media (min-width: 769px) {
+            .mobile-ad { display: none; }
+            .desktop-ad { display: block; }
+        }
+        
+        /* --- Footer --- */
         .footer { text-align:center; padding:30px; margin-top:auto; background-color:var(--card-bg); border-top:1px solid #e0e0e0; opacity:0; animation: fadeInUp 0.8s ease-out 1.2s forwards; }
+        .footer-links { display: flex; justify-content: center; flex-wrap: wrap; }
         .footer-links a { color:#666; text-decoration:none; margin:0 15px; font-size:14px; transition: color 0.3s ease; } .footer-links a:hover { color:var(--primary-color); }
         .footer p { margin-top:15px; font-size:14px; color:#666; }
+
+        /* --- Mobile-specific styles (max-width: 768px) --- */
+        @media (max-width: 768px) {
+            .container { padding: 0 10px; }
+            
+            /* হেডার স্টাইল */
+            .header { padding: 10px 0; justify-content: space-between; }
+            .logo-container { margin-right: auto; }
+            .home-btn { padding: 3px 6px; font-size: 10px; margin-right: 5px; }
+            .logo a { font-size: 16px; }
+            .language-switcher { margin-left: auto; }
+            .lang-btn { font-size: 10px; padding: 3px 6px; }
+
+            /* হিরো সেকশনের স্টাইল */
+            .hero-section { padding: 20px 10px; margin-bottom: 10px; border-radius: 0; }
+            .hero-section h1 { font-size: 16px; margin-bottom: 5px; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .hero-section p { font-size: 8px; margin-bottom: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+
+            /* টুল কন্টেন্টের গ্যাপ */
+            .tool-content { padding-top: 10px; }
+            .tool-card { padding: 20px; margin-bottom: 20px; }
+
+            /* আর্টিকেল স্টাইল */
+            .article-section h2 { font-size: 20px; }
+            .article-section h3 { font-size: 18px; }
+            .article-section p, .article-section li { font-size: 12px; }
+
+            /* ফুটারের স্টাইল */
+            .footer-links { flex-wrap: nowrap; justify-content: space-around; }
+            .footer-links a { font-size: 10px; margin: 0 5px; }
+        }
+        
+        /* --- Desktop-specific styles (min-width: 769px) --- */
+        @media (min-width: 769px) {
+            .hero-section { width: 100vw; margin-left: calc(-50vw + 50%); border-radius: 0; padding-top: 40px; padding-bottom: 40px; margin-bottom: 20px; }
+            .tool-content { padding-top: 20px; }
+        }
     </style>
 </head>
 <body>
@@ -66,6 +126,32 @@
                 <button class="lang-btn" data-lang="bn" aria-label="Switch to Bengali">BN</button>
             </div>
         </header>
+
+        <div class="ad-container desktop-ad">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '3107b60e8baa0d0e886adf12d55fbd7e',
+                    'format' : 'iframe',
+                    'height' : 90,
+                    'width' : 728,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
+        </div>
+
+        <div class="ad-container mobile-ad">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '02a9c12a5270a25efa5325c0e42ffc59',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
+        </div>
 
         <section class="hero-section">
             <h1 data-lang-en="Powerful Niche Calculators." data-lang-bn="শক্তিশালী নিশ ক্যালকুলেটরের সংগ্রহ।">Powerful Niche Calculators.</h1>
@@ -93,9 +179,21 @@
                 <div id="profit-result" class="result-container">
                     <h3 data-lang-en="Profit & Margin Details" data-lang-bn="লাভ ও মার্জিনের বিস্তারিত">Profit & Margin Details</h3>
                     <div class="result-breakdown">
-                        <!-- content will be injected dynamically -->
-                    </div>
+                        </div>
                 </div>
+            </div>
+
+            <div class="ad-container">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                        'format' : 'iframe',
+                        'height' : 250,
+                        'width' : 300,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
             </div>
 
             <div class="tool-card health-calculator">
@@ -118,8 +216,7 @@
                 <div id="bmi-result" class="result-container">
                     <h3 data-lang-en="Your BMI Result" data-lang-bn="আপনার BMI ফলাফল">Your BMI Result</h3>
                     <div class="result-breakdown">
-                        <!-- injected -->
-                    </div>
+                        </div>
                     <div id="bmi-category-box" class="bmi-category-box" style="display:none;"></div>
                 </div>
             </div>
@@ -148,13 +245,62 @@
                 <div id="emi-result" class="result-container">
                     <h3 data-lang-en="Your EMI Result" data-lang-bn="আপনার EMI ফলাফল">Your EMI Result</h3>
                     <div class="result-breakdown">
-                        <!-- injected -->
-                    </div>
+                        </div>
                 </div>
             </div>
 
-            <a href="#" class="view-btn" data-lang-en="View All Tools" data-lang-bn="সব টুল দেখুন">View All Tools</a>
+            <div class="ad-container">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                        'format' : 'iframe',
+                        'height' : 250,
+                        'width' : 300,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
+            </div>
         </section>
+
+        <section class="article-section">
+            <h2 data-lang-en="Your All-in-One Hub for Everyday Calculations" data-lang-bn="দৈনন্দিন গণনার জন্য আপনার সর্বজনীন কেন্দ্র">Your All-in-One Hub for Everyday Calculations</h2>
+            <p data-lang-en="Welcome to **NexTool Hub**, your go-to destination for professional-grade calculators. We understand that in a fast-paced world, getting quick and accurate calculations for your daily needs is essential. From business finance to personal health, our collection of specialized calculators is designed to provide you with instant, reliable results. Our tools are built with simplicity and precision in mind, ensuring a seamless user experience whether you're on a desktop or a mobile device." data-lang-bn="নেক্সটুল হাবে আপনাকে স্বাগতম, যা পেশাদার মানের ক্যালকুলেটরের জন্য আপনার অন্যতম কেন্দ্র। আমরা বুঝি যে এই দ্রুতগতির বিশ্বে, আপনার দৈনন্দিন প্রয়োজনের জন্য দ্রুত এবং সঠিক গণনা পাওয়া কতটা জরুরি। ব্যবসার আর্থিক হিসাব থেকে শুরু করে ব্যক্তিগত স্বাস্থ্য পর্যন্ত, আমাদের বিশেষ ক্যালকুলেটরগুলির সংগ্রহ আপনাকে তাৎক্ষণিক, নির্ভরযোগ্য ফলাফল দেওয়ার জন্য ডিজাইন করা হয়েছে। আমাদের টুলগুলি সরলতা এবং নির্ভুলতার কথা মাথায় রেখে তৈরি করা হয়েছে, যা ডেস্কটপ বা মোবাইল ডিভাইসেও একটি সাবলীল ব্যবহার নিশ্চিত করে।">Welcome to **NexTool Hub**, your go-to destination for professional-grade calculators. We understand that in a fast-paced world, getting quick and accurate calculations for your daily needs is essential. From business finance to personal health, our collection of specialized calculators is designed to provide you with instant, reliable results. Our tools are built with simplicity and precision in mind, ensuring a seamless user experience whether you're on a desktop or a mobile device.</p>
+            
+            <h3 data-lang-en="What Makes Our Calculators Stand Out?" data-lang-bn="আমাদের ক্যালকুলেটরগুলি কেন অনন্য?">What Makes Our Calculators Stand Out?</h3>
+            <ul>
+                <li data-lang-en="**Profit Margin Calculator:** For every small business owner, understanding profit margins is key to success. Our calculator helps you instantly figure out your profit, margin, and markup, allowing you to make smarter pricing decisions." data-lang-bn="**প্রফিট মার্জিন ক্যালকুলেটর:** প্রতিটি ছোট ব্যবসার মালিকের জন্য, লাভের মার্জিন বোঝা সাফল্যের চাবিকাঠি। আমাদের ক্যালকুলেটর আপনাকে তাৎক্ষণিকভাবে আপনার লাভ, মার্জিন এবং মার্কআপ বের করতে সাহায্য করে, যা আপনাকে আরও বুদ্ধিমান মূল্যের সিদ্ধান্ত নিতে সাহায্য করে।"></li>
+                <li data-lang-en="**BMI Calculator:** Health is wealth. Our BMI Calculator provides an accurate assessment of your Body Mass Index, giving you a quick snapshot of your health status. It's an indispensable tool for anyone on a fitness journey." data-lang-bn="**BMI ক্যালকুলেটর:** স্বাস্থ্যই সম্পদ। আমাদের BMI ক্যালকুলেটর আপনার বডি মাস ইনডেক্স-এর সঠিক পরিমাপ দেয়, যা আপনার স্বাস্থ্যের একটি দ্রুত চিত্র তুলে ধরে। যারা স্বাস্থ্য সচেতন, তাদের জন্য এটি একটি অপরিহার্য টুল।"></li>
+                <li data-lang-en="**EMI Calculator:** Planning your finances has never been easier. Use our EMI Calculator to determine your monthly loan installments. This tool helps you budget effectively and manage your financial commitments without any hassle." data-lang-bn="**EMI ক্যালকুলেটর:** আপনার আর্থিক পরিকল্পনা করা এখন আরও সহজ। আমাদের EMI ক্যালকুলেটর ব্যবহার করে আপনার ঋণের মাসিক কিস্তি নির্ধারণ করুন। এই টুলটি আপনাকে কার্যকরভাবে বাজেট করতে এবং আপনার আর্থিক দায়বদ্ধতা ঝামেলামুক্তভাবে পরিচালনা করতে সহায়তা করে।"></li>
+            </ul>
+            <p data-lang-en="At **NexTool Hub**, we are committed to providing you with **free, reliable tools** that simplify your life. Whether you are a student, a professional, or a small business owner, our calculators are here to assist you. Explore our collection and start calculating with confidence!" data-lang-bn="**নেক্সটুল হাব**-এ, আমরা আপনাকে এমন **বিনামূল্যে, নির্ভরযোগ্য টুল** সরবরাহ করতে প্রতিশ্রুতিবদ্ধ যা আপনার জীবনকে সহজ করে তোলে। আপনি একজন ছাত্র, একজন পেশাদার, বা একজন ছোট ব্যবসার মালিক হোন না কেন, আমাদের ক্যালকুলেটরগুলি আপনাকে সাহায্য করার জন্য এখানে রয়েছে। আমাদের সংগ্রহটি অন্বেষণ করুন এবং আত্মবিশ্বাসের সাথে গণনা শুরু করুন!">At **NexTool Hub**, we are committed to providing you with **free, reliable tools** that simplify your life. Whether you are a student, a professional, or a small business owner, our calculators are here to assist you. Explore our collection and start calculating with confidence!</p>
+        </section>
+
+        <div class="ad-container desktop-ad">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '3107b60e8baa0d0e886adf12d55fbd7e',
+                    'format' : 'iframe',
+                    'height' : 90,
+                    'width' : 728,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
+        </div>
+
+        <div class="ad-container mobile-ad">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '02a9c12a5270a25efa5325c0e42ffc59',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
+        </div>
     </div>
 
     <footer class="footer">
@@ -182,13 +328,20 @@
                 }
 
                 elementsToTranslate.forEach(el => {
-                    // skip inputs/placeholders here — handled separately
                     if (el.hasAttribute('placeholder')) return;
-
                     const textContent = el.dataset[lang === 'en' ? 'langEn' : 'langBn'];
                     if (typeof textContent !== 'undefined') {
-                        // use innerHTML so embedded tags like <span> remain DOM elements
-                        el.innerHTML = textContent;
+                        const htmlContent = textContent.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                        el.innerHTML = htmlContent;
+                    }
+                });
+                
+                const liElements = document.querySelectorAll('.article-section li');
+                liElements.forEach(li => {
+                    const textContent = li.dataset[lang === 'en' ? 'langEn' : 'langBn'];
+                    if (textContent) {
+                        const htmlContent = textContent.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                        li.innerHTML = htmlContent;
                     }
                 });
 
@@ -237,7 +390,6 @@
                 const profitMargin = (sellingPrice === 0) ? 0 : (profitAmount / sellingPrice) * 100;
                 const markup = (cost === 0) ? 0 : (profitAmount / cost) * 100;
 
-                // Inject language-specific breakdown (ensures spans exist)
                 if (lang === 'en') {
                     profitResultContainer.querySelector('.result-breakdown').innerHTML =
                         `<p>Profit Amount: <span>₹${profitAmount.toFixed(2)}</span></p>
@@ -369,5 +521,10 @@
             });
         };
     </script>
+
+<script type='text/javascript' src='//pl27408564.profitableratecpm.com/6f/9e/55/6f9e557cf4f6d1ad34e52bf37ab2156a.js'></script>
+
+<script type='text/javascript' src='//pl27444202.profitableratecpm.com/f7/be/3d/f7be3da0a62cf03c9a315bdc6f0e403e.js'></script>
+    
 </body>
 </html>
