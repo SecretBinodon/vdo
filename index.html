@@ -57,6 +57,85 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
     <style>
+    
+    /* --- Spin & Win Section --- */
+.spin-and-win-section {
+    padding: 30px 20px;
+    background-color: var(--card-bg);
+    box-shadow: var(--shadow-light);
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.spin-and-win-section h2 {
+    margin-bottom: 20px;
+}
+
+.spin-content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    flex-wrap: wrap; 
+}
+
+.spin-button-btn {
+    background-color: var(--primary-color);
+    color: #fff;
+    font-weight: 700;
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    font-size: 1.4rem;
+    white-space: nowrap;
+}
+
+.spin-button-btn:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+}
+
+.spin-button-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.spin-wheel-container {
+    width: 100px;
+    height: 100px;
+}
+
+.spin-wheel {
+    width: 100%;
+    height: 100%;
+    animation: spin-360 4s linear infinite;
+}
+
+@keyframes spin-360 {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+@media (max-width: 600px) {
+    .spin-content-wrapper {
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        gap: 10px;
+    }
+
+    .spin-button-btn {
+        font-size: 1.2rem;
+        padding: 12px 20px;
+    }
+        }
+        
         /* --- Global Variables & Base Styles --- */
         :root {
             --primary-color: #4A90E2;
@@ -952,7 +1031,17 @@
         <section id="daily-offer-section" class="daily-offer-section filterable-section visible">
             <h2 class="on-scroll-animate" data-lang-en="Daily Offer" data-lang-bn="দিনের সেরা অফার">Daily Offer</h2>
             <div class="offer-cards-grid on-scroll-animate">
-
+                
+<section id="spin-and-win-section" class="spin-and-win-section filterable-section visible">
+    <h2 class="on-scroll-animate" data-lang-en="Test Your Luck: Spin & Win!" data-lang-bn="আপনার ভাগ্য পরীক্ষা করুন">Test Your Luck: Spin & Win!</h2>
+    <div class="spin-content-wrapper on-scroll-animate">
+        <a href="https://www.profitableratecpm.com/gpbenjxu?key=bebb9ec59e6fe86414605a44c4b0ad9f" class="spin-button-btn" data-lang-en="Spin to Win!" data-lang-bn="ভাগ্য পরীক্ষা করুন!">Spin to Win!</a>
+        <div class="spin-wheel-container">
+            <img src="https://github.com/NexToolHub/NexToolHub/blob/main/images/5336 11zon.png">
+        </div>
+    </div>
+</section>
+                
                 <div class="offer-card-wrapper">
                     <div class="offer-card" data-card-index="0" tabindex="0">
                         <div class="icon-wrapper">
@@ -1307,6 +1396,9 @@
 
             const sectionMap = {
                 'tools': 'tools-panel',
+
+ 'spin-and-win': 'spin-and-win-section', //
+                
                 'daily-offer': 'daily-offer-section',
                 'blog': 'blog-section',
                 'testimonials': 'testimonials-section',
