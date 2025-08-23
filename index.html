@@ -317,6 +317,103 @@
             margin: 20px auto;
             text-align: center;
         }
+        
+        
+        
+        
+        
+        
+        /* --- All Viral Package Link Section --- */
+.viral-package-section {
+    padding: 20px 0;
+    text-align: center;
+    background-color: var(--card-bg);
+}
+
+.viral-package-section h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+    color: var(--text-color);
+}
+
+.viral-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.viral-image-link {
+    width: 100%;
+    max-width: 1100px;
+}
+
+.viral-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+}
+
+.viral-text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1100px;
+}
+
+@media (min-width: 769px) {
+    .viral-text-container {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+}
+
+.viral-text {
+    font-size: 16px;
+    color: var(--secondary-text);
+    margin: 0;
+    text-align: center;
+    padding: 0 10px;
+}
+
+.checkout-btn {
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    border: none;
+    white-space: nowrap;
+}
+
+.checkout-btn:hover {
+    background-color: #2F6DB8;
+}
+
+.checkout-btn:active {
+    background-color: var(--accent-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translateY(1px);
+}
+
+
+
+        
+        
+        
 
         /* Show only on Desktop */
         @media (min-width: 769px) {
@@ -1013,6 +1110,7 @@
             <button class="filter-btn" data-lang-en="Blog" data-lang-bn="ব্লগ" data-filter="blog" aria-pressed="false">Blog</button>
             <button class="filter-btn" data-lang-en="Testimonials" data-lang-bn="সাক্ষ্য" data-filter="testimonials" aria-pressed="false">Testimonials</button>
             <button class="filter-btn" data-lang-en="Why Us?" data-lang-bn="কেন আমরা?" data-filter="why-us" aria-pressed="false">Why Us?</button>
+            <button class="filter-btn" data-lang-en="Viral Package" data-lang-bn="ভাইরাল প্যাকেজ" data-filter="viral-package" aria-pressed="false">Viral Package</button>
         </div>
 
         <section id="tools-panel" class="tools-panel filterable-section visible">
@@ -1252,6 +1350,26 @@
             </div>
         </section>
     </div>
+    
+    
+    
+    <section id="viral-package-section" class="viral-package-section filterable-section visible">
+    <h2 data-lang-en="All Viral Package Link" data-lang-bn="সব ভাইরাল প্যাকেজ লিংক">All Viral Package Link</h2>
+    <div class="viral-content-wrapper">
+        <a href="#" class="viral-image-link" id="viral-image-link">
+            <img src="https://via.placeholder.com/1600x900.png?text=16:9+Image+Goes+Here" alt="Viral Package Link Image" class="viral-image">
+        </a>
+        <div class="viral-text-container">
+            <p class="viral-text" data-lang-en="Check out the 'Check Out' button to get all the latest viral links." data-lang-bn="নিত্য নতুন সব ভাইরাল লিংক পেতে চেকআউট বাটনে ক্লিক করুন।">Check out the 'Check Out' button to get all the latest viral links.</p>
+            <a href="#" class="checkout-btn" id="checkout-btn" data-lang-en="Check Out" data-lang-bn="চেকআউট">Check Out</a>
+        </div>
+    </div>
+</section>
+
+    
+    
+    
+    
 
     <footer class="footer">
         <div class="footer-container">
@@ -1272,6 +1390,7 @@
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+        
             const langButtons = document.querySelectorAll('.lang-btn');
             const filterButtons = document.querySelectorAll('.filter-btn');
             const sections = document.querySelectorAll('.filterable-section');
@@ -1425,14 +1544,16 @@
                 }
                 offerIntervalId = setInterval(rotateOffers, 6000);
             }
-
+            
+            // এখানে sectionMap ভেরিয়েবলে নতুন সেকশনটি যোগ করা হয়েছে।
             const sectionMap = {
                 'tools': 'tools-panel',
-                'spin-and-win': 'spin-and-win-section', //
+                'spin-and-win': 'spin-and-win-section',
                 'daily-offer': 'daily-offer-section',
                 'blog': 'blog-section',
                 'testimonials': 'testimonials-section',
-                'why-us': 'why-choose-us-section'
+                'why-us': 'why-choose-us-section',
+                'viral-package': 'viral-package-section' // এই লাইনটি যোগ করা হয়েছে
             };
 
             function filterSections(filter) {
@@ -1565,6 +1686,45 @@
                 currentOfferSetIndex = 0;
                 rotateOffers();
                 startOfferRotation();
+
+                // নতুন ভাইরাল প্যাকেজ সেকশনের জন্য ভাষা পরিবর্তন
+                const viralSection = document.getElementById('viral-package-section');
+                if (viralSection) {
+                    const viralSectionData = {
+                        'viral-package-section': {
+                            en: "All Viral Package Link",
+                            bn: "সব ভাইরাল প্যাকেজ লিংক"
+                        }
+                    };
+                    
+                    const viralText = viralSection.querySelector('.viral-text');
+                    const checkoutBtn = viralSection.querySelector('.checkout-btn');
+                    
+                    const viralLinksData = {
+                        'viral-text': {
+                            en: "Check out the 'Check Out' button to get all the latest viral links.",
+                            bn: "নিত্য নতুন সব ভাইরাল লিংক পেতে চেকআউট বাটনে ক্লিক করুন।"
+                        },
+                        'checkout-btn': {
+                            en: "Check Out",
+                            bn: "চেকআউট"
+                        }
+                    };
+    
+                    function updateViralSection(lang) {
+                        const h2 = viralSection.querySelector('h2');
+                        if (h2) {
+                            h2.textContent = viralSectionData['viral-package-section'][lang];
+                        }
+                        if (viralText) {
+                            viralText.textContent = viralLinksData['viral-text'][lang];
+                        }
+                        if (checkoutBtn) {
+                            checkoutBtn.textContent = viralLinksData['checkout-btn'][lang];
+                        }
+                    }
+                    updateViralSection(lang);
+                }
             }
 
             function handleSearch() {
