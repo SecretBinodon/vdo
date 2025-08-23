@@ -58,7 +58,7 @@
 
     <style>
 
-    /* --- Spin & Win Section --- */
+/* --- Spin & Win Section --- */
 .spin-and-win-section {
     padding: 30px 20px;
     background-color: var(--card-bg);
@@ -123,6 +123,8 @@
         transform: rotate(360deg);
     }
 }
+
+/* --- Mobile View (600px and smaller) --- */
 @media (max-width: 600px) {
     .spin-content-wrapper {
         flex-wrap: nowrap;
@@ -136,24 +138,33 @@
     }
 }
 
-        
-
+/* --- Desktop View (601px and larger) --- */
 @media (min-width: 601px) {
     .spin-and-win-section {
         padding: 50px 80px;
     }
+    
+    .spin-and-win-section h2 {
+        font-size: 2.5rem;
+    }
+
     .spin-content-wrapper {
         gap: 100px;
     }
+
     .spin-button-btn {
         font-size: 2rem;
         padding: 20px 40px;
     }
+    
     .spin-wheel-container {
         width: 150px;
         height: 150px;
     }
 }
+
+
+
         
         
         /* --- Global Variables & Base Styles --- */
