@@ -57,154 +57,6 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
     <style>
-    
-    .hidden {
-        display: none;
-    }
-
-    /* --- All Viral Packages Section --- */
-.viral-packages-section {
-    padding: 30px 15px;
-    background-color: var(--background-color);
-    box-shadow: var(--shadow-light);
-    border-radius: var(--border-radius);
-    margin-bottom: 20px;
-}
-
-.viral-packages-section .container {
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
-.viral-packages-section .section-title {
-    text-align: center;
-    font-size: 2.5em;
-    font-weight: 700;
-    color: var(--text-color);
-    margin-bottom: 20px;
-}
-
-.viral-card {
-    background-color: var(--card-bg);
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.viral-card .image-wrapper {
-    width: 100%;
-    margin-bottom: 15px;
-}
-
-.viral-card .viral-image {
-    width: 100%;
-    height: auto;
-    display: block;
-    aspect-ratio: 16 / 9;
-    border-radius: 5px;
-}
-
-.viral-card .section-description {
-    font-size: 1.1em;
-    color: var(--secondary-text);
-    margin-bottom: 15px;
-    font-weight: normal;
-    text-align: left;
-}
-
-.viral-card .checkout-button {
-    display: inline-block;
-    padding: 12px 25px;
-    background-color: var(--green-color);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 16px;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border: none;
-    cursor: pointer;
-}
-
-.viral-card .checkout-button:hover {
-    background-color: #2F6DB8;
-}
-
-/* Mobile View Adjustments */
-@media (max-width: 768px) {
-    .viral-packages-section {
-        padding: 20px 10px;
-    }
-    .viral-packages-section .section-title {
-        font-size: 24px;
-        margin-bottom: 15px;
-    }
-    .viral-card .section-description {
-        font-size: 14px;
-    }
-    .viral-card .checkout-button {
-        font-size: 14px;
-        padding: 8px 15px;
-    }
-}
-
-/* New CSS for the viral section ad containers */
-.viral-ad-container-mobile {
-    display: none;
-    margin-top: 20px;
-    text-align: center;
-}
-
-.viral-ad-container-mobile iframe {
-    width: 100%;
-    max-width: 300px;
-}
-
-.viral-ad-container-desktop {
-    display: none;
-    margin-top: 20px;
-    text-align: center;
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-}
-.viral-ad-container-desktop iframe {
-    flex-grow: 1;
-    min-width: 300px;
-}
-
-
-/* Hide on desktop, show on mobile */
-@media (max-width: 768px) {
-    .viral-ad-container-mobile {
-        display: block;
-    }
-    .viral-ad-container-desktop {
-        display: none;
-    }
-}
-
-/* Hide on mobile, show on desktop */
-@media (min-width: 769px) {
-    .viral-ad-container-mobile {
-        display: none;
-    }
-    .viral-ad-container-desktop {
-        display: flex;
-    }
-}
-
-
-    
-
-
-
-
 
 /* --- Spin & Win Section --- */
 .spin-and-win-section {
@@ -1094,8 +946,8 @@
                     <i class="ri-moon-line"></i>
                 </button>
                 <div class="language-switcher">
-                    <button class="lang-btn active" data-lang="en" aria-label="Switch to English" aria-pressed="true">EN</button>
-                    <button class="lang-btn" data-lang="bn" aria-label="Switch to Bengali" aria-pressed="false">BN</button>
+                    <button class="lang-btn" data-lang="en" aria-label="Switch to English">EN</button>
+                    <button class="lang-btn" data-lang="bn" aria-label="Switch to Bengali">BN</button>
                 </div>
             </div>
         </header>
@@ -1157,12 +1009,10 @@
         <div class="filter-options">
             <button class="filter-btn all-btn active" data-lang-en="All" data-lang-bn="সব" data-filter="all" aria-pressed="true">All</button>
             <button class="filter-btn" data-lang-en="Your Tools" data-lang-bn="আপনার টুলস" data-filter="tools" aria-pressed="false">Your Tools</button>
-            <button class="filter-btn" data-lang-en="Spin & Win" data-lang-bn="স্পিন অ্যান্ড উইন" data-filter="spin-and-win" aria-pressed="false">Spin & Win</button>
             <button class="filter-btn" data-lang-en="Daily Offer" data-lang-bn="দিনের সেরা অফার" data-filter="daily-offer" aria-pressed="false">Daily Offer</button>
             <button class="filter-btn" data-lang-en="Blog" data-lang-bn="ব্লগ" data-filter="blog" aria-pressed="false">Blog</button>
             <button class="filter-btn" data-lang-en="Testimonials" data-lang-bn="সাক্ষ্য" data-filter="testimonials" aria-pressed="false">Testimonials</button>
             <button class="filter-btn" data-lang-en="Why Us?" data-lang-bn="কেন আমরা?" data-filter="why-us" aria-pressed="false">Why Us?</button>
-            <button class="filter-btn" data-lang-en="Viral Packages" data-lang-bn="ভাইরাল প্যাকেজ" data-filter="viral-packages" aria-pressed="false">Viral Packages</button>
         </div>
 
         <section id="tools-panel" class="tools-panel filterable-section visible">
@@ -1233,7 +1083,18 @@
                         <p data-lang-en="Earn $100 daily from home." data-lang-bn="ঘরে বসে রোজ $100 আয় করুন।">Earn $100 daily from home.</p>
                         <a href="" class="join-offer-btn" data-lang-en="Join Offer" data-lang-bn="অফারে যোগ দিন" target="_blank" rel="noopener noreferrer">Join Offer</a>
                     </div>
-                    
+                    <div class="offer-ad-container">
+                        <script type="text/javascript">
+                            atOptions = {
+                                'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                                'format' : 'iframe',
+                                'height' : 250,
+                                'width' : 300,
+                                'params' : {}
+                            };
+                        </script>
+                        <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
+                    </div>
                 </div>
 
                 <div class="offer-card-wrapper">
@@ -1245,7 +1106,18 @@
                         <p data-lang-en="Make money with simple online tasks." data-lang-bn="সহজ অনলাইন কাজ করে টাকা আয় করুন।">Make money with simple online tasks.</p>
                         <a href="" class="join-offer-btn" data-lang-en="Join Offer" data-lang-bn="অফারে যোগ দিন" target="_blank" rel="noopener noreferrer">Join Offer</a>
                     </div>
-                    
+                    <div class="offer-ad-container">
+                        <script type="text/javascript">
+                            atOptions = {
+                                'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                                'format' : 'iframe',
+                                'height' : 250,
+                                'width' : 300,
+                                'params' : {}
+                            };
+                        </script>
+                        <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
+                    </div>
                 </div>
                 
                 <div class="ad-container-mobile">
@@ -1269,7 +1141,18 @@
                         <p data-lang-en="Start your online business with us." data-lang-bn="আমাদের সাথে আপনার অনলাইন ব্যবসা শুরু করুন।">Start your online business with us.</p>
                         <a href="" class="join-offer-btn" data-lang-en="Join Offer" data-lang-bn="অফারে যোগ দিন" target="_blank" rel="noopener noreferrer">Join Offer</a>
                     </div>
-                    
+                    <div class="offer-ad-container">
+                        <script type="text/javascript">
+                            atOptions = {
+                                'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                                'format' : 'iframe',
+                                'height' : 250,
+                                'width' : 300,
+                                'params' : {}
+                            };
+                        </script>
+                        <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1343,68 +1226,32 @@
                     <p>All our tools are free to use without any hidden costs or subscriptions.</p>
                 </div>
             </div>
-            
+            <div class="ad-container-mobile">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '02a9c12a5270a25efa5325c0e42ffc59',
+                        'format' : 'iframe',
+                        'height' : 50,
+                        'width' : 320,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
+            </div>
+            <div class="ad-container-desktop">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '3107b60e8baa0d0e886adf12d55fbd7e',
+                        'format' : 'iframe',
+                        'height' : 90,
+                        'width' : 728,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
+            </div>
         </section>
     </div>
-
-<section class="viral-packages-section filterable-section visible">
-    <div class="container">
-        <h2 class="section-title" data-lang-en="All Viral Packages" data-lang-bn="অল ভাইরাল প্যাকেজ">All Viral Packages</h2>
-        <div class="viral-card">
-            <div class="image-wrapper">
-                <img src="https://via.placeholder.com/1600x900" alt="Viral Packages Image" class="viral-image">
-            </div>
-            <p class="section-description">
-                <span class="lang-en hidden">To get all the latest viral links, click on the checkout button.</span>
-                <span class="lang-bn">নিত্য নতুন সব ভাইরাল লিংক পেতে চেক আউট বাটনে ক্লিক করুন।</span>
-            </p>
-            <a href="#" class="checkout-button">
-                <span class="lang-en hidden">Check Out</span>
-                <span class="lang-bn">চেক আউট</span>
-            </a>
-        </div>
-        
-        <div class="viral-ad-container-mobile">
-            <script type="text/javascript">
-                atOptions = {
-                    'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
-                    'format' : 'iframe',
-                    'height' : 250,
-                    'width' : 300,
-                    'params' : {}
-                };
-            </script>
-            <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
-        </div>
-
-        <div class="viral-ad-container-desktop">
-            <div style="width: 100%;">
-                <script type="text/javascript">
-                    atOptions = {
-                        'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
-                        'format' : 'iframe',
-                        'height' : 250,
-                        'width' : 300,
-                        'params' : {}
-                    };
-                </script>
-                <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
-            </div>
-            <div style="width: 100%;">
-                <script type="text/javascript">
-                    atOptions = {
-                        'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
-                        'format' : 'iframe',
-                        'height' : 250,
-                        'width' : 300,
-                        'params' : {}
-                    };
-                </script>
-                <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
-            </div>
-        </div>
-    </div>
-</section>
 
     <footer class="footer">
         <div class="footer-container">
@@ -1581,12 +1428,11 @@
 
             const sectionMap = {
                 'tools': 'tools-panel',
-                'spin-and-win': 'spin-and-win-section',
+                'spin-and-win': 'spin-and-win-section', //
                 'daily-offer': 'daily-offer-section',
                 'blog': 'blog-section',
                 'testimonials': 'testimonials-section',
-                'why-us': 'why-choose-us-section',
-                'viral-packages': 'viral-packages-section'
+                'why-us': 'why-choose-us-section'
             };
 
             function filterSections(filter) {
@@ -1712,16 +1558,6 @@
                 });
 
 
-                const langSpecificElements = document.querySelectorAll('.lang-en, .lang-bn');
-                langSpecificElements.forEach(el => {
-                    if (el.classList.contains(`lang-${lang}`)) {
-                        el.classList.remove('hidden');
-                    } else {
-                        el.classList.add('hidden');
-                    }
-                });
-
-
                 currentTestimonialIndex = 0;
                 updateTestimonials(lang);
                 startTestimonialRotation();
@@ -1809,6 +1645,9 @@
         });
     </script>
 
+<script type='text/javascript' src='//pl27444202.profitableratecpm.com/f7/be/3d/f7be3da0a62cf03c9a315bdc6f0e403e.js'></script>
+    
+<script type='text/javascript' src='//pl27408564.profitableratecpm.com/6f/9e/55/6f9e557cf4f6d1ad34e52bf37ab2156a.js'></script>
     
 </body>
 </html>
