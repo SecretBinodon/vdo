@@ -55,35 +55,30 @@
 
         /* Main content container */
         .main-content {
-            /* flex-grow: 1;  <-- এই লাইনটি সরানো হয়েছে */
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 5px; /* Reduced padding for less space on all devices */
             box-sizing: border-box;
+            width: 100%;
         }
 
         /* Card and button styles */
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-
         .image-card {
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            width: 350px;
+            width: 100%;
+            max-width: 600px;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
             position: relative;
+            margin-bottom: 5px; /* Reduced gap between cards for all devices */
         }
-
+        
         .image-card img {
             width: 100%;
             height: auto;
@@ -206,9 +201,6 @@
             .header p {
                 font-size: 0.75em;
             }
-            .image-card {
-                width: 100%;
-            }
         }
     </style>
 </head>
@@ -220,32 +212,58 @@
             কিন্তু রাগ করবেন না আমার জন্য একটু বাড়তি 20 সেকেন্ড সময় দিবেন। এইসব ম্যানেজ করতে আমারও তো অনেক অনেক অনেক সময় ব্যয় করা লাগে একটু সময় তো দিতেই পারেন। "ধন্যবাদ" ইনজয় করুন!! 🥵
         </p>
     </div>
-
+    
     <div class="main-content">
-        <div class="card-container">
-            <div class="image-card" data-card-id="1">
-                <img class="img-fluid" src="https://raw.githubusercontent.com/NexToolHub/NexToolHub/refs/heads/main/images/Viral%20Link.jpg" alt="ইমেজ ১">
-                <div class="card-content">
-                    <p class="instruction">আনলক বাটনে ক্লিক করুন এবং নতুন ট্যাবে 20 সেকেন্ড অপেক্ষা করুন।</p>
-                    <div class="button-container">
-                        <button class="unlock-btn" onclick="startUnlockProcess('1', 'https://www.profitableratecpm.com/gpbenjxu?key=bebb9ec59e6fe86414605a44c4b0ad9f')">
-                            <i class="fas fa-lock button-icon" id="lock-icon-1"></i>আনলক করুন
-                        </button>
-                        <button class="download-btn" disabled>ডাউনলোড</button>
-                    </div>
+        <div class="image-card" data-card-id="3">
+            <img class="img-fluid" src="https://raw.githubusercontent.com/NexToolHub/NexToolHub/refs/heads/main/images/Viral%20Link.jpg" alt="ইমেজ ৩">
+            <div class="card-content">
+                <p class="instruction">আনলক বাটনে ক্লিক করুন এবং নতুন ট্যাবে 20 সেকেন্ড অপেক্ষা করুন।</p>
+                <div class="button-container">
+                    <button class="unlock-btn" onclick="startUnlockProcess('3', 'https://www.profitableratecpm.com/gpbenjxu?key=bebb9ec59e6fe86414605a44c4b0ad9f')">
+                        <i class="fas fa-lock button-icon" id="lock-icon-3"></i>আনলক করুন
+                    </button>
+                    <button class="download-btn" disabled>ডাউনলোড</button>
                 </div>
             </div>
+        </div>
     
-            <div class="image-card" data-card-id="2">
-                <img class="img-fluid" src="https://via.placeholder.com/1600x900" alt="ইমেজ ২">
-                <div class="card-content">
-                    <p class="instruction">আনলক বাটনে ক্লিক করুন এবং নতুন ট্যাবে 20 সেকেন্ড অপেক্ষা করুন।</p>
-                    <div class="button-container">
-                        <button class="unlock-btn" onclick="startUnlockProcess('2', 'https://www.profitableratecpm.com/gpbenjxu?key=bebb9ec59e6fe86414605a44c4b0ad9f')">
-                            <i class="fas fa-lock button-icon" id="lock-icon-2"></i>আনলক করুন
-                        </button>
-                        <button class="download-btn" disabled>ডাউনলোড</button>
-                    </div>
+        <div class="image-card" data-card-id="4">
+            <img class="img-fluid" src="https://via.placeholder.com/1600x900" alt="ইমেজ ৪">
+            <div class="card-content">
+                <p class="instruction">আনলক বাটনে ক্লিক করুন এবং নতুন ট্যাবে 20 সেকেন্ড অপেক্ষা করুন।</p>
+                <div class="button-container">
+                    <button class="unlock-btn" onclick="startUnlockProcess('4', 'https://www.profitableratecpm.com/gpbenjxu?key=bebb9ec59e6fe86414605a44c4b0ad9f')">
+                        <i class="fas fa-lock button-icon" id="lock-icon-4"></i>আনলক করুন
+                    </button>
+                    <button class="download-btn" disabled>ডাউনলোড</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="image-card" data-card-id="1">
+            <img class="img-fluid" src="https://raw.githubusercontent.com/NexToolHub/NexToolHub/refs/heads/main/images/Viral%20Link.jpg" alt="ইমেজ ১">
+            <div class="card-content">
+                <p class="instruction">আনলক বাটনে ক্লিক করুন এবং নতুন ট্যাবে 20 সেকেন্ড অপেক্ষা করুন।</p>
+                <div class="button-container">
+                    <button class="unlock-btn" onclick="startUnlockProcess('1', 'https://www.profitableratecpm.com/gpbenjxu?key=bebb9ec59e6fe86414605a44c4b0ad9f')">
+                        <i class="fas fa-lock button-icon" id="lock-icon-1"></i>আনলক করুন
+                    </button>
+                    <button class="download-btn" disabled>ডাউনলোড</button>
+                </div>
+            </div>
+        </div>
+    
+        <div class="image-card" data-card-id="2">
+            <img class="img-fluid" src="https://via.placeholder.com/1600x900" alt="ইমেজ ২">
+            <div class="card-content">
+                <p class="instruction">আনলক বাটনে ক্লিক করুন এবং নতুন ট্যাবে 20 সেকেন্ড অপেক্ষা করুন।</p>
+                <div class="button-container">
+                    <button class="unlock-btn" onclick="startUnlockProcess('2', 'https://www.profitableratecpm.com/gpbenjxu?key=bebb9ec59e6fe86414605a44c4b0ad9f')">
+                        <i class="fas fa-lock button-icon" id="lock-icon-2"></i>আনলক করুন
+                    </button>
+                    <button class="download-btn" disabled>ডাউনলোড</button>
                 </div>
             </div>
         </div>
@@ -258,7 +276,9 @@
     <script>
         const downloadLinks = {
             '1': 'https://example.com/download1.zip',
-            '2': 'https://example.com/download2.zip'
+            '2': 'https://example.com/download2.zip',
+            '3': 'https://example.com/download3.zip',
+            '4': 'https://example.com/download4.zip'
         };
 
         function startUnlockProcess(cardId, redirectLink) {
