@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ইমেজ এবং ডাউনলোড সিস্টেম</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    
     <script>
         window.onpageshow = function(event) {
             if (event.persisted) {
@@ -15,19 +15,56 @@
     </script>
     
     <style>
-        /* কার্ড এবং বাটনগুলোর জন্য স্টাইল */
+        /* Base styles */
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             background-color: #f0f0f0;
             margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header section styles */
+        .header {
+            text-align: center;
+            padding: 15px 10px;
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .header h1 {
+            font-size: 1.5em;
+            margin: 0 0 5px 0;
+            font-weight: bold;
+            color: #333;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .header p {
+            font-size: 0.85em;
+            color: #555;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        /* Main content container */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
             box-sizing: border-box;
         }
 
+        /* Card and button styles */
         .card-container {
             display: flex;
             flex-wrap: wrap;
@@ -81,9 +118,9 @@
             transition: background-color 0.3s, opacity 0.3s;
         }
         
-        /* আনলক বাটনের প্রাথমিক স্টাইল */
+        /* Unlock button styles */
         .unlock-btn {
-            background-color: #007bff; /* নীল রঙ */
+            background-color: #007bff;
             color: white;
         }
 
@@ -91,7 +128,7 @@
             background-color: #0056b3;
         }
 
-        /* ডাউনলোড বাটনের প্রাথমিক স্টাইল (নিষ্ক্রিয় অবস্থায়) */
+        /* Disabled download button styles */
         .download-btn {
             background-color: #ccc;
             cursor: not-allowed;
@@ -99,24 +136,22 @@
             color: white;
         }
         
-        /* আনলক বাটন যখন সচল হবে */
+        /* Unlocked button states */
         .unlock-btn.unlocked {
-            background-color: #28a745; /* সবুজ রঙ */
+            background-color: #28a745;
         }
 
-        /* ডাউনলোড বাটন যখন সচল হবে (ক্লিক করার আগে) */
         .download-btn.unlocked-blue {
-            background-color: #007bff; /* নীল রঙ */
+            background-color: #007bff;
             cursor: pointer;
             opacity: 1;
         }
 
-        /* ডাউনলোড বাটন যখন ক্লিক করা হবে */
         .download-btn.unlocked-blue:active {
-            background-color: #28a745; /* সবুজ রঙ */
+            background-color: #28a745;
         }
         
-        /* কার্ডের উপরের টাইমার overlay-এর স্টাইল */
+        /* Timer overlay styles */
         .card-timer-overlay {
             position: absolute;
             top: 0;
@@ -149,40 +184,78 @@
         .button-icon {
             margin-right: 5px;
         }
+        
+        /* Footer styles */
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+            margin-top: auto;
+            width: 100%;
+            box-sizing: border-box;
+            color: #555;
+            font-size: 0.9em;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.2em;
+            }
+            .header p {
+                font-size: 0.75em;
+            }
+            .image-card {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div class="card-container">
-        <div class="image-card" data-card-id="1">
-            <img class="img-fluid" src="https://raw.githubusercontent.com/NexToolHub/NexToolHub/refs/heads/main/images/Viral%20Link.jpg" alt="ইমেজ ১">
-            <div class="card-content">
-                <p class="instruction">আনলক বাটনে ক্লিক করুন এবং নতুন ট্যাবে 20 সেকেন্ড অপেক্ষা করুন।</p>
-                <div class="button-container">
-                    <button class="unlock-btn" onclick="startUnlockProcess('1', 'https://www.profitableratecpm.com/gpbenjxu?key=bebb9ec59e6fe86414605a44c4b0ad9f')">
-                        <i class="fas fa-lock button-icon" id="lock-icon-1"></i>আনলক করুন
-                    </button>
-                    <button class="download-btn" disabled>ডাউনলোড</button>
+    <div class="header">
+        <h1>সাদা কালো দুনিয়ায় তোমাকে স্বাগতম:</h1>
+        <p>
+            এই প্যানেলে আপনি বিভিন্ন ধরনের ইমেজ এবং ফাইল পাবেন। প্রতিটি ফাইলের জন্য প্রথমে আনলক বাটনে ক্লিক করে একটি নির্দিষ্ট সময় অপেক্ষা করতে হবে। এরপর ডাউনলোড বাটনটি সচল হয়ে যাবে এবং আপনি ফাইলটি ডাউনলোড করতে পারবেন।
+        </p>
+    </div>
+
+    <div class="main-content">
+        <div class="card-container">
+            <div class="image-card" data-card-id="1">
+                <img class="img-fluid" src="https://raw.githubusercontent.com/NexToolHub/NexToolHub/refs/heads/main/images/Viral%20Link.jpg" alt="ইমেজ ১">
+                <div class="card-content">
+                    <p class="instruction">আনলক বাটনে ক্লিক করুন এবং নতুন ট্যাবে 20 সেকেন্ড অপেক্ষা করুন।</p>
+                    <div class="button-container">
+                        <button class="unlock-btn" onclick="startUnlockProcess('1', 'https://www.profitableratecpm.com/gpbenjxu?key=bebb9ec59e6fe86414605a44c4b0ad9f')">
+                            <i class="fas fa-lock button-icon" id="lock-icon-1"></i>আনলক করুন
+                        </button>
+                        <button class="download-btn" disabled>ডাউনলোড</button>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="image-card" data-card-id="2">
-            <img class="img-fluid" src="https://via.placeholder.com/1600x900" alt="ইমেজ ২">
-            <div class="card-content">
-                <p class="instruction">আনলক বাটনে ক্লিক করুন এবং নতুন ট্যাবে 20 সেকেন্ড অপেক্ষা করুন।</p>
-                <div class="button-container">
-                    <button class="unlock-btn" onclick="startUnlockProcess('2', 'https://www.profitableratecpm.com/gpbenjxu?key=bebb9ec59e6fe86414605a44c4b0ad9f')">
-                        <i class="fas fa-lock button-icon" id="lock-icon-2"></i>আনলক করুন
-                    </button>
-                    <button class="download-btn" disabled>ডাউনলোড</button>
+    
+            <div class="image-card" data-card-id="2">
+                <img class="img-fluid" src="https://via.placeholder.com/1600x900" alt="ইমেজ ২">
+                <div class="card-content">
+                    <p class="instruction">আনলক বাটনে ক্লিক করুন এবং নতুন ট্যাবে 20 সেকেন্ড অপেক্ষা করুন।</p>
+                    <div class="button-container">
+                        <button class="unlock-btn" onclick="startUnlockProcess('2', 'https://www.profitableratecpm.com/gpbenjxu?key=bebb9ec59e6fe86414605a44c4b0ad9f')">
+                            <i class="fas fa-lock button-icon" id="lock-icon-2"></i>আনলক করুন
+                        </button>
+                        <button class="download-btn" disabled>ডাউনলোড</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="footer">
+        <p>Copyright © 2025 NexTool Hub. All rights reserved.</p>
+    </div>
     
     <script>
-        // এখানে আপনার ডাউনলোডের লিংকগুলো সেট করুন
         const downloadLinks = {
             '1': 'https://example.com/download1.zip',
             '2': 'https://example.com/download2.zip'
@@ -194,14 +267,11 @@
             const unlockBtn = card.querySelector('.unlock-btn');
             const lockIcon = card.querySelector('.button-icon');
             
-            // আনলক বাটনে ডাবল-ক্লিক প্রতিরোধ করা
             if (unlockBtn.disabled) return;
             unlockBtn.disabled = true;
 
-            // নতুন ট্যাব খোলা
             window.open(redirectLink, '_blank');
             
-            // টাইমার overlay তৈরি এবং যোগ করা
             const timerOverlay = document.createElement('div');
             timerOverlay.className = 'card-timer-overlay';
             timerOverlay.innerHTML = `<p>ডাউনলোড বাটনটি সচল হচ্ছে।</p><p>অনুগ্রহ করে অপেক্ষা করুন:</p><span id="timer-text">20</span>`;
@@ -216,15 +286,13 @@
 
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
-                    card.removeChild(timerOverlay); // overlay সরিয়ে ফেলা
+                    card.removeChild(timerOverlay);
 
-                    // বাটন সচল করা এবং রঙ পরিবর্তন
                     downloadBtn.disabled = false;
                     downloadBtn.classList.add('unlocked-blue');
                     
                     unlockBtn.classList.add('unlocked');
                     
-                    // আনলক আইকন পরিবর্তন
                     lockIcon.classList.remove('fa-lock');
                     lockIcon.classList.add('fa-unlock');
                     
