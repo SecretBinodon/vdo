@@ -6,14 +6,6 @@
     <title>ইমেজ এবং ডাউনলোড সিস্টেম</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <script>
-        window.onpageshow = function(event) {
-            if (event.persisted) {
-                window.location.reload();
-            }
-        };
-    </script>
-    
     <style>
         /* Base styles */
         body {
@@ -66,7 +58,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 5px; /* Reduced padding for less space on all devices */
+            padding: 5px;
             box-sizing: border-box;
             width: 100%;
         }
@@ -83,7 +75,7 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            margin-bottom: 5px; /* Reduced gap between cards for all devices */
+            margin-bottom: 5px;
         }
         
         .image-card img {
@@ -148,8 +140,9 @@
             cursor: pointer;
             opacity: 1;
         }
-
-        .download-btn.unlocked-blue:active {
+        
+        /* Download button color change on click */
+        .download-btn.unlocked-blue.clicked {
             background-color: #28a745;
         }
         
@@ -239,9 +232,6 @@
         <script type="text/javascript"> 	atOptions = { 		'key' : '02a9c12a5270a25efa5325c0e42ffc59', 		'format' : 'iframe', 		'height' : 50, 		'width' : 320, 		'params' : {} 	}; </script> <script type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
     </div>
 
-
-
-    
     <div class="main-content">
         <div class="image-card" data-card-id="3">
             <img class="img-fluid" src="https://raw.githubusercontent.com/nth-link/NTH-link/refs/heads/main/images/4.jpg" alt="ইমেজ ৩">
@@ -261,16 +251,14 @@
             <div class="card-content">
                 <p class="instruction">আনলক বাটনে ক্লিক করুন এবং নতুন ট্যাবে 20 সেকেন্ড অপেক্ষা করুন।</p>
                 <div class="button-container">
-                    <button class="unlock-btn" onclick="startUnlockProcess('4', 'https://www.profitableratecpm.com/gpbenjxu?key=bebb9ec59e6fe86414605a44c4b0ad9f')">
+                    <button class="unlock-btn" onclick="startUnlockProcess('4', 'https://www.profitableratecpm.com/gpbenjxu?key=bebb9ec59e6fe864144605a44c4b0ad9f')">
                         <i class="fas fa-lock button-icon" id="lock-icon-4"></i>আনলক করুন
                     </button>
                     <button class="download-btn" disabled>ডাউনলোড</button>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="main-content">
         <div class="image-card" data-card-id="1">
             <img class="img-fluid" src="https://raw.githubusercontent.com/nth-link/NTH-link/refs/heads/main/images/2.jpg" alt="ইমেজ ১">
             <div class="card-content">
@@ -346,6 +334,7 @@
                     lockIcon.classList.add('fa-unlock');
                     
                     downloadBtn.onclick = () => {
+                        downloadBtn.classList.add('clicked');
                         window.location.href = downloadLinks[cardId];
                     };
                 }
@@ -354,4 +343,3 @@
     </script>
 </body>
     </html>
-    
