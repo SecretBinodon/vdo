@@ -52,6 +52,13 @@
             line-height: 1.4;
             margin: 0;
         }
+        
+        /* Ad container styles */
+        .ad-container {
+            text-align: center;
+            padding: 5px 0;
+            margin: 5px 0;
+        }
 
         /* Main content container */
         .main-content {
@@ -201,6 +208,17 @@
             .header p {
                 font-size: 0.75em;
             }
+            /* Hide desktop ad on mobile */
+            .desktop-ad {
+                display: none;
+            }
+        }
+        
+        @media (min-width: 601px) {
+            /* Hide mobile ad on desktop */
+            .mobile-ad {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -212,6 +230,17 @@
             কিন্তু রাগ করবেন না আমার জন্য একটু বাড়তি 20 সেকেন্ড সময় দিবেন। এইসব ম্যানেজ করতে আমারও তো অনেক অনেক অনেক সময় ব্যয় করা লাগে একটু সময় তো দিতেই পারেন। "ধন্যবাদ" ইনজয় করুন!! 🥵
         </p>
     </div>
+
+    <div class="ad-container desktop-ad">
+        <script type="text/javascript"> 	atOptions = { 		'key' : '3107b60e8baa0d0e886adf12d55fbd7e', 		'format' : 'iframe', 		'height' : 90, 		'width' : 728, 		'params' : {} 	}; </script> <script type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
+    </div>
+
+    <div class="ad-container mobile-ad">
+        <script type="text/javascript"> 	atOptions = { 		'key' : '02a9c12a5270a25efa5325c0e42ffc59', 		'format' : 'iframe', 		'height' : 50, 		'width' : 320, 		'params' : {} 	}; </script> <script type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
+    </div>
+
+
+
     
     <div class="main-content">
         <div class="image-card" data-card-id="3">
@@ -324,4 +353,5 @@
         }
     </script>
 </body>
-</html>
+    </html>
+    
