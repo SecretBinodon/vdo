@@ -3,346 +3,305 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ইমেজ এবং ডাউনলোড সিস্টেম</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
+    <title>Afrin Viral Video Link</title>
     <style>
-        /* Base styles */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            font-family: sans-serif;
+            background-color: #f0f2f5;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
         }
 
-        /* Header section styles */
+        /* হেডার সেকশনের স্টাইল */
         .header {
+            background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+            color: #fff;
             text-align: center;
-            padding: 15px 10px;
-            background-color: #fff;
-            border-bottom: 1px solid #ddd;
-            width: 100%;
-            box-sizing: border-box;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* এখানে margin-bottom: 20px; অংশটি সরিয়ে দেওয়া হয়েছে */
         }
-
+        
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
         .header h1 {
-            font-size: 1.5em;
-            margin: 0 0 5px 0;
-            font-weight: bold;
-            color: #333;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            font-size: 24px;
+            margin: 0;
+            margin-bottom: 10px;
         }
-
+        
         .header p {
-            font-size: 0.85em;
-            color: #555;
-            line-height: 1.4;
+            font-size: 16px;
             margin: 0;
         }
-        
-        /* Ad container styles */
+
+        /* অ্যাড সেকশনের জন্য নতুন স্টাইল */
         .ad-container {
             text-align: center;
-            padding: 5px 0;
-            margin: 5px 0;
+            /* এখন শুধু margin-top যোগ করা হয়েছে */
+            margin: 5px 0 20px; 
         }
 
-        /* Main content container */
-        .main-content {
-            flex-grow: 1;
+        /* অ্যাডের ভিজিবিলিটি */
+        .mobile-ad { display: none; }
+        .desktop-ad { display: none; }
+
+        .container {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 5px;
-            box-sizing: border-box;
-            width: 100%;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        /* Card and button styles */
-        .image-card {
+        .card {
             background-color: #fff;
-            border-radius: 8px;
+            border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            width: 100%;
-            max-width: 600px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            margin-bottom: 5px;
+            flex-grow: 1; 
+            flex-shrink: 1;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.6s forwards;
         }
         
-        .image-card img {
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+
+        .card-image-container {
             width: 100%;
-            height: auto;
-            display: block;
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .card-title {
+            font-size: 18px;
+            color: #333;
+            margin: 0 0 10px;
+        }
+        
+        .task-button {
+            background-color: #ff5e3a;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        /* ডেক্সটপ ভিউতে পরিবর্তন */
+        @media (min-width: 768px) {
+            .card {
+                flex-basis: calc(50% - 15px);
+            }
+            .desktop-ad { display: block; } /* ডেস্কটপে অ্যাড দেখাবে */
+        }
+        
+        /* মোবাইল ভিউতে পরিবর্তন */
+        @media (max-width: 767px) {
+             .header h1 {
+                font-size: 20px;
+            }
+            .header p {
+                font-size: 14px;
+            }
+            .container {
+                gap: 10px;
+            }
+            .card {
+                flex-basis: calc(50% - 10px);
+            }
+            .card-image-container {
+                height: 120px;
+            }
+            .card-title {
+                font-size: 14px;
+            }
+            .task-button {
+                font-size: 12px;
+                padding: 8px 16px;
+            }
+            .mobile-ad { display: block; } /* মোবাইলে অ্যাড দেখাবে */
+        }
+
+        .card-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .card-content {
-            padding: 10px;
-            text-align: center;
+            padding: 15px;
         }
 
-        .instruction {
-            font-size: 13px;
-            color: #555;
-            margin-bottom: 10px;
+        .task-button:hover {
+            background-color: #e55232;
         }
 
-        .button-container {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .button-container button {
-            flex-grow: 1;
-            padding: 10px 15px;
-            font-size: 14px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, opacity 0.3s;
-        }
-        
-        /* Unlock button styles */
-        .unlock-btn {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .unlock-btn:hover {
-            background-color: #0056b3;
-        }
-
-        /* Disabled download button styles */
-        .download-btn {
-            background-color: #ccc;
-            cursor: not-allowed;
-            opacity: 0.5;
-            color: white;
-        }
-        
-        /* Unlocked button states */
-        .unlock-btn.unlocked {
+        .task-completed {
             background-color: #28a745;
         }
 
-        .download-btn.unlocked-blue {
-            background-color: #007bff;
-            cursor: pointer;
-            opacity: 1;
-        }
-        
-        /* Download button color change on click */
-        .download-btn.unlocked-blue.clicked {
-            background-color: #28a745;
-        }
-        
-        /* Timer overlay styles */
-        .card-timer-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(3px);
-            animation: fadeIn 0.5s;
-            cursor: not-allowed;
-        }
-
-        .card-timer-overlay p {
-            margin: 0;
-            font-size: 16px;
-        }
-
-        .card-timer-overlay #timer-text {
-            font-size: 3em;
-            font-weight: bold;
-            color: #fff;
-            margin-top: 10px;
-        }
-
-        .button-icon {
-            margin-right: 5px;
-        }
-        
-        /* Footer styles */
-        .footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #fff;
-            border-top: 1px solid #ddd;
-            margin-top: auto;
-            width: 100%;
-            box-sizing: border-box;
-            color: #555;
-            font-size: 0.9em;
-        }
-        
-        /* Responsive styles */
-        @media (max-width: 600px) {
-            .header h1 {
-                font-size: 1.2em;
-            }
-            .header p {
-                font-size: 0.75em;
-            }
-            /* Hide desktop ad on mobile */
-            .desktop-ad {
-                display: none;
-            }
-        }
-        
-        @media (min-width: 601px) {
-            /* Hide mobile ad on desktop */
-            .mobile-ad {
-                display: none;
-            }
+        .task-completed:hover {
+            background-color: #218838;
         }
     </style>
 </head>
 <body>
-
     <div class="header">
-        <h1>সাদা কালো দুনিয়ায় তোমাকে স্বাগতম:</h1>
-        <p>
-            কিন্তু রাগ করবেন না আমার জন্য একটু বাড়তি 20 সেকেন্ড সময় দিবেন। এইসব ম্যানেজ করতে আমারও তো অনেক অনেক অনেক সময় ব্যয় করা লাগে একটু সময় তো দিতেই পারেন। "ধন্যবাদ" ইনজয় করুন!! 🥵
-        </p>
+        <div class="header-content">
+            <h1>মাত্র ৫টি অ্যাড ভিজিট করে ভিডিওটি দেখুন!</h1>
+            <p>প্রতিটি ভিজিট মাত্র ২-৩ সেকেন্ডের। টাস্ক সম্পূর্ণ করে আপনি সরাসরি ভিডিওতে পৌঁছে যাবেন। এই ছোট্ট সীমাবদ্ধতার জন্য আমি ক্ষমাপ্রাপ্তি-☹️ কিন্তু কেন সীমাবদ্ধতা আপনি একটু ভাবলেই পেয়ে যাবেন!</p>
+        </div>
     </div>
 
     <div class="ad-container desktop-ad">
-        <script type="text/javascript"> 	atOptions = { 		'key' : '3107b60e8baa0d0e886adf12d55fbd7e', 		'format' : 'iframe', 		'height' : 90, 		'width' : 728, 		'params' : {} 	}; </script> <script type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
+        <script type="text/javascript">
+            atOptions = {
+                'key' : '3107b60e8baa0d0e886adf12d55fbd7e',
+                'format' : 'iframe',
+                'height' : 90,
+                'width' : 728,
+                'params' : {}
+            };
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
     </div>
 
     <div class="ad-container mobile-ad">
-        <script type="text/javascript"> 	atOptions = { 		'key' : '02a9c12a5270a25efa5325c0e42ffc59', 		'format' : 'iframe', 		'height' : 50, 		'width' : 320, 		'params' : {} 	}; </script> <script type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
+        <script type="text/javascript">
+            atOptions = {
+                'key' : '02a9c12a5270a25efa5325c0e42ffc59',
+                'format' : 'iframe',
+                'height' : 50,
+                'width' : 320,
+                'params' : {}
+            };
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
     </div>
 
-    <div class="main-content">
-        <div class="image-card" data-card-id="3">
-            <img class="img-fluid" src="https://raw.githubusercontent.com/nth-link/NTH-link/refs/heads/main/images/4.jpg" alt="ইমেজ ৩">
-            <div class="card-content">
-                <p class="instruction">আনলক বাটনে ক্লিক করুন এবং নতুন ট্যাবে 20 সেকেন্ড অপেক্ষা করুন।</p>
-                <div class="button-container">
-                    <button class="unlock-btn" onclick="startUnlockProcess('3', 'https://www.profitableratecpm.com/gpbenjxu?key=bebb9ec59e6fe86414605a44c4b0ad9f')">
-                        <i class="fas fa-lock button-icon" id="lock-icon-3"></i>আনলক করুন
-                    </button>
-                    <button class="download-btn" disabled>ডাউনলোড</button>
-                </div>
+    <div class="container">
+        <div class="card" data-video-link="https://your-video-link-for-card-1.com">
+            <div class="card-image-container">
+                <img src="https://via.placeholder.com/450x250" alt="Image">
             </div>
-        </div>
-    
-        <div class="image-card" data-card-id="4">
-            <img class="img-fluid" src="https://raw.githubusercontent.com/nth-link/NTH-link/refs/heads/main/images/3.jpg" alt="ইমেজ ৪">
             <div class="card-content">
-                <p class="instruction">আনলক বাটনে ক্লিক করুন এবং নতুন ট্যাবে 20 সেকেন্ড অপেক্ষা করুন।</p>
-                <div class="button-container">
-                    <button class="unlock-btn" onclick="startUnlockProcess('4', 'https://www.profitableratecpm.com/gpbenjxu?key=bebb9ec59e6fe864144605a44c4b0ad9f')">
-                        <i class="fas fa-lock button-icon" id="lock-icon-4"></i>আনলক করুন
-                    </button>
-                    <button class="download-btn" disabled>ডাউনলোড</button>
-                </div>
+                <h3 class="card-title">অ্যাড ভিজিট করে টাস্ক কমপ্লিট করুন।</h3>
+                <button class="task-button">Watch Ads (5/5)</button>
             </div>
         </div>
 
-        <div class="image-card" data-card-id="1">
-            <img class="img-fluid" src="https://raw.githubusercontent.com/nth-link/NTH-link/refs/heads/main/images/2.jpg" alt="ইমেজ ১">
+        <div class="card" data-video-link="https://your-video-link-for-card-2.com">
+            <div class="card-image-container">
+                <img src="https://via.placeholder.com/450x250" alt="Image">
+            </div>
             <div class="card-content">
-                <p class="instruction">আনলক বাটনে ক্লিক করুন এবং নতুন ট্যাবে 20 সেকেন্ড অপেক্ষা করুন।</p>
-                <div class="button-container">
-                    <button class="unlock-btn" onclick="startUnlockProcess('1', 'https://www.profitableratecpm.com/gpbenjxu?key=bebb9ec59e6fe86414605a44c4b0ad9f')">
-                        <i class="fas fa-lock button-icon" id="lock-icon-1"></i>আনলক করুন
-                    </button>
-                    <button class="download-btn" disabled>ডাউনলোড</button>
-                </div>
+                <h3 class="card-title">অ্যাড ভিজিট করে টাস্ক কমপ্লিট করুন।</h3>
+                <button class="task-button">Watch Ads (5/5)</button>
             </div>
         </div>
-    
-        <div class="image-card" data-card-id="2">
-            <img class="img-fluid" src="https://raw.githubusercontent.com/nth-link/NTH-link/refs/heads/main/images/1.jpg" alt="ইমেজ ২">
+        
+        <div class="card" data-video-link="https://your-video-link-for-card-3.com">
+            <div class="card-image-container">
+                <img src="https://via.placeholder.com/450x250" alt="Image">
+            </div>
             <div class="card-content">
-                <p class="instruction">আনলক বাটনে ক্লিক করুন এবং নতুন ট্যাবে 20 সেকেন্ড অপেক্ষা করুন।</p>
-                <div class="button-container">
-                    <button class="unlock-btn" onclick="startUnlockProcess('2', 'https://www.profitableratecpm.com/gpbenjxu?key=bebb9ec59e6fe86414605a44c4b0ad9f')">
-                        <i class="fas fa-lock button-icon" id="lock-icon-2"></i>আনলক করুন
-                    </button>
-                    <button class="download-btn" disabled>ডাউনলোড</button>
-                </div>
+                <h3 class="card-title">অ্যাড ভিজিট করে টাস্ক কমপ্লিট করুন।</h3>
+                <button class="task-button">Watch Ads (5/5)</button>
+            </div>
+        </div>
+
+        <div class="card" data-video-link="https://your-video-link-for-card-4.com">
+            <div class="card-image-container">
+                <img src="https://via.placeholder.com/450x250" alt="Image">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">অ্যাড ভিজিট করে টাস্ক কমপ্লিট করুন।</h3>
+                <button class="task-button">Watch Ads (5/5)</button>
             </div>
         </div>
     </div>
 
-    <div class="footer">
-        <p>Copyright © 2025 NexTool Hub. All rights reserved.</p>
-    </div>
-    
     <script>
-        const downloadLinks = {
-            '1': 'https://drive.google.com/drive/folders/1JglqR8AnS4JNrxLJPH0qHyOWeWLGP63u',
-            '2': 'https://drive.google.com/drive/folders/1RsD7D53-IqJCi3hU1or42SPIaKkjgpeU',
-            '3': 'https://drive.google.com/file/d/1wpfQIApmftpVYr7Zv7qj1NZwvN8ty7Cx/view?usp=drivesdk',
-            '4': 'https://drive.google.com/drive/folders/1OO7yFXHdBLIyO-YL8aTSysSTUtiGmWuz'
-        };
+        document.addEventListener('DOMContentLoaded', () => {
+            const adLinks = [
+                'https://nth-link.github.io/NTH-link/task1',
+                'https://nth-link.github.io/NTH-link/task2',
+                'https://nth-link.github.io/NTH-link/task3',
+                'https://nth-link.github.io/NTH-link/task4',
+                'https://nth-link.github.io/NTH-link/task5'
+            ];
 
-        function startUnlockProcess(cardId, redirectLink) {
-            const card = document.querySelector(`.image-card[data-card-id="${cardId}"]`);
-            const downloadBtn = card.querySelector('.download-btn');
-            const unlockBtn = card.querySelector('.unlock-btn');
-            const lockIcon = card.querySelector('.button-icon');
-            
-            if (unlockBtn.disabled) return;
-            unlockBtn.disabled = true;
+            const cards = document.querySelectorAll('.card');
 
-            window.open(redirectLink, '_blank');
-            
-            const timerOverlay = document.createElement('div');
-            timerOverlay.className = 'card-timer-overlay';
-            timerOverlay.innerHTML = `<p>ডাউনলোড বাটনটি সচল হচ্ছে।</p><p>অনুগ্রহ করে অপেক্ষা করুন:</p><span id="timer-text">20</span>`;
-            card.appendChild(timerOverlay);
+            cards.forEach(card => {
+                const button = card.querySelector('.task-button');
+                
+                let taskCount = 5;
+                const totalTasks = 5;
+                let isTaskCompleted = false;
 
-            let timeLeft = 20;
-            const timerText = timerOverlay.querySelector('#timer-text');
-            
-            const timerInterval = setInterval(() => {
-                timeLeft -= 1;
-                timerText.textContent = timeLeft;
-
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    card.removeChild(timerOverlay);
-
-                    downloadBtn.disabled = false;
-                    downloadBtn.classList.add('unlocked-blue');
-                    
-                    unlockBtn.classList.add('unlocked');
-                    
-                    lockIcon.classList.remove('fa-lock');
-                    lockIcon.classList.add('fa-unlock');
-                    
-                    downloadBtn.onclick = () => {
-                        downloadBtn.classList.add('clicked');
-                        window.location.href = downloadLinks[cardId];
-                    };
+                function updateButtonText() {
+                    button.textContent = `Watch Ads (${taskCount}/${totalTasks})`;
                 }
-            }, 1000);
-        }
-    </script>
 
-    <script type='text/javascript' src='//pl27408564.profitableratecpm.com/6f/9e/55/6f9e557cf4f6d1ad34e52bf37ab2156a.js'></script>
-    
+                updateButtonText();
+
+                button.addEventListener('click', () => {
+                    if (isTaskCompleted) {
+                        const videoLink = card.dataset.videoLink;
+                        window.open(videoLink, '_blank');
+                    } else {
+                        const currentAdIndex = totalTasks - taskCount;
+                        const currentAdLink = adLinks[currentAdIndex];
+                        window.open(currentAdLink, '_blank');
+
+                        setTimeout(() => {
+                            if (taskCount > 1) {
+                                taskCount--;
+                                updateButtonText();
+                            } else if (taskCount === 1) {
+                                taskCount--;
+                                isTaskCompleted = true;
+                                button.textContent = 'Watch the Video';
+                                button.classList.add('task-completed');
+                            }
+                        }, 3000);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
-    </html>
+</html>
