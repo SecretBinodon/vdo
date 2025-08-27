@@ -12,14 +12,13 @@
             padding: 0;
         }
 
-        /* হেডার সেকশনের স্টাইল */
+        /* Header section style */
         .header {
             background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
             color: #fff;
             text-align: center;
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            /* এখানে margin-bottom: 20px; অংশটি সরিয়ে দেওয়া হয়েছে */
         }
         
         .header-content {
@@ -38,14 +37,14 @@
             margin: 0;
         }
 
-        /* অ্যাড সেকশনের জন্য নতুন স্টাইল */
+        /* Ad section style */
         .ad-container {
             text-align: center;
-            /* এখন শুধু margin-top যোগ করা হয়েছে */
-            margin: 5px 0 20px; 
+            /* এখানে মার্জিন পরিবর্তন করা হয়েছে */
+            margin: 5px 0 10px; 
         }
 
-        /* অ্যাডের ভিজিবিলিটি */
+        /* Ad visibility */
         .mobile-ad { display: none; }
         .desktop-ad { display: none; }
 
@@ -56,7 +55,8 @@
             gap: 20px;
             max-width: 1000px;
             margin: 0 auto;
-            padding: 0 20px;
+            /* এখানে প্যাডিং পরিবর্তন করা হয়েছে */
+            padding: 0 20px 20px;
         }
 
         .card {
@@ -90,10 +90,57 @@
             }
         }
         
-        .card:nth-child(1) { animation-delay: 0.1s; }
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        .card:nth-child(3) { animation-delay: 0.3s; }
-        .card:nth-child(4) { animation-delay: 0.4s; }
+        /* Animation delay for each card */
+        .card:nth-child(50n+1) { animation-delay: 0.1s; }
+        .card:nth-child(50n+2) { animation-delay: 0.2s; }
+        .card:nth-child(50n+3) { animation-delay: 0.3s; }
+        .card:nth-child(50n+4) { animation-delay: 0.4s; }
+        .card:nth-child(50n+5) { animation-delay: 0.5s; }
+        .card:nth-child(50n+6) { animation-delay: 0.6s; }
+        .card:nth-child(50n+7) { animation-delay: 0.7s; }
+        .card:nth-child(50n+8) { animation-delay: 0.8s; }
+        .card:nth-child(50n+9) { animation-delay: 0.9s; }
+        .card:nth-child(50n+10) { animation-delay: 1.0s; }
+        .card:nth-child(50n+11) { animation-delay: 1.1s; }
+        .card:nth-child(50n+12) { animation-delay: 1.2s; }
+        .card:nth-child(50n+13) { animation-delay: 1.3s; }
+        .card:nth-child(50n+14) { animation-delay: 1.4s; }
+        .card:nth-child(50n+15) { animation-delay: 1.5s; }
+        .card:nth-child(50n+16) { animation-delay: 1.6s; }
+        .card:nth-child(50n+17) { animation-delay: 1.7s; }
+        .card:nth-child(50n+18) { animation-delay: 1.8s; }
+        .card:nth-child(50n+19) { animation-delay: 1.9s; }
+        .card:nth-child(50n+20) { animation-delay: 2.0s; }
+        .card:nth-child(50n+21) { animation-delay: 2.1s; }
+        .card:nth-child(50n+22) { animation-delay: 2.2s; }
+        .card:nth-child(50n+23) { animation-delay: 2.3s; }
+        .card:nth-child(50n+24) { animation-delay: 2.4s; }
+        .card:nth-child(50n+25) { animation-delay: 2.5s; }
+        .card:nth-child(50n+26) { animation-delay: 2.6s; }
+        .card:nth-child(50n+27) { animation-delay: 2.7s; }
+        .card:nth-child(50n+28) { animation-delay: 2.8s; }
+        .card:nth-child(50n+29) { animation-delay: 2.9s; }
+        .card:nth-child(50n+30) { animation-delay: 3.0s; }
+        .card:nth-child(50n+31) { animation-delay: 3.1s; }
+        .card:nth-child(50n+32) { animation-delay: 3.2s; }
+        .card:nth-child(50n+33) { animation-delay: 3.3s; }
+        .card:nth-child(50n+34) { animation-delay: 3.4s; }
+        .card:nth-child(50n+35) { animation-delay: 3.5s; }
+        .card:nth-child(50n+36) { animation-delay: 3.6s; }
+        .card:nth-child(50n+37) { animation-delay: 3.7s; }
+        .card:nth-child(50n+38) { animation-delay: 3.8s; }
+        .card:nth-child(50n+39) { animation-delay: 3.9s; }
+        .card:nth-child(50n+40) { animation-delay: 4.0s; }
+        .card:nth-child(50n+41) { animation-delay: 4.1s; }
+        .card:nth-child(50n+42) { animation-delay: 4.2s; }
+        .card:nth-child(50n+43) { animation-delay: 4.3s; }
+        .card:nth-child(50n+44) { animation-delay: 4.4s; }
+        .card:nth-child(50n+45) { animation-delay: 4.5s; }
+        .card:nth-child(50n+46) { animation-delay: 4.6s; }
+        .card:nth-child(50n+47) { animation-delay: 4.7s; }
+        .card:nth-child(50n+48) { animation-delay: 4.8s; }
+        .card:nth-child(50n+49) { animation-delay: 4.9s; }
+        .card:nth-child(50n+50) { animation-delay: 5.0s; }
 
         .card-image-container {
             width: 100%;
@@ -119,15 +166,15 @@
             width: 100%;
         }
 
-        /* ডেক্সটপ ভিউতে পরিবর্তন */
+        /* Desktop view adjustments */
         @media (min-width: 768px) {
             .card {
                 flex-basis: calc(50% - 15px);
             }
-            .desktop-ad { display: block; } /* ডেস্কটপে অ্যাড দেখাবে */
+            .desktop-ad { display: block; }
         }
         
-        /* মোবাইল ভিউতে পরিবর্তন */
+        /* Mobile view adjustments */
         @media (max-width: 767px) {
              .header h1 {
                 font-size: 20px;
@@ -151,7 +198,7 @@
                 font-size: 12px;
                 padding: 8px 16px;
             }
-            .mobile-ad { display: block; } /* মোবাইলে অ্যাড দেখাবে */
+            .mobile-ad { display: block; }
         }
 
         .card-image-container img {
@@ -211,90 +258,8 @@
         <script type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
     </div>
 
-    
     <div class="container">
-        <div class="card" data-video-link="https://drive.google.com/drive/folders/1dSlG2qeXJJOqEYL-jSeHzRX77UmZVX1k">
-            <div class="card-image-container">
-                <img src="https://raw.githubusercontent.com/nth-link/NTH-link/refs/heads/main/images/4.jpg" alt="Image">
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">অ্যাড ভিজিট করে টাস্ক কমপ্লিট করুন।</h3>
-                <button class="task-button">Watch Ads (5/5)</button>
-            </div>
         </div>
-
-        <div class="card" data-video-link="https://drive.google.com/drive/folders/1OO7yFXHdBLIyO-YL8aTSysSTUtiGmWuz">
-            <div class="card-image-container">
-                <img src="https://raw.githubusercontent.com/nth-link/NTH-link/refs/heads/main/images/3.jpg" alt="Image">
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">অ্যাড ভিজিট করে টাস্ক কমপ্লিট করুন।</h3>
-                <button class="task-button">Watch Ads (5/5)</button>
-            </div>
-        </div>
-    
-    <div class="container">
-        <div class="card" data-video-link="https://drive.google.com/drive/folders/1dSlG2qeXJJOqEYL-jSeHzRX77UmZVX1k">
-            <div class="card-image-container">
-                <img src="https://raw.githubusercontent.com/nth-link/NTH-link/refs/heads/main/images/4.jpg" alt="Image">
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">অ্যাড ভিজিট করে টাস্ক কমপ্লিট করুন।</h3>
-                <button class="task-button">Watch Ads (5/5)</button>
-            </div>
-        </div>
-
-        <div class="card" data-video-link="https://drive.google.com/drive/folders/1OO7yFXHdBLIyO-YL8aTSysSTUtiGmWuz">
-            <div class="card-image-container">
-                <img src="https://raw.githubusercontent.com/nth-link/NTH-link/refs/heads/main/images/3.jpg" alt="Image">
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">অ্যাড ভিজিট করে টাস্ক কমপ্লিট করুন।</h3>
-                <button class="task-button">Watch Ads (5/5)</button>
-            </div>
-        </div>
-
-    <div class="container">
-        <div class="card" data-video-link="https://drive.google.com/drive/folders/1dSlG2qeXJJOqEYL-jSeHzRX77UmZVX1k">
-            <div class="card-image-container">
-                <img src="https://raw.githubusercontent.com/nth-link/NTH-link/refs/heads/main/images/4.jpg" alt="Image">
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">অ্যাড ভিজিট করে টাস্ক কমপ্লিট করুন।</h3>
-                <button class="task-button">Watch Ads (5/5)</button>
-            </div>
-        </div>
-
-        <div class="card" data-video-link="https://drive.google.com/drive/folders/1OO7yFXHdBLIyO-YL8aTSysSTUtiGmWuz">
-            <div class="card-image-container">
-                <img src="https://raw.githubusercontent.com/nth-link/NTH-link/refs/heads/main/images/3.jpg" alt="Image">
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">অ্যাড ভিজিট করে টাস্ক কমপ্লিট করুন।</h3>
-                <button class="task-button">Watch Ads (5/5)</button>
-            </div>
-        </div>
-        
-        <div class="card" data-video-link="https://drive.google.com/drive/folders/1JglqR8AnS4JNrxLJPH0qHyOWeWLGP63u">
-            <div class="card-image-container">
-                <img src="https://raw.githubusercontent.com/nth-link/NTH-link/refs/heads/main/images/2.jpg" alt="Image">
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">অ্যাড ভিজিট করে টাস্ক কমপ্লিট করুন।</h3>
-                <button class="task-button">Watch Ads (5/5)</button>
-            </div>
-        </div>
-
-        <div class="card" data-video-link="https://drive.google.com/drive/folders/1RsD7D53-IqJCi3hU1or42SPIaKkjgpeU">
-            <div class="card-image-container">
-                <img src="https://raw.githubusercontent.com/nth-link/NTH-link/refs/heads/main/images/1.jpg">
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">অ্যাড ভিজিট করে টাস্ক কমপ্লিট করুন।</h3>
-                <button class="task-button">Watch Ads (5/5)</button>
-            </div>
-        </div>
-    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -304,50 +269,125 @@
                 'https://www.profitableratecpm.com/njmk9xpav?key=116655e1097328cc4cfb2c69fcfe6294',
                 'https://www.profitableratecpm.com/bxpys4w3p1?key=548da758e411d97dc9752aa68d0a7502',
                 'https://www.profitableratecpm.com/xbqsnpvv6?key=3c2dbdef651bb2d6e0638b75d579cd1a'
+          
             ];
 
-            const cards = document.querySelectorAll('.card');
+            // আপনার কার্ডের ডেটা এখানে যোগ করুন। নতুন ডেটা সবসময় অ্যারের শুরুতে যোগ করুন।
+            const cardData = [
+                 {
+                    title: "অ্যাড ভিজিট করে টাস্ক কমপ্লিট করুন।",
+                    image: "https://via.placeholder.com/450x250",
+                    videoLink: "viral-video-2.html"
+                },
+                {
+                    title: "অ্যাড ভিজিট করে টাস্ক কমপ্লিট করুন।",
+                    image: "https://via.placeholder.com/450x250",
+                    videoLink: "viral-video-2.html"
+                },
+                {
+                    title: "অ্যাড ভিজিট করে টাস্ক কমপ্লিট করুন।",
+                    image: "https://via.placeholder.com/450x250",
+                    videoLink: "viral-video-2.html"
+                },
+                {
+                    title: "অ্যাড ভিজিট করে টাস্ক কমপ্লিট করুন।",
+                    image: "https://via.placeholder.com/450x250",
+                    videoLink: "viral-video-2.html"
+                },
+                // আরও কার্ডের ডেটা এখানে যোগ করুন।
+                // আপনি যখনই নতুন কার্ডের ডেটা যোগ করবেন, তখন সেটি এখানে সবার উপরে যোগ করুন।
+            ];
 
-            cards.forEach(card => {
-                const button = card.querySelector('.task-button');
-                
-                let taskCount = 5;
-                const totalTasks = 5;
-                let isTaskCompleted = false;
+            const container = document.querySelector('.container');
 
-                function updateButtonText() {
-                    button.textContent = `Watch Ads (${taskCount}/${totalTasks})`;
-                }
+            function createCard(data) {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.setAttribute('data-video-link', data.videoLink);
+                card.innerHTML = `
+                    <div class="card-image-container">
+                        <img data-src="${data.image}" alt="${data.title}" loading="lazy">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">${data.title}</h3>
+                        <button class="task-button">Watch Ads (5/5)</button>
+                    </div>
+                `;
+                return card;
+            }
 
-                updateButtonText();
-
-                button.addEventListener('click', () => {
-                    if (isTaskCompleted) {
-                        const videoLink = card.dataset.videoLink;
-                        window.open(videoLink, '_blank');
-                    } else {
-                        const currentAdIndex = totalTasks - taskCount;
-                        const currentAdLink = adLinks[currentAdIndex];
-                        window.open(currentAdLink, '_blank');
-
-                        setTimeout(() => {
-                            if (taskCount > 1) {
-                                taskCount--;
-                                updateButtonText();
-                            } else if (taskCount === 1) {
-                                taskCount--;
-                                isTaskCompleted = true;
-                                button.textContent = 'Watch the Video';
-                                button.classList.add('task-completed');
-                            }
-                        }, 3000);
-                    }
+            // এই ফাংশনটি কার্ডগুলো তৈরি করে পেজে যুক্ত করবে
+            function renderCards() {
+                container.innerHTML = '';
+                cardData.forEach(data => {
+                    const card = createCard(data);
+                    container.appendChild(card);
                 });
-            });
+                setupTaskButtons();
+                setupLazyLoading();
+            }
+
+            function setupTaskButtons() {
+                const cards = document.querySelectorAll('.card');
+                cards.forEach(card => {
+                    const button = card.querySelector('.task-button');
+                    let taskCount = 5;
+                    const totalTasks = 5;
+                    let isTaskCompleted = false;
+
+                    function updateButtonText() {
+                        button.textContent = `Watch Ads (${taskCount}/${totalTasks})`;
+                    }
+
+                    updateButtonText();
+
+                    button.addEventListener('click', () => {
+                        if (isTaskCompleted) {
+                            const videoLink = card.dataset.videoLink;
+                            window.open(videoLink, '_blank');
+                        } else {
+                            const currentAdIndex = totalTasks - taskCount;
+                            const currentAdLink = adLinks[currentAdIndex];
+                            window.open(currentAdLink, '_blank');
+
+                            setTimeout(() => {
+                                if (taskCount > 1) {
+                                    taskCount--;
+                                    updateButtonText();
+                                } else if (taskCount === 1) {
+                                    taskCount--;
+                                    isTaskCompleted = true;
+                                    button.textContent = 'Watch the Video';
+                                    button.classList.add('task-completed');
+                                }
+                            }, 3000);
+                        }
+                    });
+                });
+            }
+
+            function setupLazyLoading() {
+                const lazyImages = document.querySelectorAll('img[data-src]');
+                
+                const lazyLoad = (target) => {
+                    const observer = new IntersectionObserver((entries, observer) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const img = entry.target;
+                                img.src = img.dataset.src;
+                                observer.unobserve(img);
+                            }
+                        });
+                    });
+                    observer.observe(target);
+                };
+                
+                lazyImages.forEach(lazyLoad);
+            }
+
+            // পেজ লোড হলেই কার্ডগুলো রেন্ডার হবে
+            renderCards();
         });
     </script>
-
-    <script type='text/javascript' src='//pl27408564.profitableratecpm.com/6f/9e/55/6f9e557cf4f6d1ad34e52bf37ab2156a.js'></script>
-    
 </body>
 </html>
