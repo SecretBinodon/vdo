@@ -183,7 +183,6 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
     min-height: 350px;
     border: 1px solid transparent;
 }
-.tool-card.hide { display: none; }
 .tool-card:hover, .tool-card:focus {
     transform: translateY(-5px) scale(1.02);
     box-shadow: var(--shadow-hover);
@@ -227,7 +226,6 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
 .use-tool-btn:hover, .action-btn:hover { background-color: #2F6DB8; }
 .use-tool-btn:active, .action-btn:active { background-color: #28a745; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); transform: translateY(1px); }
 .no-results { text-align: center; margin-top: 50px; font-size: 20px; color: #777; display: none; }
-
 /* --- New: All Viral Link Section --- */
 .all-viral-link-section {
     padding: 30px 20px;
@@ -286,7 +284,6 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transform: translateY(1px);
 }
-
 /* --- Spin & Win Section --- */
 .spin-and-win-section {
     padding: 30px 20px;
@@ -471,6 +468,19 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
 .ashiqur-popup { position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%); background-color: var(--primary-color); color: #fff; padding: 15px 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); font-size: 16px; font-weight: 500; opacity: 0; visibility: hidden; transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); z-index: 20; white-space: nowrap; max-width: 90%; text-align: center; }
 .ashiqur-popup.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(-20px); }
 .ashiqur-popup.hide { opacity: 0; visibility: hidden; transform: translateX(-50%) translateY(20px); }
+/* --- Ad container style for both desktop and mobile --- */
+.ad-slot-middle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* এখানে নতুন পরিবর্তন */
+    margin: 10px auto;
+    width: 100%;
+}
+.ad-slot-middle iframe {
+    display: block;
+    margin: 0 auto;
+}
 /* --- Mobile Only Ad Placement --- */
 .ad-container-mobile {
     display: none; /* Hide by default */
@@ -488,11 +498,9 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
     }
     body { font-size: 14px; }
     .container { padding: 0 10px; }
-
     /* New CSS: Reduce header and hero section top/bottom padding */
     .header { padding-top: 10px; padding-bottom: 5px; }
     .hero-section { padding-top: 15px; padding-bottom: 15px; margin-bottom: 15px; }
-
     .header-right { flex-wrap: nowrap; justify-content: flex-end; gap: 5px; }
     .logo a { font-size: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .logo-icon { font-size: 24px; margin-right: 4px; }
@@ -510,7 +518,6 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
     .search-icon { right: 25px; font-size: 18px; }
     .filter-options { flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 10px; margin-bottom: 10px; padding: 0 5px; overflow-x: hidden; }
     .filter-btn { padding: 6px 10px; font-size: 10px; flex-shrink: 0; }
-
     /* New CSS: Reduce section top/bottom padding and margin */
     .tools-panel,
     .spin-and-win-section,
@@ -524,7 +531,6 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
     }
     .tools-panel h2, .testimonials-section h2, .why-choose-us-section h2, .all-viral-link-section h2 { font-size: 24px; margin-bottom: 15px; }
     .tool-cards-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
-    
     /* Mobile Specific Styling */
     .tool-card.facebook-card {
         grid-column: 1 / -1;
@@ -537,7 +543,6 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
         box-sizing: border-box;
         justify-content: center;
     }
-
     .tool-card.facebook-card .icon-wrapper {
         width: 80px;
         height: 80px;
@@ -546,11 +551,9 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
         align-items: center;
         justify-content: center;
     }
-
     .tool-card.facebook-card .icon {
         font-size: 50px;
     }
-
     .tool-card.facebook-card h3 {
         font-size: 18px;
         margin: 0;
@@ -563,7 +566,6 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
         display: block;
         line-height: 1.2;
     }
-    /* আপনার প্রথম কাজটি এখানে সম্পন্ন করা হয়েছে */
     .tool-card.facebook-card .use-tool-btn {
         font-size: 14px;
         padding: 10px 20px;
@@ -572,7 +574,16 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
         border-radius: 5px;
     }
     
-    .ad-container-mobile { grid-column: 1 / -1; order: 2; margin: 10px auto; }
+    /* এখানে নতুন পরিবর্তন */
+    .ad-slot-middle {
+        margin: 10px auto;
+    }
+    .ad-container-mobile {
+        display: block;
+        margin: 10px auto;
+        grid-column: 1 / -1; 
+        order: 2;
+    }
     .tool-card:nth-child(1) { order: 1; }
     .tool-card:nth-child(2) { order: 1; }
     .testimonials-section { padding: 20px 10px; }
@@ -599,17 +610,22 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
     .footer-container { flex-direction: row; justify-content: space-between; flex-wrap: nowrap; gap: 5px; padding-bottom: 10px; }
     .footer a, .footer button { padding: 4px 6px; font-size: 8px; }
     .ashiqur-popup { font-size: 12px; white-space: normal; width: 90%; bottom: 60px; }
+    .all-viral-link-section {
+        margin-bottom: 10px;
+    }
     .all-viral-link-section .viral-link-text { font-size: 14px; margin-bottom: 15px; }
     .viral-link-button { font-size: 14px; padding: 10px 20px; }
-
-    /* আপনার দ্বিতীয় কাজটি এখানে সম্পন্ন করা হয়েছে */
+    /* New CSS: Adjusting margins for mobile layout */
     .tools-panel {
-        margin-bottom: 0px; /* গ্যাপ কমানো হয়েছে */
+        margin-bottom: 0px; /* Adjust this value as needed */
+    }
+    .ad-slot-middle, .ad-container-mobile {
+        margin-top: -8px; /* Adjust this value as needed */
+        margin-bottom: 10px; /* Adjust this value as needed */
     }
     .spin-and-win-section {
-        margin-bottom: 10px; /* গ্যাপ কমানো হয়েছে */
+        margin-bottom: 15px; /* Adjust this value as needed */
     }
-    
 }
 /* --- Desktop Specific Styles (Updated) --- */
 @media (min-width: 769px) {
@@ -664,6 +680,7 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
     }
     .all-viral-link-section {
         padding: 80px 100px;
+        margin-bottom: 25px;
     }
     .all-viral-link-section h2 {
         font-size: 3.0rem;
@@ -675,6 +692,19 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
     .viral-link-button {
         font-size: 1.4rem;
         padding: 15px 30px;
+    }
+    /* New CSS: Adjusting margins for desktop layout */
+    .tools-panel {
+        margin-bottom: 10px; /* Adjust this value as needed */
+        padding-bottom: 10px;
+    }
+    .ad-slot-middle {
+        margin-top: 10px; /* Adjust this value as needed */
+        margin-bottom: 10px; /* Adjust this value as needed */
+    }
+    .spin-and-win-section {
+        margin-top: 15px; /* Adjust this value as needed */
+        margin-bottom: 20px;
     }
 }
     </style>
@@ -729,6 +759,18 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
                 <i class="ri-search-line search-icon"></i>
             </div>
         </div>
+        <div class="ad-container-mobile">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '02a9c12a5270a25efa5325c0e42ffc59',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
+        </div>
         <div class="filter-options">
             <button class="filter-btn all-btn active" data-lang-en="All" data-lang-bn="সব" data-filter="all" aria-pressed="true">All</button>
             <button class="filter-btn" data-lang-en="Your Tools" data-lang-bn="আপনার টুলস" data-filter="tools" aria-pressed="false">Your Tools</button>
@@ -747,6 +789,19 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
             </div>
             <p class="no-results" data-align-en="center" data-lang-en="No tools found for your search." data-lang-bn="আপনার অনুসন্ধানের জন্য কোনো টুল পাওয়া যায়নি।">No tools found for your search.</p>
         </section>
+
+        <div class="ad-slot-middle on-scroll-animate">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                    'format' : 'iframe',
+                    'height' : 250,
+                    'width' : 300,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
+        </div>
         <section id="spin-and-win-section" class="spin-and-win-section filterable-section visible">
             <h2 class="on-scroll-animate" data-lang-en="Test Your Luck: Spin & Win!" data-lang-bn="আপনার ভাগ্য পরীক্ষা করুন">Test Your Luck: Spin & Win!</h2>
             <div class="spin-content-wrapper on-scroll-animate">
@@ -767,7 +822,12 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
                 <a href="https://www.your-viral-link-here.com" target="_blank" class="viral-link-button" data-lang-en="Check Out" data-lang-bn="চেকআউট করুন">Check Out</a>
             </div>
         </section>
-        
+
+        <div class="ad-slot-middle full-width-ad on-scroll-animate">
+            <script async="async" data-cfasync="false" src="//pl27408554.effectivecpmrate.com/45718544708b185acff6d14248cc94cd/invoke.js"></script> 
+            <div id="container-45718544708b185acff6d14248cc94cd"></div>
+        </div>
+
         <section id="testimonials-section" class="testimonials-section filterable-section visible">
             <h2 class="on-scroll-animate" data-lang-en="What Our Users Say" data-lang-bn="ব্যবহারকারীরা যা বলেন">What Our Users Say</h2>
             <div class="testimonial-cards-grid on-scroll-animate">
@@ -826,7 +886,6 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
             const ashiqurBtn = document.querySelector('.ashiqur-btn');
             const ashiqurPopup = document.getElementById('ashiqur-popup');
             const searchInput = document.getElementById('search-input');
-            const toolCards = document.querySelectorAll('.tool-card');
             const noResultsMessage = document.querySelector('.no-results');
             const modeToggleBtn = document.querySelector('.mode-toggle');
             const testimonials = [
@@ -845,6 +904,7 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
             let currentTestimonialIndex = 0;
             let cardToUpdateIndex = 0;
             let testimonialIntervalId;
+            const toolCards = document.querySelectorAll('.tool-card');
             function updateTestimonials(lang) {
                 if (testimonialTexts[0] && testimonials[0][lang]) {
                     testimonialTexts[0].textContent = testimonials[0][lang].text;
