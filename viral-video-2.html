@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timed Button</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Align content to the top */
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: #333;
+            box-sizing: border-box;
+            padding-top: 20px; /* Overall top padding for the body */
+        }
+
+        /* Ad Container Styles */
+        .ad-container {
+            width: 100%;
+            margin-bottom: 20px; /* Reduced gap below the top ad */
+        }
+
+        /* Main Content Container */
+        .main-content {
+            background-color: #e6f7ff;
+            padding: 40px 20px;
+            border-radius: 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+            margin: 0; /* Removed margin to close the gap */
+        }
+        
+        /* Ad space below the button */
+        .ad-space {
+            margin-top: 10px; /* Reduced gap above the ad */
+            margin-bottom: 10px; /* Reduced gap below the ad */
+        }
+        
+        .ad-space-bottom {
+            margin-top: 10px;
+        }
+
+        /* Header Section */
+        .header {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+        }
+        
+        /* Mobile View Styles */
+        @media (max-width: 768px) {
+            .header {
+                font-size: 1.2em;
+                margin-bottom: 20px;
+            }
+        }
+        
+        #timer {
+            font-size: 2.5em;
+            margin-bottom: 25px;
+            color: #333;
+            font-weight: bold;
+        }
+        #openButton {
+            padding: 18px 60px;
+            font-size: 1.8em;
+            font-weight: bold;
+            cursor: not-allowed;
+            background-color: #6c757d;
+            border: none;
+            border-radius: 8px;
+            color: #dee2e6;
+            transition: background-color 0.3s, color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #openButton:enabled {
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+        }
+        #openButton:hover:enabled {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        
+        #openButton i {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ad-container">
+        <script async="async" data-cfasync="false" src="//pl27408554.profitableratecpm.com/45718544708b185acff6d14248cc94cd/invoke.js"></script>
+        <div id="container-45718544708b185acff6d14248cc94cd"></div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            কংগ্রাচুলেশন আপনি ঠিক জায়গায় এসে পড়েছেন।
+        </div>
+
+        <div id="timer">10</div>
+        <button id="openButton" disabled>
+            <i class="fas fa-play-circle"></i> Play
+        </button>
+    </div>
+
+    <div class="ad-space">
+        <script type="text/javascript">
+            atOptions = {
+                'key' : '02a9c12a5270a25efa5325c0e42ffc59',
+                'format' : 'iframe',
+                'height' : 50,
+                'width' : 320,
+                'params' : {}
+            };
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
+    </div>
+
+    <div class="ad-space-bottom">
+        <script type="text/javascript">
+            atOptions = {
+                'key' : 'eefd5e3bd2c4d4b53fe80f25417a2497',
+                'format' : 'iframe',
+                'height' : 250,
+                'width' : 300,
+                'params' : {}
+            };
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/eefd5e3bd2c4d4b53fe80f25417a2497/invoke.js"></script>
+    </div>
+
+    <script>
+        const timerElement = document.getElementById('timer');
+        const openButton = document.getElementById('openButton');
+
+        let countdown = 10;
+
+        function updateCountdown() {
+            countdown--;
+            timerElement.textContent = countdown;
+
+            if (countdown <= 0) {
+                clearInterval(timerInterval);
+                timerElement.textContent = 'Ready!';
+                openButton.disabled = false;
+            }
+        }
+
+        const timerInterval = setInterval(updateCountdown, 1000);
+    </script>
+
+<script type='text/javascript' src='//pl27408564.profitableratecpm.com/6f/9e/55/6f9e557cf4f6d1ad34e52bf37ab2156a.js'></script>
+
+<script type='text/javascript' src='//pl27444202.profitableratecpm.com/f7/be/3d/f7be3da0a62cf03c9a315bdc6f0e403e.js'></script>
+  
+</body>
+</html>
