@@ -488,7 +488,11 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
     }
     body { font-size: 14px; }
     .container { padding: 0 10px; }
-    .header { justify-content: space-between; flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; }
+
+    /* New CSS: Reduce header and hero section top/bottom padding */
+    .header { padding-top: 10px; padding-bottom: 5px; }
+    .hero-section { padding-top: 15px; padding-bottom: 15px; margin-bottom: 15px; }
+
     .header-right { flex-wrap: nowrap; justify-content: flex-end; gap: 5px; }
     .logo a { font-size: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .logo-icon { font-size: 24px; margin-right: 4px; }
@@ -496,7 +500,7 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
     .social-link { font-size: 16px; }
     .lang-btn { padding: 4px 8px; font-size: 10px; }
     .mode-toggle { font-size: 16px; }
-    .hero-section { padding: 20px 0; min-height: auto; margin-bottom: 15px; }
+    .hero-section { min-height: auto; }
     .hero-title { font-size: 28px; line-height: 1.1; margin: 0; }
     .hero-section p { font-size: 10px; margin: 5px 0 0 0; text-align: center; width: 100%; }
     .hero-section .paper-pieces-container { display: none; }
@@ -506,7 +510,19 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
     .search-icon { right: 25px; font-size: 18px; }
     .filter-options { flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 10px; margin-bottom: 10px; padding: 0 5px; overflow-x: hidden; }
     .filter-btn { padding: 6px 10px; font-size: 10px; flex-shrink: 0; }
-    .tools-panel h2, .daily-offer-section h2, .blog-section h2, .testimonials-section h2, .why-choose-us-section h2, .all-viral-link-section h2 { font-size: 24px; margin-bottom: 20px; }
+
+    /* New CSS: Reduce section top/bottom padding and margin */
+    .tools-panel,
+    .spin-and-win-section,
+    .all-viral-link-section,
+    .testimonials-section,
+    .why-choose-us-section {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        margin-top: 0;
+        margin-bottom: 15px;
+    }
+    .tools-panel h2, .testimonials-section h2, .why-choose-us-section h2, .all-viral-link-section h2 { font-size: 24px; margin-bottom: 15px; }
     .tool-cards-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
     
     /* Mobile Specific Styling */
@@ -547,27 +563,18 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
         display: block;
         line-height: 1.2;
     }
+    /* আপনার প্রথম কাজটি এখানে সম্পন্ন করা হয়েছে */
     .tool-card.facebook-card .use-tool-btn {
         font-size: 14px;
         padding: 10px 20px;
-        width: auto;
-        max-width: 200px;
+        width: 100%; 
+        max-width: 250px;
         border-radius: 5px;
     }
     
     .ad-container-mobile { grid-column: 1 / -1; order: 2; margin: 10px auto; }
     .tool-card:nth-child(1) { order: 1; }
     .tool-card:nth-child(2) { order: 1; }
-    .daily-offer-section { padding: 20px 10px; }
-    .offer-cards-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
-    .offer-card-wrapper:last-child { grid-column: 1 / -1; }
-    .daily-offer-section .offer-card-wrapper.full-width h3 { font-size: 18px; }
-    .daily-offer-section .offer-card-wrapper.full-width p { font-size: 14px; -webkit-line-clamp: 2; }
-    .blog-section { padding: 20px 10px; }
-    .blog-post-card { padding: 15px; }
-    .blog-image-container { height: 150px; margin-bottom: 15px; }
-    .blog-post-card h3 { font-size: 18px; }
-    .blog-post-card p { font-size: 14px; -webkit-line-clamp: 3; }
     .testimonials-section { padding: 20px 10px; }
     .testimonials-section h2 { margin-bottom: 10px; }
     .testimonial-cards-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
@@ -585,21 +592,24 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
     .tool-card { min-height: 250px; padding: 15px 10px; }
     .tool-card .icon-wrapper { width: 60px; height: 60px; margin-bottom: 10px; }
     .tool-card .icon { font-size: 30px; }
-    .tool-card h3, .offer-card h3 { font-size: 16px; margin-bottom: 5px; }
-    .tool-card p, .offer-card p { font-size: 12px; margin-bottom: 10px; }
-    .offer-card { min-height: 200px; padding: 15px 10px; }
-    .offer-card .icon-wrapper { width: 50px; height: 50px; margin-bottom: 10px; }
-    .offer-card .icon { font-size: 30px; }
-    .offer-card h3 { font-size: 16px; margin-bottom: 5px; }
-    .offer-card p { font-size: 12px; min-height: 40px; -webkit-line-clamp: 2; margin-bottom: 10px; }
-    .use-tool-btn, .join-offer-btn { font-size: 12px; padding: 8px 15px; }
-    .offer-card-wrapper { margin-bottom: 0; }
+    .tool-card h3 { font-size: 16px; margin-bottom: 5px; }
+    .tool-card p { font-size: 12px; margin-bottom: 10px; }
+    .use-tool-btn { font-size: 12px; padding: 8px 15px; }
     .footer { margin-top: 0; padding-top: 20px; padding-bottom: 20px; padding: 20px 10px; }
     .footer-container { flex-direction: row; justify-content: space-between; flex-wrap: nowrap; gap: 5px; padding-bottom: 10px; }
     .footer a, .footer button { padding: 4px 6px; font-size: 8px; }
     .ashiqur-popup { font-size: 12px; white-space: normal; width: 90%; bottom: 60px; }
     .all-viral-link-section .viral-link-text { font-size: 14px; margin-bottom: 15px; }
     .viral-link-button { font-size: 14px; padding: 10px 20px; }
+
+    /* আপনার দ্বিতীয় কাজটি এখানে সম্পন্ন করা হয়েছে */
+    .tools-panel {
+        margin-bottom: 0px; /* গ্যাপ কমানো হয়েছে */
+    }
+    .spin-and-win-section {
+        margin-bottom: 10px; /* গ্যাপ কমানো হয়েছে */
+    }
+    
 }
 /* --- Desktop Specific Styles (Updated) --- */
 @media (min-width: 769px) {
@@ -615,19 +625,9 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
     .tool-card h3 { font-size: 24px; }
     .tool-card p { font-size: 16px; padding: 0 10px; -webkit-line-clamp: 3; }
     .use-tool-btn { font-size: 16px; padding: 10px 20px; }
-    .offer-cards-grid { grid-template-columns: repeat(3, 1fr); gap: 25px; }
-    .offer-card-wrapper.full-width { grid-column: auto; }
-    .offer-card { min-height: 350px; padding: 30px 20px; }
-    .offer-card .icon-wrapper { width: 90px; height: 90px; margin: 0 auto 20px; }
-    .offer-card .icon { font-size: 60px; }
-    .offer-card h3 { font-size: 28px; margin-bottom: 15px; }
-    .offer-card p { font-size: 18px; margin-bottom: 20px; -webkit-line-clamp: unset; text-align: center; display: block; }
-    .join-offer-btn { font-size: 16px; padding: 12px 25px; max-width: 200px; }
     .footer p { font-size: 20px; }
     .header-right { gap: 20px; }
     .footer-container { flex-direction: row; justify-content: space-between; align-items: center; }
-    .footer-buttons-wrapper { display: contents; } 
-    .footer-links-group { display: contents; } 
     .ashiqur-popup { bottom: 80px; }
     
     /* Add this new CSS for the desktop Facebook card */
@@ -691,8 +691,7 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
             <div class="header-right">
                 <div class="social-links">
                     <a href="#" class="social-link" aria-label="Facebook"><i class="ri-facebook-box-fill"></i></a>
-                    <a href="#" class="social-link" aria-label="Twitter"><i class="ri-twitter-x-fill"></i></a>
-                    <a href="#" class="social-link" aria-label="WhatsApp"><i class="ri-whatsapp-line"></i></a>
+                    <a href="#" class="social-link" aria-label="Telegram"><i class="ri-telegram-fill"></i></a>
                 </div>
                 <button class="mode-toggle" aria-label="Toggle Dark/Light Mode">
                     <i class="ri-sun-line"></i>
@@ -831,14 +830,14 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
             const noResultsMessage = document.querySelector('.no-results');
             const modeToggleBtn = document.querySelector('.mode-toggle');
             const testimonials = [
-                { en: { text: "“I’ve shortened my long links with a custom alias. It’s a killer feature for my campaigns!”", author: "- Arif Chowdhury" }, bn: { text: "“আমি কাস্টম নাম দিয়ে আমার লম্বা লিঙ্কগুলো ছোট করতে পেরেছি। এটি আমার প্রচারণার জন্য একটি দারুণ ফিচার!”", author: "- আরিফ চৌধুরী" } },
-                { en: { text: "“This URL shortener is a game-changer! My links look professional now. Absolutely brilliant.”", author: "- Nabila Haque" }, bn: { text: "“এই URL শর্টনারটি অসাধারণ! আমার লিঙ্কগুলো এখন অনেক পেশাদার লাগছে। সত্যিই দুর্দান্ত।”", author: "- নাবিলা হক" } },
-                { en: { text: "“I use the niche calculators daily for my business. They are accurate and easy to use. Great work!”", author: "- Emily Chen, Canada" }, bn: { text: "“আমার ব্যবসার জন্য আমি প্রতিদিন এই ক্যালকুলেটরগুলো ব্যবহার করি। এগুলি খুবই সঠিক এবং ব্যবহার করা সহজ। দারুণ কাজ!”", author: "- এমিলি চেন, কানাডা" } },
-                { en: { text: "“I love the clean design and the variety of tools on this panel. It's my go-to for daily tasks.”", author: "- David Williams, USA" }, bn: { text: "“এই প্যানেলের পরিষ্কার ডিজাইন এবং বিভিন্ন টুল আমার খুব ভালো লাগে। প্রতিদিনের কাজের জন্য এটিই আমার প্রথম পছন্দ।”", author: "- ডেভিড উইলিয়ামস, ইউএসএ" } },
-                { en: { text: "“The URL shortener is lightning-fast and the custom alias feature is a must-have for any marketer.”", author: "- Liam Johnson, Canada" }, bn: { text: "“URL শর্টনারটি বিদ্যুতের মতো দ্রুত কাজ করে এবং কাস্টম নামের ফিচারটি যেকোনো মার্কেটারের জন্য আবশ্যক।”", author: "- লিয়াম জনসন, কানাডা" } },
-                { en: { text: "“Your website is a treasure trove of useful tools. The BMI calculator is a nice touch!”", author: "- Noah Davis, Canada" }, bn: { text: "“আপনাদের ওয়েবসাইটটি দরকারী টুলের এক ভাণ্ডার। BMI ক্যালকুলেটরটি একটি চমৎকার সংযোজন!”", author: "- নোয়া ডেভিস, কানাডা" } },
-                { en: { text: "“The panel is so easy to navigate. I found exactly what I needed in seconds. Fantastic user experience.”", author: "- Sarah Parker, USA" }, bn: { text: "“এই প্যানেলটি ব্যবহার করা খুবই সহজ। আমি কয়েক সেকেন্ডের মধ্যে আমার প্রয়োজনীয় টুল খুঁজে পেয়েছি। দারুণ ইউজার এক্সপেরিয়েন্স।”", author: "- সারা পার্কার, ইউএসএ" } },
-                { en: { text: "“The Facebook follower tool helped me reach more people without any cost. I'm very impressed.”", author: "- Mark Evans, Canada" }, bn: { text: "“ফেসবুক ফলোয়ার টুলটি আমাকে কোনো খরচ ছাড়াই বেশি মানুষের কাছে পৌঁছাতে সাহায্য করেছে। আমি মুগ্ধ।”", author: "- মার্ক ইভান্স, কানাডা" } }
+                { en: { text: "“This tool is a lifesaver! Gained thousands of real followers on my page in just a few days. Totally free and effective.”", author: "- Jessica M." }, bn: { text: "“এই টুলটা আমার জন্য জীবন বাঁচানোর মতো! মাত্র কয়েকদিনে আমার পেজে হাজার হাজার আসল ফলোয়ার পেয়েছি। সম্পূর্ণ বিনামূল্যে এবং কার্যকরী।”", author: "- জেসিকা এম." } },
+                { en: { text: "“Unbelievable results! My Facebook reach has skyrocketed since I started using this tool. The engagement is through the roof.”", author: "- Robert K." }, bn: { text: "“অবিশ্বাস্য ফলাফল! এই টুল ব্যবহার করার পর আমার ফেসবুকের রিচ অনেক বেড়ে গেছে। এনগেজমেন্টও অনেক বেশি।”", author: "- রবার্ট কে." } },
+                { en: { text: "“I was skeptical at first, but the free likes and followers are genuine. This is the best tool for growing a page without spending a dime.”", author: "- Sarah P." }, bn: { text: "“প্রথম দিকে সন্দেহ ছিল, কিন্তু বিনামূল্যে পাওয়া লাইক এবং ফলোয়ারগুলো আসল। টাকা খরচ না করে পেজ বাড়ানোর জন্য এটি সেরা টুল।”", author: "- সারা পি." } },
+                { en: { text: "“Absolutely brilliant! My business page looks so much more credible with the new followers. Thanks a million for this tool.”", author: "- David C." }, bn: { text: "“একদম অসাধারণ! নতুন ফলোয়ারদের কারণে আমার ব্যবসার পেজ অনেক বেশি বিশ্বাসযোগ্য লাগছে। এই টুলের জন্য অসংখ্য ধন্যবাদ।”", author: "- ডেভিড সি." } },
+                { en: { text: "“The interface is so easy to use, and the results are instant. I've been recommending this to all my friends who want to grow their FB page.”", author: "- Maria L." }, bn: { text: "“ব্যবহার করা খুবই সহজ এবং ফলাফল তাৎক্ষণিক। যারা তাদের ফেসবুক পেজ বাড়াতে চায়, আমি তাদের সবাইকে এটি ব্যবহারের পরামর্শ দিচ্ছি।”", author: "- মারিয়া এল." } },
+                { en: { text: "“Finally, a tool that actually works! My engagement rate has never been higher. I’m so happy with the free likes.”", author: "- Ben S." }, bn: { text: "“অবশেষে, একটি টুল যা সত্যিই কাজ করে! আমার এনগেজমেন্ট রেট এতো বেশি আগে কখনো ছিল না। বিনামূল্যে লাইক পেয়ে আমি খুব খুশি।”", author: "- বেন এস." } },
+                { en: { text: "“I was struggling to get my first 1000 followers. This tool helped me cross that milestone effortlessly. Highly recommended!”", author: "- Emily R." }, bn: { text: "“আমি আমার প্রথম ১০০০ ফলোয়ার পেতে খুব কষ্ট করছিলাম। এই টুলটি আমাকে খুব সহজে সেই মাইলফলক অতিক্রম করতে সাহায্য করেছে। অত্যন্ত প্রস্তাবিত!”", author: "- এমিলি আর." } },
+                { en: { text: "“The Facebook follower tool is incredibly fast. I saw my numbers growing in real-time. This is a must-have for any page owner.”", author: "- John W." }, bn: { text: "“ফেসবুক ফলোয়ার টুলটি অবিশ্বাস্যভাবে দ্রুত কাজ করে। আমি রিয়েল-টাইমে আমার সংখ্যা বাড়তে দেখেছি। যেকোনো পেজ মালিকের জন্য এটি আবশ্যক।”", author: "- জন ডাব্লিউ." } }
             ];
             const testimonialCards = document.querySelectorAll('.testimonial-card');
             const testimonialTexts = document.querySelectorAll('.testimonial-text');
@@ -880,10 +879,10 @@ body.dark-mode .mode-toggle .ri-moon-line { display: block; }
             }
             const sectionMap = {
                 'tools': 'tools-panel',
-                'spin-and-win': 'spin-and-win-section',
-                'viral-link': 'all-viral-link-section',
                 'testimonials': 'testimonials-section',
-                'why-us': 'why-choose-us-section'
+                'why-us': 'why-choose-us-section',
+                'spin-and-win': 'spin-and-win-section',
+                'viral-link': 'all-viral-link-section'
             };
             function filterSections(filter) {
                 sections.forEach(section => {
