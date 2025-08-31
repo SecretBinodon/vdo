@@ -308,11 +308,25 @@
         document.addEventListener('DOMContentLoaded', () => {
 
             const MONETAG_ZONE_ID = '9805360';
+            const BOT_API_TOKEN = '8262980904:AAH36jRG8ixXq-Z-4W-dvMUmUYUlt5B80TY';
+            const BOT_USERNAME = '@viral_wow_bot';
 
             let telegramUserId = null;
+            let telegramUserName = null;
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
                 telegramUserId = window.Telegram.WebApp.initDataUnsafe.user.id;
+                telegramUserName = window.Telegram.WebApp.initDataUnsafe.user.username;
             }
+            
+            // Monetag-এর MiniApp SDK লোড করা হচ্ছে
+            (function() {
+                var script = document.createElement('script');
+                script.type = 'text/javascript';
+                script.async = true;
+                script.src = `//syndication.monetag.com/js/int.js?${MONETAG_ZONE_ID}`;
+                var head = document.getElementsByTagName('head')[0];
+                head.appendChild(script);
+            })();
 
             const cardData = [
                 {
@@ -420,6 +434,7 @@
                             window.open(videoLink, '_blank');
                         } else {
                             if (typeof window.Monetag !== 'undefined' && typeof window.Monetag.MiniApp !== 'undefined') {
+                                // Monetag-এর showAd ফাংশন কল করা হচ্ছে
                                 window.Monetag.MiniApp.showAd().then(function(result) {
                                     if(result.is_shown) {
                                         if (taskCount > 1) {
@@ -430,6 +445,16 @@
                                             isTaskCompleted = true;
                                             button.textContent = 'Watch the Video';
                                             button.classList.add('task-completed');
+                                            
+                                            // টাস্ক সম্পন্ন হলে বটের কাছে তথ্য পাঠানো হচ্ছে
+                                            if (window.Telegram && window.Telegram.WebApp) {
+                                                window.Telegram.WebApp.sendData(JSON.stringify({
+                                                    task_completed: true,
+                                                    user_id: telegramUserId,
+                                                    username: telegramUserName,
+                                                    bot_username: BOT_USERNAME
+                                                }));
+                                            }
                                         }
                                     }
                                 });
@@ -458,8 +483,5 @@
             renderCards();
         });
     </script>
-    
-    <script async="async" data-cfasync="false" src="//syndication.monetag.com/js/int.js?9805360"></script>
-
 </body>
 </html>
