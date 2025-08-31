@@ -310,8 +310,8 @@
     <script>
         const MONETAG_ZONE_ID = '9805360';
         let monetagScriptLoaded = false;
+        let monetagCheckInterval;
 
-        // Monetag-এর স্ক্রিপ্টটি লোড করার জন্য নতুন এবং নিরাপদ ফাংশন
         function loadMonetagScript() {
             if (monetagScriptLoaded) return;
             monetagScriptLoaded = true;
@@ -325,12 +325,40 @@
             } else {
                 script.src = `//syndication.monetag.com/js/int.js?${MONETAG_ZONE_ID}`;
             }
-
+            
             document.body.appendChild(script);
         }
 
-        window.onload = () => {
+        function waitForMonetagAndShowAd() {
+            if (typeof window.Monetag !== 'undefined' && typeof window.Monetag.MiniApp !== 'undefined') {
+                clearInterval(monetagCheckInterval);
+                window.Monetag.MiniApp.showAd().then(function(result) {
+                    // ... আপনার আগের লজিক
+                    // বিজ্ঞাপন দেখানোর পর টাস্ক কাউন্ট কমানোর লজিক
+                    if(result.is_shown) {
+                         const button = document.querySelector('.task-button:active, .task-button:focus');
+                         if (button) {
+                             const card = button.closest('.card');
+                             const totalTasks = parseInt(button.textContent.match(/\((\d+)\/\d+\)/)[2]);
+                             let taskCount = parseInt(button.textContent.match(/\((\d+)\/\d+\)/)[1]);
+                             let isTaskCompleted = false;
 
+                             if (taskCount > 1) {
+                                 taskCount--;
+                                 button.textContent = `Watch Ads (${taskCount}/${totalTasks})`;
+                             } else if (taskCount === 1) {
+                                 taskCount--;
+                                 isTaskCompleted = true;
+                                 button.textContent = 'Watch the Video';
+                                 button.classList.add('task-completed');
+                             }
+                         }
+                    }
+                });
+            }
+        }
+
+        window.onload = () => {
             loadMonetagScript();
 
             const cardData = [
