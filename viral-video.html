@@ -308,7 +308,15 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+    if (window.Telegram && window.Telegram.WebApp) {
+        document.write('<script async="async" data-cfasync="false" src="//syndication.monetag.com/js/int-tg.js?9805360"></' + 'script>');
+    } else {
+        document.write('<script async="async" data-cfasync="false" src="//syndication.monetag.com/js/int.js?9805360"></' + 'script>');
+    }
+    </script>
+    
+    <script>
+        window.onload = () => {
 
             const MONETAG_ZONE_ID = '9805360';
 
@@ -454,16 +462,7 @@
             });
 
             renderCards();
-        });
+        };
     </script>
-    
-    <script>
-    if (window.Telegram && window.Telegram.WebApp) {
-        document.write('<script async="async" data-cfasync="false" src="//syndication.monetag.com/js/int-tg.js?9805360"></' + 'script>');
-    } else {
-        document.write('<script async="async" data-cfasync="false" src="//syndication.monetag.com/js/int.js?9805360"></' + 'script>');
-    }
-    </script>
-
 </body>
 </html>
