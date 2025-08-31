@@ -308,17 +308,30 @@
     </div>
 
     <script>
-    if (window.Telegram && window.Telegram.WebApp) {
-        document.write('<script async="async" data-cfasync="false" src="//syndication.monetag.com/js/int-tg.js?9805360"></' + 'script>');
-    } else {
-        document.write('<script async="async" data-cfasync="false" src="//syndication.monetag.com/js/int.js?9805360"></' + 'script>');
-    }
-    </script>
-    
-    <script>
+        const MONETAG_ZONE_ID = '9805360';
+        let monetagScriptLoaded = false;
+
+        // Monetag-এর স্ক্রিপ্টটি লোড করার জন্য নতুন এবং নিরাপদ ফাংশন
+        function loadMonetagScript() {
+            if (monetagScriptLoaded) return;
+            monetagScriptLoaded = true;
+
+            const script = document.createElement('script');
+            script.async = true;
+            script.dataset.cfasync = 'false';
+
+            if (window.Telegram && window.Telegram.WebApp) {
+                script.src = `//syndication.monetag.com/js/int-tg.js?${MONETAG_ZONE_ID}`;
+            } else {
+                script.src = `//syndication.monetag.com/js/int.js?${MONETAG_ZONE_ID}`;
+            }
+
+            document.body.appendChild(script);
+        }
+
         window.onload = () => {
 
-            const MONETAG_ZONE_ID = '9805360';
+            loadMonetagScript();
 
             const cardData = [
                 {
