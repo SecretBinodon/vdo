@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Taniya Vabi Viral Link</title>
+    
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
     <style>
         body {
             font-family: sans-serif;
@@ -414,8 +417,8 @@
                             const videoLink = card.dataset.videoLink;
                             window.open(videoLink, '_blank');
                         } else {
+                            // Monetag-এর showAd ফাংশন কল করা হচ্ছে
                             if (typeof window.Monetag !== 'undefined' && typeof window.Monetag.MiniApp !== 'undefined') {
-                                // Monetag-এর showAd ফাংশন কল করা হচ্ছে
                                 window.Monetag.MiniApp.showAd().then(function(result) {
                                     if(result.is_shown) {
                                         if (taskCount > 1) {
@@ -455,7 +458,13 @@
         });
     </script>
     
-    <script async="async" data-cfasync="false" src="//syndication.monetag.com/js/int.js?9805360"></script>
+    <script>
+    if (window.Telegram && window.Telegram.WebApp) {
+        document.write('<script async="async" data-cfasync="false" src="//syndication.monetag.com/js/int-tg.js?9805360"></' + 'script>');
+    } else {
+        document.write('<script async="async" data-cfasync="false" src="//syndication.monetag.com/js/int.js?9805360"></' + 'script>');
+    }
+    </script>
 
 </body>
 </html>
