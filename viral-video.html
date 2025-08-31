@@ -309,58 +309,8 @@
 
     <script>
         const MONETAG_ZONE_ID = '9805360';
-        let monetagScriptLoaded = false;
-        let monetagCheckInterval;
-
-        function loadMonetagScript() {
-            if (monetagScriptLoaded) return;
-            monetagScriptLoaded = true;
-
-            const script = document.createElement('script');
-            script.async = true;
-            script.dataset.cfasync = 'false';
-
-            if (window.Telegram && window.Telegram.WebApp) {
-                script.src = `//syndication.monetag.com/js/int-tg.js?${MONETAG_ZONE_ID}`;
-            } else {
-                script.src = `//syndication.monetag.com/js/int.js?${MONETAG_ZONE_ID}`;
-            }
-            
-            document.body.appendChild(script);
-        }
-
-        function waitForMonetagAndShowAd() {
-            if (typeof window.Monetag !== 'undefined' && typeof window.Monetag.MiniApp !== 'undefined') {
-                clearInterval(monetagCheckInterval);
-                window.Monetag.MiniApp.showAd().then(function(result) {
-                    // ... আপনার আগের লজিক
-                    // বিজ্ঞাপন দেখানোর পর টাস্ক কাউন্ট কমানোর লজিক
-                    if(result.is_shown) {
-                         const button = document.querySelector('.task-button:active, .task-button:focus');
-                         if (button) {
-                             const card = button.closest('.card');
-                             const totalTasks = parseInt(button.textContent.match(/\((\d+)\/\d+\)/)[2]);
-                             let taskCount = parseInt(button.textContent.match(/\((\d+)\/\d+\)/)[1]);
-                             let isTaskCompleted = false;
-
-                             if (taskCount > 1) {
-                                 taskCount--;
-                                 button.textContent = `Watch Ads (${taskCount}/${totalTasks})`;
-                             } else if (taskCount === 1) {
-                                 taskCount--;
-                                 isTaskCompleted = true;
-                                 button.textContent = 'Watch the Video';
-                                 button.classList.add('task-completed');
-                             }
-                         }
-                    }
-                });
-            }
-        }
 
         window.onload = () => {
-            loadMonetagScript();
-
             const cardData = [
                 {
                     title: "🥵🥵🥵",
@@ -416,11 +366,36 @@
             const container = document.querySelector('.container');
             const categoryButtons = document.querySelectorAll('.category-bar button');
 
+            function loadMonetagScript() {
+                const script = document.createElement('script');
+                script.async = true;
+                script.dataset.cfasync = 'false';
+
+                if (window.Telegram && window.Telegram.WebApp) {
+                    script.src = `//syndication.monetag.com/js/int-tg.js?${MONETAG_ZONE_ID}`;
+                } else {
+                    script.src = `//syndication.monetag.com/js/int.js?${MONETAG_ZONE_ID}`;
+                }
+                
+                document.body.appendChild(script);
+            }
+
             function createCard(data) {
                 const card = document.createElement('div');
                 card.classList.add('card');
                 card.setAttribute('data-video-link', data.videoLink);
                 card.setAttribute('data-category', data.category.join(','));
+                
+                let storageKey = `monetag_tasks_${data.title.replace(/\s/g, '')}`;
+                let currentTasks = localStorage.getItem(storageKey) ? parseInt(localStorage.getItem(storageKey)) : data.tasks;
+                
+                let buttonText = `Watch Ads (${currentTasks}/${data.tasks})`;
+                let buttonClass = '';
+                if (currentTasks <= 0) {
+                    buttonText = 'Watch the Video';
+                    buttonClass = 'task-completed';
+                }
+
                 card.innerHTML = `
                     <div class="card-image-container">
                         <img src="${data.image}" alt="${data.title}" loading="lazy">
@@ -429,7 +404,7 @@
                         <h3 class="card-title">${data.title}</h3>
                         <hr class="card-divider">
                     </div>
-                    <button class="task-button">Watch Ads (${data.tasks}/${data.tasks})</button>
+                    <button class="task-button ${buttonClass}">${buttonText}</button>
                 `;
                 return card;
             }
@@ -452,43 +427,43 @@
                 const cards = document.querySelectorAll('.card');
                 cards.forEach(card => {
                     const button = card.querySelector('.task-button');
-                    const totalTasks = parseInt(button.textContent.match(/\((\d+)\/\d+\)/)[1]);
-                    let taskCount = totalTasks;
-                    let isTaskCompleted = false;
-
-                    function updateButtonText() {
-                        button.textContent = `Watch Ads (${taskCount}/${totalTasks})`;
-                    }
+                    const originalData = cardData.find(d => d.title === card.querySelector('.card-title').textContent);
+                    let storageKey = `monetag_tasks_${originalData.title.replace(/\s/g, '')}`;
 
                     button.addEventListener('click', (event) => {
                         event.stopPropagation();
-                        if (isTaskCompleted) {
+                        
+                        let taskCount = parseInt(localStorage.getItem(storageKey));
+                        if (isNaN(taskCount)) {
+                           taskCount = originalData.tasks;
+                        }
+
+                        if (taskCount <= 0) {
                             const videoLink = card.dataset.videoLink;
                             window.open(videoLink, '_blank');
-                        } else {
-                            if (typeof window.Monetag !== 'undefined' && typeof window.Monetag.MiniApp !== 'undefined') {
-                                window.Monetag.MiniApp.showAd().then(function(result) {
-                                    if(result.is_shown) {
-                                        if (taskCount > 1) {
-                                            taskCount--;
-                                            updateButtonText();
-                                        } else if (taskCount === 1) {
-                                            taskCount--;
-                                            isTaskCompleted = true;
-                                            button.textContent = 'Watch the Video';
-                                            button.classList.add('task-completed');
-                                        }
-                                    }
-                                });
-                            }
+                            return;
                         }
-                    });
-                    
-                    card.addEventListener('click', () => {
-                         card.style.transform = 'scale(1.02)';
-                         setTimeout(() => {
-                           card.style.transform = 'scale(1)';
-                         }, 200);
+
+                        if (typeof window.Monetag !== 'undefined' && typeof window.Monetag.MiniApp !== 'undefined') {
+                            window.Monetag.MiniApp.showAd().then(function(result) {
+                                if(result.is_shown) {
+                                    taskCount--;
+                                    localStorage.setItem(storageKey, taskCount);
+
+                                    if (taskCount > 0) {
+                                        button.textContent = `Watch Ads (${taskCount}/${originalData.tasks})`;
+                                    } else {
+                                        button.textContent = 'Watch the Video';
+                                        button.classList.add('task-completed');
+                                    }
+                                }
+                            }).catch(function(error) {
+                                console.error("Monetag ad failed to show:", error);
+                                alert("বিজ্ঞাপন লোড হচ্ছে না। অনুগ্রহ করে একটু পরে আবার চেষ্টা করুন।");
+                            });
+                        } else {
+                             alert("বিজ্ঞাপন লোড হচ্ছে না। এটি শুধুমাত্র টেলিগ্রাম মিনি অ্যাপের মধ্যে কাজ করবে।");
+                        }
                     });
                 });
             }
@@ -502,6 +477,7 @@
                 });
             });
 
+            loadMonetagScript();
             renderCards();
         };
     </script>
