@@ -23,7 +23,6 @@
             background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
             color: #fff;
             text-align: center;
-            /* Height adjusted to fit content */
             padding: 10px 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
@@ -40,7 +39,7 @@
             font-weight: bold;
         }
         
-        .header h2 { /* New style for the one-line text */
+        .header h2 {
             font-size: 16px;
             margin: 0;
             font-weight: bold;
@@ -119,10 +118,10 @@
 
         @media (max-width: 767px) {
             .header {
-                padding: 10px 15px; /* Adjust padding for mobile */
+                padding: 10px 15px;
             }
             .header h2 {
-                font-size: 14px; /* Adjust font size for mobile */
+                font-size: 14px;
             }
             .category-bar {
                 justify-content: space-between;
@@ -329,6 +328,39 @@
                 width: 90px;
             }
             .mobile-ad { display: block; }
+            /* Smaller modal for mobile */
+            .modal-content {
+                width: 95%;
+                max-width: 250px;
+                padding: 10px;
+            }
+            .form-group input, .form-group select {
+                padding: 5px;
+                font-size: 12px;
+            }
+            .form-buttons button {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+            .modal-content h2 {
+                font-size: 16px;
+                margin-bottom: 5px;
+            }
+            .form-group label {
+                font-size: 12px;
+            }
+            .code-box-container {
+                margin-top: 10px;
+            }
+            .code-box {
+                font-size: 10px;
+                padding: 5px;
+                max-height: 150px;
+            }
+            .copy-btn {
+                padding: 8px 15px;
+                font-size: 12px;
+            }
         }
 
         .task-completed {
@@ -354,15 +386,14 @@
             justify-content: center;
             align-items: center;
             
-            /* New positioning for better user experience */
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            display: none; /* Initially hidden */
-            align-items: flex-start; /* Aligns content to the top */
-            padding-top: 50px; /* Space from the top of the screen */
+            display: none;
+            align-items: flex-start;
+            padding-top: 50px;
         }
         
         .modal-content {
@@ -374,7 +405,7 @@
             max-width: 300px;
             text-align: left;
             position: relative;
-            margin-top: 50px; /* Optional: adds extra space from the top */
+            margin-top: 50px;
         }
 
         .modal-content h2 {
@@ -487,6 +518,29 @@
             padding: 5px 10px;
             font-size: 14px;
         }
+        
+        /* New styles for responsive notification */
+        .notification {
+            position: fixed;
+            top: 10vh;
+            left: 50%;
+            transform: translate(-50%, 0);
+            background-color: rgba(220, 53, 69, 0.9);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            z-index: 1002;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+            max-width: 90%;
+            word-wrap: break-word;
+        }
+        .notification.show {
+            opacity: 1;
+        }
 
         .manual-copy-instruction {
             margin-top: 10px;
@@ -496,12 +550,14 @@
         }
     </style>
     
-    <script src='//libtl.com/sdk.js' data-zone='9805360' data-sdk='show_9805360'></script>
+    <script async type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
+    <script async type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
+    <script async type='text/javascript' src='//pl27408564.profitableratecpm.com/6f/9e/55/6f9e557cf4f6d1ad34e52bf37ab2156a.js'></script>
 </head>
 <body>
     <div class="header">
         <div class="header-content">
-            <h2>Video কোয়ালিটি অনুযায়ী "টাস্ক" রাখা হয়েছে..!</h2>
+            <h2>কোয়ালিটি অনুযায়ী "টাস্ক" রাখা হয়েছে/ভিজিট টাইম মাত্র 15 সেকেন্ড.!</h2>
         </div>
     </div>
     
@@ -521,7 +577,7 @@
     <div id="authModal" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
-            <h2>Only For Admin</h2>
+            <h2>Only for Admin</h2>
             <div class="form-group">
                 <input type="password" id="passwordInput" placeholder="Password" required>
             </div>
@@ -581,7 +637,7 @@
                 <button id="copyCodeBtn" class="copy-btn">Copy Code</button>
                 <div id="codeNotificationPopup" class="notification"></div>
                 <div id="manualCopyInstruction" class="manual-copy-instruction" style="display: none;">
-                    Sorry, automatic copy failed. Please manually select and copy the code above.
+                    Sorry, automatic copy failed. Please select the code above and press `Ctrl+C` (or the "Copy" option on mobile) to copy.
                 </div>
             </div>
         </div>
@@ -591,21 +647,17 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const adLinks = [
+                'https://www.profitableratecpm.com/gpbenjxu?key=bebb9ec59e6fe86414605a44c4b0ad9f',
+                'https://www.profitableratecpm.com/vayrvz28p?key=c6fdae697483b5c58b9b2c33ed412845',
+                'https://www.profitableratecpm.com/njmk9xpav?key=116655e1097328cc4cfb2c69fcfe6294',
+                'https://www.profitableratecpm.com/bxpys4w3p1?key=548da758e411d97dc9752aa68d0a7502',
+                'https://www.profitableratecpm.com/xbqsnpvv6?key=3c2dbdef651bb2d6e0638b75d579cd1a'
+                // Add more direct links here up to 20
+            ];
+
             const cardData = [
-                {
-                    title: "🥵🥵🥵",
-                    image: "http://googleusercontent.com/file_content/0",
-                    videoLink: "https://drive.google.com/drive/folders/...",
-                    category: ["tiktoker"],
-                    tasks: 3
-                },
-                {
-                    title: "Uff 🥵",
-                    image: "http://googleusercontent.com/file_content/0",
-                    videoLink: "https://drive.google.com/drive/folders/...",
-                    category: ["viral"],
-                    tasks: 3
-                },
+                
                 {
                     title: "কড়া",
                     image: "https://raw.githubusercontent.com/nth-link/NTH-link/refs/heads/main/images/4.jpg",
@@ -657,22 +709,9 @@
             const notificationPopup = document.getElementById('notificationPopup');
             const codeNotificationPopup = document.getElementById('codeNotificationPopup');
             const manualCopyInstruction = document.getElementById('manualCopyInstruction');
-            
-            // নতুন পাসওয়ার্ড
             const password = '@@@###';
-            
             let wrongPasswordCount = 0;
             const lockoutDuration = 5 * 60 * 1000;
-
-            // Monetag specific logic
-            function showMonetagAd() {
-                // The Monetag SDK is loaded from the head, this function will call the SDK's method
-                if (typeof show_9805360 === 'function') {
-                    show_9805360();
-                } else {
-                    console.error('Monetag SDK function not found. Please check the SDK code.');
-                }
-            }
 
             function showNotification(message, duration = 3000, target = notificationPopup) {
                 target.textContent = message;
@@ -734,7 +773,6 @@
                 
                 codeBox.textContent = newCardCode.trim();
                 codeResultDiv.style.display = 'block';
-                manualCopyInstruction.style.display = 'none';
             });
 
             copyCodeBtn.addEventListener('click', async () => {
@@ -746,6 +784,11 @@
                 } catch (err) {
                     console.error('Failed to copy text: ', err);
                     showNotification('Failed to copy.', 2000, codeNotificationPopup);
+                    
+                    const range = document.createRange();
+                    range.selectNode(codeBox);
+                    window.getSelection().removeAllRanges();
+                    window.getSelection().addRange(range);
                     manualCopyInstruction.style.display = 'block';
                 }
             });
@@ -758,7 +801,6 @@
                     addCardModal.style.display = "none";
                 }
             });
-
 
             function createCard(data) {
                 const card = document.createElement('div');
@@ -794,6 +836,8 @@
 
             function setupTaskButtons() {
                 const cards = document.querySelectorAll('.card');
+                const lastVisitedIndex = parseInt(localStorage.getItem('lastVisitedIndex')) || 0;
+                
                 cards.forEach(card => {
                     const button = card.querySelector('.task-button');
                     const totalTasks = parseInt(button.textContent.match(/\((\d+)\/\d+\)/)[1]);
@@ -810,20 +854,38 @@
                             const videoLink = card.dataset.videoLink;
                             window.open(videoLink, '_blank');
                         } else {
-                            // Call Monetag ad function here
-                            showMonetagAd();
-
+                            const currentAdIndex = (lastVisitedIndex + (totalTasks - taskCount)) % adLinks.length;
+                            const currentAdLink = adLinks[currentAdIndex];
+                            
+                            const adWindow = window.open(currentAdLink, '_blank');
+                            
+                            let timerCompleted = false;
+                            
                             setTimeout(() => {
-                                if (taskCount > 1) {
-                                    taskCount--;
-                                    updateButtonText();
-                                } else if (taskCount === 1) {
-                                    taskCount--;
-                                    isTaskCompleted = true;
-                                    button.textContent = 'Watch the Video';
-                                    button.classList.add('task-completed');
+                                timerCompleted = true;
+                                if (adWindow && !adWindow.closed) {
+                                    if (taskCount > 1) {
+                                        taskCount--;
+                                        updateButtonText();
+                                        localStorage.setItem('lastVisitedIndex', currentAdIndex + 1);
+                                    } else if (taskCount === 1) {
+                                        taskCount--;
+                                        isTaskCompleted = true;
+                                        button.textContent = 'Watch the Video';
+                                        button.classList.add('task-completed');
+                                        localStorage.setItem('lastVisitedIndex', currentAdIndex + 1);
+                                    }
                                 }
-                            }, 10000); // 10-second timer
+                            }, 15000); // 15 seconds timer
+                            
+                            const checkAdStatus = setInterval(() => {
+                                if (adWindow && adWindow.closed && !timerCompleted) {
+                                    clearInterval(checkAdStatus);
+                                    showNotification('Please complete 15 seconds to proceed.', 5000);
+                                } else if (adWindow && !adWindow.closed && timerCompleted) {
+                                    clearInterval(checkAdStatus);
+                                }
+                            }, 500);
                         }
                     });
                     
