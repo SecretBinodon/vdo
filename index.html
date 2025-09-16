@@ -865,7 +865,7 @@
             let allCardData = [];
             let filteredCards = [];
             let cardsLoaded = 0;
-            const cardsPerLoad = 10; // এটি পরিবর্তন করে 10 করা হয়েছে
+            const cardsPerLoad = 10;
             const loadingSentinel = document.getElementById('loading-sentinel');
             let currentFilter = 'all';
             let currentCardToHighlight = null;
@@ -1001,6 +1001,9 @@
                     renderCards(0, cardsPerLoad, true);
                     cardsLoaded = cardsPerLoad;
                 }
+                
+                // এখানে নতুন লাইনটি যুক্ত করা হয়েছে, যাতে লোডার আবার কাজ করা শুরু করে
+                observer.observe(loadingSentinel);
             }
             
             // নতুন: আরও কার্ড লোড করার ফাংশন (ইনফিনিট স্ক্রোলিংয়ের জন্য)
@@ -1206,7 +1209,6 @@
                  mainContent.style.display = 'block';
                  adminPanelFull.classList.remove('show');
                  loadData();
-                 //observer.observe(loadingSentinel); // এখন শুধু init-এর সময় না, বরং filterAndLoadCards-এর পর অবসার্ভার চালু হবে
             }
             
             init();
