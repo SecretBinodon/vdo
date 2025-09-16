@@ -881,7 +881,7 @@
                     loadingBar.style.width = '60%';
                     const data = await response.json();
                     loadingBar.style.width = '80%';
-                    allCardData = data; // নতুন কার্ডগুলো প্রথমে দেখানোর জন্য
+                    allCardData = data;
                     filterAndLoadCards(currentFilter);
                     loadingBar.style.width = '100%';
                     setTimeout(() => {
@@ -967,6 +967,13 @@
                     // অ্যানিমেশনের জন্য কার্ডগুলো দৃশ্যমান করা
                     setTimeout(() => {
                          card.classList.add('visible');
+                         // হাইলাইট করার লজিক এখানে যুক্ত করা হয়েছে
+                         if (data.id === currentCardToHighlight) {
+                             card.classList.add('highlighted');
+                             setTimeout(() => {
+                                 card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                             }, 100);
+                         }
                     }, 50); // ছোট ডিলে যোগ করা হয়েছে
                 });
                 
@@ -1012,7 +1019,10 @@
 
                 // হাইলাইট রিমুভ করার লজিক
                 if (button && currentCardToHighlight) {
-                    currentCardToHighlight.classList.remove('highlighted');
+                    const highlightedCard = document.querySelector(`[data-id="${currentCardToHighlight}"]`);
+                    if (highlightedCard) {
+                        highlightedCard.classList.remove('highlighted');
+                    }
                     currentCardToHighlight = null;
                 }
                 
@@ -1050,8 +1060,8 @@
                 if (button && card) {
                     const totalTasks = parseInt(card.dataset.tasks);
                     
-                    let currentTasks = parseInt(card.dataset.currentTasks);
-                    const videoLink = card.dataset.videoLink;
+                    let currentTasks = parseInt(card.dataset.current-tasks);
+                    const videoLink = card.dataset.video-link;
 
                     if (currentTasks === 0) {
                         window.open(videoLink, '_blank');
@@ -1176,6 +1186,10 @@
             });
             
             function init() {
+                // ইউআরএল থেকে কার্ড আইডি বের করা
+                const urlParams = new URLSearchParams(window.location.search);
+                currentCardToHighlight = urlParams.get('cardId');
+                
                  mainContent.style.display = 'block';
                  adminPanelFull.classList.remove('show');
                  loadData();
