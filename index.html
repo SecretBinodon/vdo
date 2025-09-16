@@ -865,7 +865,7 @@
             let allCardData = [];
             let filteredCards = [];
             let cardsLoaded = 0;
-            const cardsPerLoad = 30;
+            const cardsPerLoad = 10;
             const loadingSentinel = document.getElementById('loading-sentinel');
             let currentFilter = 'all';
             let currentCardToHighlight = null;
@@ -881,7 +881,7 @@
                     loadingBar.style.width = '60%';
                     const data = await response.json();
                     loadingBar.style.width = '80%';
-                    allCardData = data.reverse(); // নতুন কার্ডগুলো প্রথমে দেখানোর জন্য
+                    allCardData = data; // নতুন কার্ডগুলো প্রথমে দেখানোর জন্য
                     filterAndLoadCards(currentFilter);
                     loadingBar.style.width = '100%';
                     setTimeout(() => {
