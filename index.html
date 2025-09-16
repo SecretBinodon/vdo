@@ -852,6 +852,7 @@
             const manualCopyInstruction = document.getElementById('manualCopyInstruction');
             const backBtn = document.getElementById('backBtn');
             const restartBtn = document.getElementById('restartBtn');
+            const header = document.querySelector('.header');
             
             const password = '@@@###';
             let wrongPasswordCount = 0;
@@ -972,7 +973,7 @@
                              card.classList.add('highlighted');
                              // এখানে নতুন লজিক যুক্ত করা হয়েছে
                              setTimeout(() => {
-                                 const headerHeight = document.querySelector('.header').offsetHeight;
+                                 const headerHeight = header.offsetHeight;
                                  const viewportHeight = window.innerHeight;
                                  const cardTop = card.getBoundingClientRect().top;
                                  const scrollPosition = window.scrollY + cardTop - (viewportHeight / 2) + (card.offsetHeight / 2) + (headerHeight / 2);
