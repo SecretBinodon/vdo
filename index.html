@@ -865,10 +865,11 @@
             let allCardData = [];
             let filteredCards = [];
             let cardsLoaded = 0;
-            const cardsPerLoad = 10;
+            const cardsPerLoad = 10; // এটি পরিবর্তন করে 10 করা হয়েছে
             const loadingSentinel = document.getElementById('loading-sentinel');
             let currentFilter = 'all';
             let currentCardToHighlight = null;
+            let observer;
             
             // নতুন: ডেটা লোড করার ফাংশন
             async function loadData() {
@@ -956,7 +957,6 @@
             function renderCards(start, end, clear = false) {
                 if (clear) {
                     container.innerHTML = '';
-                    cardsLoaded = 0;
                 }
                 
                 const cardsToRender = filteredCards.slice(start, end);
@@ -988,7 +988,19 @@
                 } else {
                     filteredCards = allCardData.filter(card => card.category.includes(filterCategory));
                 }
-                renderCards(0, cardsPerLoad, true);
+                
+                // হাইলাইট কার্ড আছে কিনা তা চেক করা
+                const targetCardIndex = filteredCards.findIndex(card => card.id === currentCardToHighlight);
+                
+                if (targetCardIndex !== -1) {
+                    // নির্দিষ্ট কার্ডটি খুঁজে পাওয়া গেলে, সেই পর্যন্ত লোড করা
+                    renderCards(0, targetCardIndex + 1, true);
+                    cardsLoaded = targetCardIndex + 1;
+                } else {
+                    // যদি কোনো কার্ড হাইলাইট করার না থাকে, তাহলে স্বাভাবিক লোড করা
+                    renderCards(0, cardsPerLoad, true);
+                    cardsLoaded = cardsPerLoad;
+                }
             }
             
             // নতুন: আরও কার্ড লোড করার ফাংশন (ইনফিনিট স্ক্রোলিংয়ের জন্য)
@@ -1001,7 +1013,7 @@
             }
 
             // ইনফিনিট স্ক্রোলিংয়ের জন্য IntersectionObserver
-            const observer = new IntersectionObserver((entries) => {
+            observer = new IntersectionObserver((entries) => {
                 if (entries[0].isIntersecting) {
                     loadMoreCards();
                 }
@@ -1060,8 +1072,8 @@
                 if (button && card) {
                     const totalTasks = parseInt(card.dataset.tasks);
                     
-                    let currentTasks = parseInt(card.dataset.current-tasks);
-                    const videoLink = card.dataset.video-link;
+                    let currentTasks = parseInt(card.dataset.currentTasks);
+                    const videoLink = card.dataset.videoLink;
 
                     if (currentTasks === 0) {
                         window.open(videoLink, '_blank');
@@ -1091,6 +1103,7 @@
                     categoryButtons.forEach(btn => btn.classList.remove('active'));
                     button.classList.add('active');
                     const category = button.getAttribute('data-category');
+                    currentCardToHighlight = null; // নতুন ফিল্টার করার সময় হাইলাইট বন্ধ করা
                     filterAndLoadCards(category);
                 });
             });
@@ -1193,7 +1206,7 @@
                  mainContent.style.display = 'block';
                  adminPanelFull.classList.remove('show');
                  loadData();
-                 observer.observe(loadingSentinel);
+                 //observer.observe(loadingSentinel); // এখন শুধু init-এর সময় না, বরং filterAndLoadCards-এর পর অবসার্ভার চালু হবে
             }
             
             init();
