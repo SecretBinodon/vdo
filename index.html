@@ -970,9 +970,18 @@
                          // হাইলাইট করার লজিক এখানে যুক্ত করা হয়েছে
                          if (data.id === currentCardToHighlight) {
                              card.classList.add('highlighted');
+                             // এখানে নতুন লজিক যুক্ত করা হয়েছে
                              setTimeout(() => {
-                                 card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                             }, 100);
+                                 const headerHeight = document.querySelector('.header').offsetHeight;
+                                 const viewportHeight = window.innerHeight;
+                                 const cardTop = card.getBoundingClientRect().top;
+                                 const scrollPosition = window.scrollY + cardTop - (viewportHeight / 2) + (card.offsetHeight / 2) + (headerHeight / 2);
+            
+                                 window.scrollTo({
+                                     top: scrollPosition,
+                                     behavior: 'smooth'
+                                 });
+                             }, 200);
                          }
                     }, 50); // ছোট ডিলে যোগ করা হয়েছে
                 });
