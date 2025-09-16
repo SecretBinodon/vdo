@@ -852,7 +852,6 @@
             const manualCopyInstruction = document.getElementById('manualCopyInstruction');
             const backBtn = document.getElementById('backBtn');
             const restartBtn = document.getElementById('restartBtn');
-            const header = document.querySelector('.header');
             
             const password = '@@@###';
             let wrongPasswordCount = 0;
@@ -971,24 +970,20 @@
                          // হাইলাইট করার লজিক এখানে যুক্ত করা হয়েছে
                          if (data.id === currentCardToHighlight) {
                              card.classList.add('highlighted');
-                             
+                             // এখানে নতুন লজিক যুক্ত করা হয়েছে
                              setTimeout(() => {
                                  const headerHeight = document.querySelector('.header').offsetHeight;
-                                 const categoryBarHeight = document.querySelector('.category-bar').offsetHeight;
-                                 const totalHeaderHeight = headerHeight + categoryBarHeight;
-                                 
-                                 const cardPosition = card.getBoundingClientRect().top;
-                                 const currentScroll = window.scrollY;
-                                 
-                                 const targetScroll = currentScroll + cardPosition - totalHeaderHeight - 10;
-                                 
+                                 const viewportHeight = window.innerHeight;
+                                 const cardTop = card.getBoundingClientRect().top;
+                                 const scrollPosition = window.scrollY + cardTop - (viewportHeight / 2) + (card.offsetHeight / 2) + (headerHeight / 2);
+            
                                  window.scrollTo({
-                                     top: targetScroll,
+                                     top: scrollPosition,
                                      behavior: 'smooth'
                                  });
                              }, 200);
                          }
-                    }, 50); 
+                    }, 50); // ছোট ডিলে যোগ করা হয়েছে
                 });
                 
                 cardsLoaded = end;
@@ -1089,7 +1084,7 @@
                 if (button && card) {
                     const totalTasks = parseInt(card.dataset.tasks);
                     
-                    let currentTasks = parseInt(card.dataset.current-tasks);
+                    let currentTasks = parseInt(card.dataset.currentTasks);
                     const videoLink = card.dataset.videoLink;
 
                     if (currentTasks === 0) {
