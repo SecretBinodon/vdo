@@ -714,6 +714,63 @@
             }
         }
         
+    /* Pagination CSS */
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 10px;
+            background-color: #f0f2f5;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+            white-space: nowrap;
+        }
+
+        .pagination-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .pagination-button {
+            background-color: #fff;
+            color: #2575fc;
+            border: 1px solid #2575fc;
+            border-radius: 5px;
+            padding: 8px 12px;
+            margin: 0 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .pagination-button.active {
+            background-color: #2575fc;
+            color: #fff;
+        }
+
+        .pagination-button:hover:not(.active) {
+            background-color: #e6f0ff;
+        }
+
+        .pagination-button.disabled {
+            background-color: #e0e0e0;
+            color: #888;
+            border-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .pagination-button.prev-next {
+            background-color: #6a11cb;
+            color: #fff;
+            border-color: #6a11cb;
+        }
+        .pagination-button.prev-next:hover:not(.disabled) {
+            background-color: #550e99;
+        }
     </style>
 </head>
 <body>
@@ -750,6 +807,7 @@
         
         <div class="container"></div>
 
+        <div id="pagination-container" class="pagination-container"></div>
         <div id="loading-sentinel" style="height: 1px;"></div>
     
         <div id="authModal" class="modal">
@@ -852,6 +910,7 @@
             const manualCopyInstruction = document.getElementById('manualCopyInstruction');
             const backBtn = document.getElementById('backBtn');
             const restartBtn = document.getElementById('restartBtn');
+            const paginationContainer = document.getElementById('pagination-container');
             
             const password = '@@@###';
             let wrongPasswordCount = 0;
@@ -870,7 +929,12 @@
             let currentFilter = 'all';
             let currentCardToHighlight = null;
             let observer;
-            
+
+            // নতুন: পেজিনেশনের জন্য ভেরিয়েবল
+            const cardsPerPage = 100;
+            let currentPage = 1;
+            let totalPages = 1;
+
             // নতুন: ডেটা লোড করার ফাংশন
             async function loadData() {
                 loadingBar.style.width = '20%';
@@ -989,7 +1053,7 @@
                 cardsLoaded = end;
             }
             
-            // নতুন: ক্যাটাগরি ফিল্টার এবং প্রথম ৩০টি কার্ড লোড করার ফাংশন
+            // নতুন: ক্যাটাগরি ফিল্টার এবং প্রথম কার্ড লোড করার ফাংশন (এখন পেজিনেশন অনুযায়ী)
             function filterAndLoadCards(filterCategory) {
                 currentFilter = filterCategory;
                 if (filterCategory === 'all') {
@@ -998,30 +1062,134 @@
                     filteredCards = allCardData.filter(card => card.category.includes(filterCategory));
                 }
                 
+                // পেজিনেশন আপডেট করা
+                totalPages = Math.ceil(filteredCards.length / cardsPerPage);
+                currentPage = 1;
+                renderPaginationButtons();
+                
                 // হাইলাইট কার্ড আছে কিনা তা চেক করা
                 const targetCardIndex = filteredCards.findIndex(card => card.id === currentCardToHighlight);
                 
                 if (targetCardIndex !== -1) {
+                    const targetPage = Math.floor(targetCardIndex / cardsPerPage) + 1;
+                    currentPage = targetPage;
                     // নির্দিষ্ট কার্ডটি খুঁজে পাওয়া গেলে, সেই পর্যন্ত লোড করা
-                    renderCards(0, targetCardIndex + 1, true);
-                    cardsLoaded = targetCardIndex + 1;
+                    loadPage(targetPage, targetCardIndex);
                 } else {
                     // যদি কোনো কার্ড হাইলাইট করার না থাকে, তাহলে স্বাভাবিক লোড করা
-                    renderCards(0, cardsPerLoad, true);
-                    cardsLoaded = cardsPerLoad;
+                    loadPage(currentPage);
                 }
-                
-                // এখানে নতুন লাইনটি যুক্ত করা হয়েছে, যাতে লোডার আবার কাজ করা শুরু করে
-                observer.observe(loadingSentinel);
             }
-            
+
+            // নতুন: নির্দিষ্ট পেজ লোড করার ফাংশন
+            function loadPage(pageNumber, highlightIndex = -1) {
+                currentPage = pageNumber;
+                const startCardIndex = (currentPage - 1) * cardsPerPage;
+                let endCardIndex = Math.min(startCardIndex + cardsPerLoad, filteredCards.length);
+                
+                if (highlightIndex !== -1) {
+                    endCardIndex = highlightIndex + 1;
+                }
+
+                container.innerHTML = ''; // কন্টেনার খালি করা
+                renderCards(startCardIndex, endCardIndex, true); // শুধু প্রথম ১০টি কার্ড লোড করা
+                updatePaginationButtons();
+                
+                // পেজ লোড হলে টপে স্ক্রল করা
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
             // নতুন: আরও কার্ড লোড করার ফাংশন (ইনফিনিট স্ক্রোলিংয়ের জন্য)
             function loadMoreCards() {
-                if (cardsLoaded < filteredCards.length) {
-                    const start = cardsLoaded;
-                    const end = Math.min(cardsLoaded + cardsPerLoad, filteredCards.length);
-                    renderCards(start, end);
+                const startCardIndex = (currentPage - 1) * cardsPerPage + cardsLoaded;
+                const endCardIndex = Math.min((currentPage - 1) * cardsPerPage + cardsLoaded + cardsPerLoad, (currentPage * cardsPerPage));
+
+                if (startCardIndex < endCardIndex) {
+                    renderCards(startCardIndex, endCardIndex, false);
                 }
+            }
+            
+            // নতুন: পেজিনেশন বাটন রেন্ডার করার ফাংশন
+            function renderPaginationButtons() {
+                paginationContainer.innerHTML = ''; // আগের বাটনগুলো মুছে ফেলা
+                
+                if (totalPages <= 1) return;
+
+                const prevBtn = document.createElement('button');
+                prevBtn.textContent = 'Previous';
+                prevBtn.classList.add('pagination-button', 'prev-next');
+                prevBtn.disabled = currentPage === 1;
+                prevBtn.addEventListener('click', () => loadPage(currentPage - 1));
+                paginationContainer.appendChild(prevBtn);
+
+                const maxButtonsToShow = 5;
+                let startPage = Math.max(1, currentPage - Math.floor(maxButtonsToShow / 2));
+                let endPage = Math.min(totalPages, startPage + maxButtonsToShow - 1);
+                
+                if (endPage - startPage + 1 < maxButtonsToShow) {
+                    startPage = Math.max(1, endPage - maxButtonsToShow + 1);
+                }
+
+                if (startPage > 1) {
+                    const firstPageBtn = document.createElement('button');
+                    firstPageBtn.textContent = '1';
+                    firstPageBtn.classList.add('pagination-button');
+                    firstPageBtn.addEventListener('click', () => loadPage(1));
+                    paginationContainer.appendChild(firstPageBtn);
+
+                    if (startPage > 2) {
+                        const dots = document.createElement('span');
+                        dots.textContent = '...';
+                        paginationContainer.appendChild(dots);
+                    }
+                }
+
+                for (let i = startPage; i <= endPage; i++) {
+                    const pageBtn = document.createElement('button');
+                    pageBtn.textContent = i;
+                    pageBtn.classList.add('pagination-button');
+                    if (i === currentPage) {
+                        pageBtn.classList.add('active');
+                    }
+                    pageBtn.addEventListener('click', () => loadPage(i));
+                    paginationContainer.appendChild(pageBtn);
+                }
+
+                if (endPage < totalPages) {
+                     if (endPage < totalPages - 1) {
+                        const dots = document.createElement('span');
+                        dots.textContent = '...';
+                        paginationContainer.appendChild(dots);
+                    }
+                    const lastPageBtn = document.createElement('button');
+                    lastPageBtn.textContent = totalPages;
+                    lastPageBtn.classList.add('pagination-button');
+                    lastPageBtn.addEventListener('click', () => loadPage(totalPages));
+                    paginationContainer.appendChild(lastPageBtn);
+                }
+                
+                const nextBtn = document.createElement('button');
+                nextBtn.textContent = 'Next';
+                nextBtn.classList.add('pagination-button', 'prev-next');
+                nextBtn.disabled = currentPage === totalPages;
+                nextBtn.addEventListener('click', () => loadPage(currentPage + 1));
+                paginationContainer.appendChild(nextBtn);
+            }
+
+            // নতুন: পেজিনেশন বাটন আপডেট করার ফাংশন
+            function updatePaginationButtons() {
+                const buttons = paginationContainer.querySelectorAll('.pagination-button');
+                buttons.forEach(button => {
+                    button.classList.remove('active');
+                    if (button.textContent == currentPage) {
+                        button.classList.add('active');
+                    }
+                    if (button.textContent === 'Previous') {
+                        button.disabled = currentPage === 1;
+                    } else if (button.textContent === 'Next') {
+                        button.disabled = currentPage === totalPages;
+                    }
+                });
             }
 
             // ইনফিনিট স্ক্রোলিংয়ের জন্য IntersectionObserver
@@ -1084,7 +1252,7 @@
                 if (button && card) {
                     const totalTasks = parseInt(card.dataset.tasks);
                     
-                    let currentTasks = parseInt(card.dataset.currentTasks);
+                    let currentTasks = parseInt(card.dataset.current-tasks);
                     const videoLink = card.dataset.videoLink;
 
                     if (currentTasks === 0) {
@@ -1218,6 +1386,7 @@
                  mainContent.style.display = 'block';
                  adminPanelFull.classList.remove('show');
                  loadData();
+                 observer.observe(loadingSentinel);
             }
             
             init();
