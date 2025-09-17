@@ -1082,23 +1082,36 @@
             }
 
             // নতুন: নির্দিষ্ট পেজ লোড করার ফাংশন
-            function loadPage(pageNumber, highlightIndex = -1) {
-                currentPage = pageNumber;
-                const startCardIndex = (currentPage - 1) * cardsPerPage;
-                let endCardIndex = Math.min(startCardIndex + cardsPerLoad, filteredCards.length);
-                
-                if (highlightIndex !== -1) {
-                    endCardIndex = highlightIndex + 1;
-                }
+    function loadPage(pageNumber, highlightIndex = -1) {
+    currentPage = pageNumber;
+    const startCardIndex = (currentPage - 1) * cardsPerPage;
+    const endOfPage = Math.min(startCardIndex + cardsPerPage, filteredCards.length);
+    const initialLoadCount = Math.min(cardsPerLoad, endOfPage - startCardIndex);
+    
+    // পেজ খালি করা
+    container.innerHTML = '';
+    
+    // যদি হাইলাইট কার্ড থাকে, তাহলে সেই পর্যন্ত লোড করা
+    if (highlightIndex !== -1) {
+        renderCards(startCardIndex, highlightIndex + 1, true);
+    } 
+    // যদি অবশিষ্ট কার্ডের সংখ্যা প্রাথমিক লোডের চেয়ে কম হয়, তাহলে সব লোড করে ফেলা
+    else if (endOfPage - startCardIndex <= cardsPerLoad) {
+        renderCards(startCardIndex, endOfPage, true);
+        observer.unobserve(loadingSentinel);
+    } 
+    // অন্যথায়, প্রাথমিক ১০টি কার্ড লোড করা
+    else {
+        renderCards(startCardIndex, startCardIndex + initialLoadCount, true);
+        observer.observe(loadingSentinel);
+    }
 
-                container.innerHTML = ''; // কন্টেনার খালি করা
-                renderCards(startCardIndex, endCardIndex, true); // শুধু প্রথম ১০টি কার্ড লোড করা
-                updatePaginationButtons();
-                
-                // পেজ লোড হলে টপে স্ক্রল করা
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-
+    updatePaginationButtons();
+    
+    // পেজ লোড হলে টপে স্ক্রল করা
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+            
             // নতুন: আরও কার্ড লোড করার ফাংশন (ইনফিনিট স্ক্রোলিংয়ের জন্য)
             function loadMoreCards() {
                 const startCardIndex = (currentPage - 1) * cardsPerPage + cardsLoaded;
