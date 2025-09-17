@@ -1174,15 +1174,15 @@
                 const category = cardCategorySelect.value;
                 const tasks = cardTasksSelect.value; 
                 const newId = generateUniqueId();
-                
+               
                 const newCardCode = `{
-                    id: "${newId}",
-                    title: "${title}",
-                    image: "${image}",
-                    videoLink: "${videoLink}",
-                    category: ["${category}"],
-                    tasks: ${tasks}
-                }`;
+    "id": "${newId}",
+    "title": "${title}",
+    "image": "${image}",
+    "videoLink": "${videoLink}",
+    "category": ["${category}"],
+    "tasks": ${tasks}
+},`;
                 
                 cardCodeBox.textContent = newCardCode.trim();
                 codeResultDiv.style.display = 'block';
