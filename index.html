@@ -715,62 +715,80 @@
         }
         
     /* Pagination CSS */
-        .pagination-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            padding: 10px;
-            background-color: #f0f2f5;
-            margin: 15px 0;
-            border-radius: 10px;
-            box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
-            white-space: nowrap;
-        }
+.pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background-color: #f0f2f5;
+    margin: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+    border-bottom: 2px solid #ddd; /* নিচে লম্বা দাগের জন্য */
+}
 
-        .pagination-container::-webkit-scrollbar {
-            display: none;
-        }
+/* পেজ নম্বরগুলোর স্লাইডিং কন্টেইনার */
+.pagination-numbers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    flex-grow: 1; /* এটি মাঝের জায়গাটি দখল করবে */
+    padding: 0 10px;
+}
+.pagination-numbers::-webkit-scrollbar {
+    display: none; /* স্ক্রলবার লুকানো হয়েছে */
+}
 
-        .pagination-button {
-            background-color: #fff;
-            color: #2575fc;
-            border: 1px solid #2575fc;
-            border-radius: 5px;
-            padding: 8px 12px;
-            margin: 0 5px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            flex-shrink: 0;
-        }
+/* পেজ নম্বর বাটনের জন্য CSS */
+.pagination-button {
+    background-color: #fff;
+    color: #2575fc;
+    border: 1px solid #2575fc;
+    border-radius: 5px;
+    padding: 8px 12px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    flex-shrink: 0;
+}
+.pagination-button.active {
+    background-color: #2575fc;
+    color: #fff;
+}
+.pagination-button:hover:not(.active) {
+    background-color: #e6f0ff;
+}
+.pagination-button.disabled {
+    background-color: #e0e0e0;
+    color: #888;
+    border-color: #ccc;
+    cursor: not-allowed;
+}
 
-        .pagination-button.active {
-            background-color: #2575fc;
-            color: #fff;
-        }
-
-        .pagination-button:hover:not(.active) {
-            background-color: #e6f0ff;
-        }
-
-        .pagination-button.disabled {
-            background-color: #e0e0e0;
-            color: #888;
-            border-color: #ccc;
-            cursor: not-allowed;
-        }
-
-        .pagination-button.prev-next {
-            background-color: #6a11cb;
-            color: #fff;
-            border-color: #6a11cb;
-        }
-        .pagination-button.prev-next:hover:not(.disabled) {
-            background-color: #550e99;
-        }
+/* অ্যারো বাটনের জন্য */
+.pagination-button.prev-next {
+    background-color: #6a11cb;
+    color: #fff;
+    border-color: #6a11cb;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.pagination-button.prev-next svg {
+    margin: 0;
+}
+.pagination-button.prev-next:hover:not(.disabled) {
+    background-color: #550e99;
+}
     </style>
 </head>
 <body>
@@ -806,8 +824,23 @@
         </div>
         
         <div class="container"></div>
-
-        <div id="pagination-container" class="pagination-container"></div>
+        
+        <div class="pagination-wrapper">
+            <button id="prev-btn" class="pagination-button prev-next">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                </svg>
+            </button>
+        
+            <div id="pagination-container" class="pagination-numbers"></div>
+        
+            <button id="next-btn" class="pagination-button prev-next">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+            </button>
+        </div>
+        
         <div id="loading-sentinel" style="height: 1px;"></div>
     
         <div id="authModal" class="modal">
@@ -911,6 +944,8 @@
             const backBtn = document.getElementById('backBtn');
             const restartBtn = document.getElementById('restartBtn');
             const paginationContainer = document.getElementById('pagination-container');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
             
             const password = '@@@###';
             let wrongPasswordCount = 0;
@@ -1135,13 +1170,6 @@
                 
                 if (totalPages <= 1) return;
 
-                const prevBtn = document.createElement('button');
-                prevBtn.textContent = 'Previous';
-                prevBtn.classList.add('pagination-button', 'prev-next');
-                prevBtn.disabled = currentPage === 1;
-                prevBtn.addEventListener('click', () => loadPage(currentPage - 1));
-                paginationContainer.appendChild(prevBtn);
-
                 const maxButtonsToShow = 5;
                 let startPage = Math.max(1, currentPage - Math.floor(maxButtonsToShow / 2));
                 let endPage = Math.min(totalPages, startPage + maxButtonsToShow - 1);
@@ -1188,12 +1216,7 @@
                     paginationContainer.appendChild(lastPageBtn);
                 }
                 
-                const nextBtn = document.createElement('button');
-                nextBtn.textContent = 'Next';
-                nextBtn.classList.add('pagination-button', 'prev-next');
-                nextBtn.disabled = currentPage === totalPages;
-                nextBtn.addEventListener('click', () => loadPage(currentPage + 1));
-                paginationContainer.appendChild(nextBtn);
+                updatePaginationButtons();
             }
 
             // নতুন: পেজিনেশন বাটন আপডেট করার ফাংশন
@@ -1204,14 +1227,13 @@
                     if (button.textContent == currentPage) {
                         button.classList.add('active');
                     }
-                    if (button.textContent === 'Previous') {
-                        button.disabled = currentPage === 1;
-                    } else if (button.textContent === 'Next') {
-                        button.disabled = currentPage === totalPages;
-                    }
                 });
+                
+                // নতুন: অ্যারো বাটনের অবস্থা আপডেট করা
+                prevBtn.disabled = currentPage === 1;
+                nextBtn.disabled = currentPage === totalPages;
             }
-
+            
             // ইনফিনিট স্ক্রোলিংয়ের জন্য IntersectionObserver
             observer = new IntersectionObserver((entries) => {
                 if (entries[0].isIntersecting) {
@@ -1395,6 +1417,18 @@
             window.addEventListener('click', (event) => {
                 if (event.target == authModal) {
                     authModal.style.display = "none";
+                }
+            });
+            
+            // নতুন: অ্যারো বাটনের জন্য ইভেন্ট লিসেনার
+            prevBtn.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    loadPage(currentPage - 1);
+                }
+            });
+            nextBtn.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    loadPage(currentPage + 1);
                 }
             });
             
