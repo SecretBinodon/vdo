@@ -1103,18 +1103,23 @@
                 card.setAttribute('data-video-link', data.videoLink);
                 card.setAttribute('data-category', data.category.join(','));
                 card.setAttribute('data-tasks', data.tasks);
-                card.setAttribute('data-current-tasks', data.tasks);
-                // নতুন: আপলোড টাইম ডেটা অ্যাট্রিবিউট হিসাবে যুক্ত করা হয়েছে
-                if (data.uploadTime) {
-                    card.setAttribute('data-upload-time', data.uploadTime);
+                
+                const completedTime = localStorage.getItem(`completed_card_${data.id}`);
+                const now = Date.now();
+                const fiveMinutes = 5 * 60 * 1000;
+                let currentTasks = data.tasks;
+                
+                if (completedTime && (now - completedTime < fiveMinutes)) {
+                    currentTasks = 0;
                 }
                 
-                let buttonText = `Tasks ${data.tasks}/${data.tasks}`;
-                if (data.tasks === 0) {
+                card.setAttribute('data-current-tasks', currentTasks);
+                
+                let buttonText = `Tasks ${currentTasks}/${data.tasks}`;
+                if (currentTasks === 0) {
                     buttonText = 'Watch Video';
                 }
                 
-                // নতুন: আপলোড টাইম ডিসপ্লে করার এলিমেন্ট
                 const timeAgoText = data.uploadTime ? formatTimeAgo(data.uploadTime) : '';
                 
                 card.innerHTML = `
@@ -1138,7 +1143,7 @@
                     <button class="task-button">${buttonText}</button>
                 `;
                 
-                if (data.tasks === 0) {
+                if (currentTasks === 0) {
                     const button = card.querySelector('.task-button');
                     button.classList.add('task-completed');
                 }
@@ -1405,6 +1410,7 @@
 
                 if (button && card) {
                     const totalTasks = parseInt(card.dataset.tasks);
+                    const cardId = card.dataset.id;
                     
                     let currentTasks = parseInt(card.dataset.currentTasks);
                     const videoLink = card.dataset.videoLink;
@@ -1412,6 +1418,9 @@
                     if (currentTasks === 0) {
                         window.open(videoLink, '_blank');
                         updateViewCount(card.dataset.id);
+                        setTimeout(() => {
+                            localStorage.removeItem(`completed_card_${cardId}`);
+                        }, 5 * 60 * 1000); 
                     } else {
                         if (typeof show_9823222 === 'function') {
                             show_9823222().then(() => {
@@ -1424,6 +1433,7 @@
                                 } else {
                                     button.textContent = 'Watch Video';
                                     button.classList.add('task-completed');
+                                    localStorage.setItem(`completed_card_${cardId}`, Date.now());
                                 }
                             }).catch(error => {
                                 console.error("Monetag Ad error:", error);
