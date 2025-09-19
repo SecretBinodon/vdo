@@ -6,6 +6,7 @@
     <title>Viral Link Market</title>
   
     <script src='//libtl.com/sdk.js' data-zone='9823222' data-sdk='show_9823222'></script>
+
   
     <style>
     /* টিউটোরিয়াল বাটনের জন্য CSS */
@@ -1101,53 +1102,19 @@
                 card.setAttribute('data-id', data.id);
                 card.setAttribute('data-video-link', data.videoLink);
                 card.setAttribute('data-category', data.category.join(','));
-                
-                // নতুন লজিক: localStorage থেকে টাস্কের অবস্থা লোড করা
-                let currentTasks = data.tasks;
-                const savedTasksData = localStorage.getItem(`card_tasks_${data.id}`);
-                const videoUnlockedTime = localStorage.getItem(`video_unlocked_${data.id}`);
-                const TEN_MINUTES = 10 * 60 * 1000;
-                const FIVE_MINUTES = 5 * 60 * 1000;
-
-                // ১. যদি ভিডিও বাটন আনলক করার ডেটা থাকে
-                if (videoUnlockedTime) {
-                    const timeElapsed = Date.now() - parseInt(videoUnlockedTime);
-                    if (timeElapsed <= FIVE_MINUTES) {
-                        // ৫ মিনিটের মধ্যে থাকলে Watch Video বাটন থাকবে
-                        currentTasks = 0;
-                    } else {
-                        // ৫ মিনিটের বেশি হলে রিসেট হবে
-                        localStorage.removeItem(`video_unlocked_${data.id}`);
-                    }
-                }
-                
-                // ২. যদি টাস্কের ডেটা থাকে এবং ভিডিও আনলক না থাকে
-                if (currentTasks !== 0 && savedTasksData) {
-                    const parsedData = JSON.parse(savedTasksData);
-                    const timeElapsed = Date.now() - parsedData.timestamp;
-
-                    if (timeElapsed <= TEN_MINUTES) {
-                        // ১০ মিনিটের মধ্যে থাকলে সেভ করা টাস্ক ব্যবহার করবে
-                        currentTasks = parsedData.currentTasks;
-                    } else {
-                        // ১০ মিনিটের বেশি হলে রিসেট হবে
-                        localStorage.removeItem(`card_tasks_${data.id}`);
-                    }
-                }
-
-                card.setAttribute('data-tasks', data.tasks); // মোট টাস্ক
-                card.setAttribute('data-current-tasks', currentTasks); // বর্তমান টাস্ক
-                
-                let buttonText = `Tasks ${currentTasks}/${data.tasks}`;
-                if (currentTasks === 0) {
-                    buttonText = 'Watch Video';
-                }
-                
+                card.setAttribute('data-tasks', data.tasks);
+                card.setAttribute('data-current-tasks', data.tasks);
                 // নতুন: আপলোড টাইম ডেটা অ্যাট্রিবিউট হিসাবে যুক্ত করা হয়েছে
                 if (data.uploadTime) {
                     card.setAttribute('data-upload-time', data.uploadTime);
                 }
                 
+                let buttonText = `Tasks ${data.tasks}/${data.tasks}`;
+                if (data.tasks === 0) {
+                    buttonText = 'Watch Video';
+                }
+                
+                // নতুন: আপলোড টাইম ডিসপ্লে করার এলিমেন্ট
                 const timeAgoText = data.uploadTime ? formatTimeAgo(data.uploadTime) : '';
                 
                 card.innerHTML = `
@@ -1171,7 +1138,7 @@
                     <button class="task-button">${buttonText}</button>
                 `;
                 
-                if (currentTasks === 0) {
+                if (data.tasks === 0) {
                     const button = card.querySelector('.task-button');
                     button.classList.add('task-completed');
                 }
@@ -1438,6 +1405,7 @@
 
                 if (button && card) {
                     const totalTasks = parseInt(card.dataset.tasks);
+                    
                     let currentTasks = parseInt(card.dataset.currentTasks);
                     const videoLink = card.dataset.videoLink;
 
@@ -1445,28 +1413,17 @@
                         window.open(videoLink, '_blank');
                         updateViewCount(card.dataset.id);
                     } else {
-                        // Monetag অ্যাড দেখানো হচ্ছে
                         if (typeof show_9823222 === 'function') {
                             show_9823222().then(() => {
                                 currentTasks--;
-                                
-                                // টাস্কের অবস্থা এবং টাইমস্ট্যাম্প localStorage-এ সেভ করা
-                                const dataToSave = {
-                                    currentTasks: currentTasks,
-                                    timestamp: Date.now()
-                                };
-                                localStorage.setItem(`card_tasks_${card.dataset.id}`, JSON.stringify(dataToSave));
                                 
                                 card.dataset.currentTasks = currentTasks;
                                 
                                 if (currentTasks > 0) {
                                     button.textContent = `Tasks ${currentTasks}/${totalTasks}`;
                                 } else {
-                                    // সব টাস্ক কমপ্লিট হলে
                                     button.textContent = 'Watch Video';
                                     button.classList.add('task-completed');
-                                    // ভিডিও বাটন আনলক হওয়ার সময় localStorage-এ সেভ করা
-                                    localStorage.setItem(`video_unlocked_${card.dataset.id}`, Date.now());
                                 }
                             }).catch(error => {
                                 console.error("Monetag Ad error:", error);
@@ -1591,9 +1548,9 @@
             
             init();
         });
-</script>
-
-    
-
+    </script>
+  
+  <script type='text/javascript' src='//pl27572890.revenuecpmgate.com/91/1e/1d/911e1d9971c3f1df5ac81db66264db5c.js'></script>
+  
 </body>
 </html>
