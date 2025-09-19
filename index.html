@@ -1378,57 +1378,7 @@
                     currentCardToHighlight = null;
                 }
                 
-                // এখানে কার্ডের যেকোনো জায়গায় ক্লিক করলে লজিক শুরু হবে
-                if (card) {
-                    const cardId = card.dataset.id;
-                    const videoLink = card.dataset.videoLink;
-                    let currentTasks = parseInt(card.dataset.currentTasks);
-                    
-                    if (currentTasks === 0) {
-                        // যদি সব টাস্ক সম্পন্ন হয়, তাহলে পপান্ডার অ্যাড লোড করবে এবং ভিডিও লিংকটি খুলবে
-                        // এখানে আমরা অ্যাড নেটওয়ার্কের কুলডাউন সিস্টেমের উপর নির্ভর করছি।
-                        // প্রথম ক্লিকে অ্যাড লোড হবে এবং ইউজারকে রিডাইরেক্ট করবে।
-                        // দ্বিতীয়বার ফিরে এসে ক্লিক করলে অ্যাড লোড হবে না, সরাসরি ভিডিও লিংকটি খুলবে।
-                        
-                        // ***এখানে আপনার পপান্ডার অ্যাড লোড করার ফাংশন কল করতে হবে***
-                        // উদাহরণ: window.popunder.loadAd();
-                        // আপনার অ্যাড নেটওয়ার্কের কোড অনুযায়ী এই লাইনটি পরিবর্তন করতে হবে।
-                        
-                        window.open(videoLink, '_blank');
-                        updateViewCount(cardId);
-                        
-                        setTimeout(() => {
-                             localStorage.removeItem(`completed_card_${cardId}`);
-                         }, 5 * 60 * 1000); 
-
-                    } else if (button) {
-                        // যদি টাস্ক বাকি থাকে এবং বাটনে ক্লিক করা হয়, তাহলে টাস্ক অ্যাড লোড হবে
-                        const totalTasks = parseInt(card.dataset.tasks);
-                        if (typeof show_9823222 === 'function') {
-                            show_9823222().then(() => {
-                                currentTasks--;
-                                card.dataset.currentTasks = currentTasks;
-                                
-                                if (currentTasks > 0) {
-                                    button.textContent = `Tasks ${currentTasks}/${totalTasks}`;
-                                } else {
-                                    button.textContent = 'Watch Video';
-                                    button.classList.add('task-completed');
-                                    localStorage.setItem(`completed_card_${cardId}`, Date.now());
-                                }
-                            }).catch(error => {
-                                console.error("Monetag Ad error:", error);
-                            });
-                        }
-                    } else if (!shareIcon) {
-                        // যদি বাটনে বা শেয়ার আইকনে ক্লিক না করে কার্ডের অন্য কোথাও ক্লিক করে, তবে অ্যানিমেশন হবে
-                        card.style.transform = 'scale(1.05)';
-                        setTimeout(() => {
-                            card.style.transform = 'scale(1)';
-                        }, 200);
-                    }
-                }
-                
+                // শেয়ার আইকনের জন্য আলাদা লজিক, যাতে এটি অন্য কার্যকারিতাকে প্রভাবিত না করে
                 if (shareIcon) {
                     const cardId = shareIcon.dataset.id;
                     const cardTitle = card.querySelector('.card-title').textContent;
@@ -1449,6 +1399,62 @@
                         copyToClipboard(shareUrl, notificationPopup);
                     }
                     return;
+                }
+
+                // যখন কার্ডের কোনো অংশে ক্লিক করা হয়
+                if (card) {
+                    const cardId = card.dataset.id;
+                    const videoLink = card.dataset.videoLink;
+                    let currentTasks = parseInt(card.dataset.currentTasks);
+
+                    if (currentTasks > 0) {
+                        // যদি টাস্ক বাকি থাকে এবং বাটনে ক্লিক করা হয়, তবেই টাস্ক অ্যাড লোড হবে
+                        if (button) {
+                            const totalTasks = parseInt(card.dataset.tasks);
+                            if (typeof show_9823222 === 'function') {
+                                show_9823222().then(() => {
+                                    currentTasks--;
+                                    card.dataset.currentTasks = currentTasks;
+                                    
+                                    if (currentTasks > 0) {
+                                        button.textContent = `Tasks ${currentTasks}/${totalTasks}`;
+                                    } else {
+                                        button.textContent = 'Watch Video';
+                                        button.classList.add('task-completed');
+                                        localStorage.setItem(`completed_card_${cardId}`, Date.now());
+                                    }
+                                }).catch(error => {
+                                    console.error("Monetag Ad error:", error);
+                                });
+                            }
+                        } else {
+                             // টাস্ক বাকি থাকা অবস্থায় বাটনে ক্লিক না করলে, শুধুমাত্র অ্যানিমেশন হবে
+                            card.style.transform = 'scale(1.05)';
+                            setTimeout(() => {
+                                card.style.transform = 'scale(1)';
+                            }, 200);
+                        }
+                    } else {
+                        // যদি সব টাস্ক সম্পন্ন হয়
+                        if (button) {
+                             // 'Watch Video' বাটনে ক্লিক করলে সরাসরি ভিডিও লিংক খুলবে
+                             window.open(videoLink, '_blank');
+                             updateViewCount(cardId);
+                             setTimeout(() => {
+                                 localStorage.removeItem(`completed_card_${cardId}`);
+                             }, 5 * 60 * 1000); 
+                        } else {
+                            // সম্পন্ন হওয়া কার্ডের অন্য কোনো অংশে (বাটনের বাইরে) ক্লিক করলে পপান্ডার অ্যাড লোড হবে
+                            // যেহেতু আপনার পপান্ডার অ্যাডের কোড <head> সেকশনে আছে এবং স্বয়ংক্রিয়ভাবে কাজ করে,
+                            // তাই এখানে কোনো অতিরিক্ত ফাংশন কল করার প্রয়োজন নেই।
+                            
+                            // শুধুমাত্র অ্যানিমেশন দেখানো হচ্ছে
+                            card.style.transform = 'scale(1.05)';
+                            setTimeout(() => {
+                                card.style.transform = 'scale(1)';
+                            }, 200);
+                        }
+                    }
                 }
             });
 
