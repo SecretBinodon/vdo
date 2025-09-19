@@ -8,8 +8,7 @@
     <script src='//libtl.com/sdk.js' data-zone='9823222' data-sdk='show_9823222'></script>
 
     
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TMJDMSTLMX"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TMJDMSTLMX"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -322,6 +321,20 @@
         .share-icon:hover {
             background-color: rgba(0, 0, 0, 0.7);
         }
+        
+        /* নতুন আপলোড টাইম স্টাইল */
+        .card-upload-time {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 5px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            z-index: 5;
+            white-space: nowrap;
+        }
 
         .card-image-container {
             width: 100%;
@@ -528,7 +541,7 @@
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
             text-align: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
             font-size: 14px;
             max-width: 90%;
             white-space: nowrap;
@@ -622,6 +635,12 @@
             .copy-btn {
                 padding: 8px 15px;
                 font-size: 12px;
+            }
+            .card-upload-time {
+                font-size: 10px;
+                top: 8px;
+                left: 8px;
+                padding: 4px 6px;
             }
         }
 
@@ -938,6 +957,35 @@
             const cardsPerPage = 50;
             let currentPage = 1;
             let totalPages = 1;
+            
+            // নতুন: সময় গণনা করার ফাংশন
+            function formatTimeAgo(timestamp) {
+                const uploadDate = new Date(timestamp);
+                const now = new Date();
+                const seconds = Math.floor((now - uploadDate) / 1000);
+            
+                let interval = seconds / 31536000; // বছর
+                if (interval > 1) {
+                    return Math.floor(interval) + " বছর আগে";
+                }
+                interval = seconds / 2592000; // মাস
+                if (interval > 1) {
+                    return Math.floor(interval) + " মাস আগে";
+                }
+                interval = seconds / 86400; // দিন
+                if (interval > 1) {
+                    return Math.floor(interval) + " দিন আগে";
+                }
+                interval = seconds / 3600; // ঘন্টা
+                if (interval > 1) {
+                    return Math.floor(interval) + " ঘন্টা আগে";
+                }
+                interval = seconds / 60; // মিনিট
+                if (interval > 1) {
+                    return Math.floor(interval) + " মিনিট আগে";
+                }
+                return "এখনই";
+            }
 
             // নতুন: ডেটা লোড করার ফাংশন
             async function loadData() {
@@ -956,11 +1004,28 @@
                     setTimeout(() => {
                         loadingBar.style.width = '0%';
                     }, 500);
+                    
+                    // প্রতি মিনিটে সময় আপডেট করার জন্য
+                    setInterval(updateCardTimes, 60000);
                 } catch (error) {
                     console.error('Error loading card data:', error);
                     showNotification('Error loading data. Please try again later.');
                     loadingBar.style.width = '0%';
                 }
+            }
+            
+            // নতুন: কার্ডের সময় আপডেট করার ফাংশন
+            function updateCardTimes() {
+                document.querySelectorAll('.card').forEach(card => {
+                    const uploadTime = card.dataset.uploadTime;
+                    if (uploadTime) {
+                        const timeAgoText = formatTimeAgo(uploadTime);
+                        const timeElement = card.querySelector('.card-upload-time');
+                        if (timeElement) {
+                            timeElement.textContent = timeAgoText;
+                        }
+                    }
+                });
             }
 
             function showNotification(message, duration = 3000, target = notificationPopup) {
@@ -989,11 +1054,18 @@
                 card.setAttribute('data-category', data.category.join(','));
                 card.setAttribute('data-tasks', data.tasks);
                 card.setAttribute('data-current-tasks', data.tasks);
+                // নতুন: আপলোড টাইম ডেটা অ্যাট্রিবিউট হিসাবে যুক্ত করা হয়েছে
+                if (data.uploadTime) {
+                    card.setAttribute('data-upload-time', data.uploadTime);
+                }
                 
                 let buttonText = `Tasks ${data.tasks}/${data.tasks}`;
                 if (data.tasks === 0) {
                     buttonText = 'Watch Video';
                 }
+                
+                // নতুন: আপলোড টাইম ডিসপ্লে করার এলিমেন্ট
+                const timeAgoText = data.uploadTime ? formatTimeAgo(data.uploadTime) : '';
                 
                 card.innerHTML = `
                     <div class="card-header">
@@ -1003,6 +1075,7 @@
                                 <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V9.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
                             </svg>
                         </div>
+                        <div class="card-upload-time">${timeAgoText}</div>
                         <div class="card-image-container">
                             <img src="${data.image}" alt="${data.title}" loading="lazy">
                         </div>
@@ -1371,6 +1444,7 @@
                 const category = cardCategorySelect.value;
                 const tasks = cardTasksSelect.value; 
                 const newId = generateUniqueId();
+                const currentTime = new Date().toISOString();
                
                 const newCardCode = `{
     "id": "${newId}",
@@ -1378,7 +1452,8 @@
     "image": "${image}",
     "videoLink": "${videoLink}",
     "category": ["${category}"],
-    "tasks": ${tasks}
+    "tasks": ${tasks},
+    "uploadTime": "${currentTime}"
 },`;
                 
                 cardCodeBox.textContent = newCardCode.trim();
