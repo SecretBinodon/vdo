@@ -7,17 +7,7 @@
   
     <script src='//libtl.com/sdk.js' data-zone='9823222' data-sdk='show_9823222'></script>
 
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TMJDMSTLMX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-TMJDMSTLMX');
-</script>
-
-    
+  
     <style>
     /* টিউটোরিয়াল বাটনের জন্য CSS */
 .tutorial-button {
@@ -335,6 +325,15 @@
             z-index: 5;
             white-space: nowrap;
         }
+        
+        .card-views {
+            font-size: 14px;
+            color: #555;
+            margin-top: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+
 
         .card-image-container {
             width: 100%;
@@ -821,9 +820,9 @@
         <div class="sticky-wrapper-top">
             <div class="category-bar">
                 <button data-category="all" class="active">All</button>
-                <button data-category="viral">Viral video 😻</button>
-                <button data-category="tiktoker">Tiktoker 😜</button>
-                <button data-category="premium">Premium 👑</button>
+                <button data-category="viral" class="category-btn">Viral video 😻</button>
+                <button data-category="tiktoker" class="category-btn">Tiktoker 😜</button>
+                <button data-category="premium" class="category-btn">Premium 👑</button>
                 <button class="add-card-btn">+</button>
             </div>
         </div>
@@ -911,7 +910,26 @@
         </div>
     </div>
     
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc, increment } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+        // Firebase Configuration from your project
+        const firebaseConfig = {
+            apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q",
+            authDomain: "my-ad-analytics-4560a.firebaseapp.com",
+            databaseURL: "https://my-ad-analytics-4560a-default-rtdb.firebaseio.com",
+            projectId: "my-ad-analytics-4560a",
+            storageBucket: "my-ad-analytics-4560a.firebasestorage.app",
+            messagingSenderId: "104213283950",
+            appId: "1:104213283950:web:b5a25ecd54df809625127f",
+            measurementId: "G-WS7QSQ9H0Y"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
         document.addEventListener('DOMContentLoaded', () => {
             const container = document.querySelector('.container');
             const categoryButtons = document.querySelectorAll('.category-bar button:not(.add-card-btn)');
@@ -1046,6 +1064,38 @@
                 return result;
             }
 
+            // নতুন Firebase ভিউ কাউন্টার ফাংশন
+            async function updateViewCount(cardId) {
+                const viewsRef = doc(db, "views", cardId);
+                const viewsSnap = await getDoc(viewsRef);
+
+                let currentViews = 0;
+                if (viewsSnap.exists()) {
+                    currentViews = viewsSnap.data().count;
+                }
+
+                await setDoc(viewsRef, { count: increment(1) }, { merge: true });
+
+                const viewsElement = document.getElementById(`views-${cardId}`);
+                if (viewsElement) {
+                    viewsElement.textContent = `${currentViews + 1} views`;
+                }
+            }
+
+            async function getAndUpdateViews(cardId) {
+                const viewsRef = doc(db, "views", cardId);
+                const viewsSnap = await getDoc(viewsRef);
+
+                let currentViews = 0;
+                if (viewsSnap.exists()) {
+                    currentViews = viewsSnap.data().count;
+                }
+                const viewsElement = document.getElementById(`views-${cardId}`);
+                if (viewsElement) {
+                    viewsElement.textContent = `${currentViews} views`;
+                }
+            }
+
             function createCard(data) {
                 const card = document.createElement('div');
                 card.classList.add('card');
@@ -1083,6 +1133,7 @@
                     <div class="card-content">
                         <h3 class="card-title">${data.title}</h3>
                         <hr class="card-divider">
+                        <div class="card-views" id="views-${data.id}">Loading views...</div>
                     </div>
                     <button class="task-button">${buttonText}</button>
                 `;
@@ -1124,6 +1175,7 @@
                                  });
                              }, 200);
                          }
+                         getAndUpdateViews(data.id);
                     }, 50); // ছোট ডিলে যোগ করা হয়েছে
                 });
                 
@@ -1359,6 +1411,7 @@
 
                     if (currentTasks === 0) {
                         window.open(videoLink, '_blank');
+                        updateViewCount(card.dataset.id);
                     } else {
                         if (typeof show_9823222 === 'function') {
                             show_9823222().then(() => {
