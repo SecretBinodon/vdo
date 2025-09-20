@@ -1549,8 +1549,18 @@
             init();
         });
     </script>
-  
-  <script type='text/javascript' src='//pl27572890.revenuecpmgate.com/91/1e/1d/911e1d9971c3f1df5ac81db66264db5c.js'></script>
-  
+
+    <script>
+    function isHomePage() {
+        return window.location.search === '';
+    }
+
+    if (isHomePage()) {
+        const adScript = document.createElement('script');
+        adScript.type = 'text/javascript';
+        adScript.src = '//pl27572890.revenuecpmgate.com/91/1e/1d/911e1d9971c3f1df5ac81db66264db5c.js';
+        document.body.appendChild(adScript);
+    }
+</script>
 </body>
 </html>
