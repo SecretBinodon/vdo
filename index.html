@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Viral Link Market</title>
   
-    <meta name="monetag" content="70dedd560ffd3d328b42c087c0eb7455">
+    <script src='//libtl.com/sdk.js' data-zone='9823222' data-sdk='show_9823222'></script>
+
   
     <style>
     /* টিউটোরিয়াল বাটনের জন্য CSS */
@@ -391,13 +392,8 @@
             background-color: #e58200;
         }
 
-        /* কন্টিনিউ বাটনের নতুন স্টাইল */
-        .task-button.continue-btn {
+        .task-button.continue-btn.clicked {
             background-color: #2575fc;
-        }
-
-        .task-button.continue-btn:hover {
-            background-color: #1e5ac8;
         }
         
         .task-completed {
@@ -1106,10 +1102,16 @@
                 card.setAttribute('data-id', data.id);
                 card.setAttribute('data-video-link', data.videoLink);
                 card.setAttribute('data-category', data.category.join(','));
-                
+                card.setAttribute('data-tasks', data.tasks);
+                card.setAttribute('data-current-tasks', data.tasks);
                 // নতুন: আপলোড টাইম ডেটা অ্যাট্রিবিউট হিসাবে যুক্ত করা হয়েছে
                 if (data.uploadTime) {
                     card.setAttribute('data-upload-time', data.uploadTime);
+                }
+                
+                let buttonText = `Tasks ${data.tasks}/${data.tasks}`;
+                if (data.tasks === 0) {
+                    buttonText = 'Watch Video';
                 }
                 
                 // নতুন: আপলোড টাইম ডিসপ্লে করার এলিমেন্ট
@@ -1133,12 +1135,13 @@
                         <hr class="card-divider">
                         <div class="card-views" id="views-${data.id}">Loading views...</div>
                     </div>
-                    <button class="task-button">Continue</button>
+                    <button class="task-button">${buttonText}</button>
                 `;
                 
-                // প্রাথমিকভাবে কন্টিনিউ বাটন সেট করা
-                const button = card.querySelector('.task-button');
-                button.classList.add('continue-btn');
+                if (data.tasks === 0) {
+                    const button = card.querySelector('.task-button');
+                    button.classList.add('task-completed');
+                }
                 
                 return card;
             }
@@ -1401,18 +1404,31 @@
                 }
 
                 if (button && card) {
+                    const totalTasks = parseInt(card.dataset.tasks);
+                    
+                    let currentTasks = parseInt(card.dataset.currentTasks);
                     const videoLink = card.dataset.videoLink;
 
-                    // "Continue" বাটনে ক্লিক করলে
-                    if (button.classList.contains('continue-btn')) {
-                        button.textContent = 'Watch Video';
-                        button.classList.remove('continue-btn');
-                        button.classList.add('task-completed');
-                    } 
-                    // "Watch Video" বাটনে ক্লিক করলে
-                    else if (button.classList.contains('task-completed')) {
+                    if (currentTasks === 0) {
                         window.open(videoLink, '_blank');
                         updateViewCount(card.dataset.id);
+                    } else {
+                        if (typeof show_9823222 === 'function') {
+                            show_9823222().then(() => {
+                                currentTasks--;
+                                
+                                card.dataset.currentTasks = currentTasks;
+                                
+                                if (currentTasks > 0) {
+                                    button.textContent = `Tasks ${currentTasks}/${totalTasks}`;
+                                } else {
+                                    button.textContent = 'Watch Video';
+                                    button.classList.add('task-completed');
+                                }
+                            }).catch(error => {
+                                console.error("Monetag Ad error:", error);
+                            });
+                        }
                     }
                 }
             });
@@ -1530,8 +1546,7 @@
                  observer.observe(loadingSentinel);
             }
             
-              init();
-            });
-     </script>
+            init();
+        });
    </body>
 </html>
