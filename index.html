@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Viral Link Market</title>
   
-    <script src='//libtl.com/sdk.js' data-zone='9823222' data-sdk='show_9823222'></script>
-  
     <style>
     /* টিউটোরিয়াল বাটনের জন্য CSS */
 .tutorial-button {
@@ -371,7 +369,7 @@
             margin: 5px 0;
         }
         
-        .task-button {
+        .continue-button {
             background-color: #ff9100;
             color: #fff;
             border: none;
@@ -387,11 +385,11 @@
             white-space: nowrap;
         }
         
-        .task-button:hover, .task-button:active {
+        .continue-button:hover, .continue-button:active {
             background-color: #e58200;
         }
 
-        .task-button.continue-btn.clicked {
+        .continue-button.clicked {
             background-color: #2575fc;
         }
         
@@ -598,7 +596,7 @@
             .card-title {
                 font-size: 14px;
             }
-            .task-button {
+            .continue-button {
                 font-size: 12px;
                 padding: 10px 8px;
             }
@@ -809,7 +807,7 @@
     </div>
     <div class="header-content">
         <h2>ভাইরাল লিংক মার্কেটে আপনাকে.! 🔥"স্বাগতম"🔥</h2>
-        <p>আপনার পছন্দের কার্ডের টাক্স কমপ্লিট করে Video 🔞 দেখুন!📥! "ধন্যবাদ"</p>
+        <p>আপনার পছন্দের কার্ডের বাটনে ক্লিক করে Video 🔞 দেখুন!📥! "ধন্যবাদ"</p>
     </div>
     <a href="https://youtube.com/shorts/wa8wV6NZZ6k?si=0R0QF7sxIYwKMHzn" class="tutorial-button">
         👉 Video কিভাবে দেখবেন-"Click-Tutorial" 🔞
@@ -877,21 +875,6 @@
                         <option value="premium">Premium 👑</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="cardTasks">Tasks:</label>
-                    <select id="cardTasks" required>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>
-                </div>
                 <div class="form-buttons">
                     <button type="submit" class="submit">Generate Code</button>
                 </div>
@@ -910,25 +893,6 @@
     </div>
     
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-        import { getFirestore, doc, getDoc, setDoc, increment } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
-
-        // Firebase Configuration from your project
-        const firebaseConfig = {
-            apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q",
-            authDomain: "my-ad-analytics-4560a.firebaseapp.com",
-            databaseURL: "https://my-ad-analytics-4560a-default-rtdb.firebaseio.com",
-            projectId: "my-ad-analytics-4560a",
-            storageBucket: "my-ad-analytics-4560a.firebasestorage.app",
-            messagingSenderId: "104213283950",
-            appId: "1:104213283950:web:b5a25ecd54df809625127f",
-            measurementId: "G-WS7QSQ9H0Y"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
         document.addEventListener('DOMContentLoaded', () => {
             const container = document.querySelector('.container');
             const categoryButtons = document.querySelectorAll('.category-bar button:not(.add-card-btn)');
@@ -941,7 +905,6 @@
             const cardImageInput = document.getElementById('cardImage');
             const cardVideoLinkInput = document.getElementById('cardVideoLink');
             const cardCategorySelect = document.getElementById('cardCategory');
-            const cardTasksSelect = document.getElementById('cardTasks'); // নতুন ড্রপডাউন
             const codeResultDiv = document.getElementById('codeResult');
             const cardCodeBox = document.getElementById('cardCodeBox');
             const copyCardCodeBtn = document.getElementById('copyCardCodeBtn');
@@ -969,7 +932,7 @@
             let currentFilter = 'all';
             let currentCardToHighlight = null;
             let observer;
-
+            
             // নতুন: পেজিনেশনের জন্য ভেরিয়েবল
             const cardsPerPage = 50;
             let currentPage = 1;
@@ -1063,57 +1026,12 @@
                 return result;
             }
 
-            // নতুন Firebase ভিউ কাউন্টার ফাংশন
-            async function updateViewCount(cardId) {
-                const viewsRef = doc(db, "views", cardId);
-                const viewsSnap = await getDoc(viewsRef);
-
-                let currentViews = 0;
-                if (viewsSnap.exists()) {
-                    currentViews = viewsSnap.data().count;
-                }
-
-                await setDoc(viewsRef, { count: increment(1) }, { merge: true });
-
-                const viewsElement = document.getElementById(`views-${cardId}`);
-                if (viewsElement) {
-                    viewsElement.textContent = `${currentViews + 1} views`;
-                }
-            }
-
-            async function getAndUpdateViews(cardId) {
-                const viewsRef = doc(db, "views", cardId);
-                const viewsSnap = await getDoc(viewsRef);
-
-                let currentViews = 0;
-                if (viewsSnap.exists()) {
-                    currentViews = viewsSnap.data().count;
-                }
-                const viewsElement = document.getElementById(`views-${cardId}`);
-                if (viewsElement) {
-                    viewsElement.textContent = `${currentViews} views`;
-                }
-            }
-
             function createCard(data) {
                 const card = document.createElement('div');
                 card.classList.add('card');
                 card.setAttribute('data-id', data.id);
-                card.setAttribute('data-video-link', data.videoLink);
                 card.setAttribute('data-category', data.category.join(','));
-                card.setAttribute('data-tasks', data.tasks);
-                card.setAttribute('data-current-tasks', data.tasks);
-                // নতুন: আপলোড টাইম ডেটা অ্যাট্রিবিউট হিসাবে যুক্ত করা হয়েছে
-                if (data.uploadTime) {
-                    card.setAttribute('data-upload-time', data.uploadTime);
-                }
                 
-                let buttonText = `Tasks ${data.tasks}/${data.tasks}`;
-                if (data.tasks === 0) {
-                    buttonText = 'Watch Video';
-                }
-                
-                // নতুন: আপলোড টাইম ডিসপ্লে করার এলিমেন্ট
                 const timeAgoText = data.uploadTime ? formatTimeAgo(data.uploadTime) : '';
                 
                 card.innerHTML = `
@@ -1132,15 +1050,9 @@
                     <div class="card-content">
                         <h3 class="card-title">${data.title}</h3>
                         <hr class="card-divider">
-                        <div class="card-views" id="views-${data.id}">Loading views...</div>
                     </div>
-                    <button class="task-button">${buttonText}</button>
+                    <button class="continue-button">Continue</button>
                 `;
-                
-                if (data.tasks === 0) {
-                    const button = card.querySelector('.task-button');
-                    button.classList.add('task-completed');
-                }
                 
                 return card;
             }
@@ -1174,7 +1086,6 @@
                                  });
                              }, 200);
                          }
-                         getAndUpdateViews(data.id);
                     }, 50); // ছোট ডিলে যোগ করা হয়েছে
                 });
                 
@@ -1359,7 +1270,7 @@
             // টাস্ক সিস্টেম এবং অ্যানিমেশনের জন্য ইভেন্ট লিসেনার
             container.addEventListener('click', async (event) => {
                 const card = event.target.closest('.card');
-                const button = event.target.closest('.task-button');
+                const button = event.target.closest('.continue-button');
                 const shareIcon = event.target.closest('.share-icon');
 
                 // হাইলাইট রিমুভ করার লজিক
@@ -1403,32 +1314,8 @@
                 }
 
                 if (button && card) {
-                    const totalTasks = parseInt(card.dataset.tasks);
-                    
-                    let currentTasks = parseInt(card.dataset.currentTasks);
-                    const videoLink = card.dataset.videoLink;
-
-                    if (currentTasks === 0) {
-                        window.open(videoLink, '_blank');
-                        updateViewCount(card.dataset.id);
-                    } else {
-                        if (typeof show_9823222 === 'function') {
-                            show_9823222().then(() => {
-                                currentTasks--;
-                                
-                                card.dataset.currentTasks = currentTasks;
-                                
-                                if (currentTasks > 0) {
-                                    button.textContent = `Tasks ${currentTasks}/${totalTasks}`;
-                                } else {
-                                    button.textContent = 'Watch Video';
-                                    button.classList.add('task-completed');
-                                }
-                            }).catch(error => {
-                                console.error("Monetag Ad error:", error);
-                            });
-                        }
-                    }
+                    const cardId = card.dataset.id;
+                    window.location.href = `step1.html?cardId=${cardId}`;
                 }
             });
 
@@ -1494,7 +1381,6 @@
                 const image = cardImageInput.value;
                 const videoLink = cardVideoLinkInput.value;
                 const category = cardCategorySelect.value;
-                const tasks = cardTasksSelect.value; 
                 const newId = generateUniqueId();
                 const currentTime = new Date().toISOString();
                
@@ -1504,7 +1390,6 @@
     "image": "${image}",
     "videoLink": "${videoLink}",
     "category": ["${category}"],
-    "tasks": ${tasks},
     "uploadTime": "${currentTime}"
 },`;
                 
