@@ -66,6 +66,41 @@
       margin-top:10px;font-size:13px;color:#444;background:#ffeef3;
       border:1px dashed #ff99b9;padding:8px 12px;border-radius:10px;
     }
+    
+    /* New button styles */
+    .special-button {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 8px;
+        background: linear-gradient(90deg, var(--brand), var(--brand-2));
+        color: white;
+        font-weight: 700;
+        font-size: 14px;
+        cursor: pointer;
+        text-decoration: none;
+        margin-left: 10px;
+        white-space: nowrap; /* Prevents text from wrapping */
+    }
+    
+    .download-button {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin: 20px auto; /* Centering the button */
+        padding: 12px 18px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(90deg, #ff9b49, #ff5e3a); /* A different color gradient */
+        color: white;
+        font-weight: 700;
+        font-size: 15px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    
+    .download-button:hover {
+        filter: brightness(1.05);
+    }
 
     .article{margin-top:18px;padding:14px;border-radius:12px;background:#f9faff;border:1px solid #dde3f0}
     .article h3{margin:0 0 8px;font-size:16px;color:#222}
@@ -82,6 +117,15 @@
         transition: width 0s linear;
         z-index: 1000;
     }
+    
+    /* Flexbox for inline alignment */
+    .headline-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    }
+    
   </style>
 </head>
 <body>
@@ -95,7 +139,11 @@
 
   <main>
     <div class="panel">
-      <h1 class="headline" id="headline">ভিডিও লোড হচ্ছে...</h1>
+      <div class="headline-container">
+          <h1 class="headline" id="headline">ভিডিও লোড হচ্ছে...</h1>
+          <a href="#" id="specialVideoBtn" class="special-button">Special Sideo 🎬</a>
+      </div>
+      
       <p class="lead" id="lead">ভিডিও লোড হতে ১০ সেকেন্ড অপেক্ষা করুন। এরপর নিচের বাটনটি ক্লিক করে ভিডিও দেখুন।</p>
       
       <div class="timer-card">
@@ -104,6 +152,8 @@
         <a id="videoBtn" class="btn" href="#" style="display:none;">Watch Video 🔞</a>
         <div class="perma-note">যদি প্রথমবার ক্লিকে সঠিকভাবে না যায়, তবে ১৫ সেকেন্ড অপেক্ষা করে আবার চেষ্টা করুন।</div>
       </div>
+      
+      <a href="#" id="downloadBtn" class="download-button">Download 📥</a>
 
       <div class="article">
         <h3>সংবেদনশীল কনটেন্ট বিষয়ে সচেতনতা</h3>
@@ -182,6 +232,14 @@
             window.location.href = finalVideoLink;
         }
     });
+    
+    // New button event listeners
+    const specialVideoBtn = document.getElementById('specialVideoBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    // You can add links here
+    specialVideoBtn.href = "#"; // Replace with your desired Special Video link
+    downloadBtn.href = "#";      // Replace with your desired Download link
 
     // পেজ লোড হলে ভিডিও লিংক লোড করা শুরু
     window.addEventListener('load', () => {
