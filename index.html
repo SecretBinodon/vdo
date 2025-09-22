@@ -324,13 +324,13 @@
         }
         
         .card-views {
-    font-size: 14px;
-    color: #555;
-    margin-top: 0px;   
-    margin-bottom: 0px; 
-    text-align: center;
-    font-weight: normal;  /* এই লাইনটি লেখাটিকে সাধারণ করবে */
-}
+            font-size: 14px;
+            color: #555;
+            margin-top: 0px;   
+            margin-bottom: 0px; 
+            text-align: center;
+            font-weight: normal; 
+        }
         
         .card-image-container {
             width: 100%;
@@ -893,6 +893,20 @@
     </div>
     
     <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+             apiKey: "YOUR_API_KEY",
+             authDomain: "YOUR_AUTH_DOMAIN",
+             projectId: "YOUR_PROJECT_ID",
+             storageBucket: "YOUR_STORAGE_BUCKET",
+             messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+             appId: "YOUR_APP_ID"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
         document.addEventListener('DOMContentLoaded', () => {
             const container = document.querySelector('.container');
             const categoryButtons = document.querySelectorAll('.category-bar button:not(.add-card-btn)');
@@ -966,6 +980,46 @@
                 }
                 return "এখনই";
             }
+            
+            async function updateViewCount(cardId) {
+                 const docRef = doc(db, "views", cardId);
+                 try {
+                     const docSnap = await getDoc(docRef);
+                     let currentCount = 0;
+                     if (docSnap.exists()) {
+                         currentCount = docSnap.data().count;
+                     }
+                     const newCount = currentCount + 1;
+                     await setDoc(docRef, { count: newCount }, { merge: true });
+                     console.log(`View count for ${cardId} updated to ${newCount}`);
+                     const cardElement = document.querySelector(`.card[data-id="${cardId}"] .card-views`);
+                     if (cardElement) {
+                         cardElement.textContent = `Views: ${newCount}`;
+                     }
+                 } catch (error) {
+                     console.error("Error updating view count:", error);
+                 }
+            }
+
+            async function getAndUpdateViews() {
+                 try {
+                     const cards = document.querySelectorAll('.card');
+                     cards.forEach(async (card) => {
+                         const cardId = card.dataset.id;
+                         const docRef = doc(db, "views", cardId);
+                         const docSnap = await getDoc(docRef);
+                         if (docSnap.exists()) {
+                             const viewCount = docSnap.data().count;
+                             const viewElement = card.querySelector('.card-views');
+                             if (viewElement) {
+                                 viewElement.textContent = `Views: ${viewCount}`;
+                             }
+                         }
+                     });
+                 } catch (error) {
+                     console.error("Error fetching views:", error);
+                 }
+            }
 
             // নতুন: ডেটা লোড করার ফাংশন
             async function loadData() {
@@ -987,6 +1041,7 @@
                     
                     // প্রতি মিনিটে সময় আপডেট করার জন্য
                     setInterval(updateCardTimes, 60000);
+                    
                 } catch (error) {
                     console.error('Error loading card data:', error);
                     showNotification('Error loading data. Please try again later.');
@@ -1049,6 +1104,7 @@
                     </div>
                     <div class="card-content">
                         <h3 class="card-title">${data.title}</h3>
+                        <p class="card-views" data-views="${data.views}">Views: 0</p>
                         <hr class="card-divider">
                     </div>
                     <button class="continue-button">Continue</button>
@@ -1090,6 +1146,7 @@
                 });
                 
                 cardsLoaded = end;
+                getAndUpdateViews();
             }
             
             // নতুন: ক্যাটাগরি ফিল্টার এবং প্রথম কার্ড লোড করার ফাংশন (এখন পেজিনেশন অনুযায়ী)
@@ -1121,42 +1178,42 @@
             }
 
             // নতুন: নির্দিষ্ট পেজ লোড করার ফাংশন
-    function loadPage(pageNumber, highlightIndex = -1) {
-    currentPage = pageNumber;
-    
-    // প্রতিবার নতুন পেজ লোড হলে cardsLoaded ভেরিয়েবলটি রিসেট করা
-    cardsLoaded = 0; 
-    
-    const startCardIndex = (currentPage - 1) * cardsPerPage;
-    const endOfPage = Math.min(startCardIndex + cardsPerPage, filteredCards.length);
-    const totalCardsToLoad = endOfPage - startCardIndex;
-    
-    // পেজ খালি করা
-    container.innerHTML = '';
-    
-    // যদি হাইলাইট কার্ড থাকে, তাহলে সেই পর্যন্ত লোড করা
-    if (highlightIndex !== -1) {
-        renderCards(startCardIndex, highlightIndex + 1, true);
-        cardsLoaded = (highlightIndex + 1) - startCardIndex;
-    } 
-    // যদি অবশিষ্ট কার্ডের সংখ্যা প্রাথমিক লোডের চেয়ে কম বা সমান হয়, তাহলে সব লোড করে ফেলা
-    else if (totalCardsToLoad <= cardsPerLoad) {
-        renderCards(startCardIndex, endOfPage, true);
-        cardsLoaded = totalCardsToLoad;
-        observer.unobserve(loadingSentinel);
-    } 
-    // অন্যথায়, প্রাথমিক ১০টি কার্ড লোড করা
-    else {
-        renderCards(startCardIndex, startCardIndex + cardsPerLoad, true);
-        cardsLoaded = cardsPerLoad;
-        observer.observe(loadingSentinel);
-    }
+            function loadPage(pageNumber, highlightIndex = -1) {
+                currentPage = pageNumber;
+                
+                // প্রতিবার নতুন পেজ লোড হলে cardsLoaded ভেরিয়েবলটি রিসেট করা
+                cardsLoaded = 0; 
+                
+                const startCardIndex = (currentPage - 1) * cardsPerPage;
+                const endOfPage = Math.min(startCardIndex + cardsPerPage, filteredCards.length);
+                const totalCardsToLoad = endOfPage - startCardIndex;
+                
+                // পেজ খালি করা
+                container.innerHTML = '';
+                
+                // যদি হাইলাইট কার্ড থাকে, তাহলে সেই পর্যন্ত লোড করা
+                if (highlightIndex !== -1) {
+                    renderCards(startCardIndex, highlightIndex + 1, true);
+                    cardsLoaded = (highlightIndex + 1) - startCardIndex;
+                } 
+                // যদি অবশিষ্ট কার্ডের সংখ্যা প্রাথমিক লোডের চেয়ে কম বা সমান হয়, তাহলে সব লোড করে ফেলা
+                else if (totalCardsToLoad <= cardsPerLoad) {
+                    renderCards(startCardIndex, endOfPage, true);
+                    cardsLoaded = totalCardsToLoad;
+                    observer.unobserve(loadingSentinel);
+                } 
+                // অন্যথায়, প্রাথমিক ১০টি কার্ড লোড করা
+                else {
+                    renderCards(startCardIndex, startCardIndex + cardsPerLoad, true);
+                    cardsLoaded = cardsPerLoad;
+                    observer.observe(loadingSentinel);
+                }
 
-    renderPaginationButtons();
-    
-    // পেজ লোড হলে টপে স্ক্রল করা
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+                renderPaginationButtons();
+                
+                // পেজ লোড হলে টপে স্ক্রল করা
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
             
             // নতুন: আরও কার্ড লোড করার ফাংশন (ইনফিনিট স্ক্রোলিংয়ের জন্য)
             function loadMoreCards() {
@@ -1315,6 +1372,12 @@
 
                 if (button && card) {
                     const cardId = card.dataset.id;
+                    // এখানে ভিউ কাউন্টার আপডেট করার লজিক যুক্ত করা হয়েছে
+                    // কন্টিনিউ বাটনে ক্লিক করার 10 সেকেন্ড পর ভিউ কাউন্ট হবে
+                    setTimeout(() => {
+                        updateViewCount(cardId);
+                    }, 10000);
+                    
                     window.location.href = `step1.html?cardId=${cardId}`;
                 }
             });
