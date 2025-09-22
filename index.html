@@ -369,7 +369,7 @@
             margin: 5px 0;
         }
         
-        .continue-button {
+        .continue-button { /* .task-button থেকে .continue-button এ পরিবর্তন করা হয়েছে */
             background-color: #ff9100;
             color: #fff;
             border: none;
@@ -385,21 +385,12 @@
             white-space: nowrap;
         }
         
-        .continue-button:hover, .continue-button:active {
+        .continue-button:hover, .continue-button:active { /* .task-button থেকে .continue-button এ পরিবর্তন করা হয়েছে */
             background-color: #e58200;
         }
 
-        .continue-button.clicked {
-            background-color: #2575fc;
-        }
-        
-        .task-completed {
-            background-color: #28a745;
-        }
-
-        .task-completed:hover {
-            background-color: #218838;
-        }
+        /* .continue-button.clicked এবং .task-completed ক্লাসগুলো টাস্ক সিস্টেমের সাথে সম্পর্কিত ছিল, তাই এখানে অপ্রয়োজনীয়। */
+        /* যদি ভবিষ্যতে কোনো বিশেষ স্টাইল প্রয়োজন হয়, তবে সেগুলো আবার যোগ করা যাবে। */
 
         /* Modal and other styles remain the same */
         .modal {
@@ -893,17 +884,22 @@
     </div>
     
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc, increment } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
+        // Firebase Configuration from your project
         const firebaseConfig = {
-             apiKey: "YOUR_API_KEY",
-             authDomain: "YOUR_AUTH_DOMAIN",
-             projectId: "YOUR_PROJECT_ID",
-             storageBucket: "YOUR_STORAGE_BUCKET",
-             messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-             appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q",
+            authDomain: "my-ad-analytics-4560a.firebaseapp.com",
+            databaseURL: "https://my-ad-analytics-4560a-default-rtdb.firebaseio.com",
+            projectId: "my-ad-analytics-4560a",
+            storageBucket: "my-ad-analytics-4560a.firebasestorage.app",
+            messagingSenderId: "104213283950",
+            appId: "1:104213283950:web:b5a25ecd54df809625127f",
+            measurementId: "G-WS7QSQ9H0Y"
         };
+
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
@@ -919,6 +915,7 @@
             const cardImageInput = document.getElementById('cardImage');
             const cardVideoLinkInput = document.getElementById('cardVideoLink');
             const cardCategorySelect = document.getElementById('cardCategory');
+            // const cardTasksSelect = document.getElementById('cardTasks'); // সরানো হয়েছে
             const codeResultDiv = document.getElementById('codeResult');
             const cardCodeBox = document.getElementById('cardCodeBox');
             const copyCardCodeBtn = document.getElementById('copyCardCodeBtn');
@@ -937,7 +934,6 @@
             const adminPanelFull = document.getElementById('admin-panel-full');
             const loadingBar = document.getElementById('loading-bar');
             
-            // ইনফিনিট স্ক্রোলিংয়ের জন্য নতুন ভেরিয়েবল
             let allCardData = [];
             let filteredCards = [];
             let cardsLoaded = 0;
@@ -946,13 +942,11 @@
             let currentFilter = 'all';
             let currentCardToHighlight = null;
             let observer;
-            
-            // নতুন: পেজিনেশনের জন্য ভেরিয়েবল
+
             const cardsPerPage = 50;
             let currentPage = 1;
             let totalPages = 1;
             
-            // নতুন: সময় গণনা করার ফাংশন
             function formatTimeAgo(timestamp) {
                 const uploadDate = new Date(timestamp);
                 const now = new Date();
@@ -980,48 +974,48 @@
                 }
                 return "এখনই";
             }
-            
+
             async function updateViewCount(cardId) {
-                 const docRef = doc(db, "views", cardId);
-                 try {
-                     const docSnap = await getDoc(docRef);
-                     let currentCount = 0;
-                     if (docSnap.exists()) {
-                         currentCount = docSnap.data().count;
-                     }
-                     const newCount = currentCount + 1;
-                     await setDoc(docRef, { count: newCount }, { merge: true });
-                     console.log(`View count for ${cardId} updated to ${newCount}`);
-                     const cardElement = document.querySelector(`.card[data-id="${cardId}"] .card-views`);
-                     if (cardElement) {
-                         cardElement.textContent = `Views: ${newCount}`;
-                     }
-                 } catch (error) {
-                     console.error("Error updating view count:", error);
-                 }
+                const viewsRef = doc(db, "views", cardId);
+                try {
+                    const docSnap = await getDoc(viewsRef);
+                    let currentCount = 0;
+                    if (docSnap.exists()) {
+                        currentCount = docSnap.data().count;
+                    }
+                    const newCount = currentCount + 1;
+                    await setDoc(viewsRef, { count: increment(1) }, { merge: true }); // increment ব্যবহার করা হয়েছে
+                    console.log(`View count for ${cardId} updated to ${newCount}`);
+                    const cardElement = document.querySelector(`.card[data-id="${cardId}"] .card-views`);
+                    if (cardElement) {
+                        cardElement.textContent = `Views: ${newCount}`;
+                    }
+                } catch (error) {
+                    console.error("Error updating view count:", error);
+                }
             }
 
             async function getAndUpdateViews() {
-                 try {
-                     const cards = document.querySelectorAll('.card');
-                     cards.forEach(async (card) => {
-                         const cardId = card.dataset.id;
-                         const docRef = doc(db, "views", cardId);
-                         const docSnap = await getDoc(docRef);
-                         if (docSnap.exists()) {
-                             const viewCount = docSnap.data().count;
-                             const viewElement = card.querySelector('.card-views');
-                             if (viewElement) {
-                                 viewElement.textContent = `Views: ${viewCount}`;
-                             }
-                         }
-                     });
-                 } catch (error) {
-                     console.error("Error fetching views:", error);
-                 }
+                try {
+                    const cards = document.querySelectorAll('.card');
+                    for (const card of cards) { // Async operation, so iterate with for...of
+                        const cardId = card.dataset.id;
+                        const docRef = doc(db, "views", cardId);
+                        const docSnap = await getDoc(docRef);
+                        let viewCount = 0;
+                        if (docSnap.exists()) {
+                            viewCount = docSnap.data().count;
+                        }
+                        const viewElement = card.querySelector('.card-views');
+                        if (viewElement) {
+                            viewElement.textContent = `Views: ${viewCount}`;
+                        }
+                    }
+                } catch (error) {
+                    console.error("Error fetching views:", error);
+                }
             }
 
-            // নতুন: ডেটা লোড করার ফাংশন
             async function loadData() {
                 loadingBar.style.width = '20%';
                 try {
@@ -1039,7 +1033,6 @@
                         loadingBar.style.width = '0%';
                     }, 500);
                     
-                    // প্রতি মিনিটে সময় আপডেট করার জন্য
                     setInterval(updateCardTimes, 60000);
                     
                 } catch (error) {
@@ -1049,7 +1042,6 @@
                 }
             }
             
-            // নতুন: কার্ডের সময় আপডেট করার ফাংশন
             function updateCardTimes() {
                 document.querySelectorAll('.card').forEach(card => {
                     const uploadTime = card.dataset.uploadTime;
@@ -1071,7 +1063,6 @@
                 }, duration);
             }
             
-            // নতুন: ইউনিক আইডি জেনারেটর
             function generateUniqueId() {
                 const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
                 let result = '';
@@ -1085,7 +1076,11 @@
                 const card = document.createElement('div');
                 card.classList.add('card');
                 card.setAttribute('data-id', data.id);
+                card.setAttribute('data-video-link', data.videoLink);
                 card.setAttribute('data-category', data.category.join(','));
+                if (data.uploadTime) {
+                    card.setAttribute('data-upload-time', data.uploadTime);
+                }
                 
                 const timeAgoText = data.uploadTime ? formatTimeAgo(data.uploadTime) : '';
                 
@@ -1104,11 +1099,10 @@
                     </div>
                     <div class="card-content">
                         <h3 class="card-title">${data.title}</h3>
-                        <p class="card-views" data-views="${data.views}">Views: 0</p>
                         <hr class="card-divider">
+                        <div class="card-views" id="views-${data.id}">Views: Loading...</div>
                     </div>
-                    <button class="continue-button">Continue</button>
-                `;
+                    <button class="continue-button">Continue</button> `;
                 
                 return card;
             }
@@ -1123,13 +1117,10 @@
                 cardsToRender.forEach(data => {
                     const card = createCard(data);
                     container.appendChild(card);
-                    // অ্যানিমেশনের জন্য কার্ডগুলো দৃশ্যমান করা
                     setTimeout(() => {
                          card.classList.add('visible');
-                         // হাইলাইট করার লজিক এখানে যুক্ত করা হয়েছে
                          if (data.id === currentCardToHighlight) {
                              card.classList.add('highlighted');
-                             // এখানে নতুন লজিক যুক্ত করা হয়েছে
                              setTimeout(() => {
                                  const headerHeight = document.querySelector('.header').offsetHeight;
                                  const viewportHeight = window.innerHeight;
@@ -1142,14 +1133,13 @@
                                  });
                              }, 200);
                          }
-                    }, 50); // ছোট ডিলে যোগ করা হয়েছে
+                    }, 50); 
                 });
                 
                 cardsLoaded = end;
-                getAndUpdateViews();
+                getAndUpdateViews(); // এখানে সমস্ত কার্ডের ভিউ আপডেট করার জন্য কল করা হয়েছে
             }
             
-            // নতুন: ক্যাটাগরি ফিল্টার এবং প্রথম কার্ড লোড করার ফাংশন (এখন পেজিনেশন অনুযায়ী)
             function filterAndLoadCards(filterCategory) {
                 currentFilter = filterCategory;
                 if (filterCategory === 'all') {
@@ -1158,51 +1148,40 @@
                     filteredCards = allCardData.filter(card => card.category.includes(filterCategory));
                 }
                 
-                // পেজিনেশন আপডেট করা
                 totalPages = Math.ceil(filteredCards.length / cardsPerPage);
                 currentPage = 1;
                 renderPaginationButtons();
                 
-                // হাইলাইট কার্ড আছে কিনা তা চেক করা
                 const targetCardIndex = filteredCards.findIndex(card => card.id === currentCardToHighlight);
                 
                 if (targetCardIndex !== -1) {
                     const targetPage = Math.floor(targetCardIndex / cardsPerPage) + 1;
                     currentPage = targetPage;
-                    // নির্দিষ্ট কার্ডটি খুঁজে পাওয়া গেলে, সেই পর্যন্ত লোড করা
                     loadPage(targetPage, targetCardIndex);
                 } else {
-                    // যদি কোনো কার্ড হাইলাইট করার না থাকে, তাহলে স্বাভাবিক লোড করা
                     loadPage(currentPage);
                 }
             }
 
-            // নতুন: নির্দিষ্ট পেজ লোড করার ফাংশন
             function loadPage(pageNumber, highlightIndex = -1) {
                 currentPage = pageNumber;
-                
-                // প্রতিবার নতুন পেজ লোড হলে cardsLoaded ভেরিয়েবলটি রিসেট করা
                 cardsLoaded = 0; 
                 
                 const startCardIndex = (currentPage - 1) * cardsPerPage;
                 const endOfPage = Math.min(startCardIndex + cardsPerPage, filteredCards.length);
                 const totalCardsToLoad = endOfPage - startCardIndex;
                 
-                // পেজ খালি করা
                 container.innerHTML = '';
                 
-                // যদি হাইলাইট কার্ড থাকে, তাহলে সেই পর্যন্ত লোড করা
                 if (highlightIndex !== -1) {
                     renderCards(startCardIndex, highlightIndex + 1, true);
                     cardsLoaded = (highlightIndex + 1) - startCardIndex;
                 } 
-                // যদি অবশিষ্ট কার্ডের সংখ্যা প্রাথমিক লোডের চেয়ে কম বা সমান হয়, তাহলে সব লোড করে ফেলা
                 else if (totalCardsToLoad <= cardsPerLoad) {
                     renderCards(startCardIndex, endOfPage, true);
                     cardsLoaded = totalCardsToLoad;
                     observer.unobserve(loadingSentinel);
                 } 
-                // অন্যথায়, প্রাথমিক ১০টি কার্ড লোড করা
                 else {
                     renderCards(startCardIndex, startCardIndex + cardsPerLoad, true);
                     cardsLoaded = cardsPerLoad;
@@ -1210,12 +1189,9 @@
                 }
 
                 renderPaginationButtons();
-                
-                // পেজ লোড হলে টপে স্ক্রল করা
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
             
-            // নতুন: আরও কার্ড লোড করার ফাংশন (ইনফিনিট স্ক্রোলিংয়ের জন্য)
             function loadMoreCards() {
                 const startCardIndex = (currentPage - 1) * cardsPerPage + cardsLoaded;
                 const endCardIndex = Math.min((currentPage - 1) * cardsPerPage + cardsLoaded + cardsPerLoad, (currentPage * cardsPerPage));
@@ -1225,9 +1201,8 @@
                 }
             }
             
-            // নতুন: পেজিনেশন বাটন রেন্ডার করার ফাংশন
             function renderPaginationButtons() {
-                paginationContainer.innerHTML = ''; // আগের বাটনগুলো মুছে ফেলা
+                paginationContainer.innerHTML = ''; 
                 
                 if (totalPages <= 1) return;
 
@@ -1302,7 +1277,6 @@
                 updatePaginationButtons();
             }
 
-            // নতুন: পেজিনেশন বাটন আপডেট করার ফাংশন
             function updatePaginationButtons() {
                 const buttons = paginationContainer.querySelectorAll('.pagination-button');
                 buttons.forEach(button => {
@@ -1313,7 +1287,6 @@
                 });
             }
             
-            // ইনফিনিট স্ক্রোলিংয়ের জন্য IntersectionObserver
             observer = new IntersectionObserver((entries) => {
                 if (entries[0].isIntersecting) {
                     loadMoreCards();
@@ -1324,13 +1297,11 @@
                 threshold: 0.1
             });
 
-            // টাস্ক সিস্টেম এবং অ্যানিমেশনের জন্য ইভেন্ট লিসেনার
             container.addEventListener('click', async (event) => {
                 const card = event.target.closest('.card');
-                const button = event.target.closest('.continue-button');
+                const button = event.target.closest('.continue-button'); // .task-button থেকে .continue-button এ পরিবর্তন
                 const shareIcon = event.target.closest('.share-icon');
 
-                // হাইলাইট রিমুভ করার লজিক
                 if (button && currentCardToHighlight) {
                     const highlightedCard = document.querySelector(`[data-id="${currentCardToHighlight}"]`);
                     if (highlightedCard) {
@@ -1340,7 +1311,6 @@
                 }
                 
                 if (card && !button && !shareIcon) {
-                    // কার্ডে ক্লিক করলে অ্যানিমেশন
                     card.style.transform = 'scale(1.05)';
                     setTimeout(() => {
                         card.style.transform = 'scale(1)';
@@ -1364,7 +1334,6 @@
                             console.error('Sharing failed:', error);
                         }
                     } else {
-                        // যদি নেটিভ শেয়ার সাপোর্ট না থাকে, তাহলে শুধু কপি করবে
                         copyToClipboard(shareUrl, notificationPopup);
                     }
                     return;
@@ -1372,11 +1341,12 @@
 
                 if (button && card) {
                     const cardId = card.dataset.id;
+                    
                     // এখানে ভিউ কাউন্টার আপডেট করার লজিক যুক্ত করা হয়েছে
                     // কন্টিনিউ বাটনে ক্লিক করার 10 সেকেন্ড পর ভিউ কাউন্ট হবে
                     setTimeout(() => {
                         updateViewCount(cardId);
-                    }, 10000);
+                    }, 10000); // 10 সেকেন্ড = 10000 মিলিসেকেন্ড
                     
                     window.location.href = `step1.html?cardId=${cardId}`;
                 }
@@ -1387,7 +1357,7 @@
                     categoryButtons.forEach(btn => btn.classList.remove('active'));
                     button.classList.add('active');
                     const category = button.getAttribute('data-category');
-                    currentCardToHighlight = null; // নতুন ফিল্টার করার সময় হাইলাইট বন্ধ করা
+                    currentCardToHighlight = null; 
                     filterAndLoadCards(category);
                 });
             });
@@ -1483,18 +1453,17 @@
             });
             
             function init() {
-                // ইউআরএল থেকে কার্ড আইডি বের করা
                 const urlParams = new URLSearchParams(window.location.search);
                 currentCardToHighlight = urlParams.get('cardId');
                 
-                 mainContent.style.display = 'block';
-                 adminPanelFull.classList.remove('show');
-                 loadData();
-                 observer.observe(loadingSentinel);
+                mainContent.style.display = 'block';
+                adminPanelFull.classList.remove('show');
+                loadData();
+                observer.observe(loadingSentinel);
             }
             
-              init();
-            });
+            init();
+        });
      </script>
    </body>
 </html>
