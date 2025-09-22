@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>টাইমার শেষেই চমক — এখনি দেখুন</title>
+  <meta name="description" content="১০ সেকেন্ডের টাইমার সহ একটি সিঙ্গেল স্টেপ ফ্লো; টাইম শেষেই সরাসরি ভিডিও।" />
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#111a2b;
+      --panel-2:#0f1626;
+      --text:#e9eefc;
+      --muted:#a9b4d6;
+      --brand:#6ca2ff;
+      --brand-2:#7ef0ff;
+      --ok:#24d27e;
+      --warn:#ffae42;
+      --danger:#ff5d7a;
+      --ring: rgba(124, 179, 255, .35);
+      --shadow: 0 10px 25px rgba(0,0,0,.35);
+      --radius: 18px;
+      --gap: 16px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background: radial-gradient(1200px 800px at 80% -10%, #123 0%, #0a0f1a 45%, #070b14 100%), var(--bg);
+      color:var(--text);
+      font: 15px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+      letter-spacing:.2px;
+    }
+  
+    /* Sticky Header */
+    header{
+      position:sticky; top:0; z-index:50;
+      background: rgba(10,15,26,.7);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .wrap{max-width:900px; margin:0 auto; padding: 10px 16px;}
+    .brand{
+      display:flex; gap:10px; align-items:center; padding:8px 0 6px;
+    }
+    .logo{
+      width:28px; height:28px; border-radius:8px;
+      background: conic-gradient(from 0deg, var(--brand), var(--brand-2), var(--brand) );
+      box-shadow: 0 0 0 6px rgba(124,179,255,.08), inset 0 0 18px rgba(255,255,255,.35);
+    }
+    .title{font-weight:700; font-size:16px}
+    .subtitle{color:var(--muted); font-size:12px}
+  
+    /* Main panel */
+    .panel{
+      max-width:900px; margin:0 auto; padding: 18px 18px 18px; 
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border: 1px solid rgba(255,255,255,.06);
+      box-shadow: var(--shadow);
+    }
+    .section{
+      display:grid;
+      gap: 12px;
+    }
+    .headline{
+      font-size:22px; font-weight:800; letter-spacing:.3px;
+      text-shadow: 0 1px 0 rgba(0,0,0,.4);
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    .lead{color:var(--muted); margin-top: 0; margin-bottom: 0;}
+    .callout{
+      border-radius: 14px; padding:12px 14px;
+      background: rgba(124,179,255,.07);
+      border:1px dashed rgba(124,179,255,.35);
+      color:#cfe2ff;
+      font-size:14px;
+    }
+  
+    /* Timer block */
+    .timer-card{
+      border-radius: 16px; padding:16px; border:1px solid rgba(255,255,255,.06);
+      background: #0b1526;
+      display:grid; gap:10px;
+      position:relative; overflow:hidden;
+    }
+    .timer-row{
+      display:flex; justify-content:space-between; align-items:center; gap:12px;
+    }
+    .count{
+      font: 800 28px/1 monospace; letter-spacing: .5px;
+    }
+    .count[aria-live]{min-width:3ch; text-align:right}
+    .hint{color:var(--muted); font-size:13px}
+    .action{
+      display:grid; gap:8px; margin-top:4px;
+    }
+    .btn{
+      appearance:none; border:none; cursor:pointer;
+      border-radius: 12px; padding:12px 16px; font-weight:800; font-size:15px;
+      background: linear-gradient(180deg, #1a6fff, #0f5be7);
+      color:white; box-shadow: 0 10px 18px rgba(26,111,255,.2), inset 0 0 0 1px rgba(255,255,255,.18);
+      transition: transform .08s ease, box-shadow .2s ease, filter .2s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); filter: brightness(1.05)}
+    .btn:active{ transform: translateY(1px); filter: brightness(.98)}
+    .btn[disabled]{opacity:.5; pointer-events:none}
+  
+    /* Appear only after timer */
+    .reveal{ display:none }
+    .reveal.show{ display:block }
+  
+    /* Progress bar styling */
+    .progress{ height:10px; border-radius:999px; background:rgba(255,255,255,.06); overflow:hidden; border:1px solid rgba(255,255,255,.08)}
+    .bar{
+      height:100%; width:0%;
+      background-image: repeating-linear-gradient(45deg, rgba(108,162,255,.9) 0 10px, rgba(126,240,255,.9) 10px 20px);
+    }
+  
+    /* Note under buttons (permanent line) */
+    .perma-note{
+      font-size:13px; color:#d6ffe9;
+      background: rgba(36,210,126,.08);
+      border:1px solid rgba(36,210,126,.25);
+      padding:10px 12px; border-radius:12px;
+    }
+  
+    /* Article (persists across steps) */
+    .article{
+      margin-top: 8px;
+      padding:14px; border-radius:16px;
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+    }
+    .article h3{ margin:0 0 8px 0; font-size:16px }
+    .article p{ margin: 6px 0; color:var(--muted) }
+  
+    /* Footer */
+    footer{ color:var(--muted); text-align:center; padding: 14px 0 40px }
+  
+    /* Small */
+    @media (max-width:560px){
+      .headline{
+        font-size:16px;
+        line-height: 1.2;
+      }
+      .count{font-size:26px}
+      .title{font-size:15px}
+      .step-label{font-size:12px}
+      .btn{font-size:14px}
+    }
+  </style>
+</head>
+<body>
+  <a id="top" aria-hidden="true"></a>
+  <header>
+    <div class="wrap">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div class="title">Viral Link Market 🔞</div>
+          <div class="subtitle">"আনলক" সেকশন এবং গুরুত্বপূর্ণ নির্দেশনা" 📥</div>
+        </div>
+      </div>
+  </header>
+  
+  <main class="panel">
+    <section class="section">
+      <h1 class="headline" id="headline">আপনার জন্য ভিডিওটি অপেক্ষা করছে_😉</h1>
+      <p class="lead" id="lead">
+        ধৈর্য রাখুন, আরও কিছুক্ষণ অপেক্ষার পর নিচে একটি বাটন দেখাবেন। তার আগে নির্দেশনাগুলো মনোযোগ দিয়ে পড়ুন!
+      </p>
+  
+      <div id="callout" class="callout">
+        <strong>নির্দেশনা:</strong> “এখানে ক্লিক করুন”—এই নির্দেশনার পরে বাটন দেখা গেলে তবেই ক্লিক করবেন।  বাটনে ক্লিক করলেই ভিডিওটি—<em>আনলক 🔓 হয়ে যাবে!</em>
+      </div>
+  
+      <div class="timer-card style-1" id="timerCard">
+        <div class="timer-row">
+          <div class="hint" id="hint">টাইমার চলছে… শেষ হলে বাটন দেখাবে</div>
+          <div class="count" id="counter" aria-live="polite">15</div>
+        </div>
+        <div class="progress" aria-hidden="true">
+          <div class="bar" id="bar"></div>
+        </div>
+        <div class="action">
+          <div class="hint" id="clickGuide">এখানে ক্লিক করুন ⤵︎</div>
+          <button id="nextBtn" class="btn reveal" disabled>🔒Unlock Video 📥</button>
+          <div class="perma-note" id="permaNote">
+           বিঃদ্রঃ: যদি বাটনে ক্লিক করার পর অন্য কোথাও যায়, তাহলে সেই ট্যাবে <strong>১৫ সেকেন্ড</strong> অপেক্ষা করে ব্যাক দিয়ে আবার বাটনে ক্লিক করলেই আপনার গন্তব্যে পৌঁছে যাবেন।
+          </div>
+        </div>
+      </div>
+  
+      <article class="article" aria-label="সচেতনতামূলক লেখা">
+        <h3>বাংলাদেশের বর্তমান প্রেক্ষাপটে প্রাপ্তবয়স্ক কন্টেন্ট বিষয়ক সচেতনতা</h3>
+        <p>
+          ইন্টারনেটের ব্যবহার অত্যন্ত সংবেদনশীল। যেকোনো কন্টেন্ট দেখার আগে এর <strong>বয়স–উপযুক্ততা</strong>, <strong>সম্মতি (consent)</strong> এবং <strong>আইন</strong>—এই তিনটি বিষয়ে সতর্ক থাকা জরুরি। আপনি বয়স–উপযুক্ত কিনা এবং যে কন্টেন্টটি দেখতে যাচ্ছেন তা বৈধ ও নিরাপদ প্ল্যাটফর্মে আছে কিনা তা নিশ্চিত হয়ে নিন।
+        </p>
+        <p>
+          ব্যক্তিগত গোপনীয়তা (privacy) রক্ষা করুন, অচেনা কোনো লিংকে ক্লিক না করে সোর্স যাচাই করুন, এবং সন্দেহজনক সাইটে ব্যক্তিগত তথ্য দেবেন না।
+          অনলাইন নিরাপত্তাই সবচেয়ে বড় অগ্রাধিকার—নিজের ও অন্যের সম্মান সবার আগে।
+        </p>
+        <p>
+          এই সেকশনের উদ্দেশ্য শিক্ষামূলক/সচেতনতামূলক নির্দেশনা দেওয়া—এখানে অশালীন, অবৈধ বা শোষণমূলক কোনো কন্টেন্টের প্রচার করা হয় না। আমাদের যে কনটেন্ট এগুলো বিভিন্ন জায়গা এবং বিভিন্ন ভাইরাল ভিডিও গ্রুপ থেকে নেওয়া.! যদি কখনো আপনার পরিচিত কারো সাথে ভিডিও মিলে যায় আমাদের সাথে যোগাযোগ করলেই ভিডিওটি সাথে সাথেই রিমুভ করা হবে এবং সচেতনতার দিক থেকে যতটা সম্ভব সাহায্য করা হবে.! "ধন্যবাদ"
+        </p>
+      </article>
+    </section>
+  </main>
+  
+  <footer>
+    © <span id="year"></span> টাইমার ফ্লো • এক ধাপেই চূড়ান্ত গন্তব্য
+  </footer>
+  
+  <noscript>
+    <div class="panel" style="border:2px solid #ff5d7a">
+      <strong>জাভাস্ক্রিপ্ট বন্ধ আছে।</strong> এই ফ্লো চালাতে জাভাস্ক্রিপ্ট চালু করুন।
+    </div>
+  </noscript>
+  
+  <script>
+    // এই ভেরিয়েবলটি আপনাকে বলে দেবে পরবর্তী ফাইলের নাম কী হবে
+    const NEXT_FILE_NAME = "step2.html";
+    const STEP_SECONDS = 15;
+  
+    const headlineEl = document.getElementById("headline");
+    const leadEl = document.getElementById("lead");
+    const calloutEl = document.getElementById("callout");
+    const hintEl = document.getElementById("hint");
+    const counterEl = document.getElementById("counter");
+    const barEl = document.getElementById("bar");
+    const nextBtn = document.getElementById("nextBtn");
+    const yearEl = document.getElementById("year");
+  
+    yearEl.textContent = new Date().getFullYear();
+  
+    let tickInterval = null;
+    let startTs = null;
+    let cardId = null; // কার্ড আইডি সংরক্ষণের জন্য ভেরিয়েবল
+    
+    // URL থেকে কার্ড আইডি বের করা
+    const urlParams = new URLSearchParams(window.location.search);
+    cardId = urlParams.get('cardId');
+  
+    function startCountdown(){
+      if (tickInterval) clearInterval(tickInterval);
+      startTs = Date.now();
+      const totalMs = STEP_SECONDS * 1000;
+  
+      tickInterval = setInterval(()=>{
+        const elapsed = Date.now() - startTs;
+        const remainMs = Math.max(0, totalMs - elapsed);
+        const remainSec = Math.ceil(remainMs / 1000);
+        const pct = Math.min(100, (elapsed / totalMs) * 100);
+  
+        counterEl.textContent = remainSec;
+        barEl.style.width = pct + "%";
+  
+        if (remainMs <= 0){
+          clearInterval(tickInterval);
+          counterEl.textContent = 0;
+          revealButton();
+        }
+      }, 100);
+    }
+  
+    function revealButton(){
+      nextBtn.disabled = false;
+      nextBtn.classList.add("show");
+      nextBtn.focus({preventScroll:true});
+    }
+  
+    nextBtn.addEventListener("click", ()=>{
+      if (cardId) {
+        // যদি কার্ড আইডি থাকে, তাহলে পরের ফাইলে তা পাস করা হবে
+        window.location.href = `${NEXT_FILE_NAME}?cardId=${cardId}`;
+      } else {
+        // যদি কোনো কারণে কার্ড আইডি না পাওয়া যায়, তাহলে শুধু পরের ফাইলে যাবে
+        window.location.href = NEXT_FILE_NAME;
+      }
+    });
+  
+    startCountdown();
+  </script>
+</body>
+</html>
