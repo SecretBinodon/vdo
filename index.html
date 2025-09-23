@@ -237,9 +237,7 @@
             flex-grow: 1;
             flex-shrink: 1;
             text-align: center;
-            
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            
+            /* transition: transform 0.3s ease, box-shadow 0.3s ease; <--- অ্যানিমেশন বন্ধ */
             display: flex;
             flex-direction: column; 
             justify-content: space-between;
@@ -256,12 +254,12 @@
         
         .card:hover {
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-            transform: scale(1.05);
+            /* transform: scale(1.05); <--- অ্যানিমেশন বন্ধ */
         }
 
-        /* এখানে .card:active{} এর থেকে box-shadow প্রপার্টিটি সরিয়ে দেওয়া হয়েছে */
         .card:active {
             box-shadow: none;
+            /* transform: none; <--- অ্যানিমেশন বন্ধ */
         }
         
         /* নতুন হাইলাইট সার্কেল স্টাইল */
@@ -954,7 +952,7 @@
             const authSubmit = document.getElementById('authSubmit');
             const addCardForm = document.getElementById('addCardForm');
             const cardTitleInput = document.getElementById('cardTitle');
-            const cardImageInput = document.getElementById('cardImage');
+            const cardImageInput = document = document.getElementById('cardImage');
             const cardVideoLinkInput = document.getElementById('cardVideoLink');
             const cardCategorySelect = document.getElementById('cardCategory');
             const codeResultDiv = document.getElementById('codeResult');
@@ -1083,7 +1081,15 @@
                     
                     const likeCountElement = button.querySelector('.card-likes-count');
                     const currentCountText = likeCountElement.textContent.trim();
-                    const currentCount = parseFloat(currentCountText) || 0;
+                    // Handle compact notation (e.g., "1.2K" to 1200)
+                    let currentCount;
+                    if (currentCountText.endsWith('K')) {
+                        currentCount = parseFloat(currentCountText) * 1000;
+                    } else if (currentCountText.endsWith('M')) {
+                        currentCount = parseFloat(currentCountText) * 1000000;
+                    } else {
+                        currentCount = parseInt(currentCountText) || 0;
+                    }
                     
                     let newCount = currentCount + 1;
                     
@@ -1435,26 +1441,23 @@
                 const imageContainer = event.target.closest('.card-image-container');
                 if (imageContainer) {
                     const cardId = card.dataset.id;
+                    // View count increment on image click
+                    const docRef = doc(db, "stats", cardId);
+                    await setDoc(docRef, { views: increment(1) }, { merge: true });
                     window.location.href = `step1.html?cardId=${cardId}`;
                     return; 
                 }
 
+                // কার্ডের অন্যান্য অংশে ক্লিক করলে (টাইটেল, ভিউ কাউন্টার) কোনো অ্যানিমেশন হবে না, শুধু কার্যকারিতা অক্ষুণ্ণ থাকবে
                 const cardContent = event.target.closest('.card-content');
                 if (cardContent) {
-                    card.style.transform = 'scale(1.02)';
-                    card.style.transition = 'transform 0.1s ease-in-out';
-                    
-                    setTimeout(() => {
-                        card.style.transform = 'scale(1)';
-                        setTimeout(() => {
-                            card.style.transition = '';
-                        }, 100); 
-                    }, 200); 
+                    // কোনো অ্যানিমেশন কোড নেই
                     return;
                 }
             });
             
             // New click event listener for the like button
+            // এই ইভেন্ট লিসেনারটি লাইক বাটন ক্লিকের জন্য, এখানে কোনো অ্যানিমেশন নেই
             container.addEventListener('click', (event) => {
                 const likeButton = event.target.closest('.card-likes');
                 if (likeButton) {
