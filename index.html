@@ -9,8 +9,8 @@
     /* Global Styles */
     body {
         font-family: sans-serif;
-        background-color: #121212;
-        color: #e0e0e0;
+        background-color: #121212; /* Dark theme background */
+        color: #e0e0e0; /* Light text color for dark theme */
         margin: 0;
         padding: 0;
     }
@@ -129,7 +129,7 @@
         position: sticky;
         top: 0;
         z-index: 1000;
-        background-color: #121212;
+        background-color: #121212; /* Dark theme background */
     }
     .category-bar {
         display: flex;
@@ -139,9 +139,9 @@
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         padding: 10px 10px;
-        background-color: #1a1a1a;
+        background-color: #1a1a1a; /* Darker background for bar */
         margin: 0;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Darker shadow */
         white-space: nowrap;
         position: sticky;
         top: 0;
@@ -151,8 +151,8 @@
         display: none;
     }
     .category-bar button {
-        background-color: #333;
-        color: #e0e0e0;
+        background-color: #333; /* Darker button background */
+        color: #e0e0e0; /* Light text for buttons */
         border: none;
         border-radius: 20px;
         padding: 8px 10px;
@@ -184,7 +184,7 @@
         color: #fff;
     }
     .category-bar button:not(.add-card-btn):hover {
-        background-color: #444;
+        background-color: #444; /* Darker hover background */
     }
     .add-card-btn:hover {
         background-color: #45a049;
@@ -193,29 +193,33 @@
     /* Card Container - Single Column Layout */
     .container {
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Single column layout */
         gap: 15px;
-        max-width: 600px; /* Adjust for better single column display */
+        max-width: 600px; /* Adjusted for single column presentation */
         margin: 0 auto;
         padding: 10px 20px 0px;
     }
     @media (max-width: 767px) {
         .container {
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr; /* Mobile also single column */
             gap: 10px;
         }
     }
     
     /* Card Styles */
     .card {
-        background-color: #222;
+        background-color: #222; /* Darker card background */
         border-radius: 15px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Darker shadow */
         overflow: hidden;
+        flex-grow: 1;
+        flex-shrink: 1;
+        text-align: center;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         display: flex;
         flex-direction: column; 
-        cursor: pointer; /* Entire card is clickable */
+        justify-content: space-between;
+        cursor: pointer; /* Makes entire card clickable */
         
         opacity: 0;
         transform: translateY(20px);
@@ -225,12 +229,13 @@
         opacity: 1;
         transform: translateY(0);
     }
+    /* Card hover/active effects - adjusted for subtle interaction */
     .card:hover {
-        transform: scale(1.02);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+        transform: scale(1.01); /* Slightly less aggressive scale */
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45); /* Darker shadow on hover */
     }
     .card:active {
-        transform: scale(1.01);
+        transform: scale(0.99); /* Slight press effect */
     }
     
     /* Highlight Circle */
@@ -290,15 +295,15 @@
         white-space: nowrap;
     }
     
-    /* Image Container and Play Icon (16:9 aspect ratio) */
+    /* Image Container with 16:9 Aspect Ratio and Play Icon */
     .card-image-container {
         width: 100%;
         position: relative;
-        padding-top: 56.25%; /* 16:9 aspect ratio fallback */
+        padding-top: 56.25%; /* 16:9 Aspect Ratio (height / width * 100%) */
         overflow: hidden;
         border-radius: 15px 15px 0 0;
-        background-color: #000;
-        aspect-ratio: 16 / 9; /* Modern browsers */
+        background-color: #000; /* Black background if image doesn't load */
+        aspect-ratio: 16 / 9; /* Modern browsers will use this */
     }
     .card-image-container img {
         position: absolute;
@@ -317,6 +322,18 @@
         z-index: 2;
         opacity: 0.8;
         transition: opacity 0.3s ease;
+        /* Ensure click is registered for this pseudo-element */
+        pointer-events: none; /* Allows clicks to pass through to the container */
+    }
+    /* Add a clickable overlay for the play button area */
+    .card-image-container .play-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 3; /* Above the ::after pseudo-element */
+        cursor: pointer;
     }
     .card-image-container:hover::after {
         opacity: 1;
@@ -333,7 +350,7 @@
     }
     .card-title {
         font-size: 16px;
-        color: #fff;
+        color: #fff; /* Light text for title */
         margin: 0;
         white-space: normal;
         word-wrap: break-word;
@@ -341,31 +358,33 @@
     .card-divider {
         height: 1.5px;
         width: 80%;
-        background-color: #444; /* Changed for dark theme */
+        background-color: #444; /* Light gray for dark theme */
         margin: 5px 0;
     }
     .card-views {
         display: flex;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: flex-start; /* Aligned to left */
         font-size: 14px;
-        color: #aaa;
-        margin-top: 0px;   
-        margin-bottom: 0px; 
+        color: #aaa; /* Lighter color for view count */
+        margin-top: 5px;   /* Added margin for separation */
+        margin-bottom: 5px; /* Added margin for separation */
         text-align: left;
         font-weight: normal; 
         width: 100%;
-        padding-left: 20px;
+        padding-left: 20px; /* Indent for alignment */
         box-sizing: border-box;
     }
     .card-views svg {
         margin-right: 5px;
         width: 18px;
         height: 18px;
-        fill: #aaa;
+        fill: #aaa; /* Eye icon color */
     }
     
-    /* Modal and other styles remain the same */
+    /* Removed .continue-button styles as it's no longer present */
+
+    /* Modal and other styles - Adjusted for dark theme */
     .modal {
         display: none;
         position: fixed;
@@ -378,19 +397,11 @@
         background-color: rgba(0,0,0,0.6);
         display: flex;
         justify-content: center;
-        align-items: center;
-        
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: none;
-        align-items: flex-start;
+        align-items: flex-start; /* Align to top */
         padding-top: 50px;
     }
     .modal-content {
-        background-color: #222; /* Changed for dark theme */
+        background-color: #222; /* Dark theme modal background */
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 5px 15px rgba(0,0,0,0.3);
@@ -399,7 +410,7 @@
         text-align: left;
         position: relative;
         margin-top: 50px;
-        color: #e0e0e0;
+        color: #e0e0e0; /* Light text color */
     }
     .modal-content h2 {
         margin-top: 0;
@@ -417,7 +428,7 @@
     }
     .close-btn:hover,
     .close-btn:focus {
-        color: #fff;
+        color: #fff; /* Lighter hover color */
         text-decoration: none;
         cursor: pointer;
     }
@@ -432,15 +443,15 @@
     .form-group input, .form-group select {
         width: 100%;
         padding: 8px;
-        border: 1px solid #555; /* Changed for dark theme */
+        border: 1px solid #555; /* Dark theme border */
         border-radius: 5px;
         box-sizing: border-box;
-        background-color: #333;
-        color: #e0e0e0;
+        background-color: #333; /* Dark theme input background */
+        color: #e0e0e0; /* Light text color */
     }
     .form-group select {
         appearance: none;
-        background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23ccc' d='M2 0L0 2h4L2 0z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px #333;
+        background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23ccc' d='M2 0L0 2h4L2 0z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px #333; /* Adjusted arrow color */
     }
     .form-buttons {
         display: flex;
@@ -465,9 +476,9 @@
         position: relative;
     }
     .code-box {
-        background-color: #333;
-        border: 1px solid #555;
-        color: #e0e0e0;
+        background-color: #333; /* Dark theme code box background */
+        border: 1px solid #555; /* Dark theme border */
+        color: #e0e0e0; /* Light text color */
         padding: 10px;
         border-radius: 5px;
         font-family: monospace;
@@ -512,6 +523,7 @@
         visibility: hidden;
         pointer-events: none;
     }
+
     .notification.show {
         opacity: 1;
         visibility: visible;
@@ -530,6 +542,7 @@
         visibility: visible;
         pointer-events: auto;
     }
+
     .manual-copy-instruction {
         margin-top: 10px;
         font-size: 14px;
@@ -539,13 +552,13 @@
     
     @media (min-width: 768px) {
         .container {
-            grid-template-columns: 1fr; 
+            grid-template-columns: 1fr; /* Ensures single column on wider screens too */
         }
     }
     
     @media (max-width: 767px) {
          .container {
-            grid-template-columns: 1fr; 
+            grid-template-columns: 1fr; /* Single column on mobile */
             gap: 10px;
         }
         .header h1 {
@@ -560,6 +573,7 @@
         .card-title {
             font-size: 14px;
         }
+        /* .continue-button removed */
         .modal-content {
             width: 95%;
             max-width: 250px;
@@ -612,7 +626,7 @@
         transition: width 2s linear;
     }
     
-    /* New Full-screen Admin Panel CSS */
+    /* New Full-screen Admin Panel CSS - Adjusted for dark theme */
     .admin-panel-full {
         display: none;
         position: fixed;
@@ -620,7 +634,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: #121212;
+        background-color: #121212; /* Dark theme background */
         z-index: 1000;
         padding: 20px;
         box-sizing: border-box;
@@ -628,7 +642,7 @@
         opacity: 0;
         transform: translateY(20px);
         transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-        color: #e0e0e0;
+        color: #e0e0e0; /* Light text color */
     }
 
     .admin-panel-full.show {
@@ -638,7 +652,7 @@
     }
     
     .admin-panel-content {
-        background-color: #222;
+        background-color: #222; /* Dark theme panel background */
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -694,7 +708,7 @@
         }
     }
     
-    /* Pagination CSS */
+    /* Pagination CSS - Adjusted for dark theme */
     .pagination-container {
         display: flex;
         justify-content: center;
@@ -703,18 +717,18 @@
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         padding: 10px;
-        background-color: #121212;
+        background-color: #121212; /* Dark theme background */
         margin: 15px 0;
         border-radius: 10px;
         box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
         white-space: nowrap;
-        border-bottom: 2px solid #333;
+        border-bottom: 2px solid #333; /* Dark theme border */
     }
     .pagination-container::-webkit-scrollbar {
         display: none;
     }
     .pagination-button {
-        background-color: #222;
+        background-color: #222; /* Dark theme button background */
         color: #2575fc;
         border: 1px solid #2575fc;
         border-radius: 5px;
@@ -730,7 +744,7 @@
         color: #fff;
     }
     .pagination-button:hover:not(.active) {
-        background-color: #333;
+        background-color: #333; /* Dark theme hover background */
     }
     .pagination-button.disabled {
         background-color: #e0e0e0;
@@ -755,7 +769,7 @@
     </div>
     <div class="header-content">
         <h2>ভাইরাল লিংক মার্কেটে আপনাকে.! 🔥"স্বাগতম"🔥</h2>
-        <p>আপনার পছন্দের কার্ডে ক্লিক করে Video 🔞 দেখুন!📥! "ধন্যবাদ"</p>
+        <p>আপনার পছন্দের কার্ডের বাটনে ক্লিক করে Video 🔞 দেখুন!📥! "ধন্যবাদ"</p>
     </div>
     <a href="https://youtube.com/shorts/6O0ktfOu3xo?si=ZdQztPqYn8Zq8NTv" class="tutorial-button">
         👉 Video কিভাবে দেখবেন-"Click-Tutorial" 🔞
@@ -842,7 +856,7 @@
     
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-        import { getFirestore, doc, getDoc, setDoc, increment, updateDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
         // Firebase Configuration from your project
         const firebaseConfig = {
@@ -908,23 +922,23 @@
                 const now = new Date();
                 const seconds = Math.floor((now - uploadDate) / 1000);
             
-                let interval = seconds / 31536000;
+                let interval = seconds / 31536000; // বছর
                 if (interval > 1) {
                     return Math.floor(interval) + " বছর আগে";
                 }
-                interval = seconds / 2592000;
+                interval = seconds / 2592000; // মাস
                 if (interval > 1) {
                     return Math.floor(interval) + " মাস আগে";
                 }
-                interval = seconds / 86400;
+                interval = seconds / 86400; // দিন
                 if (interval > 1) {
                     return Math.floor(interval) + " দিন আগে";
                 }
-                interval = seconds / 3600;
+                interval = seconds / 3600; // ঘন্টা
                 if (interval > 1) {
                     return Math.floor(interval) + " ঘন্টা আগে";
                 }
-                interval = seconds / 60;
+                interval = seconds / 60; // মিনিট
                 if (interval > 1) {
                     return Math.floor(interval) + " মিনিট আগে";
                 }
@@ -1012,7 +1026,7 @@
                 const card = document.createElement('div');
                 card.classList.add('card');
                 card.setAttribute('data-id', data.id);
-                card.setAttribute('data-video-link', data.videoLink);
+                card.setAttribute('data-video-link', data.videoLink); /* Keep for step1.html */
                 card.setAttribute('data-category', data.category.join(','));
                 if (data.uploadTime) {
                     card.setAttribute('data-upload-time', data.uploadTime);
@@ -1031,6 +1045,7 @@
                         <div class="card-upload-time">${timeAgoText}</div>
                         <div class="card-image-container">
                             <img src="${data.image}" alt="${data.title}" loading="lazy">
+                            <div class="play-overlay" data-card-id="${data.id}"></div>
                         </div>
                     </div>
                     <div class="card-content">
@@ -1231,11 +1246,12 @@
 
             container.addEventListener('click', async (event) => {
                 const card = event.target.closest('.card');
+                const playOverlay = event.target.closest('.play-overlay'); // Targeting the play button area
                 const shareIcon = event.target.closest('.share-icon');
 
-                if (card && !shareIcon) {
+                // If clicked on the play overlay area (which replaces the continue button)
+                if (playOverlay && card) {
                     const cardId = card.dataset.id;
-                    const cardVideoLink = card.dataset.videoLink;
                     
                     if (currentCardToHighlight) {
                         const highlightedCard = document.querySelector(`[data-id="${currentCardToHighlight}"]`);
@@ -1255,10 +1271,12 @@
                         console.error("Error incrementing view count:", e);
                     }
                     
-                    // Card is now clickable, navigate to the link
-                    window.location.href = cardVideoLink;
+                    // Navigate to step1.html, preserving original functionality
+                    window.location.href = `step1.html?cardId=${cardId}`;
+                    return; // Stop further processing for this click
                 }
                 
+                // If clicked on the share icon
                 if (shareIcon) {
                     const cardId = shareIcon.dataset.id;
                     const cardTitle = card.querySelector('.card-title').textContent;
@@ -1278,7 +1296,11 @@
                     } else {
                         copyToClipboard(shareUrl, notificationPopup);
                     }
+                    return; // Stop further processing for this click
                 }
+
+                // Any other click on the card (not play overlay or share icon) should not navigate directly
+                // (Original behavior of just styling the card is removed as per new logic)
             });
 
             categoryButtons.forEach(button => {
