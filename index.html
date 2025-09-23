@@ -823,6 +823,21 @@
             border-color: #ccc;
             cursor: not-allowed;
         }
+        
+        /* Loading Spinner CSS */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -1042,48 +1057,57 @@
                 return num;
             }
 
-            async function getAndUpdateStats() {
+            async function getAndUpdateStats(cardId, cardElement) {
                 try {
-                    const cards = document.querySelectorAll('.card');
-                    for (const card of cards) {
-                        const cardId = card.dataset.id;
-                        
-                        // Fetch Views
-                        const viewsDocRef = doc(db, "views", cardId);
-                        const viewsDocSnap = await getDoc(viewsDocRef);
-                        let viewCount = 0;
-                        if (viewsDocSnap.exists()) {
-                            viewCount = viewsDocSnap.data().count;
-                        }
-                        const viewElement = card.querySelector('.view-stats .count');
-                        if (viewElement) {
-                            viewElement.textContent = formatCount(viewCount);
-                        }
-
-                        // Fetch Loves
-                        const lovesDocRef = doc(db, "loves", cardId);
-                        const lovesDocSnap = await getDoc(lovesDocRef);
-                        let loveCount = 0;
-                        if (lovesDocSnap.exists()) {
-                            loveCount = lovesDocSnap.data().count;
-                        }
-                        const loveElement = card.querySelector('.love-stats .count');
-                        if (loveElement) {
-                            loveElement.textContent = formatCount(loveCount);
-                        }
-
-                        // Check if user has liked
-                        const userLikedDocRef = doc(db, `loves/${cardId}/users`, deviceId);
-                        const userLikedDocSnap = await getDoc(userLikedDocRef);
-                        const loveButton = card.querySelector('.love-stats');
-                        if (userLikedDocSnap.exists()) {
-                            loveButton.classList.add('liked');
-                        } else {
-                            loveButton.classList.remove('liked');
-                        }
+                    // Fetch Views
+                    const viewsDocRef = doc(db, "views", cardId);
+                    const viewsDocSnap = await getDoc(viewsDocRef);
+                    let viewCount = 0;
+                    if (viewsDocSnap.exists()) {
+                        viewCount = viewsDocSnap.data().count;
                     }
+                    
+                    // Fetch Loves
+                    const lovesDocRef = doc(db, "loves", cardId);
+                    const lovesDocSnap = await getDoc(lovesDocRef);
+                    let loveCount = 0;
+                    if (lovesDocSnap.exists()) {
+                        loveCount = lovesDocSnap.data().count;
+                    }
+
+                    // Check if user has liked
+                    const userLikedDocRef = doc(db, `loves/${cardId}/users`, deviceId);
+                    const userLikedDocSnap = await getDoc(userLikedDocRef);
+                    const loveButton = cardElement.querySelector('.love-stats');
+
+                    // Update UI
+                    const viewElement = cardElement.querySelector('.view-stats .count');
+                    const loveElement = cardElement.querySelector('.love-stats .count');
+                    
+                    if (viewElement) viewElement.textContent = formatCount(viewCount);
+                    if (loveElement) loveElement.textContent = formatCount(loveCount);
+
+                    if (userLikedDocSnap.exists()) {
+                        loveButton.classList.add('liked');
+                    } else {
+                        loveButton.classList.remove('liked');
+                    }
+                    
+                    // Enable love button after successful load
+                    loveButton.classList.remove('disabled');
+
                 } catch (error) {
                     console.error("Error fetching stats:", error);
+                    // On error, show a message and keep button disabled
+                    const viewElement = cardElement.querySelector('.view-stats .count');
+                    const loveElement = cardElement.querySelector('.love-stats .count');
+                    const loveButton = cardElement.querySelector('.love-stats');
+
+                    if (viewElement) viewElement.textContent = 'Error';
+                    if (loveElement) loveElement.textContent = 'Error';
+                    
+                    loveButton.classList.add('disabled');
+                    loveButton.style.cursor = 'not-allowed';
                 }
             }
 
@@ -1183,13 +1207,13 @@
                                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                                 <circle cx="12" cy="12" r="3"></circle>
                             </svg>
-                            <span class="count">Loading...</span>
+                            <span class="count"><div class="loader"></div></span>
                         </div>
-                        <div class="card-stats love-stats" data-id="${data.id}">
+                        <div class="card-stats love-stats disabled" data-id="${data.id}">
                             <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6c757d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">
                                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                             </svg>
-                            <span class="count">Loading...</span>
+                            <span class="count"><div class="loader"></div></span>
                         </div>
                     </div>`;
                 
@@ -1206,6 +1230,7 @@
                 cardsToRender.forEach(data => {
                     const card = createCard(data);
                     container.appendChild(card);
+                    getAndUpdateStats(data.id, card);
                     setTimeout(() => {
                          card.classList.add('visible');
                          if (data.id === currentCardToHighlight) {
@@ -1226,7 +1251,6 @@
                 });
                 
                 cardsLoaded = end;
-                getAndUpdateStats();
             }
             
             function filterAndLoadCards(filterCategory) {
@@ -1415,6 +1439,9 @@
                 }
                 
                 if (loveStats) {
+                    if (loveStats.classList.contains('disabled')) {
+                        return; // Do nothing if the button is disabled
+                    }
                     const cardId = loveStats.dataset.id;
                     const userLikedDocRef = doc(db, `loves/${cardId}/users`, deviceId);
                     
@@ -1428,7 +1455,10 @@
                             // Record user's like
                             await setDoc(userLikedDocRef, { timestamp: new Date() });
                             showNotification("Thanks for loving this card!", 2000);
-                            getAndUpdateStats();
+                            
+                            // Re-fetch and update stats for this card
+                            const cardElement = event.target.closest('.card');
+                            getAndUpdateStats(cardId, cardElement);
                         }
                     } catch (error) {
                         console.error("Error updating love count:", error);
@@ -1487,7 +1517,7 @@
             });
             
             backBtn.addEventListener('click', () => {
-                adminPanelFull.classList.remove('show');
+                admin-panel-full.classList.remove('show');
                 mainContent.style.display = 'block';
                 addCardForm.reset();
                 codeResultDiv.style.display = 'none';
