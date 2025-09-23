@@ -813,14 +813,6 @@
             color: #000;
         }
 
-        .card-stats .stat-item svg {
-            margin-right: 5px;
-            width: 18px;
-            height: 18px;
-            fill: #555;
-            transition: fill 0.2s ease;
-        }
-        
         .card-stats .stat-item.liked svg {
             fill: red;
         }
@@ -999,37 +991,41 @@
             const formatter = Intl.NumberFormat('en', { notation: 'compact' });
 
             function formatNumber(number) {
+                if (typeof number !== 'number') {
+                    return '0';
+                }
                 return formatter.format(number);
             }
             
             function formatTimeAgo(timestamp) {
+                if (!timestamp) return '';
                 const uploadDate = new Date(timestamp);
                 const now = new Date();
                 const seconds = Math.floor((now - uploadDate) / 1000);
             
-                let interval = seconds / 31536000; // বছর
+                let interval = seconds / 31536000; 
                 if (interval > 1) {
                     return Math.floor(interval) + " বছর আগে";
                 }
-                interval = seconds / 2592000; // মাস
+                interval = seconds / 2592000; 
                 if (interval > 1) {
                     return Math.floor(interval) + " মাস আগে";
                 }
-                interval = seconds / 86400; // দিন
+                interval = seconds / 86400; 
                 if (interval > 1) {
                     return Math.floor(interval) + " দিন আগে";
                 }
-                interval = seconds / 3600; // ঘন্টা
+                interval = seconds / 3600; 
                 if (interval > 1) {
                     return Math.floor(interval) + " ঘন্টা আগে";
                 }
-                interval = seconds / 60; // মিনিট
+                interval = seconds / 60; 
                 if (interval > 1) {
                     return Math.floor(interval) + " মিনিট আগে";
                 }
                 return "এখনই";
             }
-
+            
             async function getAndUpdateViewsAndLikes() {
                 try {
                     const cards = document.querySelectorAll('.card');
@@ -1046,7 +1042,7 @@
                             likeCount = docSnap.data().likes || 0;
                         }
                         
-                        const viewElement = card.querySelector('.card-views');
+                        const viewElement = card.querySelector('.card-views span');
                         if (viewElement) {
                             viewElement.textContent = formatNumber(viewCount);
                         }
@@ -1056,7 +1052,6 @@
                             likeElement.textContent = formatNumber(likeCount);
                         }
                         
-                        // Check if user has already liked this card
                         const likedCards = JSON.parse(localStorage.getItem('likedCards')) || [];
                         const likeButton = card.querySelector('.card-likes');
                         if (likedCards.includes(cardId)) {
@@ -1087,8 +1082,12 @@
                     button.classList.add('liked');
                     
                     const likeCountElement = button.querySelector('.card-likes-count');
-                    const currentCount = parseInt(likeCountElement.textContent.replace(/,/g, '')); 
-                    likeCountElement.textContent = formatNumber(currentCount + 1);
+                    const currentCountText = likeCountElement.textContent.trim();
+                    const currentCount = parseFloat(currentCountText) || 0;
+                    
+                    let newCount = currentCount + 1;
+                    
+                    likeCountElement.textContent = formatNumber(newCount);
                     
                     showNotification('Liked successfully!', 2000, notificationPopup);
 
