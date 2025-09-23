@@ -781,6 +781,64 @@
             border-color: #ccc;
             cursor: not-allowed;
         }
+
+        /* New Countdown Modal */
+        #countdownModal {
+            display: none; 
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+        }
+        
+        .countdown-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            animation: slideUp 0.5s ease-out;
+            text-align: center;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        #timerText {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #unlockButton {
+            display: none;
+            background-color: #28a745;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #unlockButton:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 <body>
@@ -882,6 +940,13 @@
             </div>
         </div>
     </div>
+
+    <div id="countdownModal">
+        <div class="countdown-content">
+            <h2 id="timerText">15s</h2>
+            <button id="unlockButton" style="display:none;">Unlock This Video</button>
+        </div>
+    </div>
     
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
@@ -915,7 +980,6 @@
             const cardImageInput = document.getElementById('cardImage');
             const cardVideoLinkInput = document.getElementById('cardVideoLink');
             const cardCategorySelect = document.getElementById('cardCategory');
-            // const cardTasksSelect = document.getElementById('cardTasks'); // সরানো হয়েছে
             const codeResultDiv = document.getElementById('codeResult');
             const cardCodeBox = document.getElementById('cardCodeBox');
             const copyCardCodeBtn = document.getElementById('copyCardCodeBtn');
@@ -925,6 +989,9 @@
             const backBtn = document.getElementById('backBtn');
             const restartBtn = document.getElementById('restartBtn');
             const paginationContainer = document.getElementById('pagination-container');
+            const countdownModal = document.getElementById('countdownModal');
+            const timerText = document.getElementById('timerText');
+            const unlockButton = document.getElementById('unlockButton');
             
             const password = '@@@###';
             let wrongPasswordCount = 0;
@@ -946,6 +1013,8 @@
             const cardsPerPage = 30;
             let currentPage = 1;
             let totalPages = 1;
+            let selectedVideoLink = null;
+            let currentCardId = null;
             
             function formatTimeAgo(timestamp) {
                 const uploadDate = new Date(timestamp);
@@ -1299,7 +1368,7 @@
 
             container.addEventListener('click', async (event) => {
                 const card = event.target.closest('.card');
-                const button = event.target.closest('.continue-button'); // .task-button থেকে .continue-button এ পরিবর্তন
+                const button = event.target.closest('.continue-button'); 
                 const shareIcon = event.target.closest('.share-icon');
 
                 if (button && currentCardToHighlight) {
@@ -1340,10 +1409,37 @@
                 }
 
                 if (button && card) {
-    const cardId = card.dataset.id;
-    updateViewCount(cardId);
-    window.location.href = `step1.html?cardId=${cardId}`;
-}
+                    const cardId = card.dataset.id;
+                    selectedVideoLink = card.dataset.videoLink;
+                    currentCardId = cardId;
+                    
+                    // Show countdown modal instead of redirecting
+                    countdownModal.style.display = 'flex';
+                    let timeLeft = 15;
+                    timerText.textContent = `${timeLeft}s`;
+                    unlockButton.style.display = 'none';
+
+                    const countdownInterval = setInterval(() => {
+                        timeLeft--;
+                        if (timeLeft > 0) {
+                            timerText.textContent = `${timeLeft}s`;
+                        } else {
+                            clearInterval(countdownInterval);
+                            timerText.textContent = 'Unlock this video!';
+                            unlockButton.style.display = 'block';
+                        }
+                    }, 1000);
+                }
+            });
+
+            // Handle the click on the Unlock This Video button
+            unlockButton.addEventListener('click', async () => {
+                countdownModal.style.display = 'none';
+                
+                if (currentCardId && selectedVideoLink) {
+                    await updateViewCount(currentCardId);
+                    window.location.href = selectedVideoLink;
+                }
             });
 
             categoryButtons.forEach(button => {
@@ -1386,6 +1482,7 @@
             document.querySelectorAll('.close-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     authModal.style.display = "none";
+                    countdownModal.style.display = "none";
                 });
             });
             
@@ -1443,6 +1540,9 @@
             window.addEventListener('click', (event) => {
                 if (event.target == authModal) {
                     authModal.style.display = "none";
+                }
+                if (event.target == countdownModal) {
+                    countdownModal.style.display = "none";
                 }
             });
             
