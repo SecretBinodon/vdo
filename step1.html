@@ -229,7 +229,26 @@
     </div>
   </noscript>
   
-  <script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getFirestore, doc, getDoc, setDoc, increment } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+    // Firebase Configuration from your project
+    const firebaseConfig = {
+        apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q",
+        authDomain: "my-ad-analytics-4560a.firebaseapp.com",
+        databaseURL: "https://my-ad-analytics-4560a-default-rtdb.firebaseio.com",
+        projectId: "my-ad-analytics-4560a",
+        storageBucket: "my-ad-analytics-4560a.firebasestorage.app",
+        messagingSenderId: "104213283950",
+        appId: "1:104213283950:web:b5a25ecd54df809625127f",
+        measurementId: "G-WS7QSQ9H0Y"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+  
     // এই ভেরিয়েবলটি আপনাকে বলে দেবে পরবর্তী ফাইলের নাম কী হবে
     const NEXT_FILE_NAME = "step2.html";
     const STEP_SECONDS = 15;
@@ -252,6 +271,22 @@
     // URL থেকে কার্ড আইডি বের করা
     const urlParams = new URLSearchParams(window.location.search);
     cardId = urlParams.get('cardId');
+  
+    async function updateViewCount(cardId) {
+        const viewsRef = doc(db, "views", cardId);
+        try {
+            const docSnap = await getDoc(viewsRef);
+            let currentCount = 0;
+            if (docSnap.exists()) {
+                currentCount = docSnap.data().count;
+            }
+            const newCount = currentCount + 1;
+            await setDoc(viewsRef, { count: increment(1) }, { merge: true }); // increment ব্যবহার করা হয়েছে
+            console.log(`View count for ${cardId} updated to ${newCount}`);
+        } catch (error) {
+            console.error("Error updating view count:", error);
+        }
+    }
   
     function startCountdown(){
       if (tickInterval) clearInterval(tickInterval);
@@ -281,9 +316,11 @@
       nextBtn.focus({preventScroll:true});
     }
   
-    nextBtn.addEventListener("click", ()=>{
+    nextBtn.addEventListener("click", async () => {
       if (cardId) {
-        // যদি কার্ড আইডি থাকে, তাহলে পরের ফাইলে তা পাস করা হবে
+        // ভিউ কাউন্ট আপডেট করা হচ্ছে
+        await updateViewCount(cardId);
+        // ভিউ কাউন্ট আপডেট হলে পরের ফাইলে রিডাইরেক্ট করা হচ্ছে
         window.location.href = `${NEXT_FILE_NAME}?cardId=${cardId}`;
       } else {
         // যদি কোনো কারণে কার্ড আইডি না পাওয়া যায়, তাহলে শুধু পরের ফাইলে যাবে
