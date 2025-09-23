@@ -258,10 +258,12 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
         }
         
-.card:active {
-    transform: scale(1.02);
-    transition: transform 0.1s ease-in-out;
-}
+        /* এখানে পরিবর্তন করা হয়েছে */
+        .card:active {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
         
         /* নতুন হাইলাইট সার্কেল স্টাইল */
         .card.highlighted {
