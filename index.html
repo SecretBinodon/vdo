@@ -237,14 +237,16 @@
             flex-grow: 1;
             flex-shrink: 1;
             text-align: center;
+            
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            
             display: flex;
             flex-direction: column; 
             justify-content: space-between;
             
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease, transform 0.3s ease;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease;
         }
         
         .card.visible {
@@ -252,17 +254,12 @@
             transform: translateY(0);
         }
         
-        /* আগের মতো অ্যানিমেশন */
+        /* এখানে `:hover` বা `:active` এ transform প্রপার্টি থাকবে না */
         .card:hover {
-            transform: scale(1.05);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            transform: scale(1.05);
         }
         
-        /* নতুন কোড: তাৎক্ষণিক জুমের জন্য */
-        .card.zoom-pulse {
-            transform: scale(1.02);
-        }
-
         /* নতুন হাইলাইট সার্কেল স্টাইল */
         .card.highlighted {
             animation: highlight-pulse 1.5s infinite;
@@ -1290,7 +1287,6 @@
                 threshold: 0.1
             });
 
-            // এই অংশটি নতুন কোড দিয়ে প্রতিস্থাপন করা হয়েছে
             container.addEventListener('click', async (event) => {
                 const card = event.target.closest('.card');
                 if (!card) return;
@@ -1326,10 +1322,16 @@
                     return;
                 }
                 
-                // শুধুমাত্র এই অংশটি নতুন যোগ করা হয়েছে
-                card.classList.add('zoom-pulse');
+                // এই অংশটি সম্পূর্ণ নতুনভাবে লেখা হয়েছে
+                card.style.transform = 'scale(1.02)';
+                card.style.transition = 'transform 0.1s ease-in-out';
+                
                 setTimeout(() => {
-                    card.classList.remove('zoom-pulse');
+                    card.style.transform = 'scale(1)';
+                    // ট্রানজিশন প্রোপার্টিটি সরিয়ে নেওয়া, যাতে অন্যান্য hover ইফেক্ট স্বাভাবিকভাবে কাজ করতে পারে
+                    setTimeout(() => {
+                        card.style.transition = '';
+                    }, 100); 
                 }, 200); 
             });
 
