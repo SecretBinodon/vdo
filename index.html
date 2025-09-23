@@ -257,13 +257,12 @@
             transform: scale(1.05);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
         }
-
-        /* নতুন জাভাস্ক্রিপ্ট ইফেক্টের জন্য CSS */
-        .card.card-active {
-            transform: scale(1.02);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-        }
         
+        /* নতুন কোড: তাৎক্ষণিক জুমের জন্য */
+        .card.zoom-pulse {
+            transform: scale(1.02);
+        }
+
         /* নতুন হাইলাইট সার্কেল স্টাইল */
         .card.highlighted {
             animation: highlight-pulse 1.5s infinite;
@@ -1291,18 +1290,13 @@
                 threshold: 0.1
             });
 
+            // এই অংশটি নতুন কোড দিয়ে প্রতিস্থাপন করা হয়েছে
             container.addEventListener('click', async (event) => {
                 const card = event.target.closest('.card');
+                if (!card) return;
+
                 const imageContainer = event.target.closest('.card-image-container');
                 const shareIcon = event.target.closest('.share-icon');
-
-                // ক্লিক করলে জুম ইফেক্ট যোগ করা এবং অল্প সময়ের পর তা সরিয়ে দেওয়া
-                if (card) {
-                    card.classList.add('card-active');
-                    setTimeout(() => {
-                        card.classList.remove('card-active');
-                    }, 200); 
-                }
 
                 if (shareIcon) {
                     const cardId = shareIcon.dataset.id;
@@ -1326,10 +1320,17 @@
                     return;
                 }
 
-                if (imageContainer && card) {
+                if (imageContainer) {
                     const cardId = card.dataset.id;
                     window.location.href = `step1.html?cardId=${cardId}`;
+                    return;
                 }
+                
+                // শুধুমাত্র এই অংশটি নতুন যোগ করা হয়েছে
+                card.classList.add('zoom-pulse');
+                setTimeout(() => {
+                    card.classList.remove('zoom-pulse');
+                }, 200); 
             });
 
             categoryButtons.forEach(button => {
