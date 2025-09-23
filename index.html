@@ -324,9 +324,9 @@
         .card-views-container {
             display: flex;
             align-items: center;
-            justify-content: flex-start; /* বাম পাশে সারিবদ্ধ করার জন্য */
-            width: 100%; /* পুরো কার্ড জুড়ে বিস্তৃত করতে */
-            padding: 0 10px 10px 10px; /* নিচের প্যাডিং এবং বাম-ডান মার্জিন */
+            justify-content: flex-start;
+            width: 100%;
+            padding: 0 10px 10px 10px;
             box-sizing: border-box;
         }
         
@@ -337,11 +337,20 @@
             font-weight: normal;
             display: flex;
             align-items: center;
+            background-color: #f0f0f0; /* নতুন ব্যাকগ্রাউন্ড রঙ */
+            border-radius: 10px; /* নতুন বর্ডার-রেডিয়াস */
+            padding: 5px 8px; /* নতুন প্যাডিং */
         }
         
         .card-views .view-icon {
-            margin-right: 5px; /* আইকন এবং সংখ্যার মধ্যে দূরত্ব */
-            font-size: 18px; /* চোখের আইকনের আকার */
+            margin-right: 5px;
+            width: 20px; /* SVG আইকনের প্রস্থ */
+            height: 20px; /* SVG আইকনের উচ্চতা */
+        }
+        
+        .card-views .view-count {
+            font-weight: bold;
+            color: #333;
         }
         
         /* ভিডিও আইকনের জন্য নতুন CSS */
@@ -992,6 +1001,20 @@
                 }
                 return "এখনই";
             }
+            
+            // নতুন ফাংশন: ভিউ সংখ্যাকে K, M, B ফরম্যাটে রূপান্তর
+            function formatViews(num) {
+                if (num >= 1000000000) {
+                    return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B';
+                }
+                if (num >= 1000000) {
+                    return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+                }
+                if (num >= 1000) {
+                    return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+                }
+                return num;
+            }
 
             async function getAndUpdateViews() {
                 try {
@@ -1006,7 +1029,13 @@
                         }
                         const viewElement = card.querySelector('.card-views');
                         if (viewElement) {
-                            viewElement.innerHTML = `<span class="view-icon">👁️</span> ${viewCount}`;
+                            viewElement.innerHTML = `
+                                <svg class="view-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                                <span class="view-count">${formatViews(viewCount)}</span>
+                            `;
                         }
                     }
                 } catch (error) {
@@ -1106,7 +1135,11 @@
                     </div>
                     <div class="card-views-container">
                         <div class="card-views" id="views-${data.id}">
-                            <span class="view-icon">👁️</span> Loading...
+                            <svg class="view-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            <span class="view-count">Loading...</span>
                         </div>
                     </div>`;
                 
