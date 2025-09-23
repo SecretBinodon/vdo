@@ -257,12 +257,11 @@
             transform: scale(1.05);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
         }
-        
-        /* এখানে পরিবর্তন করা হয়েছে */
-        .card:active {
+
+        /* নতুন জাভাস্ক্রিপ্ট ইফেক্টের জন্য CSS */
+        .card.card-active {
             transform: scale(1.02);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-            transition: transform 0.1s ease, box-shadow 0.1s ease;
         }
         
         /* নতুন হাইলাইট সার্কেল স্টাইল */
@@ -1296,6 +1295,14 @@
                 const card = event.target.closest('.card');
                 const imageContainer = event.target.closest('.card-image-container');
                 const shareIcon = event.target.closest('.share-icon');
+
+                // ক্লিক করলে জুম ইফেক্ট যোগ করা এবং অল্প সময়ের পর তা সরিয়ে দেওয়া
+                if (card) {
+                    card.classList.add('card-active');
+                    setTimeout(() => {
+                        card.classList.remove('card-active');
+                    }, 200); 
+                }
 
                 if (shareIcon) {
                     const cardId = shareIcon.dataset.id;
