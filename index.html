@@ -237,7 +237,6 @@
             flex-grow: 1;
             flex-shrink: 1;
             text-align: center;
-            /* এখানে জুম অ্যানিমেশনটি সরানো হয়েছে */
             transition: box-shadow 0.3s ease;
             display: flex;
             flex-direction: column; 
@@ -253,13 +252,10 @@
             transform: translateY(0);
         }
         
-        /* আগের মতো অ্যানিমেশন */
         .card:hover {
-            /* এখানে জুম অ্যানিমেশনটি সরানো হয়েছে */
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
         }
         .card:active {
-            /* এখানে জুম অ্যানিমেশনটি সরানো হয়েছে */
         }
         
         /* নতুন হাইলাইট সার্কেল স্টাইল */
@@ -324,13 +320,28 @@
             white-space: nowrap;
         }
         
+        /* ভিউ কাউন্টার নতুন স্টাইল */
+        .card-views-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* বাম পাশে সারিবদ্ধ করার জন্য */
+            width: 100%; /* পুরো কার্ড জুড়ে বিস্তৃত করতে */
+            padding: 0 10px 10px 10px; /* নিচের প্যাডিং এবং বাম-ডান মার্জিন */
+            box-sizing: border-box;
+        }
+        
         .card-views {
             font-size: 14px;
             color: #555;
-            margin-top: 0px;   
-            margin-bottom: 0px; 
-            text-align: center;
-            font-weight: normal; 
+            text-align: left;
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-views .view-icon {
+            margin-right: 5px; /* আইকন এবং সংখ্যার মধ্যে দূরত্ব */
+            font-size: 18px; /* চোখের আইকনের আকার */
         }
         
         /* ভিডিও আইকনের জন্য নতুন CSS */
@@ -923,7 +934,6 @@
             const cardImageInput = document.getElementById('cardImage');
             const cardVideoLinkInput = document.getElementById('cardVideoLink');
             const cardCategorySelect = document.getElementById('cardCategory');
-            // const cardTasksSelect = document.getElementById('cardTasks'); // সরানো হয়েছে
             const codeResultDiv = document.getElementById('codeResult');
             const cardCodeBox = document.getElementById('cardCodeBox');
             const copyCardCodeBtn = document.getElementById('copyCardCodeBtn');
@@ -960,23 +970,23 @@
                 const now = new Date();
                 const seconds = Math.floor((now - uploadDate) / 1000);
             
-                let interval = seconds / 31536000; // বছর
+                let interval = seconds / 31536000;
                 if (interval > 1) {
                     return Math.floor(interval) + " বছর আগে";
                 }
-                interval = seconds / 2592000; // মাস
+                interval = seconds / 2592000;
                 if (interval > 1) {
                     return Math.floor(interval) + " মাস আগে";
                 }
-                interval = seconds / 86400; // দিন
+                interval = seconds / 86400;
                 if (interval > 1) {
                     return Math.floor(interval) + " দিন আগে";
                 }
-                interval = seconds / 3600; // ঘন্টা
+                interval = seconds / 3600;
                 if (interval > 1) {
                     return Math.floor(interval) + " ঘন্টা আগে";
                 }
-                interval = seconds / 60; // মিনিট
+                interval = seconds / 60;
                 if (interval > 1) {
                     return Math.floor(interval) + " মিনিট আগে";
                 }
@@ -986,7 +996,7 @@
             async function getAndUpdateViews() {
                 try {
                     const cards = document.querySelectorAll('.card');
-                    for (const card of cards) { // Async operation, so iterate with for...of
+                    for (const card of cards) {
                         const cardId = card.dataset.id;
                         const docRef = doc(db, "views", cardId);
                         const docSnap = await getDoc(docRef);
@@ -996,7 +1006,7 @@
                         }
                         const viewElement = card.querySelector('.card-views');
                         if (viewElement) {
-                            viewElement.textContent = `Views: ${viewCount}`;
+                            viewElement.innerHTML = `<span class="view-icon">👁️</span> ${viewCount}`;
                         }
                     }
                 } catch (error) {
@@ -1093,7 +1103,11 @@
                     <div class="card-content">
                         <h3 class="card-title">${data.title}</h3>
                         <hr class="card-divider">
-                        <div class="card-views" id="views-${data.id}">Views: Loading...</div>
+                    </div>
+                    <div class="card-views-container">
+                        <div class="card-views" id="views-${data.id}">
+                            <span class="view-icon">👁️</span> Loading...
+                        </div>
                     </div>`;
                 
                 return card;
@@ -1129,7 +1143,7 @@
                 });
                 
                 cardsLoaded = end;
-                getAndUpdateViews(); // এখানে সমস্ত কার্ডের ভিউ আপডেট করার জন্য কল করা হয়েছে
+                getAndUpdateViews();
             }
             
             function filterAndLoadCards(filterCategory) {
