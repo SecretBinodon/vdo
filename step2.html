@@ -198,7 +198,7 @@
         }
 
         try {
-            const response = await fetch('./cards.json');
+            const response = await fetch('cards.json');
             const cards = await response.json();
             const card = cards.find(c => c.id === cardId);
             
