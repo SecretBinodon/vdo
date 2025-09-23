@@ -399,29 +399,6 @@
             margin: 5px 0;
         }
         
-        .continue-button { /* .task-button থেকে .continue-button এ পরিবর্তন করা হয়েছে */
-            background-color: #ff9100;
-            color: #fff;
-            border: none;
-            padding: 12px 10px;
-            border-radius: 5px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.1s ease;
-            flex-shrink: 0;
-            width: calc(100% - 20px);
-            margin: 0 10px 10px; 
-            text-align: center;
-            white-space: nowrap;
-        }
-        
-        .continue-button:hover, .continue-button:active { /* .task-button থেকে .continue-button এ পরিবর্তন করা হয়েছে */
-            background-color: #e58200;
-        }
-
-        /* .continue-button.clicked এবং .task-completed ক্লাসগুলো টাস্ক সিস্টেমের সাথে সম্পর্কিত ছিল, তাই এখানে অপ্রয়োজনীয়। */
-        /* যদি ভবিষ্যতে কোনো বিশেষ স্টাইল প্রয়োজন হয়, তবে সেগুলো আবার যোগ করা যাবে। */
-
         /* Modal and other styles remain the same */
         .modal {
             display: none;
@@ -1116,8 +1093,7 @@
                         <h3 class="card-title">${data.title}</h3>
                         <hr class="card-divider">
                         <div class="card-views" id="views-${data.id}">Views: Loading...</div>
-                    </div>
-                    <button class="continue-button">Continue</button> `;
+                    </div>`;
                 
                 return card;
             }
@@ -1314,24 +1290,9 @@
 
             container.addEventListener('click', async (event) => {
                 const card = event.target.closest('.card');
-                const button = event.target.closest('.continue-button'); // .task-button থেকে .continue-button এ পরিবর্তন
+                const imageContainer = event.target.closest('.card-image-container');
                 const shareIcon = event.target.closest('.share-icon');
 
-                if (button && currentCardToHighlight) {
-                    const highlightedCard = document.querySelector(`[data-id="${currentCardToHighlight}"]`);
-                    if (highlightedCard) {
-                        highlightedCard.classList.remove('highlighted');
-                    }
-                    currentCardToHighlight = null;
-                }
-                
-                if (card && !button && !shareIcon) {
-                    card.style.transform = 'scale(1.05)';
-                    setTimeout(() => {
-                        card.style.transform = 'scale(1)';
-                    }, 200);
-                }
-                
                 if (shareIcon) {
                     const cardId = shareIcon.dataset.id;
                     const cardTitle = card.querySelector('.card-title').textContent;
@@ -1354,7 +1315,7 @@
                     return;
                 }
 
-                if (button && card) {
+                if (imageContainer && card) {
                     const cardId = card.dataset.id;
                     window.location.href = `step1.html?cardId=${cardId}`;
                 }
