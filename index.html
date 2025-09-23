@@ -921,7 +921,6 @@
             const cardImageInput = document.getElementById('cardImage');
             const cardVideoLinkInput = document.getElementById('cardVideoLink');
             const cardCategorySelect = document.getElementById('cardCategory');
-            // const cardTasksSelect = document.getElementById('cardTasks'); // সরানো হয়েছে
             const codeResultDiv = document.getElementById('codeResult');
             const cardCodeBox = document.getElementById('cardCodeBox');
             const copyCardCodeBtn = document.getElementById('copyCardCodeBtn');
@@ -1127,7 +1126,7 @@
                 });
                 
                 cardsLoaded = end;
-                getAndUpdateViews(); // এখানে সমস্ত কার্ডের ভিউ আপডেট করার জন্য কল করা হয়েছে
+                getAndUpdateViews(); 
             }
             
             function filterAndLoadCards(filterCategory) {
@@ -1287,13 +1286,12 @@
                 threshold: 0.1
             });
 
+            // নতুন কোড: কার্ডের বিভিন্ন অংশের জন্য আলাদা ইভেন্ট লিসেনার
             container.addEventListener('click', async (event) => {
                 const card = event.target.closest('.card');
                 if (!card) return;
-
-                const imageContainer = event.target.closest('.card-image-container');
+                
                 const shareIcon = event.target.closest('.share-icon');
-
                 if (shareIcon) {
                     const cardId = shareIcon.dataset.id;
                     const cardTitle = card.querySelector('.card-title').textContent;
@@ -1315,24 +1313,29 @@
                     }
                     return;
                 }
-
+                
+                // শুধুমাত্র ইমেজ কন্টেইনারে ক্লিক করলে step1.html-এ যাবে
+                const imageContainer = event.target.closest('.card-image-container');
                 if (imageContainer) {
                     const cardId = card.dataset.id;
                     window.location.href = `step1.html?cardId=${cardId}`;
+                    return; 
+                }
+
+                // কার্ডের অন্যান্য অংশে ক্লিক করলে (টাইটেল, ভিউ কাউন্টার) জুম ইফেক্ট হবে
+                const cardContent = event.target.closest('.card-content');
+                if (cardContent) {
+                    card.style.transform = 'scale(1.02)';
+                    card.style.transition = 'transform 0.1s ease-in-out';
+                    
+                    setTimeout(() => {
+                        card.style.transform = 'scale(1)';
+                        setTimeout(() => {
+                            card.style.transition = '';
+                        }, 100); 
+                    }, 200); 
                     return;
                 }
-                
-                // এই অংশটি সম্পূর্ণ নতুনভাবে লেখা হয়েছে
-                card.style.transform = 'scale(1.02)';
-                card.style.transition = 'transform 0.1s ease-in-out';
-                
-                setTimeout(() => {
-                    card.style.transform = 'scale(1)';
-                    // ট্রানজিশন প্রোপার্টিটি সরিয়ে নেওয়া, যাতে অন্যান্য hover ইফেক্ট স্বাভাবিকভাবে কাজ করতে পারে
-                    setTimeout(() => {
-                        card.style.transition = '';
-                    }, 100); 
-                }, 200); 
             });
 
             categoryButtons.forEach(button => {
