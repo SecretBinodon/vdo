@@ -791,6 +791,44 @@
             border-color: #ccc;
             cursor: not-allowed;
         }
+        
+        .card-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 0 10px;
+            margin-bottom: 10px;
+        }
+
+        .card-stats .stat-item {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #555;
+            cursor: pointer;
+        }
+
+        .card-stats .stat-item:hover {
+            color: #000;
+        }
+
+        .card-stats .stat-item svg {
+            margin-right: 5px;
+            width: 18px;
+            height: 18px;
+            fill: #555;
+            transition: fill 0.2s ease;
+        }
+        
+        .card-stats .stat-item.liked svg {
+            fill: red;
+        }
+
+        .card-stats .stat-item.liked {
+            color: red;
+        }
+        
     </style>
 </head>
 <body>
@@ -895,7 +933,8 @@
     
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-        import { getFirestore, doc, getDoc, setDoc, increment } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js";
 
         // Firebase Configuration from your project
         const firebaseConfig = {
@@ -912,6 +951,7 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        const analytics = getAnalytics(app);
 
         document.addEventListener('DOMContentLoaded', () => {
             const container = document.querySelector('.container');
@@ -955,6 +995,12 @@
             const cardsPerPage = 30;
             let currentPage = 1;
             let totalPages = 1;
+
+            const formatter = Intl.NumberFormat('en', { notation: 'compact' });
+
+            function formatNumber(number) {
+                return formatter.format(number);
+            }
             
             function formatTimeAgo(timestamp) {
                 const uploadDate = new Date(timestamp);
@@ -984,27 +1030,74 @@
                 return "এখনই";
             }
 
-            async function getAndUpdateViews() {
+            async function getAndUpdateViewsAndLikes() {
                 try {
                     const cards = document.querySelectorAll('.card');
                     for (const card of cards) { 
                         const cardId = card.dataset.id;
-                        const docRef = doc(db, "views", cardId);
+                        const docRef = doc(db, "stats", cardId);
                         const docSnap = await getDoc(docRef);
+                        
                         let viewCount = 0;
+                        let likeCount = 0;
+                        
                         if (docSnap.exists()) {
-                            viewCount = docSnap.data().count;
+                            viewCount = docSnap.data().views || 0;
+                            likeCount = docSnap.data().likes || 0;
                         }
+                        
                         const viewElement = card.querySelector('.card-views');
                         if (viewElement) {
-                            viewElement.textContent = `Views: ${viewCount}`;
+                            viewElement.textContent = formatNumber(viewCount);
+                        }
+                        
+                        const likeElement = card.querySelector('.card-likes-count');
+                        if (likeElement) {
+                            likeElement.textContent = formatNumber(likeCount);
+                        }
+                        
+                        // Check if user has already liked this card
+                        const likedCards = JSON.parse(localStorage.getItem('likedCards')) || [];
+                        const likeButton = card.querySelector('.card-likes');
+                        if (likedCards.includes(cardId)) {
+                            likeButton.classList.add('liked');
                         }
                     }
                 } catch (error) {
-                    console.error("Error fetching views:", error);
+                    console.error("Error fetching views and likes:", error);
                 }
             }
+            
+            async function handleLike(cardId, button) {
+                try {
+                    const likedCards = JSON.parse(localStorage.getItem('likedCards')) || [];
+                    if (likedCards.includes(cardId)) {
+                        showNotification('You have already liked this card!', 2000, notificationPopup);
+                        return;
+                    }
+                    
+                    const docRef = doc(db, "stats", cardId);
+                    await updateDoc(docRef, {
+                        likes: increment(1)
+                    });
+                    
+                    likedCards.push(cardId);
+                    localStorage.setItem('likedCards', JSON.stringify(likedCards));
+                    
+                    button.classList.add('liked');
+                    
+                    const likeCountElement = button.querySelector('.card-likes-count');
+                    const currentCount = parseInt(likeCountElement.textContent.replace(/,/g, '')); 
+                    likeCountElement.textContent = formatNumber(currentCount + 1);
+                    
+                    showNotification('Liked successfully!', 2000, notificationPopup);
 
+                } catch (error) {
+                    console.error("Error updating like count:", error);
+                    showNotification('Error liking. Please try again.', 2000, notificationPopup);
+                }
+            }
+            
             async function loadData() {
                 loadingBar.style.width = '20%';
                 try {
@@ -1094,7 +1187,21 @@
                     <div class="card-content">
                         <h3 class="card-title">${data.title}</h3>
                         <hr class="card-divider">
-                        <div class="card-views" id="views-${data.id}">Views: Loading...</div>
+                        <div class="card-stats">
+                            <div class="stat-item card-views">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.12 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.173 8z"/>
+                                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                                </svg>
+                                <span>Loading...</span>
+                            </div>
+                            <div class="stat-item card-likes">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.837-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.721-3.042 23.333 4.867 8 15z"/>
+                                </svg>
+                                <span class="card-likes-count">Loading...</span>
+                            </div>
+                        </div>
                     </div>`;
                 
                 return card;
@@ -1110,6 +1217,15 @@
                 cardsToRender.forEach(data => {
                     const card = createCard(data);
                     container.appendChild(card);
+                    
+                    const likeButton = card.querySelector('.card-likes');
+                    if (likeButton) {
+                        likeButton.addEventListener('click', (event) => {
+                            event.stopPropagation();
+                            handleLike(data.id, likeButton);
+                        });
+                    }
+                    
                     setTimeout(() => {
                          card.classList.add('visible');
                          if (data.id === currentCardToHighlight) {
@@ -1130,7 +1246,7 @@
                 });
                 
                 cardsLoaded = end;
-                getAndUpdateViews(); 
+                getAndUpdateViewsAndLikes(); 
             }
             
             function filterAndLoadCards(filterCategory) {
@@ -1338,6 +1454,19 @@
                     return;
                 }
             });
+            
+            // New click event listener for the like button
+            container.addEventListener('click', (event) => {
+                const likeButton = event.target.closest('.card-likes');
+                if (likeButton) {
+                    const card = likeButton.closest('.card');
+                    if (card) {
+                        const cardId = card.dataset.id;
+                        handleLike(cardId, likeButton);
+                    }
+                }
+            });
+
 
             categoryButtons.forEach(button => {
                 button.addEventListener('click', () => {
