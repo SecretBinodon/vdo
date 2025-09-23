@@ -320,37 +320,51 @@
             white-space: nowrap;
         }
         
-        /* ভিউ কাউন্টার নতুন স্টাইল */
-        .card-views-container {
+        /* ভিউ এবং লাভ কাউন্টার কন্টেইনার */
+        .card-footer {
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            width: 100%;
+            justify-content: space-between; /* বাম এবং ডান পাশে রাখার জন্য */
             padding: 0 10px 10px 10px;
             box-sizing: border-box;
         }
-        
-        .card-views {
-            font-size: 14px;
-            color: #555;
-            text-align: left;
-            font-weight: normal;
+
+        .card-stats {
             display: flex;
             align-items: center;
-            background-color: #f0f0f0; /* নতুন ব্যাকগ্রাউন্ড রঙ */
-            border-radius: 10px; /* নতুন বর্ডার-রেডিয়াস */
-            padding: 5px 8px; /* নতুন প্যাডিং */
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 5px 8px;
         }
-        
-        .card-views .view-icon {
+
+        .card-stats .icon {
             margin-right: 5px;
-            width: 20px; /* SVG আইকনের প্রস্থ */
-            height: 20px; /* SVG আইকনের উচ্চতা */
+            width: 20px;
+            height: 20px;
         }
-        
-        .card-views .view-count {
+
+        .card-stats .count {
             font-weight: bold;
             color: #333;
+            font-size: 14px;
+        }
+
+        .love-stats {
+            cursor: pointer;
+            transition: color 0.2s ease;
+            user-select: none;
+        }
+
+        .love-stats svg {
+            transition: fill 0.2s ease, transform 0.2s ease;
+        }
+
+        .love-stats.liked svg {
+            fill: #ff0000; /* লাল রঙ যখন লাইক করা হবে */
+            stroke: #ff0000;
+        }
+        .love-stats:hover svg {
+            transform: scale(1.1);
         }
         
         /* ভিডিও আইকনের জন্য নতুন CSS */
@@ -974,6 +988,18 @@
             let currentPage = 1;
             let totalPages = 1;
             
+            // Get a unique ID for the user's device
+            function getDeviceId() {
+                let deviceId = localStorage.getItem('deviceId');
+                if (!deviceId) {
+                    deviceId = 'device-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+                    localStorage.setItem('deviceId', deviceId);
+                }
+                return deviceId;
+            }
+
+            const deviceId = getDeviceId();
+            
             function formatTimeAgo(timestamp) {
                 const uploadDate = new Date(timestamp);
                 const now = new Date();
@@ -1002,8 +1028,8 @@
                 return "এখনই";
             }
             
-            // নতুন ফাংশন: ভিউ সংখ্যাকে K, M, B ফরম্যাটে রূপান্তর
-            function formatViews(num) {
+            // নতুন ফাংশন: ভিউ এবং লাইক সংখ্যাকে K, M, B ফরম্যাটে রূপান্তর
+            function formatCount(num) {
                 if (num >= 1000000000) {
                     return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B';
                 }
@@ -1016,30 +1042,48 @@
                 return num;
             }
 
-            async function getAndUpdateViews() {
+            async function getAndUpdateStats() {
                 try {
                     const cards = document.querySelectorAll('.card');
                     for (const card of cards) {
                         const cardId = card.dataset.id;
-                        const docRef = doc(db, "views", cardId);
-                        const docSnap = await getDoc(docRef);
+                        
+                        // Fetch Views
+                        const viewsDocRef = doc(db, "views", cardId);
+                        const viewsDocSnap = await getDoc(viewsDocRef);
                         let viewCount = 0;
-                        if (docSnap.exists()) {
-                            viewCount = docSnap.data().count;
+                        if (viewsDocSnap.exists()) {
+                            viewCount = viewsDocSnap.data().count;
                         }
-                        const viewElement = card.querySelector('.card-views');
+                        const viewElement = card.querySelector('.view-stats .count');
                         if (viewElement) {
-                            viewElement.innerHTML = `
-                                <svg class="view-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
-                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                    <circle cx="12" cy="12" r="3"></circle>
-                                </svg>
-                                <span class="view-count">${formatViews(viewCount)}</span>
-                            `;
+                            viewElement.textContent = formatCount(viewCount);
+                        }
+
+                        // Fetch Loves
+                        const lovesDocRef = doc(db, "loves", cardId);
+                        const lovesDocSnap = await getDoc(lovesDocRef);
+                        let loveCount = 0;
+                        if (lovesDocSnap.exists()) {
+                            loveCount = lovesDocSnap.data().count;
+                        }
+                        const loveElement = card.querySelector('.love-stats .count');
+                        if (loveElement) {
+                            loveElement.textContent = formatCount(loveCount);
+                        }
+
+                        // Check if user has liked
+                        const userLikedDocRef = doc(db, `loves/${cardId}/users`, deviceId);
+                        const userLikedDocSnap = await getDoc(userLikedDocRef);
+                        const loveButton = card.querySelector('.love-stats');
+                        if (userLikedDocSnap.exists()) {
+                            loveButton.classList.add('liked');
+                        } else {
+                            loveButton.classList.remove('liked');
                         }
                     }
                 } catch (error) {
-                    console.error("Error fetching views:", error);
+                    console.error("Error fetching stats:", error);
                 }
             }
 
@@ -1133,13 +1177,19 @@
                         <h3 class="card-title">${data.title}</h3>
                         <hr class="card-divider">
                     </div>
-                    <div class="card-views-container">
-                        <div class="card-views" id="views-${data.id}">
-                            <svg class="view-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
+                    <div class="card-footer">
+                        <div class="card-stats view-stats">
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
                                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                                 <circle cx="12" cy="12" r="3"></circle>
                             </svg>
-                            <span class="view-count">Loading...</span>
+                            <span class="count">Loading...</span>
+                        </div>
+                        <div class="card-stats love-stats" data-id="${data.id}">
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6c757d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
+                            <span class="count">Loading...</span>
                         </div>
                     </div>`;
                 
@@ -1176,7 +1226,7 @@
                 });
                 
                 cardsLoaded = end;
-                getAndUpdateViews();
+                getAndUpdateStats();
             }
             
             function filterAndLoadCards(filterCategory) {
@@ -1340,6 +1390,7 @@
                 const card = event.target.closest('.card');
                 const imageContainer = event.target.closest('.card-image-container');
                 const shareIcon = event.target.closest('.share-icon');
+                const loveStats = event.target.closest('.love-stats');
 
                 if (shareIcon) {
                     const cardId = shareIcon.dataset.id;
@@ -1359,6 +1410,29 @@
                         }
                     } else {
                         copyToClipboard(shareUrl, notificationPopup);
+                    }
+                    return;
+                }
+                
+                if (loveStats) {
+                    const cardId = loveStats.dataset.id;
+                    const userLikedDocRef = doc(db, `loves/${cardId}/users`, deviceId);
+                    
+                    try {
+                        const docSnap = await getDoc(userLikedDocRef);
+                        if (docSnap.exists()) {
+                            showNotification("You have already loved this card!", 3000);
+                        } else {
+                            // Increment love count
+                            await setDoc(doc(db, "loves", cardId), { count: increment(1) }, { merge: true });
+                            // Record user's like
+                            await setDoc(userLikedDocRef, { timestamp: new Date() });
+                            showNotification("Thanks for loving this card!", 2000);
+                            getAndUpdateStats();
+                        }
+                    } catch (error) {
+                        console.error("Error updating love count:", error);
+                        showNotification("Failed to update love count. Please try again.", 3000);
                     }
                     return;
                 }
