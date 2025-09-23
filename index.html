@@ -332,11 +332,41 @@
             font-weight: normal; 
         }
         
+        /* ভিডিও আইকনের জন্য নতুন CSS */
         .card-image-container {
+            position: relative;
             width: 100%;
-            height: 150px; 
+            height: 150px;
             overflow: hidden;
             border-radius: 15px 15px 0 0;
+            cursor: pointer;
+        }
+
+        /* প্লে আইকন */
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            transition: background-color 0.3s ease;
+        }
+
+        .play-icon:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .play-icon svg {
+            fill: #fff;
+            width: 30px;
+            height: 30px;
         }
 
         .card-image-container img {
@@ -822,7 +852,7 @@
     
         <div id="authModal" class="modal">
             <div class="modal-content">
-                <span class="close-btn">&times;</span>
+                <span class="close-btn">×</span>
                 <h2>Only for Admin</h2>
                 <div class="form-group">
                     <input type="password" id="passwordInput" placeholder="Password" required>
@@ -1075,6 +1105,11 @@
                         <div class="card-upload-time">${timeAgoText}</div>
                         <div class="card-image-container">
                             <img src="${data.image}" alt="${data.title}" loading="lazy">
+                            <div class="play-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"/>
+                                </svg>
+                            </div>
                         </div>
                     </div>
                     <div class="card-content">
