@@ -1340,16 +1340,10 @@
                 }
 
                 if (button && card) {
-                    const cardId = card.dataset.id;
-                    
-                    // এখানে ভিউ কাউন্টার আপডেট করার লজিক যুক্ত করা হয়েছে
-                    // কন্টিনিউ বাটনে ক্লিক করার 10 সেকেন্ড পর ভিউ কাউন্ট হবে
-                    setTimeout(() => {
-                        updateViewCount(cardId);
-                    }, 10000); // 10 সেকেন্ড = 10000 মিলিসেকেন্ড
-                    
-                    window.location.href = `step1.html?cardId=${cardId}`;
-                }
+    const cardId = card.dataset.id;
+    updateViewCount(cardId);
+    window.location.href = `step1.html?cardId=${cardId}`;
+}
             });
 
             categoryButtons.forEach(button => {
