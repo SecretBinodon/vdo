@@ -50,11 +50,11 @@
         background-color: #2575fc;
         color: #fff;
     }
-
+        
     .card {
         background-color: #fff;
     }
-
+    
     .card-divider {
         background-color: #e0e0e0;
     }
@@ -93,8 +93,8 @@
         color: #dc3545;
     }
 
-    /* Dark Mode Styles */
-    body.dark-mode {
+    /* Dark Mode Styles - Default */
+    body.dark-mode, body {
         background-color: #121212;
         color: #e0e0e0;
     }
@@ -127,11 +127,44 @@
         background-color: #4CAF50;
         color: #fff;
     }
+    
+    .theme-toggle-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        margin-left: 10px;
+        margin-right: 0;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .theme-toggle-icon svg {
+        width: 20px;
+        height: 20px;
+        fill: #fff;
+    }
+
+    body.dark-mode .theme-toggle-icon {
+        background-color: #4CAF50;
+    }
+    
+    body.dark-mode .theme-toggle-icon svg {
+        fill: #fff;
+    }
+    
+    body.dark-mode .theme-toggle-icon:hover {
+        background-color: #3e8e41;
+    }
 
     body.dark-mode .card {
         background-color: #1e1e1e;
         color: #e0e0e0;
-        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+        border: 1px solid #333;
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.05);
     }
     
     body.dark-mode .card:hover {
@@ -1028,7 +1061,7 @@
         }
     </style>
 </head>
-<body>
+<body class="dark-mode">
     <div id="loading-bar"></div>
 
     <div id="main-content">
@@ -1056,6 +1089,13 @@
                 <button data-category="viral" class="category-btn">Viral video 😻</button>
                 <button data-category="tiktoker" class="category-btn">Tiktoker 😜</button>
                 <button data-category="premium" class="category-btn">Premium 👑</button>
+                
+                <div class="theme-toggle-icon">
+                    <svg id="theme-toggle-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.89 0 1.76-.11 2.59-.34-.52-.94-.84-2.02-.84-3.16 0-3.32 2.68-6 6-6 .95 0 1.83.23 2.6.64-.81-4.9-5.11-8.5-10.22-8.5z" fill="#fff" />
+                    </svg>
+                </div>
+                
                 <button class="add-card-btn">+</button>
             </div>
         </div>
@@ -1191,29 +1231,30 @@
             let currentPage = 1;
             let totalPages = 1;
 
-            // Dark Mode implementation
+            // Theme Toggle Logic
             const body = document.body;
-            const darkModeToggle = document.createElement('button');
-            darkModeToggle.id = 'darkModeToggle';
-            darkModeToggle.textContent = '🌙 ডার্ক মোড';
-            darkModeToggle.classList.add('tutorial-button');
-            
-            const headerContent = document.querySelector('.header .header-content');
-            headerContent.parentNode.insertBefore(darkModeToggle, headerContent.nextSibling);
+            const themeToggleIcon = document.querySelector('.theme-toggle-icon');
+            const themeToggleSVG = document.getElementById('theme-toggle-icon-svg');
 
-            // Load and apply dark mode preference from localStorage
-            const isDarkMode = localStorage.getItem('darkMode') === 'true';
-            if (isDarkMode) {
-                body.classList.add('dark-mode');
-                darkModeToggle.textContent = '☀️ লাইট মোড';
+            function applyTheme(isDarkMode) {
+                if (isDarkMode) {
+                    body.classList.add('dark-mode');
+                    themeToggleSVG.innerHTML = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.89 0 1.76-.11 2.59-.34-.52-.94-.84-2.02-.84-3.16 0-3.32 2.68-6 6-6 .95 0 1.83.23 2.6.64-.81-4.9-5.11-8.5-10.22-8.5z" fill="#fff"/>';
+                } else {
+                    body.classList.remove('dark-mode');
+                    themeToggleSVG.innerHTML = '<path d="M12 2c5.523 0 10 4.477 10 10S17.523 22 12 22 2 17.523 2 12 6.477 2 12 2zm0 2c-4.418 0-8 3.582-8 8s3.582 8 8 8V4z" fill="#fff"/>';
+                }
             }
 
-            // Toggle dark mode on button click
-            darkModeToggle.addEventListener('click', () => {
-                body.classList.toggle('dark-mode');
+            // Load and apply theme from localStorage
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            applyTheme(isDarkMode);
+
+            // Toggle theme on icon click
+            themeToggleIcon.addEventListener('click', () => {
                 const isNowDarkMode = body.classList.contains('dark-mode');
-                localStorage.setItem('darkMode', isNowDarkMode);
-                darkModeToggle.textContent = isNowDarkMode ? '☀️ লাইট মোড' : '🌙 ডার্ক মোড';
+                localStorage.setItem('darkMode', !isNowDarkMode);
+                applyTheme(!isNowDarkMode);
             });
             
             // Get a unique ID for the user's device
