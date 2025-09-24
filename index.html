@@ -8,1060 +8,738 @@
 <script type='text/javascript' src='//pl27703154.revenuecpmgate.com/70/2c/67/702c67f9d1db58564142cc27691530f9.js'></script>
 
     <style>
-    /* Global Styles for Light and Dark Mode */
+    /* Global Styles for Permanent Dark Mode */
     body {
         font-family: sans-serif;
         margin: 0;
         padding: 0;
+        background-color: #121212; /* স্থায়ী ডার্ক ব্যাকগ্রাউন্ড */
+        color: #e0e0e0; /* স্থায়ী হালকা টেক্সট রঙ */
         transition: background-color 0.5s ease, color 0.5s ease;
     }
 
-    /* Light Mode (Default) */
-    body {
-        background-color: #f0f2f5;
-        color: #333;
-    }
-
     .header {
-        background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
-        color: #fff;
+        background: linear-gradient(to right, #1f044d 0%, #174291 100%); /* ডার্ক হেডার গ্রেডিয়েন্ট */
+        color: #f0f0f0;
+        text-align: center;
+        padding-top: 10px;
+        padding-bottom: 1px;
+        padding-left: 20px;
+        padding-right: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
     }
 
     .tutorial-button {
-        background-color: #2575fc;
+        display: block;
+        text-align: center;
+        padding: 15px;
+        margin: 5px 20px 5px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 10px;
+        text-decoration: none;
         color: #fff;
+        background-color: #4CAF50; /* ডার্ক মোডের জন্য টিউটোরিয়াল বাটন রঙ */
+        transition: background-color 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
-    
+
     .tutorial-button:hover,
     .tutorial-button:active {
         background-color: #28a745;
     }
 
+    .sticky-wrapper-top {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background-color: #121212; /* স্টিকি টপ ব্যাকগ্রাউন্ড ডার্ক */
+    }
+
     .category-bar {
-        background-color: #fff;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 10px 10px;
+        background-color: #1e1e1e; /* ক্যাটাগরি বার ব্যাকগ্রাউন্ড ডার্ক */
+        margin: 0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        white-space: nowrap;
+        position: sticky;
+        top: 0;
+        z-index: 999;
     }
-
+    .category-bar::-webkit-scrollbar {
+        display: none;
+    }
     .category-bar button {
-        background-color: #e0e0e0;
-        color: #333;
+        background-color: #333; /* ক্যাটাগরি বাটন ব্যাকগ্রাউন্ড ডার্ক */
+        color: #e0e0e0; /* ক্যাটাগরি বাটন টেক্সট রঙ */
+        border: none;
+        border-radius: 20px;
+        padding: 8px 10px;
+        margin: 0 5px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        flex-shrink: 0;
+        white-space: nowrap;
     }
-
+    .category-bar button.add-card-btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 5px;
+        font-size: 14px;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        flex-shrink: 0;
+        margin-left: 10px;
+        margin-right: 0;
+    }
     .category-bar button.active {
         background-color: #2575fc;
         color: #fff;
     }
-        
-    .card {
-        background-color: #fff;
+    .category-bar button:not(.add-card-btn):hover {
+        background-color: #444; /* হোভার ইফেক্ট ডার্ক মোডে */
+    }
+    .add-card-btn:hover {
+        background-color: #45a049;
     }
     
-    .card-divider {
-        background-color: #e0e0e0;
+    .container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 10px 20px 0px;
+    }
+    
+    .card {
+        background-color: #1e1e1e; /* কার্ড ব্যাকগ্রাউন্ড ডার্ক */
+        border-radius: 15px;
+        border: 1px solid #333; /* কার্ডের সীমানা স্পষ্ট করতে */
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.05); /* কার্ডের শ্যাডো */
+        overflow: hidden;
+        flex-grow: 1;
+        flex-shrink: 1;
+        text-align: center;
+        /* transition: box-shadow 0.3s ease; */ /* ট্রানজিশন সরানো হয়েছে */
+        display: flex;
+        flex-direction: column; 
+        justify-content: space-between;
+        
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* শুধু ভিজিবিলিটি ট্রানজিশন */
+    }
+    
+    .card.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* কার্ডে হোভার এবং অ্যাক্টিভ শ্যাডো সরানো হয়েছে */
+    .card:hover {
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.05); /* হোভারে একই শ্যাডো */
+    }
+    .card:active {
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.05); /* ক্লিকে একই শ্যাডো */
+    }
+    
+    /* নতুন হাইলাইট সার্কেল স্টাইল */
+    .card.highlighted {
+        animation: highlight-pulse 1.5s infinite;
+    }
+
+    @keyframes highlight-pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.75);
+            border: 2px solid transparent;
+        }
+        50% {
+            box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
+            border: 2px solid rgba(40, 167, 69, 0.75);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+            border: 2px solid transparent;
+        }
+    }
+    
+    /* নতুন শেয়ার আইকনের জন্য CSS */
+    .card-header {
+        position: relative;
+        width: 100%;
+    }
+
+    .share-icon {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        z-index: 5;
+    }
+    
+    .share-icon:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+    
+    /* নতুন আপলোড টাইম স্টাইল */
+    .card-upload-time {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        padding: 5px 8px;
+        border-radius: 5px;
+        font-size: 12px;
+        z-index: 5;
+        white-space: nowrap;
+    }
+    
+    /* ভিউ এবং লাভ কাউন্টার কন্টেইনার */
+    .card-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 10px 10px 10px;
+        box-sizing: border-box;
     }
 
     .card-stats {
-        background-color: #f0f0f0;
+        display: flex;
+        align-items: center;
+        background-color: #2b2b2b; /* ডার্ক মোডে স্ট্যাটস ব্যাকগ্রাউন্ড */
+        border-radius: 10px;
+        padding: 5px 8px;
+    }
+
+    .card-stats .icon {
+        margin-right: 5px;
+        width: 20px;
+        height: 20px;
+    }
+
+    .card-stats .count {
+        font-weight: bold;
+        color: #f0f0f0; /* ডার্ক মোডে স্ট্যাটস টেক্সট রঙ */
+        font-size: 14px;
+    }
+
+    .love-stats {
+        cursor: pointer;
+        transition: color 0.2s ease;
+        user-select: none;
+    }
+
+    .love-stats svg {
+        transition: fill 0.2s ease, transform 0.2s ease;
+        stroke: #aaa; /* ডার্ক মোডে হার্ট আইকনের স্ট্রোক রঙ */
     }
 
     .love-stats.liked svg {
         fill: #ff0000;
         stroke: #ff0000;
     }
-
-    .modal-content, .admin-panel-content {
-        background-color: #fefefe;
-        color: #333;
-    }
-
-    .form-group input, .form-group select {
-        background-color: #fff;
-        color: #333;
-        border: 1px solid #ccc;
-    }
-
-    .code-box {
-        background-color: #f1f1f1;
-        color: #333;
+    .love-stats:hover svg {
+        transform: scale(1.1);
     }
     
-    .notification {
-        background-color: rgba(220, 53, 69, 0.9);
-        color: white;
-    }
-    
-    .manual-copy-instruction {
-        color: #dc3545;
-    }
-
-    /* Dark Mode Styles - Default */
-    body.dark-mode, body {
-        background-color: #121212;
-        color: #e0e0e0;
-    }
-    
-    body.dark-mode .header {
-        background: linear-gradient(to right, #1f044d 0%, #174291 100%);
-        color: #f0f0f0;
+    /* ভিডিও আইকনের জন্য নতুন CSS */
+    .card-image-container {
+        position: relative;
+        width: 100%;
+        height: 150px;
+        overflow: hidden;
+        border-radius: 15px 15px 0 0;
+        cursor: pointer;
     }
 
-    body.dark-mode .tutorial-button {
-        background-color: #4CAF50;
-        color: #fff;
-    }
-    
-    body.dark-mode .tutorial-button:hover,
-    body.dark-mode .tutorial-button:active {
-        background-color: #28a745;
-    }
-
-    body.dark-mode .category-bar {
-        background-color: #1e1e1e;
-    }
-
-    body.dark-mode .category-bar button {
-        background-color: #333;
-        color: #e0e0e0;
-    }
-
-    body.dark-mode .category-bar button.active {
-        background-color: #4CAF50;
-        color: #fff;
-    }
-    
-    .theme-toggle-icon {
-        width: 30px;
-        height: 30px;
+    /* প্লে আইকন */
+    .play-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50px;
+        height: 50px;
+        background-color: rgba(0, 0, 0, 0.6);
         border-radius: 50%;
         display: flex;
-        justify-content: center;
         align-items: center;
-        flex-shrink: 0;
-        margin-left: 10px;
-        margin-right: 0;
-        cursor: pointer;
+        justify-content: center;
+        z-index: 2;
         transition: background-color 0.3s ease;
     }
 
-    .theme-toggle-icon svg {
-        width: 20px;
-        height: 20px;
+    .play-icon:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .play-icon svg {
         fill: #fff;
+        width: 25px;
+        height: 25px;
     }
 
-    body.dark-mode .theme-toggle-icon {
-        background-color: #4CAF50;
+    .card-image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
     
-    body.dark-mode .theme-toggle-icon svg {
-        fill: #fff;
+    .card-content {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .card-title {
+        font-size: 16px;
+        color: #e0e0e0; /* ডার্ক মোডে কার্ড টাইটেলের রঙ */
+        margin: 0;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+
+    .card-divider {
+        height: 1.5px;
+        width: 80%;
+        background-color: #333; /* ডার্ক মোডে ডিভাইডার রঙ */
+        margin: 5px 0;
     }
     
-    body.dark-mode .theme-toggle-icon:hover {
-        background-color: #3e8e41;
-    }
-
-    body.dark-mode .card {
-        background-color: #1e1e1e;
-        color: #e0e0e0;
-        border: 1px solid #333;
-        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.05);
-    }
-    
-    body.dark-mode .card:hover {
-        box-shadow: 0 8px 20px rgba(255, 255, 255, 0.25);
-    }
-
-    body.dark-mode .card-title {
-        color: #e0e0e0;
-    }
-
-    body.dark-mode .card-divider {
-        background-color: #333;
-    }
-
-    body.dark-mode .card-stats {
-        background-color: #2b2b2b;
+    /* Modal and other styles remain the same */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1001;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+        align-items: flex-start;
+        padding-top: 50px;
     }
     
-    body.dark-mode .card-stats .count {
-        color: #f0f0f0;
+    .modal-content {
+        background-color: #1e1e1e; /* ডার্ক মোডে মোডাল ব্যাকগ্রাউন্ড */
+        color: #e0e0e0; /* ডার্ক মোডে মোডাল টেক্সট রঙ */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        width: 90%;
+        max-width: 300px;
+        text-align: left;
+        position: relative;
+        margin-top: 50px;
     }
 
-    body.dark-mode .love-stats svg {
-        stroke: #aaa;
+    .modal-content h2 {
+        margin-top: 0;
+        text-align: center;
     }
-
-    body.dark-mode .love-stats.liked svg {
-        fill: #ff0000;
-        stroke: #ff0000;
+    .close-btn {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        cursor: pointer;
     }
-
-    body.dark-mode .modal-content, body.dark-mode .admin-panel-content {
-        background-color: #1e1e1e;
-        color: #e0e0e0;
+    .close-btn:hover,
+    .close-btn:focus {
+        color: #e0e0e0; /* ডার্ক মোডে ক্লোজ বাটন হোভার রঙ */
+        text-decoration: none;
+        cursor: pointer;
     }
-
-    body.dark-mode .form-group input, body.dark-mode .form-group select {
-        background-color: #2b2b2b;
-        color: #e0e0e0;
-        border: 1px solid #555;
+    .form-group {
+        margin-bottom: 15px;
     }
-
-    body.dark-mode .code-box {
-        background-color: #2b2b2b;
-        color: #f0f0f0;
-        border: 1px solid #555;
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    .form-group input, .form-group select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #555; /* ডার্ক মোডে ইনপুট বর্ডার */
+        background-color: #2b2b2b; /* ডার্ক মোডে ইনপুট ব্যাকগ্রাউন্ড */
+        color: #e0e0e0; /* ডার্ক মোডে ইনপুট টেক্সট */
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    .form-group select {
+        appearance: none;
+        background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23e0e0e0' d='M2 0L0 2h4L2 0z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px; /* ডার্ক মোডে সিলেক্ট ড্রপডাউন আইকন */
+    }
+    .form-buttons {
+        display: flex;
+        justify-content: center;
+    }
+    .form-buttons button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .form-buttons button.submit {
+        background-color: #28a745;
+        color: white;
+        width: 100%;
     }
     
-    body.dark-mode .notification {
-        background-color: rgba(255, 255, 255, 0.2);
+    .code-box-container {
+        margin-top: 20px;
+        text-align: center;
+        position: relative;
+    }
+    .code-box {
+        background-color: #2b2b2b; /* ডার্ক মোডে কোড বক্স ব্যাকগ্রাউন্ড */
+        border: 1px solid #555; /* ডার্ক মোডে কোড বক্স বর্ডার */
+        color: #f0f0f0; /* ডার্ক মোডে কোড বক্স টেক্সট */
+        padding: 10px;
+        border-radius: 5px;
+        font-family: monospace;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        text-align: left;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+    .copy-btn {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+    .copy-btn:hover {
+        background-color: #0056b3;
     }
     
-    body.dark-mode .manual-copy-instruction {
-        color: #f8d7da;
+    .notification {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(255, 255, 255, 0.2); /* ডার্ক মোডে নোটিফিকেশন ব্যাকগ্রাউন্ড */
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        z-index: 1002;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        text-align: center;
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+        font-size: 14px;
+        max-width: 90%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    .notification.show {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
     }
     
-    body.dark-mode .pagination-button {
-        background-color: #1e1e1e;
+    .code-box-container .notification {
+        position: absolute;
+        top: -30px;
+        padding: 5px 10px;
+        font-size: 14px;
+        visibility: hidden;
+        pointer-events: none;
+    }
+    .code-box-container .notification.show {
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .manual-copy-instruction {
+        margin-top: 10px;
+        font-size: 14px;
+        color: #f8d7da; /* ডার্ক মোডে ম্যানুয়াল কপি ইনস্ট্রাকশন রঙ */
+        display: none;
+    }
+    
+    @media (max-width: 767px) {
+         .container {
+            grid-template-columns: 1fr 1fr; 
+            gap: 10px;
+        }
+        .header h1 {
+            font-size: 20px;
+        }
+        .header h2 {
+            font-size: 14px;
+        }
+        .header p {
+            font-size: 12px;
+        }
+        .card-title {
+            font-size: 14px;
+        }
+        .continue-button {
+            font-size: 12px;
+            padding: 10px 8px;
+        }
+        .modal-content {
+            width: 95%;
+            max-width: 250px;
+            padding: 10px;
+        }
+        .form-group input, .form-group select {
+            padding: 5px;
+            font-size: 12px;
+        }
+        .form-buttons button {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+        .modal-content h2 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        .form-group label {
+            font-size: 12px;
+        }
+        .code-box-container {
+            margin-top: 10px;
+        }
+        .code-box {
+            font-size: 10px;
+            padding: 5px;
+            max-height: 150px;
+        }
+        .copy-btn {
+            padding: 8px 15px;
+            font-size: 12px;
+        }
+        .card-upload-time {
+            font-size: 10px;
+            top: 8px;
+            left: 8px;
+            padding: 4px 6px;
+        }
+    }
+
+    /* Loading Bar CSS */
+    #loading-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 4px;
+        background-color: #007bff; 
+        z-index: 9999;
+        width: 0;
+        transition: width 2s linear;
+    }
+    
+    /* New Full-screen Admin Panel CSS */
+    .admin-panel-full {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #121212; /* ডার্ক মোডে অ্যাডমিন প্যানেল ব্যাকগ্রাউন্ড */
+        z-index: 1000;
+        padding: 20px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    }
+
+    .admin-panel-full.show {
+        opacity: 1;
+        transform: translateY(0);
+        display: block;
+    }
+    
+    .admin-panel-content {
+        background-color: #1e1e1e; /* ডার্ক মোডে অ্যাডমিন প্যানেল কন্টেন্ট ব্যাকগ্রাউন্ড */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .admin-panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .admin-panel-header h2 {
+        margin: 0;
+    }
+
+    .admin-panel-actions {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .back-btn, .restart-btn {
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        color: white;
+    }
+
+    .back-btn {
+        background-color: #dc3545;
+    }
+
+    .back-btn:hover {
+        background-color: #c82333;
+    }
+
+    .restart-btn {
+        background-color: #ffc107;
+        color: #333;
+    }
+
+    .restart-btn:hover {
+        background-color: #e0a800;
+    }
+    
+    @media (max-width: 767px) {
+        .admin-panel-header {
+            flex-direction: column;
+            gap: 10px;
+        }
+        .admin-panel-actions {
+            flex-direction: column;
+            width: 100%;
+        }
+        .back-btn, .restart-btn {
+            width: 100%;
+        }
+    }
+    
+    /* Pagination CSS */
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 10px;
+        background-color: #121212; /* ডার্ক মোডে পেজিনেশন ব্যাকগ্রাউন্ড */
+        margin: 15px 0;
+        border-radius: 10px;
+        box-shadow: 0 -2px 5px rgba(255, 255, 255, 0.1); /* ডার্ক মোডে শ্যাডো */
+        white-space: nowrap;
+        border-bottom: 2px solid #333; /* ডার্ক মোডে বর্ডার */
+    }
+
+    .pagination-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    .pagination-button {
+        background-color: #1e1e1e; /* ডার্ক মোডে পেজিনেশন বাটন ব্যাকগ্রাউন্ড */
         color: #2575fc;
-        border-color: #2575fc;
+        border: 1px solid #2575fc;
+        border-radius: 5px;
+        padding: 8px 12px;
+        margin: 0 5px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        flex-shrink: 0;
     }
 
-    body.dark-mode .pagination-button.active {
+    .pagination-button.active {
         background-color: #2575fc;
         color: #fff;
     }
 
-    body.dark-mode .pagination-button:hover:not(.active) {
-        background-color: #2b2b2b;
+    .pagination-button:hover:not(.active) {
+        background-color: #2b2b2b; /* ডার্ক মোডে হোভার */
     }
 
-    /* টিউটোরিয়াল বাটনের জন্য CSS */
-.tutorial-button {
-    display: block;
-    text-align: center;
-    padding: 15px;
-    margin: 5px 20px 5px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 10px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-/* মাউস বাটনের উপর রাখলে বা ক্লিক করলে সবুজ হবে */
-.tutorial-button:hover,
-.tutorial-button:active {
-    background-color: #28a745;
-}
-
-/* মোবাইলের জন্য স্টাইল */
-@media (max-width: 767px) {
-    .tutorial-button {
-        font-size: 14px;
-        padding: 12px;
-        margin: 5px 10px 5px;
+    .pagination-button.disabled {
+        background-color: #333; /* ডার্ক মোডে ডিসেবলড বাটন */
+        color: #555;
+        border-color: #555;
+        cursor: not-allowed;
     }
-}
     
-        /* CSS styles remain the same */
-        body {
-            font-family: sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .sticky-wrapper-top {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-/* হেডার সেকশনের জন্য CSS */
-.header {
-    text-align: center;
-    padding-top: 10px; /* উপরের ফাঁকা জায়গা কমানো হয়েছে */
-    padding-bottom: 1px;
-    padding-left: 20px;
-    padding-right: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
-    overflow: hidden;
-}
-
-/* সোশ্যাল আইকন কন্টেইনার */
-.social-icons-container {
-    position: absolute;
-    top: 5px; /* উপরের কোণায় অবস্থান ঠিক রাখতে */
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 10px;
-    z-index: 10;
-}
-
-.social-icon {
-    display: block;
-    width: 35px;
-    height: 35px;
-    transition: transform 0.2s ease;
-}
-
-.social-icon img {
-    width: 100%;
-    height: 100%;
-}
-
-.social-icon:hover {
-    transform: scale(1.1);
-}
-
-/* হেডার কন্টেন্ট - লেখাগুলো */
-.header-content {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding-top: 10px; /* এই মানটি এখন ঠিকভাবে কাজ করবে */
-    position: relative;
-    z-index: 5;
-}
-        
-.header h2 {
-    font-size: 16px;
-    margin: 0;
-    font-weight: bold;
-    word-wrap: break-word; 
-    overflow-wrap: break-word; 
-}
-        
-.header p {
-    font-size: 14px;
-    margin: 5px 0 0;
-    white-space: normal;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
-
-/* মোবাইলের জন্য CSS */
-@media (max-width: 767px) {
-    .header h2 {
-        font-size: 14px;
+    /* Loading Spinner CSS */
+    .loader {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        animation: spin 1s linear infinite;
     }
-    .header p {
-        font-size: 12px;
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
     }
-    .social-icon {
-        width: 30px;
-        height: 30px;
-    }
-    .social-icons-container {
-        top: 5px;
-        padding: 0 5px;
-    }
-    .header-content {
-        padding-top: 10px;
-    }
-    .header {
-        padding-top: 0px;
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-}
-
-        .header h2 {
-            font-size: 16px;
-            margin: 0;
-            font-weight: bold;
-            word-wrap: break-word; 
-            overflow-wrap: break-word; 
-        }
-        
-        .header p {
-            font-size: 14px;
-            margin: 5px 0 0;
-            white-space: normal;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        .category-bar {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            padding: 10px 10px;
-            margin: 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            white-space: nowrap;
-            position: sticky;
-            top: 0;
-            z-index: 999;
-        }
-        .category-bar::-webkit-scrollbar {
-            display: none;
-        }
-        .category-bar button {
-            border: none;
-            border-radius: 20px;
-            padding: 8px 10px;
-            margin: 0 5px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            flex-shrink: 0;
-            white-space: nowrap;
-        }
-        .category-bar button.add-card-btn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 5px;
-            font-size: 14px;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            flex-shrink: 0;
-            margin-left: 10px;
-            margin-right: 0;
-        }
-        .category-bar button:not(.add-card-btn):hover {
-            background-color: #d0d0d0;
-        }
-        body.dark-mode .category-bar button:not(.add-card-btn):hover {
-            background-color: #444;
-        }
-        .add-card-btn:hover {
-            background-color: #45a049;
-        }
-        
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 10px 20px 0px;
-        }
-        
-        .card {
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            flex-grow: 1;
-            flex-shrink: 1;
-            text-align: center;
-            transition: box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column; 
-            justify-content: space-between;
-            
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease;
-        }
-        
-        .card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .card:hover {
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-        }
-        .card:active {
-        }
-        
-        /* নতুন হাইলাইট সার্কেল স্টাইল */
-        .card.highlighted {
-            animation: highlight-pulse 1.5s infinite;
-        }
-
-        @keyframes highlight-pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.75);
-                border: 2px solid transparent;
-            }
-            50% {
-                box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
-                border: 2px solid rgba(40, 167, 69, 0.75);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
-                border: 2px solid transparent;
-            }
-        }
-        
-        /* নতুন শেয়ার আইকনের জন্য CSS */
-        .card-header {
-            position: relative;
-            width: 100%;
-        }
-
-        .share-icon {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: #fff;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            z-index: 5;
-        }
-        
-        .share-icon:hover {
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-        
-        /* নতুন আপলোড টাইম স্টাইল */
-        .card-upload-time {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: #fff;
-            padding: 5px 8px;
-            border-radius: 5px;
-            font-size: 12px;
-            z-index: 5;
-            white-space: nowrap;
-        }
-        
-        /* ভিউ এবং লাভ কাউন্টার কন্টেইনার */
-        .card-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between; /* বাম এবং ডান পাশে রাখার জন্য */
-            padding: 0 10px 10px 10px;
-            box-sizing: border-box;
-        }
-
-        .card-stats {
-            display: flex;
-            align-items: center;
-            border-radius: 10px;
-            padding: 5px 8px;
-        }
-
-        .card-stats .icon {
-            margin-right: 5px;
-            width: 20px;
-            height: 20px;
-        }
-
-        .card-stats .count {
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        .love-stats {
-            cursor: pointer;
-            transition: color 0.2s ease;
-            user-select: none;
-        }
-
-        .love-stats svg {
-            transition: fill 0.2s ease, transform 0.2s ease;
-        }
-
-        .love-stats.liked svg {
-            fill: #ff0000; /* লাল রঙ যখন লাইক করা হবে */
-            stroke: #ff0000;
-        }
-        .love-stats:hover svg {
-            transform: scale(1.1);
-        }
-        
-        /* ভিডিও আইকনের জন্য নতুন CSS */
-        .card-image-container {
-            position: relative;
-            width: 100%;
-            height: 150px;
-            overflow: hidden;
-            border-radius: 15px 15px 0 0;
-            cursor: pointer;
-        }
-
-        /* প্লে আইকন */
-        .play-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 50px;
-            height: 50px;
-            background-color: rgba(0, 0, 0, 0.6);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2;
-            transition: background-color 0.3s ease;
-        }
-
-        .play-icon:hover {
-            background-color: rgba(0, 0, 0, 0.8);
-        }
-
-        .play-icon svg {
-            fill: #fff;
-            width: 25px;
-            height: 25px;
-        }
-
-        .card-image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .card-content {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 10px;
-        }
-
-        .card-title {
-            font-size: 16px;
-            margin: 0;
-            white-space: normal;
-            word-wrap: break-word;
-        }
-
-        .card-divider {
-            height: 1.5px;
-            width: 80%;
-            margin: 5px 0;
-        }
-        
-        /* Modal and other styles remain the same */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1001;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: none;
-            align-items: flex-start;
-            padding-top: 50px;
-        }
-        
-        .modal-content {
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            width: 90%;
-            max-width: 300px;
-            text-align: left;
-            position: relative;
-            margin-top: 50px;
-        }
-
-        .modal-content h2 {
-            margin-top: 0;
-            text-align: center;
-        }
-        .close-btn {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            cursor: pointer;
-        }
-        .close-btn:hover,
-        .close-btn:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 8px;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        .form-group select {
-            appearance: none;
-            background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23333' d='M2 0L0 2h4L2 0z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px;
-        }
-        .form-buttons {
-            display: flex;
-            justify-content: center;
-        }
-        .form-buttons button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .form-buttons button.submit {
-            background-color: #28a745;
-            color: white;
-            width: 100%;
-        }
-        
-        .code-box-container {
-            margin-top: 20px;
-            text-align: center;
-            position: relative;
-        }
-        .code-box {
-            border: 1px solid #ccc;
-            padding: 10px;
-            border-radius: 5px;
-            font-family: monospace;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            text-align: left;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-        .copy-btn {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        .copy-btn:hover {
-            background-color: #0056b3;
-        }
-        
-        .notification {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 10px 15px;
-            border-radius: 5px;
-            z-index: 1002;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            text-align: center;
-            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
-            font-size: 14px;
-            max-width: 90%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .notification.show {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
-        }
-        
-        .code-box-container .notification {
-            position: absolute;
-            top: -30px;
-            padding: 5px 10px;
-            font-size: 14px;
-            visibility: hidden;
-            pointer-events: none;
-        }
-        .code-box-container .notification.show {
-            visibility: visible;
-            pointer-events: auto;
-        }
-
-        .manual-copy-instruction {
-            margin-top: 10px;
-            font-size: 14px;
-            display: none;
-        }
-        
-        @media (min-width: 768px) {
-            .container {
-                grid-template-columns: 1fr 1fr; 
-            }
-        }
-        
-        @media (max-width: 767px) {
-             .container {
-                grid-template-columns: 1fr 1fr; 
-                gap: 10px;
-            }
-            .header h1 {
-                font-size: 20px;
-            }
-            .header h2 {
-                font-size: 14px;
-            }
-            .header p {
-                font-size: 12px;
-            }
-            .card-title {
-                font-size: 14px;
-            }
-            .continue-button {
-                font-size: 12px;
-                padding: 10px 8px;
-            }
-            .modal-content {
-                width: 95%;
-                max-width: 250px;
-                padding: 10px;
-            }
-            .form-group input, .form-group select {
-                padding: 5px;
-                font-size: 12px;
-            }
-            .form-buttons button {
-                padding: 6px 12px;
-                font-size: 12px;
-            }
-            .modal-content h2 {
-                font-size: 16px;
-                margin-bottom: 5px;
-            }
-            .form-group label {
-                font-size: 12px;
-            }
-            .code-box-container {
-                margin-top: 10px;
-            }
-            .code-box {
-                font-size: 10px;
-                padding: 5px;
-                max-height: 150px;
-            }
-            .copy-btn {
-                padding: 8px 15px;
-                font-size: 12px;
-            }
-            .card-upload-time {
-                font-size: 10px;
-                top: 8px;
-                left: 8px;
-                padding: 4px 6px;
-            }
-        }
-
-        /* Loading Bar CSS */
-        #loading-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 4px;
-            background-color: #007bff; 
-            z-index: 9999;
-            width: 0;
-            transition: width 2s linear;
-        }
-        
-        /* New Full-screen Admin Panel CSS */
-        .admin-panel-full {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #f0f2f5;
-            z-index: 1000;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-        }
-        
-        body.dark-mode .admin-panel-full {
-             background-color: #121212;
-        }
-        
-        body.dark-mode .admin-panel-content {
-            background-color: #1e1e1e;
-        }
-
-        .admin-panel-full.show {
-            opacity: 1;
-            transform: translateY(0);
-            display: block;
-        }
-        
-        .admin-panel-content {
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .admin-panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .admin-panel-header h2 {
-            margin: 0;
-        }
-
-        .admin-panel-actions {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .back-btn, .restart-btn {
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            color: white;
-        }
-
-        .back-btn {
-            background-color: #dc3545;
-        }
-
-        .back-btn:hover {
-            background-color: #c82333;
-        }
-
-        .restart-btn {
-            background-color: #ffc107;
-            color: #333;
-        }
-
-        .restart-btn:hover {
-            background-color: #e0a800;
-        }
-        
-        @media (max-width: 767px) {
-            .admin-panel-header {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .admin-panel-actions {
-                flex-direction: column;
-                width: 100%;
-            }
-            .back-btn, .restart-btn {
-                width: 100%;
-            }
-        }
-        
-    /* Pagination CSS */
-        .pagination-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            padding: 10px;
-            margin: 15px 0;
-            border-radius: 10px;
-            box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
-            white-space: nowrap;
-            border-bottom: 2px solid #ddd;
-        }
-
-        body.dark-mode .pagination-container {
-            background-color: #121212;
-            box-shadow: 0 -2px 5px rgba(255, 255, 255, 0.1);
-            border-bottom-color: #333;
-        }
-
-        .pagination-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        .pagination-button {
-            border: 1px solid #2575fc;
-            border-radius: 5px;
-            padding: 8px 12px;
-            margin: 0 5px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            flex-shrink: 0;
-        }
-
-        .pagination-button.active {
-            background-color: #2575fc;
-            color: #fff;
-        }
-
-        .pagination-button.disabled {
-            background-color: #e0e0e0;
-            color: #888;
-            border-color: #ccc;
-            cursor: not-allowed;
-        }
-
-        body.dark-mode .pagination-button.disabled {
-            background-color: #333;
-            color: #555;
-            border-color: #555;
-        }
-        
-        /* Loading Spinner CSS */
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
     </style>
 </head>
-<body class="dark-mode">
+<body>
     <div id="loading-bar"></div>
 
     <div id="main-content">
@@ -1089,13 +767,6 @@
                 <button data-category="viral" class="category-btn">Viral video 😻</button>
                 <button data-category="tiktoker" class="category-btn">Tiktoker 😜</button>
                 <button data-category="premium" class="category-btn">Premium 👑</button>
-                
-                <div class="theme-toggle-icon">
-                    <svg id="theme-toggle-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.89 0 1.76-.11 2.59-.34-.52-.94-.84-2.02-.84-3.16 0-3.32 2.68-6 6-6 .95 0 1.83.23 2.6.64-.81-4.9-5.11-8.5-10.22-8.5z" fill="#fff" />
-                    </svg>
-                </div>
-                
                 <button class="add-card-btn">+</button>
             </div>
         </div>
@@ -1231,32 +902,6 @@
             let currentPage = 1;
             let totalPages = 1;
 
-            // Theme Toggle Logic
-            const body = document.body;
-            const themeToggleIcon = document.querySelector('.theme-toggle-icon');
-            const themeToggleSVG = document.getElementById('theme-toggle-icon-svg');
-
-            function applyTheme(isDarkMode) {
-                if (isDarkMode) {
-                    body.classList.add('dark-mode');
-                    themeToggleSVG.innerHTML = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.89 0 1.76-.11 2.59-.34-.52-.94-.84-2.02-.84-3.16 0-3.32 2.68-6 6-6 .95 0 1.83.23 2.6.64-.81-4.9-5.11-8.5-10.22-8.5z" fill="#fff"/>';
-                } else {
-                    body.classList.remove('dark-mode');
-                    themeToggleSVG.innerHTML = '<path d="M12 2c5.523 0 10 4.477 10 10S17.523 22 12 22 2 17.523 2 12 6.477 2 12 2zm0 2c-4.418 0-8 3.582-8 8s3.582 8 8 8V4z" fill="#fff"/>';
-                }
-            }
-
-            // Load and apply theme from localStorage
-            const isDarkMode = localStorage.getItem('darkMode') === 'true';
-            applyTheme(isDarkMode);
-
-            // Toggle theme on icon click
-            themeToggleIcon.addEventListener('click', () => {
-                const isNowDarkMode = body.classList.contains('dark-mode');
-                localStorage.setItem('darkMode', !isNowDarkMode);
-                applyTheme(!isNowDarkMode);
-            });
-            
             // Get a unique ID for the user's device
             function getDeviceId() {
                 let deviceId = localStorage.getItem('deviceId');
@@ -1771,7 +1416,7 @@
             });
             
             backBtn.addEventListener('click', () => {
-                admin-panel-full.classList.remove('show');
+                adminPanelFull.classList.remove('show');
                 mainContent.style.display = 'block';
                 addCardForm.reset();
                 codeResultDiv.style.display = 'none';
