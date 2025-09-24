@@ -14,7 +14,7 @@
         --bg-secondary: #1e1e1e;
         --text-primary: #e0e0e0;
         --text-secondary: #aaaaaa;
-        --card-bg: #2d2d2d;
+        --card-bg: #2d2d2d; /* কার্ডের ব্যাকগ্রাউন্ড কালার */
         --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
         --card-hover-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
         --divider-color: #444444;
@@ -23,6 +23,7 @@
         --modal-bg: #333333;
         --input-bg: #444444;
         --input-border: #555555;
+        --footer-bg: #1e1e1e; /* পেজিনেশন সেকশনের জন্য হালকা ডার্ক ব্যাকগ্রাউন্ড */
     }
     
     /* টিউটোরিয়াল বাটনের জন্য CSS */
@@ -56,20 +57,31 @@
     }
 }
     
-        /* ডার্ক মোড প্রয়োগ */
+        /* ডার্ক মোড প্রয়োগ ও ঝাঁকুনি অপসারণের জন্য পরিবর্তন */
         body {
             font-family: sans-serif;
-            background-color: var(--bg-primary); /* ডার্ক ব্যাকগ্রাউন্ড */
-            color: var(--text-primary); /* উজ্জ্বল টেক্সট */
+            background-color: var(--bg-primary); 
+            color: var(--text-primary); 
             margin: 0;
             padding: 0;
+            
+            /* 👇👇👇 প্রধান পরিবর্তন: ঝাঁকুনি অপসারণ 👇👇👇 */
+            min-height: 100vh; /* কমপক্ষে স্ক্রিনের সমান উচ্চতা */
+            display: flex; /* Flexbox ব্যবহার করে কন্টেন্ট স্ট্রাকচার */
+            flex-direction: column;
+            overflow-x: hidden; /* আড়াআড়ি সাদা দাগ রোধ করতে */
+        }
+        
+        /* 👇👇👇 প্রধান পরিবর্তন: কন্টেন্টকে স্ট্রেচ করতে সাহায্য করবে 👇👇👇 */
+        #main-content {
+             flex-grow: 1; /* মূল কন্টেন্ট অবশিষ্ট উল্লম্ব জায়গা নেবে */
         }
 
         .sticky-wrapper-top {
             position: sticky;
             top: 0;
             z-index: 1000;
-            background-color: var(--bg-primary); /* ডার্ক ব্যাকগ্রাউন্ড */
+            background-color: var(--bg-primary); 
         }
 
 /* হেডার সেকশনের জন্য CSS */
@@ -189,19 +201,24 @@
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             padding: 10px 10px;
-            background-color: var(--bg-secondary); /* ডার্ক মোড ক্যাটাগরি বার */
+            background-color: var(--bg-secondary); 
             margin: 0;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             white-space: nowrap;
             position: sticky;
             top: 0;
             z-index: 999;
+            /* অতিরিক্ত আড়াআড়ি স্ক্রলবার হাইড করতে */
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
         }
         .category-bar::-webkit-scrollbar {
             display: none;
+            width: 0 !important;
+            height: 0 !important;
         }
         .category-bar button {
-            background-color: var(--category-bg); /* ডার্ক মোড ক্যাটাগরি বাটন */
+            background-color: var(--category-bg); 
             color: var(--category-text);
             border: none;
             border-radius: 20px;
@@ -234,7 +251,7 @@
             color: #fff;
         }
         .category-bar button:not(.add-card-btn):hover {
-            background-color: #4a4a4a; /* ডার্ক মোড হোভার */
+            background-color: #4a4a4a; 
         }
         .add-card-btn:hover {
             background-color: #45a049;
@@ -250,11 +267,10 @@
         }
         
         .card {
-            background-color: var(--card-bg); /* ডার্ক মোড কার্ড ব্যাকগ্রাউন্ড */
+            background-color: var(--card-bg); 
             border-radius: 15px;
             box-shadow: var(--card-shadow);
             overflow: hidden;
-            /* Flex properties for consistent card height in a grid item */
             display: flex;
             flex-direction: column; 
             justify-content: space-between;
@@ -275,8 +291,8 @@
         
         /* ব্যবহারকারীর অনুরোধ অনুযায়ী - ব্ল্যাক শ্যাডো/Active State অপসারন */
         .card:active {
-            box-shadow: var(--card-hover-shadow); /* হোভার শ্যাডো ধরে রাখবে */
-            transform: none; /* ডিফল্ট ট্রানজিশন বাতিল */
+            box-shadow: var(--card-hover-shadow); 
+            transform: none; 
         }
         
         /* নতুন হাইলাইট সার্কেল স্টাইল */
@@ -353,7 +369,7 @@
         .card-stats {
             display: flex;
             align-items: center;
-            background-color: var(--category-bg); /* ডার্ক মোড স্ট্যাটস ব্যাকগ্রাউন্ড */
+            background-color: var(--category-bg); 
             border-radius: 10px;
             padding: 5px 8px;
         }
@@ -362,12 +378,12 @@
             margin-right: 5px;
             width: 20px;
             height: 20px;
-            stroke: var(--text-primary); /* আইকনের রঙ */
+            stroke: var(--text-primary); 
         }
 
         .card-stats .count {
             font-weight: bold;
-            color: var(--text-primary); /* টেক্সটের রঙ */
+            color: var(--text-primary); 
             font-size: 14px;
         }
 
@@ -379,7 +395,7 @@
 
         .love-stats svg {
             transition: fill 0.2s ease, transform 0.2s ease;
-            stroke: var(--text-secondary); /* আনলাইক অবস্থায় আইকনের রঙ */
+            stroke: var(--text-secondary); 
         }
 
         .love-stats.liked svg {
@@ -444,7 +460,7 @@
 
         .card-title {
             font-size: 16px;
-            color: var(--text-primary); /* ডার্ক মোড টাইটেল রঙ */
+            color: var(--text-primary); 
             margin: 0;
             white-space: normal;
             word-wrap: break-word;
@@ -453,7 +469,7 @@
         .card-divider {
             height: 1.5px;
             width: 80%;
-            background-color: var(--divider-color); /* ডার্ক মোড ডিভাইডার */
+            background-color: var(--divider-color); 
             margin: 5px 0;
         }
         
@@ -467,7 +483,7 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.8); /* ডার্ক মোড মডাল ব্যাকগ্রাউন্ড */
+            background-color: rgba(0,0,0,0.8); 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -483,7 +499,7 @@
         }
         
         .modal-content {
-            background-color: var(--modal-bg); /* ডার্ক মোড মডাল কন্টেন্ট */
+            background-color: var(--modal-bg); 
             color: var(--text-primary);
             padding: 20px;
             border-radius: 10px;
@@ -559,7 +575,7 @@
             position: relative;
         }
         .code-box {
-            background-color: #444444; /* ডার্ক কোড বক্স */
+            background-color: #444444; 
             color: #ffffff;
             border: 1px solid #555555;
             padding: 10px;
@@ -720,7 +736,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: var(--bg-primary); /* ডার্ক মোড এডমিন প্যানেল */
+            background-color: var(--bg-primary); 
             z-index: 1000;
             padding: 20px;
             box-sizing: border-box;
@@ -737,7 +753,7 @@
         }
         
         .admin-panel-content {
-            background-color: var(--card-bg); /* ডার্ক মোড এডমিন কন্টেন্ট */
+            background-color: var(--card-bg); 
             color: var(--text-primary);
             padding: 20px;
             border-radius: 10px;
@@ -802,7 +818,7 @@
             }
         }
         
-    /* Pagination CSS */
+    /* Pagination CSS এর প্রধান পরিবর্তন */
         .pagination-container {
             display: flex;
             justify-content: center;
@@ -811,12 +827,23 @@
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             padding: 10px;
-            background-color: var(--bg-primary); /* ডার্ক মোড পেজিনেশন ব্যাকগ্রাউন্ড */
-            margin: 15px 0;
-            border-radius: 10px;
-            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+            
+            /* 👇👇👇 পেজিনেশন সেকশনের ব্যাকগ্রাউন্ড পরিবর্তন ও মার্জিন অ্যাডজাস্টমেন্ট 👇👇👇 */
+            background-color: var(--card-bg); /* কার্ডের মতো হালকা ডার্ক কালার */
+            margin: 15px 0 0; /* উপরে ১৫px মার্জিন, নিচে 0 */
+            padding-bottom: 20px; /* পেজিনেশন নাম্বারগুলোর নিচে পর্যাপ্ত ফাঁকা জায়গা তৈরি করবে */
+            /* পেজিনেশন সেকশনের নিচে যে সাদা দাগ আসছিল, তা রোধ করতে */
+            border-top: 1px solid var(--divider-color); /* বডির ব্যাকগ্রাউন্ডের সাথে মেশাতে হালকা বর্ডার */
+            
+            border-radius: 0; /* কোনো গোলাকার প্রান্ত ছাড়াই পুরো স্ক্রিনজুড়ে থাকবে */
+            box-shadow: 0 -5px 10px rgba(0,0,0,0.3); /* উপরে একটি শ্যাডো যোগ করা হলো */
             white-space: nowrap;
-            border-bottom: 2px solid #333; /* ডার্ক মোড বর্ডার */
+        }
+        
+        /* Loading Sentinel এর উচ্চতা ঠিক রাখতে */
+        #loading-sentinel {
+            height: 1px;
+            background-color: var(--bg-primary); 
         }
 
         .pagination-container::-webkit-scrollbar {
@@ -824,7 +851,7 @@
         }
 
         .pagination-button {
-            background-color: var(--card-bg);
+            background-color: var(--bg-primary); /* বাটনের ব্যাকগ্রাউন্ড আরও ডার্ক */
             color: #2575fc;
             border: 1px solid #2575fc;
             border-radius: 5px;
@@ -842,7 +869,7 @@
         }
 
         .pagination-button:hover:not(.active) {
-            background-color: #1a4d94; /* ডার্ক মোড হোভার */
+            background-color: #1a4d94; 
             color: #fff;
         }
 
