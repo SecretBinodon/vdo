@@ -8,6 +8,201 @@
 <script type='text/javascript' src='//pl27703154.revenuecpmgate.com/70/2c/67/702c67f9d1db58564142cc27691530f9.js'></script>
 
     <style>
+    /* Global Styles for Light and Dark Mode */
+    body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+        transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
+    /* Light Mode (Default) */
+    body {
+        background-color: #f0f2f5;
+        color: #333;
+    }
+
+    .header {
+        background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+        color: #fff;
+    }
+
+    .tutorial-button {
+        background-color: #2575fc;
+        color: #fff;
+    }
+    
+    .tutorial-button:hover,
+    .tutorial-button:active {
+        background-color: #28a745;
+    }
+
+    .category-bar {
+        background-color: #fff;
+    }
+
+    .category-bar button {
+        background-color: #e0e0e0;
+        color: #333;
+    }
+
+    .category-bar button.active {
+        background-color: #2575fc;
+        color: #fff;
+    }
+
+    .card {
+        background-color: #fff;
+    }
+
+    .card-divider {
+        background-color: #e0e0e0;
+    }
+
+    .card-stats {
+        background-color: #f0f0f0;
+    }
+
+    .love-stats.liked svg {
+        fill: #ff0000;
+        stroke: #ff0000;
+    }
+
+    .modal-content, .admin-panel-content {
+        background-color: #fefefe;
+        color: #333;
+    }
+
+    .form-group input, .form-group select {
+        background-color: #fff;
+        color: #333;
+        border: 1px solid #ccc;
+    }
+
+    .code-box {
+        background-color: #f1f1f1;
+        color: #333;
+    }
+    
+    .notification {
+        background-color: rgba(220, 53, 69, 0.9);
+        color: white;
+    }
+    
+    .manual-copy-instruction {
+        color: #dc3545;
+    }
+
+    /* Dark Mode Styles */
+    body.dark-mode {
+        background-color: #121212;
+        color: #e0e0e0;
+    }
+    
+    body.dark-mode .header {
+        background: linear-gradient(to right, #1f044d 0%, #174291 100%);
+        color: #f0f0f0;
+    }
+
+    body.dark-mode .tutorial-button {
+        background-color: #4CAF50;
+        color: #fff;
+    }
+    
+    body.dark-mode .tutorial-button:hover,
+    body.dark-mode .tutorial-button:active {
+        background-color: #28a745;
+    }
+
+    body.dark-mode .category-bar {
+        background-color: #1e1e1e;
+    }
+
+    body.dark-mode .category-bar button {
+        background-color: #333;
+        color: #e0e0e0;
+    }
+
+    body.dark-mode .category-bar button.active {
+        background-color: #4CAF50;
+        color: #fff;
+    }
+
+    body.dark-mode .card {
+        background-color: #1e1e1e;
+        color: #e0e0e0;
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+    }
+    
+    body.dark-mode .card:hover {
+        box-shadow: 0 8px 20px rgba(255, 255, 255, 0.25);
+    }
+
+    body.dark-mode .card-title {
+        color: #e0e0e0;
+    }
+
+    body.dark-mode .card-divider {
+        background-color: #333;
+    }
+
+    body.dark-mode .card-stats {
+        background-color: #2b2b2b;
+    }
+    
+    body.dark-mode .card-stats .count {
+        color: #f0f0f0;
+    }
+
+    body.dark-mode .love-stats svg {
+        stroke: #aaa;
+    }
+
+    body.dark-mode .love-stats.liked svg {
+        fill: #ff0000;
+        stroke: #ff0000;
+    }
+
+    body.dark-mode .modal-content, body.dark-mode .admin-panel-content {
+        background-color: #1e1e1e;
+        color: #e0e0e0;
+    }
+
+    body.dark-mode .form-group input, body.dark-mode .form-group select {
+        background-color: #2b2b2b;
+        color: #e0e0e0;
+        border: 1px solid #555;
+    }
+
+    body.dark-mode .code-box {
+        background-color: #2b2b2b;
+        color: #f0f0f0;
+        border: 1px solid #555;
+    }
+    
+    body.dark-mode .notification {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    body.dark-mode .manual-copy-instruction {
+        color: #f8d7da;
+    }
+    
+    body.dark-mode .pagination-button {
+        background-color: #1e1e1e;
+        color: #2575fc;
+        border-color: #2575fc;
+    }
+
+    body.dark-mode .pagination-button.active {
+        background-color: #2575fc;
+        color: #fff;
+    }
+
+    body.dark-mode .pagination-button:hover:not(.active) {
+        background-color: #2b2b2b;
+    }
+
     /* টিউটোরিয়াল বাটনের জন্য CSS */
 .tutorial-button {
     display: block;
@@ -18,8 +213,6 @@
     font-weight: bold;
     border-radius: 10px;
     text-decoration: none;
-    color: #fff;
-    background-color: #2575fc;
     transition: background-color 0.3s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
@@ -42,7 +235,6 @@
         /* CSS styles remain the same */
         body {
             font-family: sans-serif;
-            background-color: #f0f2f5;
             margin: 0;
             padding: 0;
         }
@@ -51,13 +243,10 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            background-color: #f0f2f5;
         }
 
 /* হেডার সেকশনের জন্য CSS */
 .header {
-    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
-    color: #fff;
     text-align: center;
     padding-top: 10px; /* উপরের ফাঁকা জায়গা কমানো হয়েছে */
     padding-bottom: 1px;
@@ -171,7 +360,6 @@
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             padding: 10px 10px;
-            background-color: #fff;
             margin: 0;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             white-space: nowrap;
@@ -183,8 +371,6 @@
             display: none;
         }
         .category-bar button {
-            background-color: #e0e0e0;
-            color: #333;
             border: none;
             border-radius: 20px;
             padding: 8px 10px;
@@ -211,12 +397,11 @@
             margin-left: 10px;
             margin-right: 0;
         }
-        .category-bar button.active {
-            background-color: #2575fc;
-            color: #fff;
-        }
         .category-bar button:not(.add-card-btn):hover {
             background-color: #d0d0d0;
+        }
+        body.dark-mode .category-bar button:not(.add-card-btn):hover {
+            background-color: #444;
         }
         .add-card-btn:hover {
             background-color: #45a049;
@@ -232,7 +417,6 @@
         }
         
         .card {
-            background-color: #fff;
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             overflow: hidden;
@@ -334,7 +518,6 @@
         .card-stats {
             display: flex;
             align-items: center;
-            background-color: #f0f0f0;
             border-radius: 10px;
             padding: 5px 8px;
         }
@@ -347,7 +530,6 @@
 
         .card-stats .count {
             font-weight: bold;
-            color: #333;
             font-size: 14px;
         }
 
@@ -423,7 +605,6 @@
 
         .card-title {
             font-size: 16px;
-            color: #333;
             margin: 0;
             white-space: normal;
             word-wrap: break-word;
@@ -432,7 +613,6 @@
         .card-divider {
             height: 1.5px;
             width: 80%;
-            background-color: #e0e0e0;
             margin: 5px 0;
         }
         
@@ -462,7 +642,6 @@
         }
         
         .modal-content {
-            background-color: #fefefe;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
@@ -504,7 +683,6 @@
         .form-group input, .form-group select {
             width: 100%;
             padding: 8px;
-            border: 1px solid #ccc;
             border-radius: 5px;
             box-sizing: border-box;
         }
@@ -535,7 +713,6 @@
             position: relative;
         }
         .code-box {
-            background-color: #f1f1f1;
             border: 1px solid #ccc;
             padding: 10px;
             border-radius: 5px;
@@ -564,8 +741,6 @@
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: rgba(220, 53, 69, 0.9);
-            color: white;
             padding: 10px 15px;
             border-radius: 5px;
             z-index: 1002;
@@ -604,7 +779,6 @@
         .manual-copy-instruction {
             margin-top: 10px;
             font-size: 14px;
-            color: #dc3545;
             display: none;
         }
         
@@ -704,6 +878,14 @@
             transform: translateY(20px);
             transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
         }
+        
+        body.dark-mode .admin-panel-full {
+             background-color: #121212;
+        }
+        
+        body.dark-mode .admin-panel-content {
+            background-color: #1e1e1e;
+        }
 
         .admin-panel-full.show {
             opacity: 1;
@@ -712,7 +894,6 @@
         }
         
         .admin-panel-content {
-            background-color: #fff;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -785,7 +966,6 @@
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             padding: 10px;
-            background-color: #f0f2f5;
             margin: 15px 0;
             border-radius: 10px;
             box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
@@ -793,13 +973,17 @@
             border-bottom: 2px solid #ddd;
         }
 
+        body.dark-mode .pagination-container {
+            background-color: #121212;
+            box-shadow: 0 -2px 5px rgba(255, 255, 255, 0.1);
+            border-bottom-color: #333;
+        }
+
         .pagination-container::-webkit-scrollbar {
             display: none;
         }
 
         .pagination-button {
-            background-color: #fff;
-            color: #2575fc;
             border: 1px solid #2575fc;
             border-radius: 5px;
             padding: 8px 12px;
@@ -815,15 +999,17 @@
             color: #fff;
         }
 
-        .pagination-button:hover:not(.active) {
-            background-color: #e6f0ff;
-        }
-
         .pagination-button.disabled {
             background-color: #e0e0e0;
             color: #888;
             border-color: #ccc;
             cursor: not-allowed;
+        }
+
+        body.dark-mode .pagination-button.disabled {
+            background-color: #333;
+            color: #555;
+            border-color: #555;
         }
         
         /* Loading Spinner CSS */
@@ -1004,6 +1190,31 @@
             const cardsPerPage = 30;
             let currentPage = 1;
             let totalPages = 1;
+
+            // Dark Mode implementation
+            const body = document.body;
+            const darkModeToggle = document.createElement('button');
+            darkModeToggle.id = 'darkModeToggle';
+            darkModeToggle.textContent = '🌙 ডার্ক মোড';
+            darkModeToggle.classList.add('tutorial-button');
+            
+            const headerContent = document.querySelector('.header .header-content');
+            headerContent.parentNode.insertBefore(darkModeToggle, headerContent.nextSibling);
+
+            // Load and apply dark mode preference from localStorage
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (isDarkMode) {
+                body.classList.add('dark-mode');
+                darkModeToggle.textContent = '☀️ লাইট মোড';
+            }
+
+            // Toggle dark mode on button click
+            darkModeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                const isNowDarkMode = body.classList.contains('dark-mode');
+                localStorage.setItem('darkMode', isNowDarkMode);
+                darkModeToggle.textContent = isNowDarkMode ? '☀️ লাইট মোড' : '🌙 ডার্ক মোড';
+            });
             
             // Get a unique ID for the user's device
             function getDeviceId() {
