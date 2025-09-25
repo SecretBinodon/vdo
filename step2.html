@@ -58,19 +58,6 @@
         gap: 10px; 
         flex-shrink: 0; 
     }
-    .tutorial-button {
-        display: inline-block; 
-        text-align: center;
-        font-weight: bold;
-        border-radius: 5px; 
-        text-decoration: none;
-        color: #fff;
-        background-color: #2575fc;
-        transition: background-color 0.3s ease;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        white-space: nowrap; 
-        height: fit-content;
-    }
     .social-icons-container {
         display: flex;
         gap: 5px; 
@@ -144,10 +131,15 @@
       margin-top:12px;padding:12px 18px;border:none;border-radius:12px;
       background:linear-gradient(90deg,var(--brand),var(--brand-2));
       color:white;font-weight:700;font-size:15px;cursor:pointer;
-      transition:.2s;display: none;
+      transition:.2s;
+      display: none;
       text-decoration: none;
     }
     .btn:hover{filter:brightness(1.05)}
+    .btn:active {
+        transform: scale(0.98);
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
     .perma-note{
       margin-top:10px;font-size:13px;color:#444;background:#ffeef3;
       border:1px dashed #ff99b9;padding:8px 12px;border-radius:10px;
@@ -183,9 +175,12 @@
         cursor: pointer;
         text-decoration: none;
     }
-    
     .download-button:hover {
         filter: brightness(1.05);
+    }
+    .download-button:active {
+        transform: scale(0.98);
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
     .article{margin-top:10px;padding:14px;border-radius:12px;background:#f9faff;border:1px solid #dde3f0}
@@ -212,14 +207,12 @@
         flex-wrap: wrap; /* Allows wrapping on smaller screens */
     }
     @media (min-width: 768px) {
-        .tutorial-button { padding: 8px 10px; font-size: 12px; margin: 5px 0; }
         .header { padding: 15px 40px; }
         .website-name { font-size: 24px; }
         .website-icon { width: 30px; height: 30px; }
         .social-icon { width: 30px; height: 30px; }
     }
     @media (max-width: 767px) {
-        .tutorial-button { font-size: 11px; padding: 6px 8px; margin: 2px 0; }
         .header { padding: 8px 10px; gap: 5px; }
         .website-name { font-size: 16px; }
         .website-icon { width: 20px; height: 20px; }
@@ -240,9 +233,6 @@
         </div>
     </div>
     <div class="header-right">
-        <a href="https://m.youtube.com/shorts/6O0ktfOu3xo" class="tutorial-button" target="_blank">
-            Tutorial Video 🔞
-        </a>
         <div class="social-icons-container">
             <a href="https://t.me/virallink_market" target="_blank" class="social-icon">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
@@ -283,7 +273,7 @@
         <div class="perma-note">বিঃদ্রঃ: যদি প্রথমবার ক্লিকে সঠিকভাবে না যায়, তবে সেই নতুন ট্যাবে ১৫ সেকেন্ড অপেক্ষা করে আবার ফিরে এসে চেষ্টা করুন।</div>
       </div>
       
-      <a href="https://www.revenuecpmgate.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea" id="downloadBtn" class="download-button">Download 📥</a>
+      <a href="https://www.revenuecpmgate.com/p99vwjq2?key=57217116cccb25526dfb6a5a5edd9aea" id="downloadBtn" class="download-button">Download 📥</a>
 
       <script async="async" data-cfasync="false" src="//pl27703152.revenuecpmgate.com/247476cdf6d68a31797ec615e7b10572/invoke.js"></script>
       <div id="container-247476cdf6d68a31797ec615e7b10572"></div>
@@ -336,6 +326,17 @@
             console.error("Card ID is missing.");
             alert("দুঃখিত, ভিডিওটি লোড করা যাচ্ছে না।");
         }
+    });
+    
+    // অন্যান্য বাটনে ক্লিক প্রতিক্রিয়া যোগ করা
+    const downloadBtn = document.getElementById("downloadBtn");
+    downloadBtn.addEventListener("click", () => {
+        // এই ইভেন্ট লিসেনারটি কেবল ক্লিক প্রতিক্রিয়া প্রদান করবে, লিংকের কার্যকারিতা অপরিবর্তিত থাকবে
+    });
+    
+    const specialVideoBtn = document.getElementById("specialVideoBtn");
+    specialVideoBtn.addEventListener("click", () => {
+        // এই ইভেন্ট লিসেনারটি কেবল ক্লিক প্রতিক্রিয়া প্রদান করবে, লিংকের কার্যকারিতা অপরিবর্তিত থাকবে
     });
 
     // পেজ লোড হলে টাইমার শুরু করা
