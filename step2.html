@@ -1,347 +1,234 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>টাইমার ফ্লো — এক্সক্লুসিভ কনটেন্ট</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">ভিডিও প্লেয়ার</title>
 
-  <script type='text/javascript' src='//pl27703154.revenuecpmgate.com/70/2c/67/702c67f9d1db58564142cc27691530f9.js'></script>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">
-  
-  <style>
-    /* নতুন হেডার সেকশনের স্টাইল */
-    .header {
-        background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
-        color: #fff;
-        padding: 10px 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    <script type='text/javascript' src='//pl27703154.revenuecpmgate.com/70/2c/67/702c67f9d1db58564142cc27691530f9.js'></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">
+    
+    <style>
+      /* নতুন হেডার সেকশনের স্টাইল */
+      .header {
+          background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+          color: #fff;
+          padding: 10px 20px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          position: relative;
+          overflow: hidden;
+          display: flex;
+          justify-content: space-between; 
+          align-items: center;
+          gap: 10px;
+      }
+      .header-left {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          min-width: 0;
+      }
+      .website-icon {
+          width: 25px; 
+          height: 25px;
+      }
+      .website-icon svg {
+          fill: #fff;
+          width: 100%;
+          height: 100%;
+      }
+      .website-name {
+          font-size: 20px;
+          font-weight: 400; 
+          font-family: 'Fugaz One', cursive; 
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+      }
+      .name-part-1 {
+          color: #FFD700; 
+      }
+      .name-part-2 {
+          color: #fff; 
+      }
+      .header-right {
+          display: flex;
+          align-items: center;
+          gap: 10px; 
+          flex-shrink: 0; 
+      }
+      .social-icons-container {
+          display: flex;
+          gap: 5px; 
+      }
+      .social-icon {
+          display: block;
+          width: 25px; 
+          height: 25px;
+          transition: transform 0.2s ease;
+      }
+      .social-icon img {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+      }
+      .social-icon:hover {
+          transform: scale(1.1);
+      }
+      
+      /* ভিডিও প্লেয়ার পেজের মূল স্টাইল */
+      body {
+        font-family: sans-serif;
+        background-color: #121212; 
+        color: #e0e0e0; 
+        margin: 0;
+        padding: 0;
+        min-height: 100vh; 
+        display: flex; 
+        flex-direction: column;
+        overflow-x: hidden;
+      }
+      .container {
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 10px;
+      }
+      .video-section {
+        background-color: #2d2d2d;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        padding: 20px;
+      }
+      .video-section h1 {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+      #video-player-container {
         position: relative;
+        width: 100%;
+        height: auto;
+        background-color: #000;
+        border-radius: 10px;
         overflow: hidden;
-        display: flex;
-        justify-content: space-between; 
-        align-items: center;
-        gap: 10px;
-    }
-    .header-left {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        min-width: 0;
-    }
-    .website-icon {
-        width: 25px; 
-        height: 25px;
-    }
-    .website-icon svg {
-        fill: #fff;
+      }
+      #video-player-container iframe {
         width: 100%;
-        height: 100%;
-    }
-    .website-name {
-        font-size: 20px;
-        font-weight: 400; 
-        font-family: 'Fugaz One', cursive; 
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    .name-part-1 {
-        color: #FFD700; 
-    }
-    .name-part-2 {
-        color: #fff; 
-    }
-    .header-right {
-        display: flex;
-        align-items: center;
-        gap: 10px; 
-        flex-shrink: 0; 
-    }
-    .tutorial-button {
-        display: inline-block; 
-        text-align: center;
-        font-weight: bold;
-        border-radius: 5px; 
-        text-decoration: none;
-        color: #fff;
-        background-color: #2575fc;
-        transition: background-color 0.3s ease;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        white-space: nowrap; 
-        height: fit-content;
-    }
-    .social-icons-container {
-        display: flex;
-        gap: 5px; 
-    }
-    .social-icon {
-        display: block;
-        width: 25px; 
-        height: 25px;
-        transition: transform 0.2s ease;
-    }
-    .social-icon img {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-    }
-    .social-icon:hover {
-        transform: scale(1.1);
-    }
+        height: auto;
+        border: 0;
+      }
 
-    /* মূল step2.html ফাইলের স্টাইল */
-    :root{
-      --bg:#f4f7fb;
-      --panel:#ffffff;
-      --panel-2:#f1f5ff;
-      --text:#1d2333;
-      --muted:#5f6b85;
-      --brand:#ff7eb3;
-      --brand-2:#ff758c;
-      --ok:#24d27e;
-      --warn:#ffae42;
-      --shadow: 0 6px 16px rgba(0,0,0,.1);
-      --radius: 16px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      background:linear-gradient(135deg,#ffe9f0,#e6f0ff);
-      color:var(--text);
-      font:15px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial;
-    }
-
-    header{
-      background:#fff;
-      border-bottom:1px solid #ddd;
-      position:sticky; top:0; z-index:50;
-    }
-    .wrap{max-width:900px;margin:0 auto;padding:12px 16px}
-    .title{font-weight:700;font-size:16px}
-    .subtitle{color:var(--muted);font-size:13px}
-    
-    main{
-      max-width:900px;
-      margin: 0px auto;
-      padding:16px;
-    }
-    .panel{
-      background:var(--panel);padding:20px;border-radius:var(--radius);
-      box-shadow:var(--shadow);
-    }
-    .headline{font-size:20px;font-weight:700}
-    .lead{color:var(--muted)}
-
-    .timer-card{margin-top:16px;padding:16px;border-radius:14px;
-      border:1px solid #eee;background:#fdfdfd;
-      text-align: center;
-    }
-    .count{font:800 28px/1 monospace}
-    .progress{height:10px;background:#eee;border-radius:999px;overflow:hidden;margin-top:8px}
-    .bar{height:100%;width:0%;background:linear-gradient(90deg,var(--brand),var(--brand-2))}
-    .btn{
-      margin-top:12px;padding:12px 18px;border:none;border-radius:12px;
-      background:linear-gradient(90deg,var(--brand),var(--brand-2));
-      color:white;font-weight:700;font-size:15px;cursor:pointer;
-      transition:.2s;display: none;
-      text-decoration: none;
-    }
-    .btn:hover{filter:brightness(1.05)}
-    .perma-note{
-      margin-top:10px;font-size:13px;color:#444;background:#ffeef3;
-      border:1px dashed #ff99b9;padding:8px 12px;border-radius:10px;
-    }
-    
-    /* New button styles */
-    .special-button {
-        padding: 8px 12px;
-        border: none;
-        border-radius: 8px;
-        background: linear-gradient(90deg, var(--brand), var(--brand-2));
-        color: white;
-        font-weight: 700;
-        font-size: 14px;
-        cursor: pointer;
-        text-decoration: none;
-        margin-left: 10px;
-        white-space: nowrap; /* Prevents text from wrapping */
-    }
-    
-    .download-button {
-        display: block;
-        width: 100%;
-        text-align: center;
-        margin: 5px auto; /* Centering the button */
-        padding: 12px 18px;
-        border: none;
-        border-radius: 12px;
-        background: linear-gradient(90deg, #ff9b49, #ff5e3a); /* A different color gradient */
-        color: white;
-        font-weight: 700;
-        font-size: 15px;
-        cursor: pointer;
-        text-decoration: none;
-    }
-    
-    .download-button:hover {
-        filter: brightness(1.05);
-    }
-
-    .article{margin-top:10px;padding:14px;border-radius:12px;background:#f9faff;border:1px solid #dde3f0}
-    .article h3{margin:0 0 8px;font-size:16px;color:#222}
-    .article p{margin:6px 0;color:#555;font-size:14px}
-    
-    /* Loader bar CSS */
-    .loader-bar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 3px;
-        width: 0%;
-        background: linear-gradient(90deg, var(--brand), var(--brand-2));
-        transition: width 0s linear;
-        z-index: 1000;
-    }
-    
-    /* Flexbox for inline alignment */
-    .headline-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap; /* Allows wrapping on smaller screens */
-    }
-    @media (min-width: 768px) {
-        .tutorial-button { padding: 8px 10px; font-size: 12px; margin: 5px 0; }
+      /* বাটন ক্লিক করলে প্রতিক্রিয়া দেখানোর জন্য CSS */
+      .card {
+          /* আগের স্টাইল */
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      .card:active {
+          transform: scale(0.98);
+          box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+      
+      /* মিডিয়া কোয়েরি */
+      @media (min-width: 768px) {
         .header { padding: 15px 40px; }
         .website-name { font-size: 24px; }
         .website-icon { width: 30px; height: 30px; }
         .social-icon { width: 30px; height: 30px; }
-    }
-    @media (max-width: 767px) {
-        .tutorial-button { font-size: 11px; padding: 6px 8px; margin: 2px 0; }
+      }
+      @media (max-width: 767px) {
         .header { padding: 8px 10px; gap: 5px; }
         .website-name { font-size: 16px; }
         .website-icon { width: 20px; height: 20px; }
         .social-icon { width: 20px; height: 20px; }
-    }
-  </style>
+      }
+    </style>
 </head>
 <body>
-  <div class="header">
-    <div class="header-left">
-        <div class="website-icon">
-             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M17 7h-4V4h4c2.21 0 4 1.79 4 4v4h-2V8c0-1.1-.9-2-2-2zm-6 8H7c-1.1 0-2-.9-2-2V9h2V7H7c-2.21 0-4 1.79-4 4v4c0 2.21 1.79 4 4 4h4v-2zm-1 3H7c-1.1 0-2-.9-2-2V9h2V7h2v2h4v2H9c-.55 0-1-.45-1-1s.45-1 1-1h4v2H9c-1.66 0-3 1.34-3 3v2c0 1.1.9 2 2 2h3v-2z"/>
-            </svg>
-        </div>
-        <div class="website-name">
-            <span class="name-part-1">Secret</span><span class="name-part-2">Binodon</span>
-        </div>
-    </div>
-    <div class="header-right">
-        <a href="https://m.youtube.com/shorts/6O0ktfOu3xo" class="tutorial-button" target="_blank">
-            Tutorial Video 🔞
-        </a>
-        <div class="social-icons-container">
-            <a href="https://t.me/virallink_market" target="_blank" class="social-icon">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
-            </a>
-            <a href="https://www.facebook.com/share/1CNyeZ9b4K/" target="_blank" class="social-icon">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook">
-            </a>
-            <a href="https://wa.me/" target="_blank" class="social-icon">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-            </a>
-        </div>
-    </div>
-  </div>
-
-  <div class="loader-bar"></div>
-  <header>
-    <div class="wrap">
-      <div class="title">ফাইনাল স্টেপ ফ্লো</div>
-      <div class="subtitle">👉মাথায় রাখবেন-ভিডিও দেখে "হাত*মারলে" নিজের ক্ষতি! 😄</div>
-    </div>
-  </header>
-
-  <main>
-    <div class="panel">
-      <div class="headline-container">
-          <h1 class="headline" id="headline">পুরাই অস্থির মধু মধু..👉</h1>
-        
-          <a href="https://jibonpoth1.blogspot.com" id="specialVideoBtn" class="special-button">Special Video 🎬</a>
-        
-      </div>
-      
-      <p class="lead" id="lead">ভিডিও লোড হতে 10/12 সেকেন্ড অপেক্ষা করুন। এরপর নিচের বাটনটিতে ক্লিক করে ভিডিও দেখুন।</p>
-      
-      <div class="timer-card">
-        <div><span id="hint">টাইমার চলছে…</span> <span class="count" id="counter">10</span></div>
-        <div class="progress"><div class="bar" id="bar"></div></div>
-        <a id="videoBtn" class="btn" href="#" style="display:none;">Watch Video 🔞</a>
-        <div class="perma-note">বিঃদ্রঃ: যদি প্রথমবার ক্লিকে সঠিকভাবে না যায়, তবে সেই নতুন ট্যাবে ১৫ সেকেন্ড অপেক্ষা করে আবার ফিরে এসে চেষ্টা করুন।</div>
-      </div>
-      
-      <a href="https://www.revenuecpmgate.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea" id="downloadBtn" class="download-button">Download 📥</a>
-
-      <script async="async" data-cfasync="false" src="//pl27703152.revenuecpmgate.com/247476cdf6d68a31797ec615e7b10572/invoke.js"></script>
-      <div id="container-247476cdf6d68a31797ec615e7b10572"></div>
-      
-      <div class="article">
-        <h3>সংবেদনশীল কনটেন্ট বিষয়ে সচেতনতা</h3>
-        <p>ইন্টারনেটে কিছু বিষয় সবার জন্য উপযুক্ত নাও হতে পারে। তাই বয়স-সীমা, সম্মতি ও নিরাপত্তা সবসময় মাথায় রাখা জরুরি।</p>
-        <p>নিজের গোপনীয়তা রক্ষা করুন, অচেনা লিংক ক্লিকের আগে সতর্ক হোন, আর অনলাইনে দায়িত্বশীল আচরণ করুন।</p>
-      </div>
-    </div>
-  </main>
-
-  <script>
-    const STEP_SECONDS = 10;
-    const counter = document.getElementById("counter");
-    const bar = document.getElementById("bar");
-    const videoBtn = document.getElementById("videoBtn");
-    const loaderBar = document.querySelector('.loader-bar');
-    const headline = document.getElementById("headline");
-    const lead = document.getElementById("lead");
     
-    // URL থেকে cardId বের করা
-    const urlParams = new URLSearchParams(window.location.search);
-    const cardId = urlParams.get('cardId');
+    <div class="header">
+        <div class="header-left">
+            <div class="website-icon">
+                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M17 7h-4V4h4c2.21 0 4 1.79 4 4v4h-2V8c0-1.1-.9-2-2-2zm-6 8H7c-1.1 0-2-.9-2-2V9h2V7H7c-2.21 0-4 1.79-4 4v4c0 2.21 1.79 4 4 4h4v-2zm-1 3H7c-1.1 0-2-.9-2-2V9h2V7h2v2h4v2H9c-.55 0-1-.45-1-1s.45-1 1-1h4v2H9c-1.66 0-3 1.34-3 3v2c0 1.1.9 2 2 2h3v-2z"/>
+                </svg>
+            </div>
+            <div class="website-name">
+                <span class="name-part-1">Secret</span><span class="name-part-2">Binodon</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="social-icons-container">
+                <a href="https://t.me/virallink_market" target="_blank" class="social-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
+                </a>
+                <a href="https://www.facebook.com/share/1CNyeZ9b4K/" target="_blank" class="social-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook">
+                </a>
+                <a href="https://wa.me/" target="_blank" class="social-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <main class="container">
+        <div class="video-section">
+            <h1 id="video-title">ভিডিও লোড হচ্ছে...</h1>
+            <div id="video-player-container">
+                </div>
+        </div>
+        
+        <div class="ad-container">
+            <script async="async" data-cfasync="false" src="//pl27703152.revenuecpmgate.com/247476cdf6d68a31797ec615e7b10572/invoke.js"></script>
+            <div id="container-247476cdf6d68a31797ec615e7b10572"></div>
+        </div>
+    </main>
 
-    function startSingleStep() {
-        let remain = STEP_SECONDS;
-        counter.textContent = remain;
-        bar.style.width = "0%";
-        videoBtn.style.display = "none";
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const cardId = urlParams.get('cardId');
 
-        let timer = setInterval(() => {
-            remain--;
-            counter.textContent = remain;
-            bar.style.width = ((STEP_SECONDS - remain) / STEP_SECONDS * 100) + "%";
-            if (remain <= 0) {
-                clearInterval(timer);
-                counter.textContent = "";
-                videoBtn.style.display = "inline-block";
+        async function loadVideo() {
+            const response = await fetch('cards.json');
+            const allCardData = await response.json();
+            const cardData = allCardData.find(card => card.id === cardId);
+
+            if (cardData) {
+                document.getElementById('video-title').textContent = cardData.title;
+                document.getElementById('page-title').textContent = cardData.title;
+                
+                const videoPlayerContainer = document.getElementById('video-player-container');
+                
+                // এখানে iframe তৈরি করা হচ্ছে
+                const iframe = document.createElement('iframe');
+                iframe.src = cardData.videoLink;
+                iframe.frameborder = "0";
+                iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+                iframe.allowFullscreen = true;
+                
+                // iframe লোড হওয়ার পর উচ্চতা সেট করা
+                iframe.onload = function() {
+                    const ratio = iframe.contentWindow.document.body.offsetWidth / iframe.contentWindow.document.body.offsetHeight;
+                    if (ratio) {
+                        iframe.style.height = (iframe.offsetWidth / ratio) + 'px';
+                    }
+                };
+
+                // যদি iframe লোড হতে সমস্যা হয়, তবে একটি নির্দিষ্ট অনুপাত ব্যবহার করা
+                iframes.onerror = function() {
+                    console.error("Failed to load iframe content. Using default aspect ratio.");
+                    iframe.style.height = (iframe.offsetWidth / (16/9)) + 'px';
+                };
+
+                // iframe কন্টেইনারে যুক্ত করা
+                videoPlayerContainer.appendChild(iframe);
+
+            } else {
+                 document.getElementById('video-title').textContent = "দুঃখিত, ভিডিওটি পাওয়া যায়নি।";
             }
-        }, 1000);
-    }
-    
-    // Watch Video বাটনের নতুন ক্লিক ইভেন্ট। এটি নতুন ট্যাবে ভিডিও প্লেয়ার পেজে যাবে।
-    videoBtn.addEventListener("click", (event) => {
-        event.preventDefault();
-        if (cardId) {
-            window.open(`video-player.html?cardId=${cardId}`, '_blank');
-        } else {
-            console.error("Card ID is missing.");
-            alert("দুঃখিত, ভিডিওটি লোড করা যাচ্ছে না।");
         }
-    });
-
-    // পেজ লোড হলে টাইমার শুরু করা
-    window.addEventListener('load', () => {
-        startSingleStep();
-    });
-  </script>
+        loadVideo();
+    </script>
 </body>
 </html>
