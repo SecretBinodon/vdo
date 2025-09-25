@@ -284,6 +284,11 @@
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease;
+            
+            /* 👇👇👇 নতুন হাইলাইট ট্রানজিশন যোগ করা হয়েছে */
+            border: 3px solid transparent; 
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease, border 0.3s ease;
+            /* 👆👆👆 */
         }
         
         .card.visible {
@@ -301,25 +306,13 @@
             transform: none; 
         }
         
-        /* নতুন হাইলাইট সার্কেল স্টাইল */
+        /* 👇👇👇 প্রধান CSS সমাধান: ১০ সেকেন্ডের জন্য স্থির হাইলাইট 👇👇👇 */
         .card.highlighted {
-            animation: highlight-pulse 1.5s infinite;
+            /* পূর্বের animation: highlight-pulse 1.5s infinite; সরানো হয়েছে */
+            border: 3px solid #FFD700; /* উজ্জ্বল হলুদ বর্ডার */
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.9); /* উজ্জ্বল হলুদ গ্লো */
         }
-
-        @keyframes highlight-pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.75);
-                border: 2px solid transparent;
-            }
-            50% {
-                box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
-                border: 2px solid rgba(40, 167, 69, 0.75);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
-                border: 2px solid transparent;
-            }
-        }
+        /* 👆👆👆 CSS সমাধান শেষ 👆👆👆 */
         
         /* নতুন শেয়ার আইকনের জন্য CSS */
         .card-header {
@@ -1060,7 +1053,7 @@
             const copyCardCodeBtn = document.getElementById('copyCardCodeBtn');
             const notificationPopup = document.getElementById('notificationPopup');
             const cardCodeNotification = document.getElementById('cardCodeNotification');
-            const manualCopyInstruction = document.getElementById('manualCopyInstruction');
+            const manualCopyInstruction = document.getElementById('manual-copy-instruction');
             const backBtn = document.getElementById('backBtn');
             const restartBtn = document.getElementById('restartBtn');
             const paginationContainer = document.getElementById('pagination-container');
@@ -1314,22 +1307,46 @@
                     const card = createCard(data);
                     container.appendChild(card);
                     getAndUpdateStats(data.id, card);
+                    
                     setTimeout(() => {
                          card.classList.add('visible');
+                         
+                         // 👇👇👇 প্রধান JS সমাধান: ১০ সেকেন্ডের হাইলাইট লজিক শুরু 👇👇👇
                          if (data.id === currentCardToHighlight) {
+                             // ১. কার্ড হাইলাইট করুন
                              card.classList.add('highlighted');
-                             setTimeout(() => {
-                                 const headerHeight = document.querySelector('.header').offsetHeight;
-                                 const viewportHeight = window.innerHeight;
-                                 const cardTop = card.getBoundingClientRect().top;
-                                 const scrollPosition = window.scrollY + cardTop - (viewportHeight / 2) + (card.offsetHeight / 2) + (headerHeight / 2);
+                             
+                             // ২. স্ক্রল করে কার্ডের কাছে যান (Scroll to card)
+                             const headerHeight = document.querySelector('.header').offsetHeight;
+                             const viewportHeight = window.innerHeight;
+                             const cardTop = card.getBoundingClientRect().top;
+                             // স্ক্রল পজিশন গণনা করে কার্ডটিকে মাঝামাঝি আনার চেষ্টা করা হয়েছে
+                             const scrollPosition = window.scrollY + cardTop - (viewportHeight / 2) + (card.offsetHeight / 2) + (headerHeight / 2);
             
-                                 window.scrollTo({
-                                     top: scrollPosition,
-                                     behavior: 'smooth'
-                                 });
-                             }, 200);
+                             window.scrollTo({
+                                 top: scrollPosition,
+                                 behavior: 'smooth'
+                             });
+                             
+                             // ৩. ১০ সেকেন্ডের পরে হাইলাইট বন্ধ করা এবং ডেটা পরিষ্কার করা (10-second timeout)
+                             setTimeout(() => {
+                                 // ক. হাইলাইট ক্লাস সরান (Remove highlight class)
+                                 card.classList.remove('highlighted');
+                                 
+                                 // খ. গ্লোবাল হাইলাইট আইডি রিসেট করুন
+                                 currentCardToHighlight = null; 
+                                 
+                                 // গ. URL থেকে cardId প্যারামিটার মুছে দিন 
+                                 // (এটি 'লোকাল এক্সপ্রেস থেকে সব ডেটা মুছে দেওয়া'-এর লজিক পূরণ করে,
+                                 // যা বারবার হাইলাইট হওয়া রোধ করে)
+                                 const url = new URL(window.location);
+                                 url.searchParams.delete('cardId');
+                                 history.replaceState(null, '', url.toString());
+                                 
+                             }, 10000); // 10 সেকেন্ড (10000ms)
                          }
+                        // 👆👆👆 প্রধান JS সমাধান শেষ 👆👆👆
+
                     }, 50); 
                 });
                 
