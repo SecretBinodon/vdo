@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="bn">
 <head>
   <meta charset="utf-8" />
@@ -6,40 +6,103 @@
   <title>টাইমার ফ্লো — এক্সক্লুসিভ কনটেন্ট</title>
 
   <script type='text/javascript' src='//pl27703154.revenuecpmgate.com/70/2c/67/702c67f9d1db58564142cc27691530f9.js'></script>
-
+  
   <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">
   
   <style>
-    /*======================================
-     সাধারণ স্টাইল (মোবাইল ও ডেস্কটপ উভয়ের জন্য)
-    ======================================*/
-    :root {
-        --bg-primary: #121212;
-        --bg-secondary: #1e1e1e;
-        --text-primary: #e0e0e0;
-        --text-secondary: #aaaaaa;
-        --card-bg: #2d2d2d; 
-        --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-        --card-hover-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-        --divider-color: #444444;
-        --category-bg: #3a3a3a;
-        --category-text: #e0e0e0;
-        --modal-bg: #333333;
-        --input-bg: #444444;
-        --input-border: #555555;
-        --footer-bg: #1e1e1e;
+    /* নতুন হেডার সেকশনের স্টাইল */
+    .header {
+        background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+        color: #fff;
+        padding: 10px 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between; 
+        align-items: center;
+        gap: 10px;
+    }
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+    }
+    .website-icon {
+        width: 25px; 
+        height: 25px;
+    }
+    .website-icon svg {
+        fill: #fff;
+        width: 100%;
+        height: 100%;
+    }
+    .website-name {
+        font-size: 20px;
+        font-weight: 400; 
+        font-family: 'Fugaz One', cursive; 
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .name-part-1 {
+        color: #FFD700; 
+    }
+    .name-part-2 {
+        color: #fff; 
+    }
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 10px; 
+        flex-shrink: 0; 
+    }
+    .tutorial-button {
+        display: inline-block; 
+        text-align: center;
+        font-weight: bold;
+        border-radius: 5px; 
+        text-decoration: none;
+        color: #fff;
+        background-color: #2575fc;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        white-space: nowrap; 
+        height: fit-content;
+    }
+    .social-icons-container {
+        display: flex;
+        gap: 5px; 
+    }
+    .social-icon {
+        display: block;
+        width: 25px; 
+        height: 25px;
+        transition: transform 0.2s ease;
+    }
+    .social-icon img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+    }
+    .social-icon:hover {
+        transform: scale(1.1);
+    }
 
-        --bg:#f4f7fb;
-        --panel:#ffffff;
-        --panel-2:#f1f5ff;
-        --text:#1d2333;
-        --muted:#5f6b85;
-        --brand:#ff7eb3;
-        --brand-2:#ff758c;
-        --ok:#24d27e;
-        --warn:#ffae42;
-        --shadow: 0 6px 16px rgba(0,0,0,.1);
-        --radius: 16px;
+    /* মূল step2.html ফাইলের স্টাইল */
+    :root{
+      --bg:#f4f7fb;
+      --panel:#ffffff;
+      --panel-2:#f1f5ff;
+      --text:#1d2333;
+      --muted:#5f6b85;
+      --brand:#ff7eb3;
+      --brand-2:#ff758c;
+      --ok:#24d27e;
+      --warn:#ffae42;
+      --shadow: 0 6px 16px rgba(0,0,0,.1);
+      --radius: 16px;
     }
     *{box-sizing:border-box}
     body{
@@ -49,137 +112,105 @@
       font:15px/1.6 system-ui,Segoe UI,Roboto,Helvetica,Arial;
     }
 
-    /* index.html থেকে হেডার সেকশনের স্টাইল যোগ করা হয়েছে */
-    .ad-container {
-      width: 100%;
-      box-sizing: border-box;
-      margin-top: 0px;
-      margin-bottom: -30px;
+    header{
+      background:#fff;
+      border-bottom:1px solid #ddd;
+      position:sticky; top:0; z-index:50;
+    }
+    .wrap{max-width:900px;margin:0 auto;padding:12px 16px}
+    .title{font-weight:700;font-size:16px}
+    .subtitle{color:var(--muted);font-size:13px}
+    
+    main{
+      max-width:900px;
+      margin: 0px auto;
+      padding:16px;
+    }
+    .panel{
+      background:var(--panel);padding:20px;border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .headline{font-size:20px;font-weight:700}
+    .lead{color:var(--muted)}
+
+    .timer-card{margin-top:16px;padding:16px;border-radius:14px;
+      border:1px solid #eee;background:#fdfdfd;
       text-align: center;
     }
-    .tutorial-button {
-      display: inline-block; 
-      text-align: center;
-      font-weight: bold;
-      border-radius: 5px; 
+    .count{font:800 28px/1 monospace}
+    .progress{height:10px;background:#eee;border-radius:999px;overflow:hidden;margin-top:8px}
+    .bar{height:100%;width:0%;background:linear-gradient(90deg,var(--brand),var(--brand-2))}
+    .btn{
+      margin-top:12px;padding:12px 18px;border:none;border-radius:12px;
+      background:linear-gradient(90deg,var(--brand),var(--brand-2));
+      color:white;font-weight:700;font-size:15px;cursor:pointer;
+      transition:.2s;display: none;
       text-decoration: none;
-      color: #fff;
-      background-color: #2575fc;
-      transition: background-color 0.3s ease;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      white-space: nowrap; 
-      height: fit-content;
     }
-    .tutorial-button:hover,
-    .tutorial-button:active {
-      background-color: #28a745;
-    }
-    .header {
-      background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
-      color: #fff;
-      padding: 10px 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      justify-content: space-between; 
-      align-items: center;
-      gap: 10px;
-    }
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      min-width: 0;
-    }
-    .website-icon {
-      width: 25px; 
-      height: 25px;
-    }
-    .website-icon svg {
-      fill: #fff;
-      width: 100%;
-      height: 100%;
-    }
-    .website-name {
-      font-size: 20px;
-      font-weight: 400; 
-      font-family: 'Fugaz One', cursive; 
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .name-part-1 {
-      color: #FFD700; 
-    }
-    .name-part-2 {
-      color: #fff; 
-    }
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 10px; 
-      flex-shrink: 0; 
-    }
-    .social-icons-container {
-      display: flex;
-      gap: 5px; 
-    }
-    .social-icon {
-      display: block;
-      width: 25px; 
-      height: 25px;
-      transition: transform 0.2s ease;
-    }
-    .social-icon img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-    }
-    .social-icon:hover {
-      transform: scale(1.1);
+    .btn:hover{filter:brightness(1.05)}
+    .perma-note{
+      margin-top:10px;font-size:13px;color:#444;background:#ffeef3;
+      border:1px dashed #ff99b9;padding:8px 12px;border-radius:10px;
     }
     
-    /* অন্যান্য স্টাইল... */
+    /* New button styles */
     .special-button {
-      padding: 8px 12px;
-      border: none;
-      border-radius: 8px;
-      background: linear-gradient(90deg, var(--brand), var(--brand-2));
-      color: white;
-      font-weight: 700;
-      font-size: 14px;
-      cursor: pointer;
-      text-decoration: none;
-      margin-left: 10px;
-      white-space: nowrap;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 8px;
+        background: linear-gradient(90deg, var(--brand), var(--brand-2));
+        color: white;
+        font-weight: 700;
+        font-size: 14px;
+        cursor: pointer;
+        text-decoration: none;
+        margin-left: 10px;
+        white-space: nowrap; /* Prevents text from wrapping */
     }
+    
     .download-button {
-      display: block;
-      width: 100%;
-      text-align: center;
-      margin: 5px auto;
-      padding: 12px 18px;
-      border: none;
-      border-radius: 12px;
-      background: linear-gradient(90deg, #ff9b49, #ff5e3a);
-      color: white;
-      font-weight: 700;
-      font-size: 15px;
-      cursor: pointer;
-      text-decoration: none;
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin: 5px auto; /* Centering the button */
+        padding: 12px 18px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(90deg, #ff9b49, #ff5e3a); /* A different color gradient */
+        color: white;
+        font-weight: 700;
+        font-size: 15px;
+        cursor: pointer;
+        text-decoration: none;
     }
+    
     .download-button:hover {
-      filter: brightness(1.05);
-    }
-    .headline-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
+        filter: brightness(1.05);
     }
 
-    /* মিডিয়া কোয়েরি */
+    .article{margin-top:10px;padding:14px;border-radius:12px;background:#f9faff;border:1px solid #dde3f0}
+    .article h3{margin:0 0 8px;font-size:16px;color:#222}
+    .article p{margin:6px 0;color:#555;font-size:14px}
+    
+    /* Loader bar CSS */
+    .loader-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        width: 0%;
+        background: linear-gradient(90deg, var(--brand), var(--brand-2));
+        transition: width 0s linear;
+        z-index: 1000;
+    }
+    
+    /* Flexbox for inline alignment */
+    .headline-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    }
     @media (min-width: 768px) {
         .tutorial-button { padding: 8px 10px; font-size: 12px; margin: 5px 0; }
         .header { padding: 15px 40px; }
@@ -195,10 +226,8 @@
         .social-icon { width: 20px; height: 20px; }
     }
   </style>
-
 </head>
 <body>
-  
   <div class="header">
     <div class="header-left">
         <div class="website-icon">
@@ -229,11 +258,20 @@
   </div>
 
   <div class="loader-bar"></div>
+  <header>
+    <div class="wrap">
+      <div class="title">ফাইনাল স্টেপ ফ্লো</div>
+      <div class="subtitle">👉মাথায় রাখবেন-ভিডিও দেখে "হাত*মারলে" নিজের ক্ষতি! 😄</div>
+    </div>
+  </header>
+
   <main>
     <div class="panel">
       <div class="headline-container">
           <h1 class="headline" id="headline">পুরাই অস্থির মধু মধু..👉</h1>
+        
           <a href="https://jibonpoth1.blogspot.com" id="specialVideoBtn" class="special-button">Special Video 🎬</a>
+        
       </div>
       
       <p class="lead" id="lead">ভিডিও লোড হতে 10/12 সেকেন্ড অপেক্ষা করুন। এরপর নিচের বাটনটিতে ক্লিক করে ভিডিও দেখুন।</p>
