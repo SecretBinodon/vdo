@@ -16,7 +16,7 @@
         --bg-secondary: #1e1e1e;
         --text-primary: #e0e0e0;
         --text-secondary: #aaaaaa;
-        --card-bg: #2d2d2d; /* কার্ডের ব্যাকগ্রাউন্ড কালার */
+        --card-bg: #2d2d2d; 
         --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
         --card-hover-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
         --divider-color: #444444;
@@ -25,24 +25,24 @@
         --modal-bg: #333333;
         --input-bg: #444444;
         --input-border: #555555;
-        --footer-bg: #1e1e1e; /* পেজিনেশন সেকশনের জন্য হালকা ডার্ক ব্যাকগ্রাউন্ড */
+        --footer-bg: #1e1e1e;
     }
     
     /* টিউটোরিয়াল বাটনের জন্য CSS */
 .tutorial-button {
-    display: inline-block; /* ইনলাইন ব্লক করা হলো */
+    display: inline-block; 
     text-align: center;
-    padding: 5px 10px; /* প্যাডিং কমানো হলো */
-    margin: 5px 0; /* মার্জিন কমানো হলো */
-    font-size: 12px; /* ফন্ট সাইজ কমানো হলো */
+    padding: 5px 10px; 
+    margin: 5px 0; 
+    font-size: 12px; 
     font-weight: bold;
-    border-radius: 5px; /* ছোট বর্ডার */
+    border-radius: 5px; 
     text-decoration: none;
     color: #fff;
     background-color: #2575fc;
     transition: background-color 0.3s ease;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    white-space: nowrap; /* লেখা ভাঙা রোধ */
+    white-space: nowrap; 
     height: fit-content;
 }
 
@@ -69,16 +69,16 @@
             margin: 0;
             padding: 0;
             
-            /* 👇👇👇 প্রধান সমাধান: ঝাঁকুনি অপসারণ ও ফুটার নিচে রাখা 👇👇👇 */
-            min-height: 100vh; /* কমপক্ষে স্ক্রিনের সমান উচ্চতা */
-            display: flex; /* Flexbox ব্যবহার করে কন্টেন্ট স্ট্রাকচার */
+            /* প্রধান সমাধান: ঝাঁকুনি অপসারণ ও ফুটার নিচে রাখা */
+            min-height: 100vh; 
+            display: flex; 
             flex-direction: column;
-            overflow-x: hidden; /* আড়াআড়ি সাদা দাগ রোধ করতে */
+            overflow-x: hidden; 
         }
         
-        /* 👇👇👇 প্রধান সমাধান: কন্টেন্টকে স্ট্রেচ করে ফুটার নিচে নামাবে 👇👇👇 */
+        /* প্রধান সমাধান: কন্টেন্টকে স্ট্রেচ করে ফুটার নিচে নামাবে */
         #main-content {
-             flex-grow: 1; /* মূল কন্টেন্ট অবশিষ্ট উল্লম্ব জায়গা নেবে */
+             flex-grow: 1; 
         }
 
         .sticky-wrapper-top {
@@ -96,9 +96,8 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: relative;
     overflow: hidden;
-    /* নতুন Flexbox সেটআপ */
     display: flex;
-    justify-content: space-between; /* বাম এবং ডানের কন্টেন্টকে স্পেস দেবে */
+    justify-content: space-between; 
     align-items: center;
     gap: 10px;
 }
@@ -113,7 +112,7 @@
 
 /* লিংক আইকন (ওয়েবসাইট আইকন) */
 .website-icon {
-    width: 25px; /* আইকনের সাইজ ছোট করা হলো */
+    width: 25px; 
     height: 25px;
 }
 
@@ -126,19 +125,19 @@
 /* ওয়েবসাইটের নাম - স্টাইলিশ ফন্ট এবং দুই কালার */
 .website-name {
     font-size: 20px;
-    font-weight: 400; /* Fugaz One ফন্টটি এমনিতেই বোল্ড, তাই ফন্ট-ওয়েট কমানো হলো */
-    font-family: 'Fugaz One', cursive; /* স্টাইলিশ ফন্ট: Fugaz One */
+    font-weight: 400; 
+    font-family: 'Fugaz One', cursive; 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .name-part-1 {
-    color: #FFD700; /* Secret - গোল্ডেন কালার (#FFD700) */
+    color: #FFD700; 
 }
 
 .name-part-2 {
-    color: #fff; /* Binodon - সাদা কালার (#fff) */
+    color: #fff; 
 }
 
 
@@ -146,20 +145,20 @@
 .header-right {
     display: flex;
     align-items: center;
-    gap: 10px; /* টিউটোরিয়াল বাটন এবং সোশ্যাল আইকনের মধ্যে গ্যাপ */
-    flex-shrink: 0; /* কন্টেন্ট সংকুচিত হওয়া রোধ করবে */
+    gap: 10px; 
+    flex-shrink: 0; 
 }
 
 
 /* সোশ্যাল আইকন কন্টেইনার - ডান প্রান্তে */
 .social-icons-container {
     display: flex;
-    gap: 5px; /* আইকনগুলোর মধ্যে গ্যাপ */
+    gap: 5px; 
 }
 
 .social-icon {
     display: block;
-    width: 25px; /* আইকন সাইজ ছোট করা হলো */
+    width: 25px; 
     height: 25px;
     transition: transform 0.2s ease;
 }
@@ -196,7 +195,6 @@
         padding: 3px 6px;
     }
 }
-/* পূর্বের হেডার কন্টেন্ট CSS সরানো হয়েছে */
 
 
         .category-bar {
@@ -215,8 +213,8 @@
             top: 0;
             z-index: 999;
             /* অতিরিক্ত আড়াআড়ি স্ক্রলবার হাইড করতে */
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  
+            scrollbar-width: none;  
         }
         .category-bar::-webkit-scrollbar {
             display: none;
@@ -295,7 +293,6 @@
             box-shadow: var(--card-hover-shadow);
         }
         
-        /* ব্যবহারকারীর অনুরোধ অনুযায়ী - ব্ল্যাক শ্যাডো/Active State অপসারন */
         .card:active {
             box-shadow: var(--card-hover-shadow); 
             transform: none; 
@@ -824,7 +821,7 @@
             }
         }
         
-    /* 👇👇👇 প্রধান CSS সমাধান: পেজিনেশন উপরে উঠে আসা রোধ এবং স্ক্রল-ভিত্তিক দৃশ্যমানতা 👇👇👇 */
+    /* প্রধান CSS সমাধান: পেজিনেশন উপরে উঠে আসা রোধ এবং স্ক্রল-ভিত্তিক দৃশ্যমানতা */
         .pagination-container {
             display: flex;
             justify-content: center;
@@ -834,25 +831,25 @@
             -webkit-overflow-scrolling: touch;
             padding: 10px;
             
-            background-color: var(--card-bg); /* কার্ডের মতো হালকা ডার্ক কালার */
+            background-color: var(--card-bg); 
             margin: 15px 0 0; 
             padding-bottom: 20px; 
             border-top: 1px solid var(--divider-color); 
-            box-shadow: 0 -5px 10px rgba(0,0,0,0.3); /* উপরে একটি শ্যাডো যোগ করা হলো */
+            box-shadow: 0 -5px 10px rgba(0,0,0,0.3); 
             white-space: nowrap;
             
             /* লোডের সময় এবং স্ক্রল না করা পর্যন্ত লুকিয়ে রাখা */
             opacity: 0;
             transition: opacity 0.5s ease-in-out; 
-            pointer-events: none; /* ক্লিক করা বন্ধ রাখবে */
+            pointer-events: none; 
         }
         
         /* JavaScript দ্বারা দৃশ্যমান করার জন্য নতুন ক্লাস */
         .pagination-container.visible {
              opacity: 1;
-             pointer-events: auto; /* দৃশ্যমান হলে ক্লিক সচল হবে */
+             pointer-events: auto; 
         }
-    /* 👆👆👆 CSS সমাধান শেষ 👆👆👆 */
+    
         
         /* Loading Sentinel এর উচ্চতা ঠিক রাখতে */
         #loading-sentinel {
@@ -865,7 +862,7 @@
         }
 
         .pagination-button {
-            background-color: var(--bg-primary); /* বাটনের ব্যাকগ্রাউন্ড আরও ডার্ক */
+            background-color: var(--bg-primary); 
             color: #2575fc;
             border: 1px solid #2575fc;
             border-radius: 5px;
@@ -1076,15 +1073,22 @@
             let allCardData = [];
             let filteredCards = [];
             let cardsLoaded = 0;
-            const cardsPerLoad = 10;
+            const cardsPerLoad = 10; // 👈 ইনফিনিটি স্ক্রলিং এর জন্য ১০ টি কার্ড লোড হবে
             const loadingSentinel = document.getElementById('loading-sentinel');
             let currentFilter = 'all';
             let currentCardToHighlight = null;
             let observer;
 
-            const cardsPerPage = 30;
+            const cardsPerPage = 30; // 👈 প্রতি পেজে ৩০ টি কার্ড দেখাবে
             let currentPage = 1;
             let totalPages = 1;
+            
+            // --- 👇 নতুন হাইলাইট এবং লোকাল স্টোরেজ লজিকের জন্য ভ্যারিয়েবল 👇 ---
+            let highlightTimerTimeout = null;
+            const HIGHLIGHT_KEY = 'highlightCardId';
+            const END_TIME_KEY = 'highlightEndTime';
+            const HIGHLIGHT_DURATION = 10000; // 10 সেকেন্ড
+            // --- 👆 নতুন হাইলাইট লজিক ভ্যারিয়েবল 👆 ---
             
             // Get a unique ID for the user's device
             function getDeviceId() {
@@ -1096,8 +1100,7 @@
                 return deviceId;
             }
 
-            // 'deviceId' এখন লেট (let) হিসেবে ডিক্লেয়ার করা হলো যাতে init() এ রি-অ্যাসাইন করা যায়
-            let deviceId; 
+            const deviceId = getDeviceId();
             
             function formatTimeAgo(timestamp) {
                 const uploadDate = new Date(timestamp);
@@ -1206,7 +1209,10 @@
                     const data = await response.json();
                     loadingBar.style.width = '80%';
                     allCardData = data;
+                    
+                    // হাইলাইট ম্যানেজ করার পর কার্ড লোড করা
                     filterAndLoadCards(currentFilter);
+                    
                     loadingBar.style.width = '100%';
                     setTimeout(() => {
                         loadingBar.style.width = '0%';
@@ -1318,7 +1324,9 @@
                     setTimeout(() => {
                          card.classList.add('visible');
                          if (data.id === currentCardToHighlight) {
-                             card.classList.add('highlighted');
+                            card.classList.add('highlighted');
+                             
+                             // স্ক্রল টু হাইলাইট কার্ড
                              setTimeout(() => {
                                  const headerHeight = document.querySelector('.header').offsetHeight;
                                  const viewportHeight = window.innerHeight;
@@ -1329,14 +1337,6 @@
                                      top: scrollPosition,
                                      behavior: 'smooth'
                                  });
-                                 
-                                 // 👇👇👇 নতুন পরিবর্তন: ১০ সেকেন্ড পরে হাইলাইট অপসারণ ও বর্তমান হাইলাইট আইডি মুছে ফেলা
-                                 setTimeout(() => {
-                                     card.classList.remove('highlighted');
-                                     currentCardToHighlight = null; // একবার হাইলাইট হয়ে গেলে পুনরায় লোড এ এটি হাইলাইট হবে না
-                                 }, 10000); // 10 সেকেন্ড
-                                 // 👆👆👆
-                                 
                              }, 200);
                          }
                     }, 50); 
@@ -1355,8 +1355,8 @@
                 
                 totalPages = Math.ceil(filteredCards.length / cardsPerPage);
                 currentPage = 1;
-                renderPaginationButtons();
                 
+                // যদি হাইলাইট করার কার্ড থাকে, তবে তার পেজ খুঁজে বের করে লোড করা
                 const targetCardIndex = filteredCards.findIndex(card => card.id === currentCardToHighlight);
                 
                 if (targetCardIndex !== -1) {
@@ -1378,10 +1378,20 @@
                 
                 container.innerHTML = '';
                 
-                if (highlightIndex !== -1) {
-                    renderCards(startCardIndex, highlightIndex + 1, true);
-                    cardsLoaded = (highlightIndex + 1) - startCardIndex;
+                // হাইলাইট কার্ড থাকলে সেই পর্যন্ত লোড করা
+                if (highlightIndex !== -1 && highlightIndex >= startCardIndex) {
+                    const loadUntil = highlightIndex + 1;
+                    renderCards(startCardIndex, loadUntil, true);
+                    cardsLoaded = loadUntil - startCardIndex;
+                    
+                    // লোড করার পর, যদি আরো কার্ড বাকি থাকে, তাহলে ইনফিনিটি স্ক্রলিং শুরু করা
+                    if (endOfPage > loadUntil) {
+                        observer.observe(loadingSentinel);
+                    } else {
+                        observer.unobserve(loadingSentinel);
+                    }
                 } 
+                // স্বাভাবিক লোড: প্রথম ১০টি লোড করা, বাকিদের জন্য ইনফিনিটি স্ক্রলিং শুরু করা
                 else if (totalCardsToLoad <= cardsPerLoad) {
                     renderCards(startCardIndex, endOfPage, true);
                     cardsLoaded = totalCardsToLoad;
@@ -1403,6 +1413,13 @@
 
                 if (startCardIndex < endCardIndex) {
                     renderCards(startCardIndex, endCardIndex, false);
+                    
+                    // যদি এই পেজের সব কার্ড লোড হয়ে যায়, তবে সেন্টিনেল আন-অবজার্ভ করা
+                    if (endCardIndex === (currentPage * cardsPerPage) || endCardIndex === filteredCards.length) {
+                         observer.unobserve(loadingSentinel);
+                    }
+                } else {
+                     observer.unobserve(loadingSentinel);
                 }
             }
             
@@ -1410,9 +1427,7 @@
                 paginationContainer.innerHTML = ''; 
                 
                 if (totalPages <= 1) {
-                    // যদি পেজিনেশনের প্রয়োজন না হয়, তবে লুকিয়ে রাখো এবং পর্যবেক্ষণ বন্ধ করো
                     paginationContainer.classList.remove('visible');
-                    observer.unobserve(paginationContainer);
                     return;
                 }
 
@@ -1486,10 +1501,9 @@
 
                 updatePaginationButtons();
                 
-                // 👇👇👇 নতুন পরিবর্তন: পেজিনেশন কন্টেইনারকে পর্যবেক্ষণ করা শুরু 👇👇👇
-                observer.unobserve(paginationContainer); // পুরোনো পর্যবেক্ষণ বন্ধ করে
+                observer.unobserve(paginationContainer); 
                 if (totalPages > 1) {
-                    observer.observe(paginationContainer); // নতুন করে পর্যবেক্ষণ শুরু
+                    observer.observe(paginationContainer); 
                 }
             }
 
@@ -1503,10 +1517,10 @@
                 });
             }
             
-            // 👇👇👇 প্রধান JS সমাধান: Intersection Observer এ পেজিনেশন যুক্ত করা 👇👇👇
+            // Intersection Observer এ পেজিনেশন যুক্ত করা
             observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    // লোডিং সেন্টিনেল পর্যবেক্ষণ
+                    // লোডিং সেন্টিনেল পর্যবেক্ষণ (ইনফিনিটি স্ক্রলিং)
                     if (entry.target === loadingSentinel && entry.isIntersecting) {
                         loadMoreCards();
                     }
@@ -1523,10 +1537,58 @@
                 });
             }, {
                 root: null,
-                rootMargin: '0px 0px 0px 0px', // স্ক্রিনের কাছাকাছি পৌঁছালেই ট্রিগার হবে
+                rootMargin: '0px 0px 0px 0px', 
                 threshold: 0.01
             });
-            // 👆👆👆 JS সমাধান শেষ 👆👆👆
+            
+            // --- 👇 নতুন ফাংশন: হাইলাইট ম্যানেজ করা (১০ সেকেন্ড পার্সিস্টেন্স) 👇 ---
+            function manageHighlight() {
+                const activeCardId = localStorage.getItem(HIGHLIGHT_KEY);
+                const endTime = localStorage.getItem(END_TIME_KEY);
+
+                if (highlightTimerTimeout) {
+                    clearTimeout(highlightTimerTimeout);
+                }
+
+                if (!activeCardId || !endTime) {
+                    currentCardToHighlight = null;
+                    return;
+                }
+
+                const remainingTime = new Date(endTime).getTime() - Date.now();
+
+                if (remainingTime > 0) {
+                    currentCardToHighlight = activeCardId;
+
+                    // রিমেইনং টাইম পরে হাইলাইট বন্ধ করা
+                    highlightTimerTimeout = setTimeout(() => {
+                        document.querySelectorAll('.card.highlighted').forEach(card => {
+                            card.classList.remove('highlighted');
+                        });
+                        // শুধুমাত্র এই নির্দিষ্ট কিগুলো লোকাল স্টোরেজ থেকে মুছে ফেলা
+                        localStorage.removeItem(HIGHLIGHT_KEY);
+                        localStorage.removeItem(END_TIME_KEY);
+                        currentCardToHighlight = null;
+                        showNotification('Card highlight ended.', 2000);
+                    }, remainingTime);
+
+                    // যদি URL-এ cardId থাকে, তবে তা মুছে ফেলা যাতে রিফ্রেশ করলে আবার ১০ সেকেন্ড শুরু না হয়
+                    if (window.location.search.includes('cardId=')) {
+                         if (window.history.replaceState) {
+                             const cleanUrl = window.location.pathname + window.location.search.replace(/([?&])cardId=[^&]+(&|$)/, '$1').replace(/[?&]$/, '');
+                             window.history.replaceState({path: cleanUrl}, '', cleanUrl);
+                         }
+                    }
+
+                } else {
+                    // ১০ সেকেন্ডের সময়সীমা পার হয়ে গেছে, তাই লোকাল স্টোরেজ পরিষ্কার করা
+                    localStorage.removeItem(HIGHLIGHT_KEY);
+                    localStorage.removeItem(END_TIME_KEY);
+                    currentCardToHighlight = null;
+                }
+            }
+            // --- 👆 নতুন ফাংশন: হাইলাইট ম্যানেজ করা 👆 ---
+
 
             container.addEventListener('click', async (event) => {
                 const card = event.target.closest('.card');
@@ -1558,7 +1620,7 @@
                 
                 if (loveStats) {
                     if (loveStats.classList.contains('disabled')) {
-                        return; // Do nothing if the button is disabled
+                        return; 
                     }
                     const cardId = loveStats.dataset.id;
                     const userLikedDocRef = doc(db, `loves/${cardId}/users`, deviceId);
@@ -1596,7 +1658,7 @@
                     categoryButtons.forEach(btn => btn.classList.remove('active'));
                     button.classList.add('active');
                     const category = button.getAttribute('data-category');
-                    currentCardToHighlight = null; 
+                    currentCardToHighlight = null; // নতুন ফিল্টারে হাইলাইট বন্ধ
                     filterAndLoadCards(category);
                 });
             });
@@ -1693,19 +1755,26 @@
             
             function init() {
                 const urlParams = new URLSearchParams(window.location.search);
-                currentCardToHighlight = urlParams.get('cardId');
+                const urlCardId = urlParams.get('cardId');
                 
-                // 👇👇👇 ইউজার রিকোয়েস্ট অনুযায়ী: লোকাল স্টোরেজ থেকে সব ডেটা মুছে ফেলা
-                localStorage.clear();
+                // --- 👇 নতুন লজিক: URL থেকে cardId পেলে Local Storage-এ সেভ করা 👇 ---
+                if (urlCardId) {
+                    const endTime = new Date(Date.now() + HIGHLIGHT_DURATION).toISOString();
+                    localStorage.setItem(HIGHLIGHT_KEY, urlCardId);
+                    localStorage.setItem(END_TIME_KEY, endTime);
+                    // URL থেকে cardId প্যারামিটার মুছে ফেলা
+                    if (window.history.replaceState) {
+                        const cleanUrl = window.location.pathname + window.location.search.replace(/([?&])cardId=[^&]+(&|$)/, '$1').replace(/[?&]$/, '');
+                        window.history.replaceState({path: cleanUrl}, '', cleanUrl);
+                    }
+                }
+                // --- 👆 নতুন লজিক: URL থেকে cardId পেলে Local Storage-এ সেভ করা 👆 ---
                 
-                // লোকাল স্টোরেজ মুছে ফেলার পর নতুন ডিভাইস আইডি তৈরি ও সেট করা (deviceId ভ্যারিয়েবল আপডেট করা হলো)
-                deviceId = getDeviceId();
-                // 👆👆👆
+                // Local Storage চেক করে হাইলাইট ম্যানেজ করা এবং timer সেট করা
+                manageHighlight();
                 
                 mainContent.style.display = 'block';
                 adminPanelFull.classList.remove('show');
-                
-                // 👇👇👇 ইনিট করার সময় পেজিনেশনকে লুকিয়ে রাখা নিশ্চিত করা হয়েছে 👇👇👇
                 paginationContainer.classList.remove('visible'); 
                 
                 loadData();
