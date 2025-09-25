@@ -10,29 +10,91 @@
     <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">
     
     <style>
-      /*======================================
-       সাধারণ স্টাইল (মোবাইল ও ডেস্কটপ উভয়ের জন্য)
-      ======================================*/
-      :root {
-        --bg-primary: #121212;
-        --bg-secondary: #1e1e1e;
-        --text-primary: #e0e0e0;
-        --text-secondary: #aaaaaa;
-        --card-bg: #2d2d2d; 
-        --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-        --card-hover-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-        --divider-color: #444444;
-        --category-bg: #3a3a3a;
-        --category-text: #e0e0e0;
-        --modal-bg: #333333;
-        --input-bg: #444444;
-        --input-border: #555555;
-        --footer-bg: #1e1e1e;
+      /* নতুন হেডার সেকশনের স্টাইল */
+      .header {
+          background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+          color: #fff;
+          padding: 10px 20px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          position: relative;
+          overflow: hidden;
+          display: flex;
+          justify-content: space-between; 
+          align-items: center;
+          gap: 10px;
       }
+      .header-left {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          min-width: 0;
+      }
+      .website-icon {
+          width: 25px; 
+          height: 25px;
+      }
+      .website-icon svg {
+          fill: #fff;
+          width: 100%;
+          height: 100%;
+      }
+      .website-name {
+          font-size: 20px;
+          font-weight: 400; 
+          font-family: 'Fugaz One', cursive; 
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+      }
+      .name-part-1 {
+          color: #FFD700; 
+      }
+      .name-part-2 {
+          color: #fff; 
+      }
+      .header-right {
+          display: flex;
+          align-items: center;
+          gap: 10px; 
+          flex-shrink: 0; 
+      }
+      .tutorial-button {
+          display: inline-block; 
+          text-align: center;
+          font-weight: bold;
+          border-radius: 5px; 
+          text-decoration: none;
+          color: #fff;
+          background-color: #2575fc;
+          transition: background-color 0.3s ease;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+          white-space: nowrap; 
+          height: fit-content;
+      }
+      .social-icons-container {
+          display: flex;
+          gap: 5px; 
+      }
+      .social-icon {
+          display: block;
+          width: 25px; 
+          height: 25px;
+          transition: transform 0.2s ease;
+      }
+      .social-icon img {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+      }
+      .social-icon:hover {
+          transform: scale(1.1);
+      }
+      
+      /* ভিডিও প্লেয়ার পেজের মূল স্টাইল */
       body {
         font-family: sans-serif;
-        background-color: var(--bg-primary); 
-        color: var(--text-primary); 
+        background-color: #121212; 
+        color: #e0e0e0; 
         margin: 0;
         padding: 0;
         min-height: 100vh; 
@@ -40,102 +102,13 @@
         flex-direction: column;
         overflow-x: hidden;
       }
-      .ad-container {
-        width: 100%;
-        box-sizing: border-box;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        text-align: center;
-      }
-      .tutorial-button {
-        display: inline-block; 
-        text-align: center;
-        font-weight: bold;
-        border-radius: 5px; 
-        text-decoration: none;
-        color: #fff;
-        background-color: #2575fc;
-        transition: background-color 0.3s ease;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        white-space: nowrap; 
-        height: fit-content;
-      }
-      .tutorial-button:hover,
-      .tutorial-button:active {
-        background-color: #28a745;
-      }
-      .header {
-        background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
-        color: #fff;
-        padding: 10px 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        justify-content: space-between; 
-        align-items: center;
-        gap: 10px;
-      }
-      .header-left {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        min-width: 0;
-      }
-      .website-icon {
-        width: 25px; 
-        height: 25px;
-      }
-      .website-icon svg {
-        fill: #fff;
-        width: 100%;
-        height: 100%;
-      }
-      .website-name {
-        font-size: 20px;
-        font-weight: 400; 
-        font-family: 'Fugaz One', cursive; 
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      .name-part-1 {
-        color: #FFD700; 
-      }
-      .name-part-2 {
-        color: #fff; 
-      }
-      .header-right {
-        display: flex;
-        align-items: center;
-        gap: 10px; 
-        flex-shrink: 0; 
-      }
-      .social-icons-container {
-        display: flex;
-        gap: 5px; 
-      }
-      .social-icon {
-        display: block;
-        width: 25px; 
-        height: 25px;
-        transition: transform 0.2s ease;
-      }
-      .social-icon img {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-      }
-      .social-icon:hover {
-        transform: scale(1.1);
-      }
       .container {
         max-width: 900px;
         margin: 20px auto;
         padding: 10px;
       }
       .video-section {
-        background-color: var(--card-bg);
+        background-color: #2d2d2d;
         border-radius: 15px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
         padding: 20px;
@@ -148,17 +121,14 @@
       #video-player-container {
         position: relative;
         width: 100%;
-        padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        height: auto; /* উচ্চতা অটোমেটিক সেট হবে */
         background-color: #000;
         border-radius: 10px;
         overflow: hidden;
       }
       #video-player-container iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        width: 100%; /* প্রস্থ সম্পূর্ণ থাকবে */
+        height: auto; /* উচ্চতা ভিডিওর অনুপাত অনুযায়ী হবে */
         border: 0;
       }
 
@@ -237,13 +207,31 @@
                 document.getElementById('page-title').textContent = cardData.title;
                 
                 const videoPlayerContainer = document.getElementById('video-player-container');
-                videoPlayerContainer.innerHTML = `
-                    <iframe src="${cardData.videoLink}" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                    </iframe>
-                `;
+                
+                // এখানে iframe তৈরি করা হচ্ছে
+                const iframe = document.createElement('iframe');
+                iframe.src = cardData.videoLink;
+                iframe.frameborder = "0";
+                iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+                iframe.allowFullscreen = true;
+                
+                // iframe লোড হওয়ার পর উচ্চতা সেট করা
+                iframe.onload = function() {
+                    const ratio = iframe.contentWindow.document.body.offsetWidth / iframe.contentWindow.document.body.offsetHeight;
+                    if (ratio) {
+                        iframe.style.height = (iframe.offsetWidth / ratio) + 'px';
+                    }
+                };
+
+                // যদি iframe লোড হতে সমস্যা হয়, তবে একটি নির্দিষ্ট অনুপাত ব্যবহার করা
+                iframes.onerror = function() {
+                    console.error("Failed to load iframe content. Using default aspect ratio.");
+                    iframe.style.height = (iframe.offsetWidth / (16/9)) + 'px';
+                };
+
+                // iframe কন্টেইনারে যুক্ত করা
+                videoPlayerContainer.appendChild(iframe);
+
             } else {
                  document.getElementById('video-title').textContent = "দুঃখিত, ভিডিওটি পাওয়া যায়নি।";
             }
