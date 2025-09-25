@@ -3,7 +3,7 @@
         "id": "fghij2",
         "title": "নতুন ওয়েব সিরিজ 🎬",
         "image": "https://example.com/images/series.jpg",
-        "embed_code": "<iframe allowfullscreen style=\"border: none; width:100%; aspect-ratio:16 / 9;\" scrolling=\"no\" frameborder=\"0\" src=\"https://www.bitchute.com/embed/3Vi5Xc8FFn7t\"></iframe>"
+        "embed_code": "<iframe allowfullscreen style=\"border: none; width:100%; aspect-ratio:16 / 9;\" scrolling=\"no\" frameborder=\"0\" src=\"https://www.bitchute.com/embed/3Vi5Xc8FFn7t\"></iframe>
   ",
         "category": ["premium"],
         "uploadTime": "2024-10-25T15:30:00Z"
