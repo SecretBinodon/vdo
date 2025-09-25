@@ -58,19 +58,6 @@
           gap: 10px; 
           flex-shrink: 0; 
       }
-      .tutorial-button {
-          display: inline-block; 
-          text-align: center;
-          font-weight: bold;
-          border-radius: 5px; 
-          text-decoration: none;
-          color: #fff;
-          background-color: #2575fc;
-          transition: background-color 0.3s ease;
-          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-          white-space: nowrap; 
-          height: fit-content;
-      }
       .social-icons-container {
           display: flex;
           gap: 5px; 
@@ -111,37 +98,35 @@
         background-color: #2d2d2d;
         border-radius: 15px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-        padding: 20px;
+        padding: 15px; /* এই মানটি আপনার প্রয়োজনমতো পরিবর্তন করা হয়েছে */
       }
       .video-section h1 {
         text-align: center;
         font-size: 24px;
-        margin-bottom: 20px;
+        margin: 0 0 10px 0; /* মার্জিন পরিবর্তন করা হয়েছে */
       }
       #video-player-container {
         position: relative;
         width: 100%;
-        height: auto; /* উচ্চতা অটোমেটিক সেট হবে */
+        height: auto;
         background-color: #000;
         border-radius: 10px;
         overflow: hidden;
       }
       #video-player-container iframe {
-        width: 100%; /* প্রস্থ সম্পূর্ণ থাকবে */
-        height: auto; /* উচ্চতা ভিডিওর অনুপাত অনুযায়ী হবে */
+        width: 100%;
+        height: auto;
         border: 0;
       }
 
       /* মিডিয়া কোয়েরি */
       @media (min-width: 768px) {
-        .tutorial-button { padding: 8px 10px; font-size: 12px; margin: 5px 0; }
         .header { padding: 15px 40px; }
         .website-name { font-size: 24px; }
         .website-icon { width: 30px; height: 30px; }
         .social-icon { width: 30px; height: 30px; }
       }
       @media (max-width: 767px) {
-        .tutorial-button { font-size: 11px; padding: 6px 8px; margin: 2px 0; }
         .header { padding: 8px 10px; gap: 5px; }
         .website-name { font-size: 16px; }
         .website-icon { width: 20px; height: 20px; }
@@ -163,9 +148,6 @@
             </div>
         </div>
         <div class="header-right">
-            <a href="https://m.youtube.com/shorts/6O0ktfOu3xo" class="tutorial-button" target="_blank">
-                Tutorial Video 🔞
-            </a>
             <div class="social-icons-container">
                 <a href="https://t.me/virallink_market" target="_blank" class="social-icon">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
