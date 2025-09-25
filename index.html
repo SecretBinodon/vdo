@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secret Binodon</title>
   
-<script type='text/javascript' src='//pl27703154.revenuecpmgate.com/70/2c/67/702c67f9d1db58564142cc27691530f9.js'></script>
+    <script type='text/javascript' src='//pl27703154.revenuecpmgate.com/70/2c/67/702c67f9d1db58564142cc27691530f9.js'></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">
 
@@ -675,6 +675,18 @@
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
+    /*
+        গুরুত্বপূর্ণ: নিচের এই কোডটিই আপনার সমস্যার সমাধান।
+        কার্ডগুলোকে পাশাপাশি দেখানোর জন্য এই স্টাইলটি
+        যেকোনো একটি প্রধান কন্টেইনারে থাকতে হবে।
+    */
+    .container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+        padding: 10px 10px 0px; 
+    }
+
 
     /*======================================
       ডেস্কটপ ভিউয়ের জন্য স্টাইল (768px এবং তার উপরে)
@@ -1572,8 +1584,15 @@
                 passwordInput.focus();
             });
 
+            document.querySelectorAll('.close-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    authModal.style.display = "none";
+                });
+            });
+            
             authSubmit.addEventListener('click', () => {
-                if (passwordInput.value === password) {
+                const userPassword = passwordInput.value;
+                if (userPassword === password) {
                     authModal.style.display = 'none';
                     mainContent.style.display = 'none';
                     adminPanelFull.classList.add('show');
@@ -1591,12 +1610,6 @@
                         }, lockoutDuration);
                     }
                 }
-            });
-
-            document.querySelectorAll('.close-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    authModal.style.display = "none";
-                });
             });
             
             backBtn.addEventListener('click', () => {
