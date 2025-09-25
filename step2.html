@@ -131,8 +131,7 @@
       margin-top:12px;padding:12px 18px;border:none;border-radius:12px;
       background:linear-gradient(90deg,var(--brand),var(--brand-2));
       color:white;font-weight:700;font-size:15px;cursor:pointer;
-      transition:.2s;
-      display: none;
+      transition:.2s;display: none;
       text-decoration: none;
     }
     .btn:hover{filter:brightness(1.05)}
@@ -321,11 +320,11 @@
         }, 1000);
     }
     
-    // Watch Video বাটনের নতুন ক্লিক ইভেন্ট। এটি নতুন ট্যাবে ভিডিও প্লেয়ার পেজে যাবে।
+    // Watch Video বাটনের নতুন ক্লিক ইভেন্ট। এটি একই ট্যাবে ভিডিও প্লেয়ার পেজে যাবে।
     videoBtn.addEventListener("click", (event) => {
         event.preventDefault();
         if (cardId) {
-            window.open(`video-player.html?cardId=${cardId}`, '_blank');
+            window.location.href = `video-player.html?cardId=${cardId}`;
         } else {
             console.error("Card ID is missing.");
             alert("দুঃখিত, ভিডিওটি লোড করা যাচ্ছে না।");
