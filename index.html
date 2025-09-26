@@ -377,8 +377,9 @@
         background-color: var(--divider-color); 
         margin: 5px 0;
     }
+    
     .modal {
-        display: none;
+        display: none; /* এটি পপ-আপকে শুরুতে লুকিয়ে রাখে */
         position: fixed;
         z-index: 1001;
         left: 0;
@@ -386,12 +387,17 @@
         width: 100%;
         height: 100%;
         overflow: auto;
-        background-color: rgba(0,0,0,0.8); 
-        display: flex;
+        background-color: rgba(0,0,0,0.8);
         justify-content: center;
         align-items: flex-start;
         padding-top: 50px;
     }
+
+    /* যখন জাভাস্ক্রিপ্ট এই ক্লাসটি যোগ করবে, তখন পপ-আপটি দেখা যাবে */
+    .modal.show {
+        display: flex;
+    }
+    
     .modal-content {
         background-color: var(--modal-bg); 
         color: var(--text-primary);
@@ -405,7 +411,6 @@
         margin-top: 50px;
     }
 
-    /* নতুন স্টাইল */
     .modal-header {
         display: flex;
         justify-content: space-between;
@@ -1563,21 +1568,21 @@
             });
 
             addCardBtn.addEventListener('click', () => {
-                authModal.style.display = 'flex';
+                authModal.classList.add('show');
                 passwordInput.value = '';
                 passwordInput.focus();
             });
 
             document.querySelectorAll('.close-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    authModal.style.display = "none";
+                    authModal.classList.remove('show');
                 });
             });
             
             authSubmit.addEventListener('click', () => {
                 const userPassword = passwordInput.value;
                 if (userPassword === password) {
-                    authModal.style.display = 'none';
+                    authModal.classList.remove('show');
                     mainContent.style.display = 'none';
                     adminPanelFull.classList.add('show');
                     wrongPasswordCount = 0;
@@ -1586,7 +1591,7 @@
                     showNotification('Only for Admin');
                     passwordInput.value = '';
                     if (wrongPasswordCount >= 3) {
-                        authModal.style.display = 'none';
+                        authModal.classList.remove('show');
                         addCardBtn.style.display = 'none';
                         setTimeout(() => {
                             addCardBtn.style.display = 'flex';
@@ -1651,7 +1656,7 @@
 
             window.addEventListener('click', (event) => {
                 if (event.target == authModal) {
-                    authModal.style.display = "none";
+                    authModal.classList.remove('show');
                 }
             });
             
