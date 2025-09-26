@@ -243,9 +243,8 @@
 const allowedOrigin = window.location.origin;
 const referrer = document.referrer;
 
-// যদি রেফারার না থাকে (সরাসরি অ্যাক্সেস) অথবা রেফারারটি আপনার ডোমেইন থেকে শুরু না হয়
 if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
-    window.location.href = allowedOrigin + '/index.html';
+    window.location.href = allowedOrigin + '/link/';
 }
         
         const urlParams = new URLSearchParams(window.location.search);
