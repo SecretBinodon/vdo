@@ -439,7 +439,7 @@
         margin-bottom: 5px;
         font-weight: bold;
     }
-    .form-group input, .form-group select {
+    .form-group input, .form-group select, .form-group textarea {
         width: 100%;
         padding: 8px;
         border: 1px solid var(--input-border);
@@ -784,7 +784,7 @@
             max-width: 250px;
             padding: 10px;
         }
-        .form-group input, .form-group select {
+        .form-group input, .form-group select, .form-group textarea {
             padding: 5px;
             font-size: 12px;
         }
@@ -921,8 +921,8 @@
                     <input type="url" id="cardImage" required>
                 </div>
                 <div class="form-group">
-                    <label for="cardVideoLink">Video Link:</label>
-                    <input type="url" id="cardVideoLink" required>
+                    <label for="cardEmbedCode">Embed Code:</label>
+                    <textarea id="cardEmbedCode" rows="5" required></textarea>
                 </div>
                 <div class="form-group">
                     <label for="cardCategory">Category:</label>
@@ -979,7 +979,7 @@
             const addCardForm = document.getElementById('addCardForm');
             const cardTitleInput = document.getElementById('cardTitle');
             const cardImageInput = document.getElementById('cardImage');
-            const cardVideoLinkInput = document.getElementById('cardVideoLink');
+            const cardEmbedCodeInput = document.getElementById('cardEmbedCode'); // পরিবর্তন করা হয়েছে
             const cardCategorySelect = document.getElementById('cardCategory');
             const codeResultDiv = document.getElementById('codeResult');
             const cardCodeBox = document.getElementById('cardCodeBox');
@@ -1002,24 +1002,21 @@
             let allCardData = [];
             let filteredCards = [];
             let cardsLoaded = 0;
-            const cardsPerLoad = 10; // 👈 ইনফিনিটি স্ক্রলিং এর জন্য ১০ টি কার্ড লোড হবে
+            const cardsPerLoad = 10;
             const loadingSentinel = document.getElementById('loading-sentinel');
             let currentFilter = 'all';
             let currentCardToHighlight = null;
             let observer;
 
-            const cardsPerPage = 30; // 👈 প্রতি পেজে ৩০ টি কার্ড দেখাবে
+            const cardsPerPage = 30;
             let currentPage = 1;
             let totalPages = 1;
             
-            // --- 👇 নতুন হাইলাইট এবং লোকাল স্টোরেজ লজিকের জন্য ভ্যারিয়েবল 👇 ---
             let highlightTimerTimeout = null;
             const HIGHLIGHT_KEY = 'highlightCardId';
             const END_TIME_KEY = 'highlightEndTime';
-            const HIGHLIGHT_DURATION = 10000; // 10 সেকেন্ড
-            // --- 👆 নতুন হাইলাইট লজিক ভ্যারিয়েবল 👆 ---
+            const HIGHLIGHT_DURATION = 10000;
             
-            // Get a unique ID for the user's device
             function getDeviceId() {
                 let deviceId = localStorage.getItem('deviceId');
                 if (!deviceId) {
@@ -1059,7 +1056,6 @@
                 return "এখনই";
             }
             
-            // নতুন ফাংশন: ভিউ এবং লাইক সংখ্যাকে K, M, B ফরম্যাটে রূপান্তর
             function formatCount(num) {
                 if (num >= 1000000000) {
                     return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B';
@@ -1075,7 +1071,6 @@
 
             async function getAndUpdateStats(cardId, cardElement) {
                 try {
-                    // Fetch Views
                     const viewsDocRef = doc(db, "views", cardId);
                     const viewsDocSnap = await getDoc(viewsDocRef);
                     let viewCount = 0;
@@ -1083,7 +1078,6 @@
                         viewCount = viewsDocSnap.data().count;
                     }
                     
-                    // Fetch Loves
                     const lovesDocRef = doc(db, "loves", cardId);
                     const lovesDocSnap = await getDoc(lovesDocRef);
                     let loveCount = 0;
@@ -1091,12 +1085,10 @@
                         loveCount = lovesDocSnap.data().count;
                     }
 
-                    // Check if user has liked
                     const userLikedDocRef = doc(db, `loves/${cardId}/users`, deviceId);
                     const userLikedDocSnap = await getDoc(userLikedDocRef);
                     const loveButton = cardElement.querySelector('.love-stats');
 
-                    // Update UI
                     const viewElement = cardElement.querySelector('.view-stats .count');
                     const loveElement = cardElement.querySelector('.love-stats .count');
                     
@@ -1109,12 +1101,10 @@
                         loveButton.classList.remove('liked');
                     }
                     
-                    // Enable love button after successful load
                     loveButton.classList.remove('disabled');
 
                 } catch (error) {
                     console.error("Error fetching stats:", error);
-                    // On error, show a message and keep button disabled
                     const viewElement = cardElement.querySelector('.view-stats .count');
                     const loveElement = cardElement.querySelector('.love-stats .count');
                     const loveButton = cardElement.querySelector('.love-stats');
@@ -1139,7 +1129,6 @@
                     loadingBar.style.width = '80%';
                     allCardData = data;
                     
-                    // হাইলাইট ম্যানেজ করার পর কার্ড লোড করা
                     filterAndLoadCards(currentFilter);
                     
                     loadingBar.style.width = '100%';
@@ -1255,13 +1244,12 @@
                          if (data.id === currentCardToHighlight) {
                             card.classList.add('highlighted');
                              
-                             // স্ক্রল টু হাইলাইট কার্ড
                              setTimeout(() => {
                                  const headerHeight = document.querySelector('.header').offsetHeight;
                                  const viewportHeight = window.innerHeight;
                                  const cardTop = card.getBoundingClientRect().top;
                                  const scrollPosition = window.scrollY + cardTop - (viewportHeight / 2) + (card.offsetHeight / 2) + (headerHeight / 2);
-            
+    
                                  window.scrollTo({
                                      top: scrollPosition,
                                      behavior: 'smooth'
@@ -1285,7 +1273,6 @@
                 totalPages = Math.ceil(filteredCards.length / cardsPerPage);
                 currentPage = 1;
                 
-                // যদি হাইলাইট করার কার্ড থাকে, তবে তার পেজ খুঁজে বের করে লোড করা
                 const targetCardIndex = filteredCards.findIndex(card => card.id === currentCardToHighlight);
                 
                 if (targetCardIndex !== -1) {
@@ -1307,20 +1294,17 @@
                 
                 container.innerHTML = '';
                 
-                // হাইলাইট কার্ড থাকলে সেই পর্যন্ত লোড করা
                 if (highlightIndex !== -1 && highlightIndex >= startCardIndex) {
                     const loadUntil = highlightIndex + 1;
                     renderCards(startCardIndex, loadUntil, true);
                     cardsLoaded = loadUntil - startCardIndex;
                     
-                    // লোড করার পর, যদি আরো কার্ড বাকি থাকে, তাহলে ইনফিনিটি স্ক্রলিং শুরু করা
                     if (endOfPage > loadUntil) {
                         observer.observe(loadingSentinel);
                     } else {
                         observer.unobserve(loadingSentinel);
                     }
                 } 
-                // স্বাভাবিক লোড: প্রথম ১০টি লোড করা, বাকিদের জন্য ইনফিনিটি স্ক্রলিং শুরু করা
                 else if (totalCardsToLoad <= cardsPerLoad) {
                     renderCards(startCardIndex, endOfPage, true);
                     cardsLoaded = totalCardsToLoad;
@@ -1343,7 +1327,6 @@
                 if (startCardIndex < endCardIndex) {
                     renderCards(startCardIndex, endCardIndex, false);
                     
-                    // যদি এই পেজের সব কার্ড লোড হয়ে যায়, তবে সেন্টিনেল আন-অবজার্ভ করা
                     if (endCardIndex === (currentPage * cardsPerPage) || endCardIndex === filteredCards.length) {
                          observer.unobserve(loadingSentinel);
                     }
@@ -1446,20 +1429,16 @@
                 });
             }
             
-            // Intersection Observer এ পেজিনেশন যুক্ত করা
             observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    // লোডিং সেন্টিনেল পর্যবেক্ষণ (ইনফিনিটি স্ক্রলিং)
                     if (entry.target === loadingSentinel && entry.isIntersecting) {
                         loadMoreCards();
                     }
                     
-                    // পেজিনেশন কন্টেইনার পর্যবেক্ষণ (স্ক্রল-ভিত্তিক দৃশ্যমানতা)
                     if (entry.target === paginationContainer) {
                         if (entry.isIntersecting) {
                              paginationContainer.classList.add('visible');
                         } else {
-                             // পেজিনেশন সেকশন স্ক্রিন থেকে বের হয়ে গেলে তাকে লুকিয়ে রাখবে
                              paginationContainer.classList.remove('visible'); 
                         }
                     }
@@ -1470,7 +1449,6 @@
                 threshold: 0.01
             });
             
-            // --- 👇 নতুন ফাংশন: হাইলাইট ম্যানেজ করা (১০ সেকেন্ড পার্সিস্টেন্স) 👇 ---
             function manageHighlight() {
                 const activeCardId = localStorage.getItem(HIGHLIGHT_KEY);
                 const endTime = localStorage.getItem(END_TIME_KEY);
@@ -1489,19 +1467,16 @@
                 if (remainingTime > 0) {
                     currentCardToHighlight = activeCardId;
 
-                    // রিমেইনং টাইম পরে হাইলাইট বন্ধ করা
                     highlightTimerTimeout = setTimeout(() => {
                         document.querySelectorAll('.card.highlighted').forEach(card => {
                             card.classList.remove('highlighted');
                         });
-                        // শুধুমাত্র এই নির্দিষ্ট কিগুলো লোকাল স্টোরেজ থেকে মুছে ফেলা
                         localStorage.removeItem(HIGHLIGHT_KEY);
                         localStorage.removeItem(END_TIME_KEY);
                         currentCardToHighlight = null;
                         showNotification('Card highlight ended.', 2000);
                     }, remainingTime);
 
-                    // যদি URL-এ cardId থাকে, তবে তা মুছে ফেলা যাতে রিফ্রেশ করলে আবার ১০ সেকেন্ড শুরু না হয়
                     if (window.location.search.includes('cardId=')) {
                          if (window.history.replaceState) {
                              const cleanUrl = window.location.pathname + window.location.search.replace(/([?&])cardId=[^&]+(&|$)/, '$1').replace(/[?&]$/, '');
@@ -1510,14 +1485,11 @@
                     }
 
                 } else {
-                    // ১০ সেকেন্ডের সময়সীমা পার হয়ে গেছে, তাই লোকাল স্টোরেজ পরিষ্কার করা
                     localStorage.removeItem(HIGHLIGHT_KEY);
                     localStorage.removeItem(END_TIME_KEY);
                     currentCardToHighlight = null;
                 }
             }
-            // --- 👆 নতুন ফাংশন: হাইলাইট ম্যানেজ করা 👆 ---
-
 
             container.addEventListener('click', async (event) => {
                 const card = event.target.closest('.card');
@@ -1559,13 +1531,10 @@
                         if (docSnap.exists()) {
                             showNotification("You have already loved this card!", 3000);
                         } else {
-                            // Increment love count
                             await setDoc(doc(db, "loves", cardId), { count: increment(1) }, { merge: true });
-                            // Record user's like
                             await setDoc(userLikedDocRef, { timestamp: new Date() });
                             showNotification("Thanks for loving this card!", 2000);
                             
-                            // Re-fetch and update stats for this card
                             const cardElement = event.target.closest('.card');
                             getAndUpdateStats(cardId, cardElement);
                         }
@@ -1587,7 +1556,7 @@
                     categoryButtons.forEach(btn => btn.classList.remove('active'));
                     button.classList.add('active');
                     const category = button.getAttribute('data-category');
-                    currentCardToHighlight = null; // নতুন ফিল্টারে হাইলাইট বন্ধ
+                    currentCardToHighlight = null;
                     filterAndLoadCards(category);
                 });
             });
@@ -1643,16 +1612,18 @@
                 e.preventDefault();
                 const title = cardTitleInput.value;
                 const image = cardImageInput.value;
-                const videoLink = cardVideoLinkInput.value;
+                const embedCode = cardEmbedCodeInput.value;
                 const category = cardCategorySelect.value;
                 const newId = generateUniqueId();
                 const currentTime = new Date().toISOString();
+
+                const escapedEmbedCode = embedCode.replace(/"/g, '\\"');
                
                 const newCardCode = `{
     "id": "${newId}",
     "title": "${title}",
     "image": "${image}",
-    "videoLink": "${videoLink}",
+    "embed_code": "${escapedEmbedCode}",
     "category": ["${category}"],
     "uploadTime": "${currentTime}"
 },`;
@@ -1687,20 +1658,16 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 const urlCardId = urlParams.get('cardId');
                 
-                // --- 👇 নতুন লজিক: URL থেকে cardId পেলে Local Storage-এ সেভ করা 👇 ---
                 if (urlCardId) {
                     const endTime = new Date(Date.now() + HIGHLIGHT_DURATION).toISOString();
                     localStorage.setItem(HIGHLIGHT_KEY, urlCardId);
                     localStorage.setItem(END_TIME_KEY, endTime);
-                    // URL থেকে cardId প্যারামিটার মুছে ফেলা
                     if (window.history.replaceState) {
                         const cleanUrl = window.location.pathname + window.location.search.replace(/([?&])cardId=[^&]+(&|$)/, '$1').replace(/[?&]$/, '');
                         window.history.replaceState({path: cleanUrl}, '', cleanUrl);
                     }
                 }
-                // --- 👆 নতুন লজিক: URL থেকে cardId পেলে Local Storage-এ সেভ করা 👆 ---
                 
-                // Local Storage চেক করে হাইলাইট ম্যানেজ করা এবং timer সেট করা
                 manageHighlight();
                 
                 mainContent.style.display = 'block';
