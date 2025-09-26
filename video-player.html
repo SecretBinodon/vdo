@@ -238,6 +238,15 @@
     </main>
 
     <script>
+
+        // সরাসরি লিংকে প্রবেশ বন্ধ করার জন্য এই কোডটি যুক্ত করা হয়েছে
+const homepageUrl = window.location.origin;
+const referrer = document.referrer;
+
+if (referrer === '' || !referrer.startsWith(homepageUrl)) {
+    window.location.href = homepageUrl;
+}
+        
         const urlParams = new URLSearchParams(window.location.search);
         const cardId = urlParams.get('cardId');
 
