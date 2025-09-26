@@ -313,6 +313,16 @@
   </noscript>
   
   <script type="module">
+
+    // সরাসরি লিংকে প্রবেশ বন্ধ করার জন্য এই কোডটি যুক্ত করা হয়েছে
+const homepageUrl = window.location.origin;
+const referrer = document.referrer;
+
+if (referrer === '' || !referrer.startsWith(homepageUrl)) {
+    window.location.href = homepageUrl;
+
+}
+    
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
     import { getFirestore, doc, getDoc, setDoc, increment } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
