@@ -314,13 +314,13 @@
   
   <script type="module">
 
-    // সরাসরি লিংকে প্রবেশ বন্ধ করার জন্য এই কোডটি যুক্ত করা হয়েছে
-const homepageUrl = window.location.origin;
+  // সরাসরি লিংকে প্রবেশ বন্ধ করার জন্য এই কোডটি যুক্ত করা হয়েছে
+const allowedOrigin = window.location.origin;
 const referrer = document.referrer;
 
-if (referrer === '' || !referrer.startsWith(homepageUrl)) {
-    window.location.href = homepageUrl;
-
+// যদি রেফারার না থাকে (সরাসরি অ্যাক্সেস) অথবা রেফারারটি আপনার ডোমেইন থেকে শুরু না হয়
+if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
+    window.location.href = allowedOrigin + '/index.html';
 }
     
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
