@@ -125,14 +125,11 @@
         height: 100%;
         border: 0;
       }
-      .ad-container {
-        margin-top: 20px;
-      }
-
+      
       /* নতুন ডাউনলোড বাটনের স্টাইল */
       .download-btn-container {
-          padding: 0 10px; /* ভিডিও কার্ডের সমান প্যাডিং */
-          margin: 10px auto; /* কার্ড থেকে সামান্য দূরত্ব */
+          padding: 0 10px;
+          margin: 10px auto; 
           max-width: 900px;
           box-sizing: border-box;
       }
@@ -140,7 +137,7 @@
       .download-btn {
           display: block;
           width: 100%;
-          background: #4CAF50; /* বাটনের ব্যাকগ্রাউন্ড কালার */
+          background: #4CAF50; 
           color: white;
           padding: 15px 20px;
           text-align: center;
@@ -152,6 +149,16 @@
       }
       .download-btn:hover {
           background: #45a049;
+      }
+
+      /* বিজ্ঞাপনের জন্য নতুন Wrapper */
+      .ad-wrapper {
+        width: 100%;
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 0 10px;
+        box-sizing: border-box;
+        overflow: hidden; /* এই লাইনটি overflow ঠিক করবে */
       }
 
       /* মিডিয়া কোয়েরি */
@@ -166,6 +173,9 @@
            padding: 0 20px;
         }
         .download-btn-container {
+            padding: 0 20px;
+        }
+        .ad-wrapper {
             padding: 0 20px;
         }
       }
@@ -218,7 +228,7 @@
           <a href="#" class="download-btn">Download Video 📥</a>
       </div>
         
-      <div class="ad-container">
+      <div class="ad-wrapper">
           <script async="async" data-cfasync="false" src="//pl27703152.revenuecpmgate.com/247476cdf6d68a31797ec615e7b10572/invoke.js"></script>
           <div id="container-247476cdf6d68a31797ec615e7b10572"></div>
       </div>
