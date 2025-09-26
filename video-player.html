@@ -87,16 +87,21 @@
         flex-direction: column;
         overflow-x: hidden;
       }
+      
+      /* এই অংশটি পরিবর্তন করা হয়েছে */
       .container {
-        max-width: 900px;
+        width: 100%; /* সম্পূর্ণ প্রস্থ ব্যবহার করবে */
+        max-width: 900px; /* ডেস্কটপে সর্বোচ্চ প্রস্থ */
         margin: 20px auto;
-        padding: 10px;
+        padding: 0 10px; /* ডান এবং বাম দিকে ছোট মার্জিন */
+        box-sizing: border-box; /* padding সহ প্রস্থ ঠিক রাখবে */
       }
+      
       .video-section {
         background-color: #2d2d2d;
         border-radius: 15px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-        padding: 15px;
+        padding: 15px; /* কার্ডের ভেতরের প্যাডিং */
       }
       .video-section h1 {
         text-align: center;
@@ -130,6 +135,11 @@
         .website-name { font-size: 24px; }
         .website-icon { width: 30px; height: 30px; }
         .social-icon { width: 30px; height: 30px; }
+        
+        /* ডেস্কটপে কন্টেইনারের মার্জিন */
+        .container {
+           padding: 0 20px;
+        }
       }
       @media (max-width: 767px) {
         .header { padding: 8px 10px; gap: 5px; }
