@@ -673,15 +673,15 @@ if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
                 if (viewEl) viewEl.textContent = 'Error';
             });
             
-            // লাইকের অবস্থা ও সংখ্যা একবার লোড করবে
-            getDoc(lovesDocRef).then(docSnap => {
+            // লাইকের অবস্থা ও সংখ্যা অনস্নাপশট লিসেনারের মাধ্যমে আপডেট হবে
+            onSnapshot(lovesDocRef, (docSnap) => {
                 const loveCount = docSnap.exists() ? docSnap.data().count : 0;
                 if (loveEl) loveEl.textContent = formatCount(loveCount);
-            }).catch(error => {
+            }, (error) => {
                 console.error("Error getting loves:", error);
                 if (loveEl) loveEl.textContent = 'Error';
             });
-            
+
             getDoc(userLikedDocRef).then(docSnap => {
                 if(loveBtn && docSnap.exists()){
                     loveBtn.classList.add('liked');
@@ -697,18 +697,11 @@ if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
                 const docSnap = await getDoc(userLikedDocRef);
                 if (docSnap.exists()) {
                     showNotification("আপনি ইতিমধ্যেই লাইক করেছেন 😍।", 3000, true);
+                    loveStatsBtn.classList.add('liked'); // ইউজার লাইক দিলে আইকন কালার পরিবর্তন
                 } else {
-                    loveStatsBtn.classList.add('liked');
-                    const loveCountEl = loveStatsBtn.querySelector('.count');
-                    
-                    const currentCountText = loveCountEl.textContent;
-                    if (currentCountText && currentCountText !== 'Error' && !loveCountEl.querySelector('.loader')) {
-                        let currentCount = parseInt(currentCountText.replace(/[^\d.]/g, '') * 1000);
-                        loveCountEl.textContent = formatCount(currentCount + 1);
-                    }
-
                     showNotification("লাইক দেওয়ার জন্য ধন্যবাদ 🤝", 2000);
-
+                    loveStatsBtn.classList.add('liked'); // লাইক দিলে সাথে সাথে আইকনের কালার পরিবর্তন
+                    
                     await setDoc(doc(db, "loves", id), { count: increment(1) }, { merge: true });
                     await setDoc(userLikedDocRef, { timestamp: new Date() });
                 }
