@@ -493,6 +493,15 @@
     <div id="notificationPopup" class="notification"></div>
 
     <script type="module">
+
+// সরাসরি লিংকে প্রবেশ বন্ধ করার জন্য এই কোডটি যুক্ত করা হয়েছে
+const allowedOrigin = window.location.origin;
+const referrer = document.referrer;
+
+if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
+    window.location.href = allowedOrigin + '/link/';
+}
+        
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
         import { getFirestore, doc, getDoc, setDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
