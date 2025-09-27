@@ -8,6 +8,7 @@
     <script type='text/javascript' src='//pl27703154.revenuecpmgate.com/70/2c/67/702c67f9d1db58564142cc27691530f9.js'></script>
     
     <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     <style>
       /* নতুন হেডার সেকশনের স্টাইল */
@@ -90,30 +91,25 @@
         overflow-x: hidden;
       }
       
-      /* এই অংশটি পরিবর্তন করা হয়েছে */
       .container {
-        width: 100%; /* সম্পূর্ণ প্রস্থ ব্যবহার করবে */
-        max-width: 900px; /* ডেস্কটপে সর্বোচ্চ প্রস্থ */
+        width: 100%; 
+        max-width: 900px;
         margin: 20px auto;
-        padding: 0 10px; /* ডান এবং বাম দিকে ছোট মার্জিন */
-        box-sizing: border-box; /* padding সহ প্রস্থ ঠিক রাখবে */
+        padding: 0 10px;
+        box-sizing: border-box;
       }
       
       .video-section {
         background-color: #2d2d2d;
         border-radius: 15px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-        padding: 15px; /* কার্ডের ভেতরের প্যাডিং */
-      }
-      .video-section h1 {
-        text-align: center;
-        font-size: 24px;
-        margin: 0 0 10px 0;
+        padding: 15px;
+        position: relative;
       }
       #video-player-container {
         position: relative;
         width: 100%;
-        padding-bottom: 56.25%; /* 16:9 অনুপাত */
+        padding-bottom: 56.25%;
         height: 0;
         background-color: #000;
         border-radius: 10px;
@@ -127,14 +123,81 @@
         height: 100%;
         border: 0;
       }
+
+      /* ভিডিওর নিচের কন্টেন্ট */
+      .video-meta {
+          color: #fff;
+          padding-top: 15px;
+      }
+      .video-title {
+          font-size: 24px;
+          font-weight: bold;
+          margin: 0 0 10px 0;
+      }
+      .video-stats {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+      }
+      .video-stats .counter-item {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          font-size: 16px;
+      }
+      .video-stats .counter-item svg {
+          fill: #e0e0e0;
+          width: 20px;
+          height: 20px;
+      }
       
-      /* নতুন স্টাইল: সাজেস্টেড ভিডিওর জন্য */
+      /* লাইক বাটন */
+      .like-btn {
+          background: none;
+          border: none;
+          cursor: pointer;
+          color: #e0e0e0;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+      }
+      .like-btn svg {
+          width: 20px;
+          height: 20px;
+          fill: #e0e0e0;
+      }
+      .like-btn.liked svg {
+          fill: #FF0000;
+      }
+
+      /* শেয়ার আইকন */
+      .share-icon-container {
+          position: absolute;
+          top: 25px;
+          right: 25px;
+      }
+      .share-icon {
+          display: block;
+          width: 25px;
+          height: 25px;
+          cursor: pointer;
+      }
+      .share-icon svg {
+          fill: #fff;
+          width: 100%;
+          height: 100%;
+      }
+      
+      /* কার্ডের মূল স্টাইল */
       .card-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
           gap: 15px;
           padding: 20px 10px;
+          max-width: 1200px;
+          margin: 0 auto;
       }
+      
       .card {
           background-color: #2d2d2d;
           border-radius: 15px;
@@ -142,30 +205,54 @@
           overflow: hidden;
           transition: transform 0.2s ease, box-shadow 0.2s ease;
       }
+      
       .card:hover {
           transform: translateY(-5px);
           box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
       }
+      
+      .card-link {
+          text-decoration: none;
+          color: inherit;
+      }
+      
       .card-image-container {
           position: relative;
           width: 100%;
-          height: 150px;
+          padding-top: 56.25%; /* 16:9 অনুপাত */
           overflow: hidden;
           border-radius: 15px 15px 0 0;
       }
+      
       .card-image-container img {
+          position: absolute;
+          top: 0;
+          left: 0;
           width: 100%;
           height: 100%;
           object-fit: cover;
       }
+      
+      .card-info {
+          display: flex;
+          justify-content: space-between;
+          padding: 10px;
+          font-size: 12px;
+          color: #b0b0b0;
+      }
+      
+      .card-info .view-count,
+      .card-info .like-count {
+          display: flex;
+          align-items: center;
+          gap: 3px;
+      }
+      
       .card-content {
           padding: 10px;
           text-align: center;
       }
-      .card-content a {
-          text-decoration: none;
-          color: inherit;
-      }
+      
       .card-title {
           font-size: 14px;
           font-weight: bold;
@@ -174,30 +261,28 @@
           white-space: normal;
           word-wrap: break-word;
       }
-
+      
+      .icon-svg {
+          width: 16px;
+          height: 16px;
+          fill: #b0b0b0;
+      }
+      
       /* মিডিয়া কোয়েরি */
       @media (min-width: 768px) {
         .header { padding: 15px 40px; }
         .website-name { font-size: 24px; }
         .website-icon { width: 30px; height: 30px; }
         .social-icon { width: 30px; height: 30px; }
-        
-        /* ডেস্কটপে কন্টেইনারের মার্জিন */
-        .container {
-           padding: 0 20px;
-        }
-        .card-grid {
-           grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        }
+        .container { padding: 0 20px; }
+        .card-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
       }
       @media (max-width: 767px) {
         .header { padding: 8px 10px; gap: 5px; }
         .website-name { font-size: 16px; }
         .website-icon { width: 20px; height: 20px; }
         .social-icon { width: 20px; height: 20px; }
-        .card-grid {
-           grid-template-columns: repeat(2, 1fr);
-        }
+        .card-grid { grid-template-columns: repeat(2, 1fr); }
       }
     </style>
 </head>
@@ -232,8 +317,34 @@
     <main>
       <div class="container">
           <div class="video-section">
-              <h1 id="video-title">ভিডিও লোড হচ্ছে...</h1>
               <div id="video-player-container">
+                  <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #fff;">
+                      ভিডিও লোড হচ্ছে...
+                  </div>
+              </div>
+              <div class="share-icon-container">
+                  <span class="share-icon" onclick="shareVideo()">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                          <path d="M18 16c-1.1 0-2.1.45-2.83 1.17L7.61 12.37c.05-.23.08-.47.08-.7s-.03-.47-.08-.7l7.56-5.81c.73.72 1.83 1.17 2.83 1.17 2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4c0 .23.03.47.08.7L7.51 11.23c-.72-.7-1.81-1.15-2.81-1.15-2.21 0-4 1.79-4 4s1.79 4 4 4c1.1 0 2.1-.45 2.83-1.17l7.56 5.81c-.05.23-.08.47-.08.7 0 2.21 1.79 4 4 4s4-1.79 4-4-1.79-4-4-4z"/>
+                      </svg>
+                  </span>
+              </div>
+              <div class="video-meta">
+                  <h1 class="video-title" id="video-title"></h1>
+                  <div class="video-stats">
+                      <span class="counter-item view-count">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                              <path d="M12 4.5c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zM12 21c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zM11 11h2v4h-2zm0-4h2v2h-2z"/>
+                          </svg>
+                          <span id="view-count">0</span>
+                      </span>
+                      <button class="like-btn" id="like-btn">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                              <path d="M12 21.35l-1.84-1.66C5.06 15.65 2 12.44 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.94-3.06 7.15-8.16 11.19L12 21.35z"/>
+                          </svg>
+                          <span id="like-count">0</span>
+                      </button>
+                  </div>
               </div>
           </div>
       </div>
@@ -244,56 +355,115 @@
               </div>
       </div>
     </main>
-
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    
     <script>
+        // আপনার Firebase কনফিগারেশন এখানে পেস্ট করুন
+        var firebaseConfig = {
+            apiKey: "আপনার_API_Key",
+            authDomain: "আপনার_Auth_Domain",
+            projectId: "আপনার_Project_ID",
+            storageBucket: "আপনার_Storage_Bucket",
+            messagingSenderId: "আপনার_Messaging_Sender_ID",
+            appId: "আপনার_App_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const videoRef = database.ref('videos'); // আপনার ডেটাবেসের রেফারেন্স পরিবর্তন করুন
+        
         // সরাসরি লিংকে প্রবেশ বন্ধ করার জন্য এই কোডটি যুক্ত করা হয়েছে
         const allowedOrigin = window.location.origin;
         const referrer = document.referrer;
-
         if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
             window.location.href = allowedOrigin + '/link/';
         }
-        
+
         const urlParams = new URLSearchParams(window.location.search);
         const cardId = urlParams.get('cardId');
 
         async function loadVideoAndSuggestions() {
             try {
-                const response = await fetch('cards.json');
-                if (!response.ok) {
-                    throw new Error("cards.json ফাইলটি পাওয়া যায়নি।");
-                }
-                const allCardData = await response.json();
+                const snapshot = await videoRef.once('value');
+                const allCardData = [];
+                snapshot.forEach(childSnapshot => {
+                    const data = childSnapshot.val();
+                    allCardData.push({ ...data, id: childSnapshot.key });
+                });
+
                 const cardData = allCardData.find(card => card.id === cardId);
 
                 if (cardData && cardData.embed_code) {
-                    // মূল ভিডিও লোড করা
+                    // মূল ভিডিওর ডেটা লোড করা
                     document.getElementById('video-title').textContent = cardData.title;
                     document.getElementById('page-title').textContent = cardData.title;
+                    document.getElementById('view-count').textContent = (cardData.views || 0);
+                    
                     const videoPlayerContainer = document.getElementById('video-player-container');
                     videoPlayerContainer.innerHTML = cardData.embed_code;
 
+                    // লাইক বাটন কার্যকারিতা (লোকালস্টোরেজ ব্যবহার করে)
+                    const likeBtn = document.getElementById('like-btn');
+                    const likeCountSpan = document.getElementById('like-count');
+                    let likedVideos = JSON.parse(localStorage.getItem('likedVideos')) || {};
+                    let initialLikes = parseInt(cardData.likes) || 0;
+                    if (likedVideos[cardId]) {
+                        likeBtn.classList.add('liked');
+                    }
+                    likeCountSpan.textContent = initialLikes;
+                    
+                    likeBtn.onclick = async () => {
+                        let currentLikes = initialLikes;
+                        if (likedVideos[cardId]) {
+                            currentLikes--;
+                            delete likedVideos[cardId];
+                            likeBtn.classList.remove('liked');
+                        } else {
+                            currentLikes++;
+                            likedVideos[cardId] = true;
+                            likeBtn.classList.add('liked');
+                        }
+                        likeCountSpan.textContent = currentLikes;
+                        localStorage.setItem('likedVideos', JSON.stringify(likedVideos));
+
+                        // এখানে আপনার ফায়ারবেস ডেটা আপডেট করার কোড থাকবে
+                        // videoRef.child(cardId).update({ likes: currentLikes }); 
+                    };
+
                     // সাজেস্টেড ভিডিও লোড করা
                     const suggestedContainer = document.getElementById('suggested-videos');
-                    suggestedContainer.innerHTML = ''; // আগের কার্ডগুলো সরিয়ে ফেলা
+                    suggestedContainer.innerHTML = ''; 
 
                     const otherCards = allCardData.filter(card => card.id !== cardId);
-                    // কার্ডগুলোকে এলোমেলোভাবে সাজানো
                     const randomCards = otherCards.sort(() => 0.5 - Math.random()).slice(0, 10);
 
-                    // নতুন কার্ড তৈরি করে যোগ করা
                     randomCards.forEach(card => {
                         const cardElement = document.createElement('div');
                         cardElement.classList.add('card');
                         cardElement.innerHTML = `
-                             <a href="video-player.html?cardId=${card.id}">
-                                 <div class="card-image-container">
-                                     <img src="${card.image}" alt="${card.title}" loading="lazy">
-                                 </div>
-                                 <div class="card-content">
-                                     <p class="card-title">${card.title}</p>
-                                 </div>
-                             </a>
+                             <a href="video-player.html?cardId=${card.id}" class="card-link">
+                                <div class="card-image-container">
+                                    <img src="${card.image}" alt="${card.title}" loading="lazy">
+                                </div>
+                                <div class="card-info">
+                                    <span class="view-count">
+                                        <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                            <path d="M12 4.5c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zM12 21c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zM11 11h2v4h-2zm0-4h2v2h-2z"/>
+                                        </svg>
+                                        <span>${card.views || 0}</span>
+                                    </span>
+                                    <span class="like-count">
+                                        <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                            <path d="M12 21.35l-1.84-1.66C5.06 15.65 2 12.44 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.94-3.06 7.15-8.16 11.19L12 21.35z"/>
+                                        </svg>
+                                        <span>${card.likes || 0}</span>
+                                    </span>
+                                </div>
+                                <div class="card-content">
+                                    <p class="card-title">${card.title}</p>
+                                </div>
+                            </a>
                         `;
                         suggestedContainer.appendChild(cardElement);
                     });
@@ -303,6 +473,20 @@
             } catch (error) {
                 console.error("ভিডিও লোড করতে সমস্যা হয়েছে:", error);
                 document.getElementById('video-title').textContent = "নেটওয়ার্ক ত্রুটি, অনুগ্রহ করে আবার চেষ্টা করুন।";
+            }
+        }
+        
+        function shareVideo() {
+            if (navigator.share) {
+                navigator.share({
+                    title: document.title,
+                    url: window.location.href
+                }).then(() => {
+                    console.log('Thanks for sharing!');
+                }).catch(console.error);
+            } else {
+                // Fallback for browsers that don't support the Web Share API
+                alert("এই ভিডিওটি শেয়ার করার জন্য URL টি কপি করে আপনার বন্ধুদের সাথে শেয়ার করুন: " + window.location.href);
             }
         }
 
