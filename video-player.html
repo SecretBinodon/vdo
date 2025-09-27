@@ -468,6 +468,12 @@
                         </svg>
                         <span class="count"><div class="loader"></div></span>
                     </div>
+                    <div class="card-stats share-stats">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-up" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1h-2z"/>
+                            <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V9.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                        </svg>
+                    </div>
                     <div class="card-stats love-stats" data-id="">
                         <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6c757d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">
                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
@@ -762,12 +768,30 @@ if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
                 const cardId = shareIcon.dataset.id;
                 const cardTitle = shareIcon.closest('.card').querySelector('.card-title').textContent;
                 const shareUrl = `${window.location.origin}/link/?cardId=${cardId}`;
-
                 
                 if (navigator.share) {
                     navigator.share({
                         title: cardTitle,
                         text: `${cardTitle} ভাইরাল ভিডিওটি দেখতে 👇 লিংকে ক্লিক করুন!`,
+                        url: shareUrl,
+                    });
+                } else {
+                    navigator.clipboard.writeText(shareUrl);
+                    showNotification('Link copied to clipboard!', 2000);
+                }
+                return;
+            }
+            
+            // ভিডিও টাইটেলের পাশে থাকা শেয়ার বাটনের জন্য নতুন লজিক
+            const mainShareIcon = event.target.closest('.share-stats');
+            if (mainShareIcon) {
+                const videoTitle = document.getElementById('video-title').textContent;
+                const shareUrl = `${window.location.origin}/link/?cardId=${cardId}`;
+                
+                if (navigator.share) {
+                    navigator.share({
+                        title: videoTitle,
+                        text: `${videoTitle} ভাইরাল ভিডিওটি দেখতে 👇 লিংকে ক্লিক করুন!`,
                         url: shareUrl,
                     });
                 } else {
