@@ -664,6 +664,7 @@ if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
             const lovesDocRef = doc(db, "loves", id);
             const userLikedDocRef = doc(db, `loves/${id}/users`, deviceId);
 
+            // ভিউ এর সংখ্যা অনস্নাপশট লিসেনারের মাধ্যমে আপডেট হবে
             onSnapshot(viewsDocRef, (docSnap) => {
                 const viewCount = docSnap.exists() ? docSnap.data().count : 0;
                 if (viewEl) viewEl.textContent = formatCount(viewCount);
@@ -672,22 +673,21 @@ if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
                 if (viewEl) viewEl.textContent = 'Error';
             });
             
-            // লাইকের অবস্থা চেক করার জন্য শুধুমাত্র একবার লোড করুন
-            getDoc(userLikedDocRef).then(docSnap => {
-                if(loveBtn && docSnap.exists()){
-                    loveBtn.classList.add('liked');
-                }
-            }).catch(error => {
-                console.error("Error getting user like status:", error);
-            });
-            
-            // লাইকের সংখ্যা শুধুমাত্র একবার লোড করুন
+            // লাইকের অবস্থা ও সংখ্যা একবার লোড করবে
             getDoc(lovesDocRef).then(docSnap => {
                 const loveCount = docSnap.exists() ? docSnap.data().count : 0;
                 if (loveEl) loveEl.textContent = formatCount(loveCount);
             }).catch(error => {
                 console.error("Error getting loves:", error);
                 if (loveEl) loveEl.textContent = 'Error';
+            });
+            
+            getDoc(userLikedDocRef).then(docSnap => {
+                if(loveBtn && docSnap.exists()){
+                    loveBtn.classList.add('liked');
+                }
+            }).catch(error => {
+                console.error("Error getting user like status:", error);
             });
         }
         
@@ -696,7 +696,7 @@ if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
             try {
                 const docSnap = await getDoc(userLikedDocRef);
                 if (docSnap.exists()) {
-                    showNotification("আপনি ইতিমধ্যেই এই ভিডিওটি লাইক করেছেন!", 3000, true);
+                    showNotification("আপনি ইতিমধ্যেই লাইক করেছেন 😍।", 3000, true);
                 } else {
                     loveStatsBtn.classList.add('liked');
                     const loveCountEl = loveStatsBtn.querySelector('.count');
@@ -707,7 +707,7 @@ if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
                         loveCountEl.textContent = formatCount(currentCount + 1);
                     }
 
-                    showNotification("ধন্যবাদ, লাইক করার জন্য!", 2000);
+                    showNotification("লাইক দেওয়ার জন্য ধন্যবাদ 🤝", 2000);
 
                     await setDoc(doc(db, "loves", id), { count: increment(1) }, { merge: true });
                     await setDoc(userLikedDocRef, { timestamp: new Date() });
@@ -847,7 +847,6 @@ if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
                 return;
             }
             
-            // ভিডিও টাইটেলের পাশে থাকা শেয়ার বাটনের জন্য নতুন লজিক
             const mainShareIcon = event.target.closest('.share-stats');
             if (mainShareIcon) {
                 const videoTitle = document.getElementById('video-title').textContent;
