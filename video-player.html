@@ -212,9 +212,13 @@
     }
     .recommended-section h2 {
         font-size: 20px;
-        margin-bottom: 10px;
+        margin: 0;
+        padding: 10px;
         text-align: center;
         color: var(--text-primary);
+        background-color: var(--card-bg);
+        border-radius: 10px;
+        margin-bottom: 10px;
     }
     .container {
         display: grid;
@@ -725,13 +729,13 @@
     
     // ইভেন্ট লিসেনার সেট আপ করা
     document.addEventListener('click', (event) => {
-        const card = event.target.closest('.card');
         const shareIcon = event.target.closest('.share-icon');
         const loveStats = event.target.closest('.love-stats');
+        const imageContainer = event.target.closest('.card-image-container');
 
         if (shareIcon) {
             const cardId = shareIcon.dataset.id;
-            const cardTitle = card.querySelector('.card-title').textContent;
+            const cardTitle = shareIcon.closest('.card').querySelector('.card-title').textContent;
             const shareUrl = `${window.location.origin}/video-player.html?cardId=${cardId}`;
             
             if (navigator.share) {
@@ -750,12 +754,13 @@
         if (loveStats) {
             const cardId = loveStats.dataset.id;
             if (cardId) {
-                updateLoveCount(cardId, card);
+                updateLoveCount(cardId, loveStats.closest('.card'));
             }
             return;
         }
 
-        if (card) {
+        if (imageContainer) {
+            const card = imageContainer.closest('.card');
             const cardId = card.dataset.id;
             window.location.href = `video-player.html?cardId=${cardId}`;
         }
