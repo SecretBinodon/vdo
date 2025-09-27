@@ -661,6 +661,39 @@
         font-size: 14px;
         transition: background-color 0.3s ease, color 0.3s ease;
         flex-shrink: 0;
+     }
+/*======================================
+           ফুটার স্টাইল (নতুন)
+======================================*/
+footer {
+    background-color: var(--footer-bg);
+    color: var(--text-secondary);
+    text-align: center;
+    padding: 20px 10px;
+    margin-top: 3px;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--text-primary);
+}
+
+.footer-copyright p {
+    margin: 0;
+    font-size: 12px;
     }
     .pagination-button.active {
         background-color: #2575fc;
@@ -889,7 +922,18 @@
 
         <div id="loading-sentinel" style="height: 1px;"></div>
         <div id="pagination-container" class="pagination-container"></div>
-    
+
+       <footer>
+    <div class="footer-links">
+        <a href="#">About Us</a>
+        <a href="#">Terms & Conditions</a>
+        <a href="#">Privacy Policy</a>
+    </div>
+    <div class="footer-copyright">
+        <p>&copy; 2024 Your Website Name. All Rights Reserved.</p>
+    </div>
+       </footer>
+        
         <div id="authModal" class="modal">
             <div class="modal-content">
                 <div class="modal-header">
