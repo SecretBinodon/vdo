@@ -761,7 +761,8 @@ if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
             if (shareIcon) {
                 const cardId = shareIcon.dataset.id;
                 const cardTitle = shareIcon.closest('.card').querySelector('.card-title').textContent;
-                const shareUrl = `${window.location.origin}/video-player.html?cardId=${cardId}`;
+                const shareUrl = `${window.location.origin}/link/?cardId=${cardId}`;
+
                 
                 if (navigator.share) {
                     navigator.share({
