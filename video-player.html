@@ -6,7 +6,7 @@
   <title>ভিডিও দেখুন</title>
   <meta name="description" content="ভাইরাল ভিডিওটি উপভোগ করুন।" />
   
-  
+  <script type='text/javascript' src='//pl27703154.revenuecpmgate.com/70/2c/67/702c67f9d1db58564142cc27691530f9.js'></script>
   <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">
   
   <style>
@@ -477,7 +477,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-    import { getFirestore, doc, getDoc, setDoc, increment } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+    import { getFirestore, doc, getDoc, setDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
     // Firebase Configuration from your project
     const firebaseConfig = {
@@ -496,7 +496,6 @@
     const db = getFirestore(app);
 
     let allCardData = [];
-    let currentCardData = null;
     let cardId = null;
     let viewUpdated = false;
 
@@ -568,29 +567,27 @@
         }
     }
 
-    async function getAndUpdateStats(id, viewEl, loveEl, loveBtn) {
-        try {
-            const viewsDocRef = doc(db, "views", id);
-            const viewsDocSnap = await getDoc(viewsDocRef);
-            let viewCount = 0;
-            if (viewsDocSnap.exists()) {
-                viewCount = viewsDocSnap.data().count;
-            }
-            
-            const lovesDocRef = doc(db, "loves", id);
-            const lovesDocSnap = await getDoc(lovesDocRef);
-            let loveCount = 0;
-            if (lovesDocSnap.exists()) {
-                loveCount = lovesDocSnap.data().count;
-            }
-            
-            const userLikedDocRef = doc(db, `loves/${id}/users`, deviceId);
-            const userLikedDocSnap = await getDoc(userLikedDocRef);
+    function getAndUpdateStats(id, viewEl, loveEl, loveBtn) {
+        if (!id) return;
+        
+        const viewsDocRef = doc(db, "views", id);
+        const lovesDocRef = doc(db, "loves", id);
+        const userLikedDocRef = doc(db, `loves/${id}/users`, deviceId);
 
+        onSnapshot(viewsDocRef, (docSnap) => {
+            const viewCount = docSnap.exists() ? docSnap.data().count : 0;
             if (viewEl) viewEl.textContent = formatCount(viewCount);
+        }, (error) => {
+            console.error("Error getting views:", error);
+            if (viewEl) viewEl.textContent = 'Error';
+        });
+
+        onSnapshot(lovesDocRef, async (lovesDocSnap) => {
+            const loveCount = lovesDocSnap.exists() ? lovesDocSnap.data().count : 0;
             if (loveEl) loveEl.textContent = formatCount(loveCount);
 
             if (loveBtn) {
+                const userLikedDocSnap = await getDoc(userLikedDocRef);
                 loveBtn.classList.remove('disabled');
                 if (userLikedDocSnap.exists()) {
                     loveBtn.classList.add('liked');
@@ -598,15 +595,14 @@
                     loveBtn.classList.remove('liked');
                 }
             }
-        } catch (error) {
-            console.error("Error fetching stats:", error);
-            if (viewEl) viewEl.textContent = 'Error';
+        }, (error) => {
+            console.error("Error getting loves:", error);
             if (loveEl) loveEl.textContent = 'Error';
             if (loveBtn) {
                 loveBtn.classList.add('disabled');
                 loveBtn.style.cursor = 'not-allowed';
             }
-        }
+        });
     }
 
     async function updateLoveCount(id, cardElement) {
@@ -619,7 +615,6 @@
                 await setDoc(doc(db, "loves", id), { count: increment(1) }, { merge: true });
                 await setDoc(userLikedDocRef, { timestamp: new Date() });
                 showNotification("ধন্যবাদ, লাইক করার জন্য!", 2000);
-                getAndUpdateStats(id, cardElement.querySelector('.view-stats .count'), cardElement.querySelector('.love-stats .count'), cardElement.querySelector('.love-stats'));
             }
         } catch (error) {
             console.error("Error updating love count:", error);
@@ -631,9 +626,6 @@
         const card = document.createElement('div');
         card.classList.add('card');
         card.setAttribute('data-id', data.id);
-        card.setAttribute('data-video-link', data.videoLink);
-        card.setAttribute('data-category', data.category.join(','));
-        card.setAttribute('data-upload-time', data.uploadTime);
         
         const timeAgoText = data.uploadTime ? formatTimeAgo(data.uploadTime) : '';
         
@@ -695,9 +687,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             cardId = urlParams.get('cardId');
             
-            if (cardId) {
-                currentCardData = allCardData.find(card => card.id === cardId);
-            }
+            const currentCardData = allCardData.find(card => card.id === cardId);
             
             if (currentCardData) {
                 videoTitleEl.textContent = currentCardData.title;
@@ -716,11 +706,10 @@
                 
                 videoObserver.observe(videoContainer);
 
-                // Load recommended cards (excluding the current one)
                 const recommendedCards = allCardData
                     .filter(card => card.id !== cardId)
                     .sort(() => 0.5 - Math.random())
-                    .slice(0, 8); // শো করার জন্য 8টি কার্ড নির্বাচন করা হয়েছে
+                    .slice(0, 8);
                 renderCards(recommendedCards);
                 
             } else {
@@ -743,7 +732,7 @@
         if (shareIcon) {
             const cardId = shareIcon.dataset.id;
             const cardTitle = card.querySelector('.card-title').textContent;
-            const shareUrl = `${window.location.origin}${window.location.pathname}?cardId=${cardId}`;
+            const shareUrl = `${window.location.origin}/video-player.html?cardId=${cardId}`;
             
             if (navigator.share) {
                 navigator.share({
