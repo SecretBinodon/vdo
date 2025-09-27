@@ -232,6 +232,24 @@
           height: 100%;
           object-fit: cover;
       }
+      .video-icon-container {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background-color: rgba(0, 0, 0, 0.6);
+          border-radius: 50%;
+          width: 50px;
+          height: 50px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+      }
+      .video-icon-container svg {
+          fill: #fff;
+          width: 25px;
+          height: 25px;
+      }
       
       .card-info {
           display: flex;
@@ -356,23 +374,7 @@
       </div>
     </main>
     
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    
     <script>
-        // আপনার Firebase কনফিগারেশন এখানে পেস্ট করুন
-        var firebaseConfig = {
-            apiKey: "আপনার_API_Key",
-            authDomain: "আপনার_Auth_Domain",
-            projectId: "আপনার_Project_ID",
-            storageBucket: "আপনার_Storage_Bucket",
-            messagingSenderId: "আপনার_Messaging_Sender_ID",
-            appId: "আপনার_App_ID"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-        const videoRef = database.ref('videos'); // আপনার ডেটাবেসের রেফারেন্স পরিবর্তন করুন
-        
         // সরাসরি লিংকে প্রবেশ বন্ধ করার জন্য এই কোডটি যুক্ত করা হয়েছে
         const allowedOrigin = window.location.origin;
         const referrer = document.referrer;
@@ -385,13 +387,12 @@
 
         async function loadVideoAndSuggestions() {
             try {
-                const snapshot = await videoRef.once('value');
-                const allCardData = [];
-                snapshot.forEach(childSnapshot => {
-                    const data = childSnapshot.val();
-                    allCardData.push({ ...data, id: childSnapshot.key });
-                });
-
+                // cards.json থেকে ডেটা লোড করা
+                const response = await fetch('cards.json');
+                if (!response.ok) {
+                    throw new Error("cards.json ফাইলটি পাওয়া যায়নি।");
+                }
+                const allCardData = await response.json();
                 const cardData = allCardData.find(card => card.id === cardId);
 
                 if (cardData && cardData.embed_code) {
@@ -406,6 +407,7 @@
                     // লাইক বাটন কার্যকারিতা (লোকালস্টোরেজ ব্যবহার করে)
                     const likeBtn = document.getElementById('like-btn');
                     const likeCountSpan = document.getElementById('like-count');
+                    
                     let likedVideos = JSON.parse(localStorage.getItem('likedVideos')) || {};
                     let initialLikes = parseInt(cardData.likes) || 0;
                     if (likedVideos[cardId]) {
@@ -413,7 +415,7 @@
                     }
                     likeCountSpan.textContent = initialLikes;
                     
-                    likeBtn.onclick = async () => {
+                    likeBtn.onclick = () => {
                         let currentLikes = initialLikes;
                         if (likedVideos[cardId]) {
                             currentLikes--;
@@ -426,9 +428,6 @@
                         }
                         likeCountSpan.textContent = currentLikes;
                         localStorage.setItem('likedVideos', JSON.stringify(likedVideos));
-
-                        // এখানে আপনার ফায়ারবেস ডেটা আপডেট করার কোড থাকবে
-                        // videoRef.child(cardId).update({ likes: currentLikes }); 
                     };
 
                     // সাজেস্টেড ভিডিও লোড করা
@@ -445,6 +444,11 @@
                              <a href="video-player.html?cardId=${card.id}" class="card-link">
                                 <div class="card-image-container">
                                     <img src="${card.image}" alt="${card.title}" loading="lazy">
+                                    <div class="video-icon-container">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </div>
                                 </div>
                                 <div class="card-info">
                                     <span class="view-count">
@@ -463,7 +467,7 @@
                                 <div class="card-content">
                                     <p class="card-title">${card.title}</p>
                                 </div>
-                            </a>
+                             </a>
                         `;
                         suggestedContainer.appendChild(cardElement);
                     });
