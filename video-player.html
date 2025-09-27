@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="page-title">Video Play</title>
 
-<script type='text/javascript' src='//pl27703154.revenuecpmgate.com/70/2c/67/702c67f9d1db58564142cc27691530f9.js'></script>
+    <script type='text/javascript' src='//pl27703154.revenuecpmgate.com/70/2c/67/702c67f9d1db58564142cc27691530f9.js'></script>
     
     <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">
     
@@ -128,42 +128,51 @@
         border: 0;
       }
       
-      /* নতুন ডাউনলোড বাটনের স্টাইল */
-      .download-btn-container {
-          padding: 0 10px;
-          margin: 10px auto; 
-          max-width: 900px;
-          box-sizing: border-box;
-          text-align: center;
+      /* নতুন স্টাইল: সাজেস্টেড ভিডিওর জন্য */
+      .card-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+          gap: 15px;
+          padding: 20px 10px;
       }
-
-      .download-btn {
-          display: inline-block;
+      .card {
+          background-color: #2d2d2d;
+          border-radius: 15px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+          overflow: hidden;
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      .card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+      }
+      .card-image-container {
+          position: relative;
           width: 100%;
-          max-width: 70%; /* এখানে আপনি বাটনের প্রস্থ ছোট করতে পারেন */
-          background: #4CAF50; 
-          color: white;
-          padding: 15px 20px;
+          height: 150px;
+          overflow: hidden;
+          border-radius: 15px 15px 0 0;
+      }
+      .card-image-container img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+      }
+      .card-content {
+          padding: 10px;
           text-align: center;
+      }
+      .card-content a {
           text-decoration: none;
-          font-size: 18px;
+          color: inherit;
+      }
+      .card-title {
+          font-size: 14px;
           font-weight: bold;
-          border-radius: 10px;
-          transition: background-color 0.3s ease;
-          margin: 0 auto; /* বাটন মাঝে রাখার জন্য */
-      }
-      .download-btn:hover {
-          background: #45a049;
-      }
-
-      /* বিজ্ঞাপনের জন্য নতুন Wrapper */
-      .ad-wrapper {
-        width: 100%;
-        max-width: 900px;
-        margin: 10px auto;
-        padding: 0 10px;
-        box-sizing: border-box;
-        overflow: hidden;
+          color: #e0e0e0;
+          margin: 0;
+          white-space: normal;
+          word-wrap: break-word;
       }
 
       /* মিডিয়া কোয়েরি */
@@ -177,11 +186,8 @@
         .container {
            padding: 0 20px;
         }
-        .download-btn-container {
-            padding: 0 20px;
-        }
-        .ad-wrapper {
-            padding: 0 20px;
+        .card-grid {
+           grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
         }
       }
       @media (max-width: 767px) {
@@ -189,6 +195,9 @@
         .website-name { font-size: 16px; }
         .website-icon { width: 20px; height: 20px; }
         .social-icon { width: 20px; height: 20px; }
+        .card-grid {
+           grid-template-columns: repeat(2, 1fr);
+        }
       }
     </style>
 </head>
@@ -228,31 +237,27 @@
               </div>
           </div>
       </div>
-
-      <div class="download-btn-container">
-          <a href="https://www.revenuecpmgate.com/x0tq9pfa?key=5eaa0857eb30fd0efb62daca7ba27aec" class="download-btn">Download Video 📥</a>
-      </div>
         
-      <div class="ad-wrapper">
-          <script async="async" data-cfasync="false" src="//pl27703152.revenuecpmgate.com/247476cdf6d68a31797ec615e7b10572/invoke.js"></script>
-          <div id="container-247476cdf6d68a31797ec615e7b10572"></div>
+      <div class="container">
+          <h2 style="color: #fff; text-align: center; margin-bottom: 10px;">More Videos</h2>
+          <div id="suggested-videos" class="card-grid">
+              </div>
       </div>
     </main>
 
     <script>
-
         // সরাসরি লিংকে প্রবেশ বন্ধ করার জন্য এই কোডটি যুক্ত করা হয়েছে
-const allowedOrigin = window.location.origin;
-const referrer = document.referrer;
+        const allowedOrigin = window.location.origin;
+        const referrer = document.referrer;
 
-if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
-    window.location.href = allowedOrigin + '/link/';
-}
+        if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
+            window.location.href = allowedOrigin + '/link/';
+        }
         
         const urlParams = new URLSearchParams(window.location.search);
         const cardId = urlParams.get('cardId');
 
-        async function loadVideo() {
+        async function loadVideoAndSuggestions() {
             try {
                 const response = await fetch('cards.json');
                 if (!response.ok) {
@@ -262,14 +267,36 @@ if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
                 const cardData = allCardData.find(card => card.id === cardId);
 
                 if (cardData && cardData.embed_code) {
+                    // মূল ভিডিও লোড করা
                     document.getElementById('video-title').textContent = cardData.title;
                     document.getElementById('page-title').textContent = cardData.title;
-                    
                     const videoPlayerContainer = document.getElementById('video-player-container');
-                    
-                    // এখানে সরাসরি এম্বেড কোড ইনজেক্ট করা হচ্ছে
                     videoPlayerContainer.innerHTML = cardData.embed_code;
 
+                    // সাজেস্টেড ভিডিও লোড করা
+                    const suggestedContainer = document.getElementById('suggested-videos');
+                    suggestedContainer.innerHTML = ''; // আগের কার্ডগুলো সরিয়ে ফেলা
+
+                    const otherCards = allCardData.filter(card => card.id !== cardId);
+                    // কার্ডগুলোকে এলোমেলোভাবে সাজানো
+                    const randomCards = otherCards.sort(() => 0.5 - Math.random()).slice(0, 10);
+
+                    // নতুন কার্ড তৈরি করে যোগ করা
+                    randomCards.forEach(card => {
+                        const cardElement = document.createElement('div');
+                        cardElement.classList.add('card');
+                        cardElement.innerHTML = `
+                             <a href="video-player.html?cardId=${card.id}">
+                                 <div class="card-image-container">
+                                     <img src="${card.image}" alt="${card.title}" loading="lazy">
+                                 </div>
+                                 <div class="card-content">
+                                     <p class="card-title">${card.title}</p>
+                                 </div>
+                             </a>
+                        `;
+                        suggestedContainer.appendChild(cardElement);
+                    });
                 } else {
                      document.getElementById('video-title').textContent = "দুঃখিত, এই ভিডিওটি পাওয়া যায়নি।";
                 }
@@ -278,10 +305,9 @@ if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
                 document.getElementById('video-title').textContent = "নেটওয়ার্ক ত্রুটি, অনুগ্রহ করে আবার চেষ্টা করুন।";
             }
         }
-        
-        // পেজ লোড হলে ভিডিও লোড করা শুরু করা
+
         document.addEventListener('DOMContentLoaded', () => {
-            loadVideo();
+            loadVideoAndSuggestions();
         });
     </script>
 </body>
