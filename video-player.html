@@ -139,10 +139,12 @@
         border-radius: 10px;
         margin-top: 3px;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 10px;
+        flex-direction: column; /* Changed to column for title/stats separation */
+        gap: 5px; /* Reduced gap */
+    }
+
+    .video-title-bar.open {
+      border-radius: 10px 10px 0 0;
     }
 
     .title-and-more-container {
@@ -173,30 +175,49 @@
     
     .video-stats {
         display: flex;
-        gap: 10px;
-        flex-shrink: 0;
+        justify-content: space-between; /* Aligned icons to left, center, right */
+        align-items: center;
+        width: 100%;
+        gap: 5px; /* Reduced gap between icons */
     }
+
     .card-stats {
         display: flex;
         align-items: center;
         background-color: var(--category-bg); 
         border-radius: 10px;
         padding: 5px 8px;
-        min-width: 65px; /* Added to fix sizing issue on mobile */
+        flex: 1; /* Allow flex to grow and shrink */
+        justify-content: center;
+        white-space: nowrap; /* Prevent text wrapping */
+        overflow: hidden; /* Hide overflow */
+        text-overflow: ellipsis; /* Add ellipsis */
+    }
+
+    .card-stats:nth-child(1) {
+        justify-content: flex-start;
+    }
+    .card-stats:nth-child(2) {
         justify-content: center;
     }
+    .card-stats:nth-child(3) {
+        justify-content: flex-end;
+    }
+
     .card-stats .icon {
         margin-right: 5px;
         width: 20px;
         height: 20px;
         stroke: var(--text-primary); 
     }
+
     .card-stats .count {
         font-weight: bold;
         color: var(--text-primary); 
         font-size: 14px;
-        min-width: 25px;
+        flex-shrink: 0;
     }
+
     .love-stats {
         cursor: pointer;
         transition: color 0.2s ease;
@@ -413,10 +434,6 @@
     }
 
     /* Description Styles (New Dropdown/Push Down) */
-    .video-title-bar.open {
-      border-radius: 10px 10px 0 0;
-    }
-    
     .description-container {
         max-height: 0;
         overflow: hidden;
@@ -463,6 +480,7 @@
 
     .description-content {
         line-height: 1.6;
+        padding-bottom: 20px; /* Added padding to fix narrow bottom space */
     }
 
     #description-content p {
