@@ -590,7 +590,7 @@
         color: var(--text-secondary);
         text-align: center;
         padding: 20px 10px;
-        margin-top: 0; /* Changed to 0 to fix the footer issue */
+        margin-top: 0;
     }
 
     .footer-links {
@@ -986,10 +986,6 @@
 
                     getAndUpdateStats(cardId, videoViewCountEl, videoLoveCountEl, videoLoveStatsBtn);
 
-                    // প্যানেলের তথ্য সেট করা
-                    // panelVideoTitle.textContent = currentCardData.title;  // এই লাইনটি বাদ দেওয়া হয়েছে, কারণ ডিসক্লেইমার কোডে হেডিং রয়েছে।
-                    // descriptionContent.innerHTML = fixedDescription; // এই লাইনটিও বাদ দেওয়া হয়েছে।
-
                     const videoObserver = new IntersectionObserver((entries) => {
                         entries.forEach(entry => {
                             if (entry.isIntersecting) {
@@ -1020,9 +1016,7 @@
         
         // ডেসক্রিপশন প্যানেলের ইভেন্ট লিসেনার
         openDescriptionBtn.addEventListener('click', () => {
-            const videoBottom = videoContainer.getBoundingClientRect().bottom;
-            descriptionPanel.style.top = videoBottom + 'px';
-            descriptionPanel.style.height = `calc(100vh - ${videoBottom}px)`;
+            descriptionPanel.style.height = `calc(100vh - ${descriptionPanel.offsetTop}px)`;
             descriptionPanel.classList.add('active');
             document.body.classList.add('no-scroll');
         });
@@ -1098,9 +1092,7 @@
         // Ensure panel position is correct on resize
         window.addEventListener('resize', () => {
             if(descriptionPanel.classList.contains('active')) {
-                const videoBottom = videoContainer.getBoundingClientRect().bottom;
-                descriptionPanel.style.top = videoBottom + 'px';
-                descriptionPanel.style.height = `calc(100vh - ${videoBottom}px)`;
+                descriptionPanel.style.height = `calc(100vh - ${descriptionPanel.offsetTop}px)`;
             }
         });
 
