@@ -50,7 +50,11 @@
         display: flex;
         flex-direction: column;
     }
-
+    
+    body.no-scroll {
+        overflow: hidden;
+    }
+    
     main {
         flex-grow: 1;
     }
@@ -413,26 +417,31 @@
 
     /* Description Panel Styles */
     #description-panel {
-        position: absolute; 
+        position: fixed; /* Changed from absolute to fixed */
+        top: 0;
         left: 0;
         width: 100%;
+        height: 100%; /* Now takes full screen height */
         background-color: var(--modal-bg);
         z-index: 1000;
         transform: translateY(100%);
         transition: transform 0.3s ease-in-out;
         display: flex;
         flex-direction: column;
-        padding: 20px;
         box-sizing: border-box;
         visibility: hidden;
         pointer-events: none;
-        overflow-y: auto; 
+        overflow: auto; /* Allow scrolling inside */
     }
 
     #description-panel.active {
         transform: translateY(0);
         visibility: visible;
         pointer-events: auto;
+    }
+    
+    #description-panel.active .panel-content-wrapper {
+        display: flex;
     }
 
     .panel-header {
@@ -441,6 +450,15 @@
         align-items: center;
         width: 100%;
         margin-bottom: 10px;
+        padding: 20px 20px 0 20px;
+    }
+    
+    .panel-content-wrapper {
+        flex-grow: 1;
+        display: none; /* Initially hidden */
+        flex-direction: column;
+        overflow-y: auto;
+        padding: 0 20px 20px 20px;
     }
 
     .panel-header h2 {
@@ -468,14 +486,6 @@
         margin: 10px 0;
     }
 
-    .panel-content {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        overflow-y: auto;
-        padding-bottom: 20px;
-    }
-    
     /* Styles for the new disclaimer content */
     #panel-content-container h1 {
         margin:0 0 14px 0;
@@ -505,6 +515,19 @@
     @media (min-width: 768px) {
         .panel-content {
             align-items: flex-start;
+        }
+        #description-panel {
+            max-width: 50%;
+            left: 50%;
+            transform: translate(-50%, 100%);
+            border-radius: 10px 10px 0 0;
+            height: auto;
+            max-height: 80%;
+            bottom: 0;
+        }
+
+        #description-panel.active {
+            transform: translate(-50%, 0);
         }
     }
 
@@ -548,20 +571,6 @@
         }
         #panel-content-container h1 {
             font-size: 18px;
-        }
-    }
-
-    @media (min-width: 768px) {
-        #description-panel {
-            max-width: 50%;
-            left: 50%;
-            transform: translate(-50%, 100%);
-            border-radius: 10px 10px 0 0;
-            height: auto;
-        }
-
-        #description-panel.active {
-            transform: translate(-50%, 0);
         }
     }
     
@@ -697,7 +706,9 @@
             </div>
         </div>
         <hr class="panel-divider">
-        <div class="panel-content" id="panel-content-container">
+        <div class="panel-content-wrapper">
+            <div class="panel-content" id="panel-content-container">
+            </div>
         </div>
     </div>
 
@@ -741,13 +752,14 @@
         const videoViewCountEl = document.querySelector('.video-stats .view-stats .count');
         const videoLoveCountEl = document.querySelector('.video-stats .love-stats .count');
         const videoLoveStatsBtn = document.querySelector('.video-stats .love-stats');
+        const body = document.body;
 
         // Description Panel elements
         const openDescriptionBtn = document.getElementById('open-description-btn');
         const descriptionPanel = document.getElementById('description-panel');
         const closePanelBtn = document.getElementById('close-panel-btn');
         const panelContentContainer = document.getElementById('panel-content-container');
-        const footer = document.querySelector('footer');
+        const panelContentWrapper = document.querySelector('.panel-content-wrapper');
         
         // Full HTML for the disclaimer content
         const disclaimerContent = `
@@ -1006,18 +1018,13 @@
         // ডেসক্রিপশন প্যানেলের ইভেন্ট লিসেনার
         openDescriptionBtn.addEventListener('click', () => {
             panelContentContainer.innerHTML = disclaimerContent;
-            
-            const videoBottom = videoContainer.getBoundingClientRect().bottom + window.scrollY;
-            const footerTop = footer.getBoundingClientRect().top + window.scrollY;
-            
-            descriptionPanel.style.top = `${videoBottom}px`;
-            descriptionPanel.style.height = `calc(${footerTop}px - ${videoBottom}px)`;
-            
             descriptionPanel.classList.add('active');
+            body.classList.add('no-scroll');
         });
 
         closePanelBtn.addEventListener('click', () => {
             descriptionPanel.classList.remove('active');
+            body.classList.remove('no-scroll');
         });
 
         // ইভেন্ট লিসেনার সেট আপ করা
@@ -1080,16 +1087,6 @@
         videoLoveStatsBtn.addEventListener('click', () => {
             if (cardId) {
                 updateLoveCount(cardId, videoLoveStatsBtn);
-            }
-        });
-
-        // Ensure panel position is correct on resize
-        window.addEventListener('resize', () => {
-            if(descriptionPanel.classList.contains('active')) {
-                const videoBottom = videoContainer.getBoundingClientRect().bottom + window.scrollY;
-                const footerTop = footer.getBoundingClientRect().top + window.scrollY;
-                descriptionPanel.style.top = `${videoBottom}px`;
-                descriptionPanel.style.height = `calc(${footerTop}px - ${videoBottom}px)`;
             }
         });
 
