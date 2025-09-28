@@ -398,7 +398,7 @@
     .card-footer {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: space-between; /* দুটি আইকনের মাঝে পর্যাপ্ত ফাঁকা স্থান তৈরি করা হয়েছে */
         padding: 0 10px 10px 10px;
         box-sizing: border-box;
     }
@@ -444,7 +444,7 @@
     }
 
     .description-container.active {
-        max-height: 500px; /* Adjust this value as needed based on content length */
+        max-height: 500px; /* প্রয়োজন অনুযায়ী মান পরিবর্তন করা যাবে */
         padding: 15px;
     }
 
@@ -466,13 +466,13 @@
         width: 24px;
         height: 24px;
         cursor: pointer;
-        transition: transform 0.2s ease; /* Added for the zoom effect */
+        transition: transform 0.2s ease; /* জুম ইফেক্টের জন্য transition */
     }
     
     .close-icon:focus,
     .close-icon:active {
-        outline: none; /* Removes the blue outline */
-        transform: scale(1.1); /* Adds the zoom effect on click */
+        outline: none; /* নীল আউটলাইন অপসারণ করা হয়েছে */
+        transform: scale(1.1); /* ক্লিকের সময় জুম ইফেক্ট যোগ করা হয়েছে */
     }
 
     .close-icon svg {
@@ -487,7 +487,7 @@
 
     .description-content {
         line-height: 1.6;
-        padding-bottom: 20px; /* Added padding to fix narrow bottom space */
+        padding-bottom: 20px; /* ডিসক্রিপশনের নিচের ফাঁকা স্থান বাড়ানো হয়েছে */
     }
 
     #description-content p {
@@ -723,7 +723,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
         import { getFirestore, doc, getDoc, setDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
-        // Firebase Configuration from your project
+        // Firebase কনফিগারেশন
         const firebaseConfig = {
             apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q",
             authDomain: "my-ad-analytics-4560a.firebaseapp.com",
@@ -735,7 +735,7 @@
             measurementId: "G-WS7QSQ9H0Y"
         };
 
-        // Initialize Firebase
+        // Firebase ইনিশিয়ালাইজ করা
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
@@ -751,13 +751,14 @@
         const videoLoveCountEl = document.querySelector('.video-stats .love-stats .count');
         const videoLoveStatsBtn = document.querySelector('.video-stats .love-stats');
         
-        // Description elements
+        // ডিসক্রিপশনের জন্য ব্যবহৃত উপাদান
         const videoTitleBar = document.getElementById('video-title-bar');
         const openDescriptionBtn = document.getElementById('open-description-btn');
         const closeDescriptionBtn = document.getElementById('close-description-btn');
         const descriptionContainer = document.getElementById('description-container');
         const descriptionContent = document.getElementById('description-content');
 
+        // ডিভাইসের আইডি তৈরি বা লোড করা
         function getDeviceId() {
             let deviceId = localStorage.getItem('deviceId');
             if (!deviceId) {
@@ -768,6 +769,7 @@
         }
         const deviceId = getDeviceId();
 
+        // সময়কে সহজে পড়ার মতো ফরম্যাটে রূপান্তর
         function formatTimeAgo(timestamp) {
             const uploadDate = new Date(timestamp);
             const now = new Date();
@@ -785,6 +787,7 @@
             return "এখনই";
         }
         
+        // বড় সংখ্যাকে ছোট ফরম্যাটে রূপান্তর
         function formatCount(num) {
             if (num >= 1000000000) return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B';
             if (num >= 1000000) return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
@@ -792,6 +795,7 @@
             return num;
         }
 
+        // নোটিফিকেশন দেখানো
         function showNotification(message, duration = 3000, isError = false) {
             notificationPopup.textContent = message;
             if (isError) {
@@ -805,6 +809,7 @@
             }, duration);
         }
         
+        // ভিউ কাউন্ট আপডেট করা
         async function updateViewCount(id) {
             if (viewUpdated) return;
             const viewsRef = doc(db, "views", id);
@@ -818,6 +823,7 @@
             }
         }
 
+        // লাইভ ডেটা এবং স্ট্যাটাস আপডেট করা
         function getAndUpdateStats(id, viewEl, loveEl, loveBtn) {
             if (!id) return;
             
@@ -850,6 +856,7 @@
             });
         }
         
+        // লাইক কাউন্ট আপডেট করা
         async function updateLoveCount(id, loveStatsBtn) {
             const userLikedDocRef = doc(db, `loves/${id}/users`, deviceId);
             try {
@@ -871,6 +878,7 @@
             }
         }
 
+        // কার্ড তৈরি করার ফাংশন
         function createCard(data) {
             const card = document.createElement('div');
             card.classList.add('card');
@@ -918,6 +926,7 @@
             return card;
         }
 
+        // কার্ডগুলো রেন্ডার করার ফাংশন
         function renderCards(cardsToRender) {
             recommendedContainer.innerHTML = '';
             cardsToRender.forEach(data => {
@@ -930,6 +939,7 @@
             });
         }
 
+        // ডেটা লোড এবং রেন্ডার করা
         async function loadDataAndRender() {
             try {
                 const response = await fetch('cards.json');
@@ -975,20 +985,21 @@
             }
         }
         
-        // Description event listeners for the push-down method
+        // ডিসক্রিপশন প্যানেল খোলার জন্য ইভেন্ট লিসনার
         openDescriptionBtn.addEventListener('click', () => {
             descriptionContainer.classList.add('active');
             videoTitleBar.classList.add('open');
             openDescriptionBtn.style.display = 'none';
         });
 
+        // ডিসক্রিপশন প্যানেল বন্ধ করার জন্য ইভেন্ট লিসনার
         closeDescriptionBtn.addEventListener('click', () => {
             descriptionContainer.classList.remove('active');
             videoTitleBar.classList.remove('open');
             openDescriptionBtn.style.display = 'block';
         });
 
-        // Other general event listeners
+        // অন্যান্য সাধারণ ইভেন্ট লিসনার
         document.addEventListener('click', (event) => {
             const shareIcon = event.target.closest('.share-icon');
             const loveStats = event.target.closest('.love-stats');
@@ -1045,6 +1056,7 @@
             }
         });
 
+        // মূল লাইক বাটনে ক্লিক করার জন্য ইভেন্ট লিসনার
         videoLoveStatsBtn.addEventListener('click', () => {
             if (cardId) {
                 updateLoveCount(cardId, videoLoveStatsBtn);
