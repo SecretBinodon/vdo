@@ -730,7 +730,7 @@
 
         let allCardData = [];
         let cardId = null;
-        let viewUpdated = false;
+        let mainViewUpdated = false; // ভেরিয়েবলটির নাম পরিবর্তন করা হয়েছে
 
         const videoTitleEl = document.getElementById('video-title');
         const videoContainer = document.getElementById('video-container');
@@ -798,21 +798,27 @@
             }, duration);
         }
         
-        // ভিউ কাউন্ট আপডেট করার জন্য নতুন ফাংশন
-        async function updateViewAndFetch(id, viewEl) {
-            if (viewUpdated) return;
-            viewUpdated = true; // শুধু একবার আপডেট হবে
+        // **নতুন ফাংশন:** শুধুমাত্র একটি নির্দিষ্ট কার্ডের ভিউ কাউন্ট লোড করবে
+        function getCardViews(id, viewEl) {
+            const viewsDocRef = doc(db, "views", id);
+            onSnapshot(viewsDocRef, (docSnap) => {
+                const viewCount = docSnap.exists() ? docSnap.data().count : 0;
+                if (viewEl) viewEl.textContent = formatCount(viewCount);
+            }, (error) => {
+                console.error(`Error getting views for card ${id}:`, error);
+                if (viewEl) viewEl.textContent = 'Error';
+            });
+        }
+
+        // **নতুন ফাংশন:** মূল ভিডিওর ভিউ কাউন্ট আপডেট এবং রিয়েল-টাইম লিসেনার চালু করবে
+        async function updateMainView(id, viewEl) {
+            if (mainViewUpdated) return;
+            mainViewUpdated = true; 
 
             const viewsDocRef = doc(db, "views", id);
             try {
-                const viewsSnap = await getDoc(viewsDocRef);
-                
                 // ভিউ বৃদ্ধি করা
-                if (viewsSnap.exists()) {
-                    await setDoc(viewsDocRef, { count: increment(1) }, { merge: true });
-                } else {
-                    await setDoc(viewsDocRef, { count: 1 }, { merge: true });
-                }
+                await setDoc(viewsDocRef, { count: increment(1) }, { merge: true });
 
                 // রিয়েল-টাইম লিসেনার সেট করা
                 onSnapshot(viewsDocRef, (docSnap) => {
@@ -829,8 +835,8 @@
             }
         }
         
-        // লাইভ ডেটা এবং স্ট্যাটাস আপডেট করা
-        function getAndUpdateStats(id, viewEl, loveEl, loveBtn) {
+        // লাইভ ডেটা এবং স্ট্যাটাস আপডেট করা (শুধুমাত্র লাইকের জন্য)
+        function getAndUpdateStats(id, loveEl, loveBtn) {
             if (!id) return;
             
             const lovesDocRef = doc(db, "loves", id);
@@ -942,11 +948,10 @@
             cardsToRender.forEach(data => {
                 const card = createCard(data);
                 recommendedContainer.appendChild(card);
-                getAndUpdateStats(data.id, null, card.querySelector('.love-stats .count'), card.querySelector('.love-stats'));
                 
-                // রিকমেন্ডেড কার্ডের ভিউ আপডেট করা
-                const cardViewEl = card.querySelector('.view-stats .count');
-                updateViewAndFetch(data.id, cardViewEl);
+                // রিকমেন্ডেড কার্ডের ভিউ এবং লাইক আপডেট করা
+                getCardViews(data.id, card.querySelector('.view-stats .count'));
+                getAndUpdateStats(data.id, card.querySelector('.love-stats .count'), card.querySelector('.love-stats'));
 
                 setTimeout(() => {
                     card.classList.add('visible');
@@ -971,10 +976,10 @@
                     videoContainer.innerHTML = currentCardData.embed_code;
 
                     // মূল ভিডিওর ভিউ আপডেট করার জন্য
-                    updateViewAndFetch(cardId, videoViewCountEl);
+                    updateMainView(cardId, videoViewCountEl);
                     
                     // মূল ভিডিওর লাইক আপডেট করার জন্য
-                    getAndUpdateStats(cardId, null, videoLoveCountEl, videoLoveStatsBtn);
+                    getAndUpdateStats(cardId, videoLoveCountEl, videoLoveStatsBtn);
 
                     const recommendedCards = allCardData
                         .filter(card => card.id !== cardId)
