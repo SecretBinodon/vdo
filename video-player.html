@@ -267,11 +267,12 @@
         margin-bottom: 5px;
     }
     .container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 15px;
-        padding: 10px; 
-    }
+    display: grid;
+    /* ডেস্কটপ ভিউতে ৩টি কার্ড পাশাপাশি দেখাবে */
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 15px;
+    padding: 10px; 
+   }
     .card {
         background-color: var(--card-bg); 
         border-radius: 15px;
