@@ -146,7 +146,6 @@
         gap: 10px;
     }
 
-    /* নতুন কন্টেইনার */
     .title-and-more-container {
         display: flex;
         flex-direction: column;
@@ -410,11 +409,9 @@
 
     /* Description Panel Styles (নতুন) */
     #description-panel {
-        position: fixed;
-        bottom: 0;
+        position: absolute; /* Changed to absolute for dynamic positioning */
         left: 0;
         width: 100%;
-        height: calc(100vh - 56.25vw - 42px); /* ভিডিও এবং টাইটেল বারের উচ্চতা */
         background-color: var(--modal-bg);
         z-index: 1000;
         transform: translateY(100%);
@@ -425,23 +422,8 @@
         box-sizing: border-box;
         visibility: hidden;
         pointer-events: none;
-    }
-    /* মোবাইল স্ক্রিনে ভিডিওর হাইট এবং টাইটেল বারের উচ্চতা */
-    @media (max-width: 767px) {
-        #description-panel {
-            height: calc(100vh - (100vw * 0.5625) - 42px); /* 100vw * 0.5625 = 16:9 ভিডিও হাইট, 42px = টাইটেল বারের আনুমানিক হাইট */
-        }
-    }
-    /* ডেস্কটপ স্ক্রিনে ভিডিওর হাইট এবং টাইটেল বারের উচ্চতা */
-    @media (min-width: 768px) {
-        #description-panel {
-            top: 25%;
-            left: 50%;
-            width: 50%;
-            height: 75%;
-            transform: translate(-50%, 100%);
-            border-radius: 10px 10px 0 0;
-        }
+        overflow-y: auto; /* Allow scrolling inside the panel */
+        max-height: calc(100vh - 100px); /* fallback for older browsers */
     }
 
     #description-panel.active {
@@ -595,6 +577,20 @@
         }
         .panel-content {
             align-items: center;
+        }
+    }
+
+    @media (min-width: 768px) {
+        #description-panel {
+            max-width: 50%; /* limit width on desktop */
+            left: 50%;
+            transform: translate(-50%, 100%);
+            border-radius: 10px 10px 0 0;
+            height: auto; /* Dynamic height */
+        }
+
+        #description-panel.active {
+            transform: translate(-50%, 0);
         }
     }
     
@@ -1033,6 +1029,18 @@
             }
         }
         
+        // ডেসক্রিপশন প্যানেলের ইভেন্ট লিসেনার
+        openDescriptionBtn.addEventListener('click', () => {
+            const videoBottom = document.getElementById('video-embed-section').getBoundingClientRect().bottom;
+            descriptionPanel.style.top = videoBottom + 'px';
+            descriptionPanel.style.height = `calc(100vh - ${videoBottom}px)`;
+            descriptionPanel.classList.add('active');
+        });
+
+        closePanelBtn.addEventListener('click', () => {
+            descriptionPanel.classList.remove('active');
+        });
+
         // ইভেন্ট লিসেনার সেট আপ করা
         document.addEventListener('click', (event) => {
             const shareIcon = event.target.closest('.share-icon');
@@ -1096,13 +1104,13 @@
             }
         });
 
-        // ডেসক্রিপশন প্যানেলের ইভেন্ট লিসেনার
-        openDescriptionBtn.addEventListener('click', () => {
-            descriptionPanel.classList.add('active');
-        });
-
-        closePanelBtn.addEventListener('click', () => {
-            descriptionPanel.classList.remove('active');
+        // Ensure panel position is correct on resize
+        window.addEventListener('resize', () => {
+            if(descriptionPanel.classList.contains('active')) {
+                const videoBottom = document.getElementById('video-embed-section').getBoundingClientRect().bottom;
+                descriptionPanel.style.top = videoBottom + 'px';
+                descriptionPanel.style.height = `calc(100vh - ${videoBottom}px)`;
+            }
         });
 
         loadDataAndRender();
