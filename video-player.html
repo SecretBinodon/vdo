@@ -50,13 +50,6 @@
         position: relative;
     }
     
-    body.no-scroll {
-        overflow: hidden;
-        position: fixed;
-        width: 100%;
-        height: 100%;
-    }
-    
     .header {
         background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
         color: #fff;
@@ -414,40 +407,28 @@
         visibility: visible;
         pointer-events: auto;
     }
-
-    /* Description Panel Styles */
-    #description-panel {
-        position: fixed;
-        left: 0;
-        width: 100%;
-        background-color: var(--modal-bg);
-        z-index: 1000;
-        transform: translateY(100%);
-        transition: transform 0.3s ease-in-out;
-        display: flex;
-        flex-direction: column;
-        padding: 20px;
-        box-sizing: border-box;
-        visibility: hidden;
-        pointer-events: none;
-        overflow-y: auto; 
+    
+    /* Description Styles (New Dropdown/Push Down) */
+    .description-container {
+        display: none;
+        background-color: var(--card-bg);
+        padding: 15px;
+        border-radius: 0 0 10px 10px;
+        transition: padding 0.3s ease, margin-top 0.3s ease;
     }
 
-    #description-panel.active {
-        transform: translateY(0);
-        visibility: visible;
-        pointer-events: auto;
+    .description-container.active {
+        display: block;
     }
 
-    .panel-header {
+    .description-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 100%;
         margin-bottom: 10px;
     }
 
-    .panel-header h2 {
+    .description-header h2 {
         font-size: 18px;
         font-weight: bold;
         color: var(--text-primary);
@@ -462,8 +443,6 @@
 
     .close-icon svg {
         fill: var(--text-primary);
-        width: 100%;
-        height: 100%;
     }
 
     .panel-divider {
@@ -472,41 +451,19 @@
         margin: 10px 0;
     }
 
-    .panel-content {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        overflow-y: auto;
-        padding-bottom: 20px;
-    }
-    
-    .panel-video-title {
-        font-size: 20px;
-        font-weight: bold;
-        color: var(--text-primary);
-        word-wrap: break-word;
-        word-break: break-all;
-        margin: 0 0 10px 0;
-    }
-    
-    /* New styles for the Disclaimer content */
-    #description-content h1 {
-        margin: 0 0 14px 0;
-        font-size: 20px;
-        font-weight: 700;
-        color: var(--text-primary); 
-        text-align: left;
+    .description-content {
+        padding-top: 5px;
+        line-height: 1.6;
     }
 
     #description-content p {
         margin: 0 0 12px 0;
-        color: var(--text-secondary); 
-        max-width: none;
+        color: var(--text-secondary);
         font-size: 14px;
     }
     #description-content ul {
         margin: 0 0 12px 20px;
-        color: var(--text-secondary); 
+        color: var(--text-secondary);
         font-size: 14px;
     }
     #description-content .highlight {
@@ -514,29 +471,11 @@
         color: #e74c3c;
     }
 
-    @media (min-width: 768px) {
-        .panel-video-title {
-            text-align: left;
-        }
-        .panel-content {
-            align-items: flex-start;
-        }
-        #description-panel {
-            max-width: 50%;
-            left: 50%;
-            transform: translate(-50%, 100%);
-            border-radius: 10px 10px 0 0;
-            height: auto;
-        }
-
-        #description-panel.active {
-            transform: translate(-50%, 0);
-        }
+    /* Transition effect for pushing content */
+    #recommended-section {
+        transition: margin-top 0.3s ease;
     }
 
-    /*======================================
-      মোবাইল ভিউয়ের জন্য স্টাইল (767px এবং তার নিচে)
-    ======================================*/
     @media (max-width: 767px) {
         .header { padding: 8px 10px; gap: 5px; }
         .website-name { font-size: 16px; }
@@ -563,28 +502,6 @@
             top: 8px;
             left: 8px;
             padding: 4px 6px;
-        }
-
-        /* মোবাইল ডেসক্রিপশন প্যানেল স্টাইল */
-        #description-panel {
-            padding: 15px;
-            border-radius: 10px 10px 0 0;
-            transform: translateY(100%);
-        }
-        #description-panel.active {
-            transform: translateY(0);
-        }
-        .panel-video-title {
-            text-align: center;
-        }
-        .panel-content {
-            align-items: center;
-        }
-        #description-content h1 {
-            font-size: 18px;
-        }
-        #description-content p, #description-content ul {
-            font-size: 13px;
         }
     }
     
@@ -685,6 +602,49 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="description-container" id="description-container">
+                <div class="description-header">
+                    <h2>Disclaimer &amp; Content Information</h2>
+                    <div class="close-icon" id="close-description-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                        </svg>
+                    </div>
+                </div>
+                <hr class="panel-divider">
+                <div class="description-content" id="description-content">
+                    <p>
+                        All videos available on this platform are intended for adult audiences aged 18 years and above.
+                        The content provided here is for <span class="highlight">educational, entertainment, and legal purposes only</span>.
+                        We strictly avoid any copyrighted or illegal material.
+                    </p>
+
+                    <p>
+                        The videos you see are uploaded in accordance with all applicable laws, and we do not take responsibility for content
+                        originating outside this platform. By accessing this content, you confirm that you are 18 years or older and consent to viewing
+                        adult material.
+                    </p>
+
+                    <p>
+                        Please note: Any inappropriate or illegal usage of content from this platform is strictly prohibited. We encourage responsible viewing.
+                        All content is monitored and presented under safe guidelines to ensure compliance with applicable policies and ad network rules.
+                    </p>
+
+                    <p><span class="highlight">Important Points:</span></p>
+                    <ul>
+                        <li>No copyrighted content is used.</li>
+                        <li>All content is legally shared and safe for adults.</li>
+                        <li>Viewer discretion is advised.</li>
+                        <li>The platform maintains compliance with ad network policies to ensure ads can run safely.</li>
+                    </ul>
+
+                    <p>
+                        This description is universal and will appear on all videos, ensuring that both viewers and ad networks understand the content
+                        is <span class="highlight">safe, legal, and age-restricted</span>.
+                    </p>
+                </div>
+            </div>
         </div>
 
         <div class="ad-container">
@@ -692,7 +652,7 @@
             <div id="container-247476cdf6d68a31797ec615e7b10572"></div>
         </div>
         
-        <div class="recommended-section">
+        <div class="recommended-section" id="recommended-section">
             <h2>⬇️ আপনার জন্য নির্বাচিত কিছু ভিডিও ⬇️</h2>
             <div class="container" id="recommended-container">
                 </div>
@@ -711,50 +671,6 @@
             <p>&copy; 2024 Your Website Name. All Rights Reserved.</p>
         </div>
     </footer>
-
-    <div id="description-panel">
-        <div class="panel-header">
-            <h2 class="panel-title">Disclaimer &amp; Content Information</h2>
-            <div class="close-icon" id="close-panel-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-                </svg>
-            </div>
-        </div>
-        <hr class="panel-divider">
-        <div class="panel-content" id="description-content">
-            <p>
-                All videos available on this platform are intended for adult audiences aged 18 years and above.
-                The content provided here is for <span class="highlight">educational, entertainment, and legal purposes only</span>.
-                We strictly avoid any copyrighted or illegal material.
-            </p>
-
-            <p>
-                The videos you see are uploaded in accordance with all applicable laws, and we do not take responsibility for content
-                originating outside this platform. By accessing this content, you confirm that you are 18 years or older and consent to viewing
-                adult material.
-            </p>
-
-            <p>
-                Please note: Any inappropriate or illegal usage of content from this platform is strictly prohibited. We encourage responsible viewing.
-                All content is monitored and presented under safe guidelines to ensure compliance with applicable policies and ad network rules.
-            </p>
-
-            <p><span class="highlight">Important Points:</span></p>
-            <ul>
-                <li>No copyrighted content is used.</li>
-                <li>All content is legally shared and safe for adults.</li>
-                <li>Viewer discretion is advised.</li>
-                <li>The platform maintains compliance with ad network policies to ensure ads can run safely.</li>
-            </ul>
-
-            <p>
-                This description is universal and will appear on all videos, ensuring that both viewers and ad networks understand the content
-                is <span class="highlight">safe, legal, and age-restricted</span>.
-            </p>
-        </div>
-    </div>
-
 
     <script type="module">
         // সরাসরি লিংকে প্রবেশ বন্ধ করার জন্য এই কোডটি যুক্ত করা হয়েছে
@@ -796,12 +712,10 @@
         const videoLoveCountEl = document.querySelector('.video-stats .love-stats .count');
         const videoLoveStatsBtn = document.querySelector('.video-stats .love-stats');
 
-        // Description Panel elements
+        // Description elements
         const openDescriptionBtn = document.getElementById('open-description-btn');
-        const descriptionPanel = document.getElementById('description-panel');
-        const closePanelBtn = document.getElementById('close-panel-btn');
-        const panelVideoTitle = descriptionPanel.querySelector('.panel-video-title');
-        const descriptionContent = document.getElementById('description-content');
+        const closeDescriptionBtn = document.getElementById('close-description-btn');
+        const descriptionContainer = document.getElementById('description-container');
 
 
         function getDeviceId() {
@@ -871,7 +785,6 @@
             const lovesDocRef = doc(db, "loves", id);
             const userLikedDocRef = doc(db, `loves/${id}/users`, deviceId);
 
-            // ভিউ এর সংখ্যা অনস্নাপশট লিসেনারের মাধ্যমে আপডেট হবে
             onSnapshot(viewsDocRef, (docSnap) => {
                 const viewCount = docSnap.exists() ? docSnap.data().count : 0;
                 if (viewEl) viewEl.textContent = formatCount(viewCount);
@@ -880,7 +793,6 @@
                 if (viewEl) viewEl.textContent = 'Error';
             });
             
-            // লাইকের অবস্থা ও সংখ্যা অনস্নাপশট লিসেনারের মাধ্যমে আপডেট হবে
             onSnapshot(lovesDocRef, (docSnap) => {
                 const loveCount = docSnap.exists() ? docSnap.data().count : 0;
                 if (loveEl) loveEl.textContent = formatCount(loveCount);
@@ -1023,25 +935,18 @@
             }
         }
         
-        // ডেসক্রিপশন প্যানেলের ইভেন্ট লিসেনার
+        // Description event listeners for the push-down method
         openDescriptionBtn.addEventListener('click', () => {
-            const videoTitleBar = document.getElementById('video-title-bar');
-            const videoTitleBarRect = videoTitleBar.getBoundingClientRect();
-            const videoBottom = videoTitleBarRect.bottom;
-            
-            descriptionPanel.style.top = `${videoBottom}px`;
-            descriptionPanel.style.height = `calc(100vh - ${videoBottom}px)`;
-            
-            descriptionPanel.classList.add('active');
-            document.body.classList.add('no-scroll');
+            descriptionContainer.classList.add('active');
+            openDescriptionBtn.style.display = 'none';
         });
 
-        closePanelBtn.addEventListener('click', () => {
-            descriptionPanel.classList.remove('active');
-            document.body.classList.remove('no-scroll');
+        closeDescriptionBtn.addEventListener('click', () => {
+            descriptionContainer.classList.remove('active');
+            openDescriptionBtn.style.display = 'block';
         });
 
-        // ইভেন্ট লিসেনার সেট আপ করা
+        // Other general event listeners
         document.addEventListener('click', (event) => {
             const shareIcon = event.target.closest('.share-icon');
             const loveStats = event.target.closest('.love-stats');
@@ -1101,18 +1006,6 @@
         videoLoveStatsBtn.addEventListener('click', () => {
             if (cardId) {
                 updateLoveCount(cardId, videoLoveStatsBtn);
-            }
-        });
-
-        // Ensure panel position is correct on resize
-        window.addEventListener('resize', () => {
-            if(descriptionPanel.classList.contains('active')) {
-                const videoTitleBar = document.getElementById('video-title-bar');
-                const videoTitleBarRect = videoTitleBar.getBoundingClientRect();
-                const videoBottom = videoTitleBarRect.bottom;
-                 
-                descriptionPanel.style.top = `${videoBottom}px`;
-                descriptionPanel.style.height = `calc(100vh - ${videoBottom}px)`;
             }
         });
 
