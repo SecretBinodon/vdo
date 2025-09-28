@@ -466,6 +466,13 @@
         width: 24px;
         height: 24px;
         cursor: pointer;
+        transition: transform 0.2s ease; /* Added for the zoom effect */
+    }
+    
+    .close-icon:focus,
+    .close-icon:active {
+        outline: none; /* Removes the blue outline */
+        transform: scale(1.1); /* Adds the zoom effect on click */
     }
 
     .close-icon svg {
