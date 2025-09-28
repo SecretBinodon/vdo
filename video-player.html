@@ -29,6 +29,7 @@
         --input-bg: #444444;
         --input-border: #555555;
         --footer-bg: #1e1e1e;
+        --highlight-color: #e74c3c;
     }
 
     .ad-container {
@@ -40,17 +41,18 @@
     }
 
     html, body {
-        overflow-x: hidden;
         margin: 0;
         padding: 0;
         height: 100%;
         font-family: sans-serif; 
         background-color: var(--bg-primary); 
         color: var(--text-primary); 
+        display: flex;
+        flex-direction: column;
     }
-    
-    body.no-scroll {
-        overflow: hidden;
+
+    main {
+        flex-grow: 1;
     }
     
     .header {
@@ -476,23 +478,6 @@
         padding-bottom: 20px;
     }
     
-    .panel-video-title {
-        font-size: 20px;
-        font-weight: bold;
-        color: var(--text-primary);
-        word-wrap: break-word;
-        word-break: break-all;
-        margin: 0 0 10px 0;
-    }
-    
-    .panel-description-text {
-        font-size: 14px;
-        color: var(--text-secondary);
-        text-align: justify;
-        line-height: 1.6;
-        margin-top: 10px;
-    }
-
     /* Styles for the new disclaimer content */
     #panel-content-container h1 {
         margin:0 0 14px 0;
@@ -516,7 +501,7 @@
 
     .highlight {
       font-weight:700;
-      color:var(--text-link);
+      color:var(--highlight-color);
     }
     
     @media (min-width: 768px) {
@@ -597,6 +582,7 @@
         text-align: center;
         padding: 20px 10px;
         margin-top: 3px;
+        flex-shrink: 0;
     }
 
     .footer-links {
@@ -1031,12 +1017,10 @@
             descriptionPanel.style.top = videoBottom + 'px';
             descriptionPanel.style.height = `calc(100vh - ${videoBottom}px)`;
             descriptionPanel.classList.add('active');
-            document.body.classList.add('no-scroll');
         });
 
         closePanelBtn.addEventListener('click', () => {
             descriptionPanel.classList.remove('active');
-            document.body.classList.remove('no-scroll');
         });
 
         // ইভেন্ট লিসেনার সেট আপ করা
