@@ -39,16 +39,15 @@
       text-align: center;
     }
 
-    body {
-        font-family: sans-serif;
-        background-color: var(--bg-primary); 
-        color: var(--text-primary); 
+    html, body {
+        overflow-x: hidden;
         margin: 0;
         padding: 0;
-        min-height: 100vh; 
-        display: flex; 
-        flex-direction: column;
-        overflow-x: hidden; 
+        height: 100%;
+    }
+    
+    body.no-scroll {
+        overflow: hidden;
     }
     
     .header {
@@ -409,7 +408,7 @@
 
     /* Description Panel Styles (নতুন) */
     #description-panel {
-        position: absolute; /* Changed to absolute for dynamic positioning */
+        position: absolute; 
         left: 0;
         width: 100%;
         background-color: var(--modal-bg);
@@ -422,8 +421,7 @@
         box-sizing: border-box;
         visibility: hidden;
         pointer-events: none;
-        overflow-y: auto; /* Allow scrolling inside the panel */
-        max-height: calc(100vh - 100px); /* fallback for older browsers */
+        overflow-y: auto; 
     }
 
     #description-panel.active {
@@ -661,7 +659,7 @@
             <div class="video-container" id="video-container">
                 </div>
             
-            <div class="video-title-bar">
+            <div class="video-title-bar" id="video-title-bar">
                 <div class="title-and-more-container">
                     <h1 id="video-title">Loading...</h1>
                     <p class="more-text" id="open-description-btn">Description: more...</p>
@@ -1031,14 +1029,16 @@
         
         // ডেসক্রিপশন প্যানেলের ইভেন্ট লিসেনার
         openDescriptionBtn.addEventListener('click', () => {
-            const videoBottom = document.getElementById('video-embed-section').getBoundingClientRect().bottom;
+            const videoBottom = videoContainer.getBoundingClientRect().bottom;
             descriptionPanel.style.top = videoBottom + 'px';
             descriptionPanel.style.height = `calc(100vh - ${videoBottom}px)`;
             descriptionPanel.classList.add('active');
+            document.body.classList.add('no-scroll');
         });
 
         closePanelBtn.addEventListener('click', () => {
             descriptionPanel.classList.remove('active');
+            document.body.classList.remove('no-scroll');
         });
 
         // ইভেন্ট লিসেনার সেট আপ করা
@@ -1107,7 +1107,7 @@
         // Ensure panel position is correct on resize
         window.addEventListener('resize', () => {
             if(descriptionPanel.classList.contains('active')) {
-                const videoBottom = document.getElementById('video-embed-section').getBoundingClientRect().bottom;
+                const videoBottom = videoContainer.getBoundingClientRect().bottom;
                 descriptionPanel.style.top = videoBottom + 'px';
                 descriptionPanel.style.height = `calc(100vh - ${videoBottom}px)`;
             }
