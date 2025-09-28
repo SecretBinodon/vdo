@@ -60,13 +60,11 @@
         color: #fff;
         padding: 10px 20px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        position: relative;
-        overflow: hidden;
+        position: sticky; top:0; z-index:50;
         display: flex;
         justify-content: space-between; 
         align-items: center;
         gap: 10px;
-        position: sticky; top:0; z-index:50;
     }
     .header-left {
         display: flex;
@@ -505,9 +503,6 @@
     }
     
     @media (min-width: 768px) {
-        .panel-video-title {
-            text-align: left;
-        }
         .panel-content {
             align-items: flex-start;
         }
@@ -547,9 +542,6 @@
         /* মোবাইল ডেসক্রিপশন প্যানেল স্টাইল */
         #description-panel {
             padding: 15px;
-        }
-        .panel-video-title {
-            text-align: center;
         }
         .panel-content {
             align-items: center;
@@ -755,6 +747,7 @@
         const descriptionPanel = document.getElementById('description-panel');
         const closePanelBtn = document.getElementById('close-panel-btn');
         const panelContentContainer = document.getElementById('panel-content-container');
+        const footer = document.querySelector('footer');
         
         // Full HTML for the disclaimer content
         const disclaimerContent = `
@@ -1012,10 +1005,14 @@
         
         // ডেসক্রিপশন প্যানেলের ইভেন্ট লিসেনার
         openDescriptionBtn.addEventListener('click', () => {
-            panelContentContainer.innerHTML = disclaimerContent; // Add the content here
-            const videoBottom = videoContainer.getBoundingClientRect().bottom;
-            descriptionPanel.style.top = videoBottom + 'px';
-            descriptionPanel.style.height = `calc(100vh - ${videoBottom}px)`;
+            panelContentContainer.innerHTML = disclaimerContent;
+            
+            const videoBottom = videoContainer.getBoundingClientRect().bottom + window.scrollY;
+            const footerTop = footer.getBoundingClientRect().top + window.scrollY;
+            
+            descriptionPanel.style.top = `${videoBottom}px`;
+            descriptionPanel.style.height = `calc(${footerTop}px - ${videoBottom}px)`;
+            
             descriptionPanel.classList.add('active');
         });
 
@@ -1089,9 +1086,10 @@
         // Ensure panel position is correct on resize
         window.addEventListener('resize', () => {
             if(descriptionPanel.classList.contains('active')) {
-                const videoBottom = videoContainer.getBoundingClientRect().bottom;
-                descriptionPanel.style.top = videoBottom + 'px';
-                descriptionPanel.style.height = `calc(100vh - ${videoBottom}px)`;
+                const videoBottom = videoContainer.getBoundingClientRect().bottom + window.scrollY;
+                const footerTop = footer.getBoundingClientRect().top + window.scrollY;
+                descriptionPanel.style.top = `${videoBottom}px`;
+                descriptionPanel.style.height = `calc(${footerTop}px - ${videoBottom}px)`;
             }
         });
 
