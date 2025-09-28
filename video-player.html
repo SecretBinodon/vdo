@@ -744,7 +744,7 @@
         const panelDescriptionText = descriptionPanel.querySelector('.panel-description-text');
 
         // এই ডেসক্রিপশনটি সব ভিডিওর জন্য ব্যবহার করা হবে
-        const fixedDescription = `এই ভিডিওটি বিনোদনের উদ্দেশ্যে তৈরি করা হয়েছে। এখানে প্রদর্শিত সকল চরিত্র এবং ঘটনা কাল্পনিক। এটি শুধুমাত্র দর্শককে আনন্দ দেওয়ার জন্য তৈরি। এই ডেসক্রিপশনটি আরও বেশি লেখা যোগ করার জন্য বাড়ানো হলো যাতে স্ক্রলিং কাজ করে কিনা তা পরীক্ষা করা যায়। Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`;
+        const fixedDescription = `All videos available on this platform are intended for adult audiences aged 18 years and above. The content provided here is for educational, entertainment, and legal purposes only. We strictly avoid any copyrighted or illegal material. The videos you see are uploaded in accordance with all applicable laws, and we do not take responsibility for content originating outside this platform. By accessing this content, you confirm that you are 18 years or older and consent to viewing adult material. Please note: Any inappropriate or illegal usage of content from this platform is strictly prohibited. We encourage responsible viewing. All content is monitored and presented under safe guidelines to ensure compliance with applicable policies and ad network rules. Important Points: No copyrighted content is used. All content is legally shared and safe for adults. Viewer discretion is advised. The platform maintains compliance with ad network policies to ensure ads can run safely. This description is universal and will appear on all videos, ensuring that both viewers and ad networks understand the content is safe, legal, and age-restricted.`;
 
 
         function getDeviceId() {
@@ -940,7 +940,7 @@
 
                     // প্যানেলের তথ্য সেট করা
                     panelTitle.textContent = currentCardData.title;
-                    panelDescriptionText.textContent = fixedDescription;
+                    panelDescriptionText.innerHTML = fixedDescription; // এখানে innerHTML ব্যবহার করা হয়েছে যাতে HTML ট্যাগগুলো রেন্ডার হয়
 
                     const videoObserver = new IntersectionObserver((entries) => {
                         entries.forEach(entry => {
