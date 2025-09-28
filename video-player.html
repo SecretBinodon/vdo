@@ -175,10 +175,10 @@
     
     .video-stats {
         display: flex;
-        justify-content: space-between; /* Aligned icons to left, center, right */
+        justify-content: space-between; /* আইকনগুলো বাম, মাঝ এবং ডানে স্থাপন করা হয়েছে */
         align-items: center;
         width: 100%;
-        gap: 5px; /* Reduced gap between icons */
+        gap: 5px; 
     }
 
     .card-stats {
@@ -187,13 +187,22 @@
         background-color: var(--category-bg); 
         border-radius: 10px;
         padding: 5px 8px;
-        flex: 1; /* Allow flex to grow and shrink */
+        /* flex: 1;  এই প্রপার্টিটি মুছে দেওয়া হয়েছে যাতে ব্যাকগ্রাউন্ড অতিরিক্ত বড় না হয় */
         justify-content: center;
-        white-space: nowrap; /* Prevent text wrapping */
-        overflow: hidden; /* Hide overflow */
-        text-overflow: ellipsis; /* Add ellipsis */
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis; 
     }
-
+    
+    .video-stats .card-stats:nth-child(1) {
+        justify-content: flex-start;
+    }
+    .video-stats .card-stats:nth-child(2) {
+        justify-content: center;
+    }
+    .video-stats .card-stats:nth-child(3) {
+        justify-content: flex-end;
+    }
     .card-stats:nth-child(1) {
         justify-content: flex-start;
     }
@@ -203,7 +212,6 @@
     .card-stats:nth-child(3) {
         justify-content: flex-end;
     }
-
     .card-stats .icon {
         margin-right: 5px;
         width: 20px;
@@ -398,7 +406,7 @@
     .card-footer {
         display: flex;
         align-items: center;
-        justify-content: space-between; /* দুটি আইকনের মাঝে পর্যাপ্ত ফাঁকা স্থান তৈরি করা হয়েছে */
+        justify-content: space-between; /* দুটি আইকনের মাঝে পর্যাপ্ত ফাঁকা স্থান তৈরি করা হয়েছে */
         padding: 0 10px 10px 10px;
         box-sizing: border-box;
     }
