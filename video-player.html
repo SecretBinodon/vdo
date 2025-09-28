@@ -485,13 +485,31 @@
         margin: 0 0 10px 0;
     }
     
-    .panel-description-text {
-        font-size: 14px;
-        color: var(--text-secondary);
-        text-align: justify;
-        line-height: 1.6;
-        margin-top: 10px;
+    /* New styles for the Disclaimer content */
+    #description-content h1 {
+        margin: 0 0 14px 0;
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text-primary); /* Changed to use var */
+        text-align: left;
     }
+
+    #description-content p {
+        margin: 0 0 12px 0;
+        color: var(--text-secondary); /* Changed to use var */
+        max-width: none;
+        font-size: 14px;
+    }
+    #description-content ul {
+        margin: 0 0 12px 20px;
+        color: var(--text-secondary); /* Changed to use var */
+        font-size: 14px;
+    }
+    #description-content .highlight {
+        font-weight: 700;
+        color: #e74c3c;
+    }
+
     @media (min-width: 768px) {
         .panel-video-title {
             text-align: left;
@@ -541,6 +559,12 @@
         }
         .panel-content {
             align-items: center;
+        }
+        #description-content h1 {
+            font-size: 18px;
+        }
+        #description-content p, #description-content ul {
+            font-size: 13px;
         }
     }
 
@@ -681,7 +705,7 @@
 
     <div id="description-panel">
         <div class="panel-header">
-            <h2 class="panel-title">Description</h2>
+            <h2 class="panel-title">Disclaimer &amp; Content Information</h2>
             <div class="close-icon" id="close-panel-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
@@ -689,9 +713,36 @@
             </div>
         </div>
         <hr class="panel-divider">
-        <div class="panel-content">
-            <h3 class="panel-video-title"></h3>
-            <p class="panel-description-text"></p>
+        <div class="panel-content" id="description-content">
+            <p>
+                All videos available on this platform are intended for adult audiences aged 18 years and above.
+                The content provided here is for <span class="highlight">educational, entertainment, and legal purposes only</span>.
+                We strictly avoid any copyrighted or illegal material.
+            </p>
+
+            <p>
+                The videos you see are uploaded in accordance with all applicable laws, and we do not take responsibility for content
+                originating outside this platform. By accessing this content, you confirm that you are 18 years or older and consent to viewing
+                adult material.
+            </p>
+
+            <p>
+                Please note: Any inappropriate or illegal usage of content from this platform is strictly prohibited. We encourage responsible viewing.
+                All content is monitored and presented under safe guidelines to ensure compliance with applicable policies and ad network rules.
+            </p>
+
+            <p><span class="highlight">Important Points:</span></p>
+            <ul>
+                <li>No copyrighted content is used.</li>
+                <li>All content is legally shared and safe for adults.</li>
+                <li>Viewer discretion is advised.</li>
+                <li>The platform maintains compliance with ad network policies to ensure ads can run safely.</li>
+            </ul>
+
+            <p>
+                This description is universal and will appear on all videos, ensuring that both viewers and ad networks understand the content
+                is <span class="highlight">safe, legal, and age-restricted</span>.
+            </p>
         </div>
     </div>
 
@@ -740,11 +791,8 @@
         const openDescriptionBtn = document.getElementById('open-description-btn');
         const descriptionPanel = document.getElementById('description-panel');
         const closePanelBtn = document.getElementById('close-panel-btn');
-        const panelTitle = descriptionPanel.querySelector('.panel-video-title');
-        const panelDescriptionText = descriptionPanel.querySelector('.panel-description-text');
-
-        // এই ডেসক্রিপশনটি সব ভিডিওর জন্য ব্যবহার করা হবে
-        const fixedDescription = `All videos available on this platform are intended for adult audiences aged 18 years and above. The content provided here is for educational, entertainment, and legal purposes only. We strictly avoid any copyrighted or illegal material. The videos you see are uploaded in accordance with all applicable laws, and we do not take responsibility for content originating outside this platform. By accessing this content, you confirm that you are 18 years or older and consent to viewing adult material. Please note: Any inappropriate or illegal usage of content from this platform is strictly prohibited. We encourage responsible viewing. All content is monitored and presented under safe guidelines to ensure compliance with applicable policies and ad network rules. Important Points: No copyrighted content is used. All content is legally shared and safe for adults. Viewer discretion is advised. The platform maintains compliance with ad network policies to ensure ads can run safely. This description is universal and will appear on all videos, ensuring that both viewers and ad networks understand the content is safe, legal, and age-restricted.`;
+        const panelVideoTitle = descriptionPanel.querySelector('.panel-video-title');
+        const descriptionContent = document.getElementById('description-content');
 
 
         function getDeviceId() {
@@ -939,8 +987,8 @@
                     getAndUpdateStats(cardId, videoViewCountEl, videoLoveCountEl, videoLoveStatsBtn);
 
                     // প্যানেলের তথ্য সেট করা
-                    panelTitle.textContent = currentCardData.title;
-                    panelDescriptionText.innerHTML = fixedDescription; // এখানে innerHTML ব্যবহার করা হয়েছে যাতে HTML ট্যাগগুলো রেন্ডার হয়
+                    // panelVideoTitle.textContent = currentCardData.title;  // এই লাইনটি বাদ দেওয়া হয়েছে, কারণ ডিসক্লেইমার কোডে হেডিং রয়েছে।
+                    // descriptionContent.innerHTML = fixedDescription; // এই লাইনটিও বাদ দেওয়া হয়েছে।
 
                     const videoObserver = new IntersectionObserver((entries) => {
                         entries.forEach(entry => {
