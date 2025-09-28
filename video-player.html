@@ -417,21 +417,23 @@
 
     /* Description Panel Styles */
     #description-panel {
-        position: fixed; /* Changed from absolute to fixed */
-        top: 0;
+        position: fixed;
+        bottom: 0; /* Align to the bottom */
         left: 0;
         width: 100%;
-        height: 100%; /* Now takes full screen height */
+        height: 0; /* Initially hidden */
         background-color: var(--modal-bg);
         z-index: 1000;
         transform: translateY(100%);
-        transition: transform 0.3s ease-in-out;
+        transition: transform 0.3s ease-in-out, height 0.3s ease-in-out;
         display: flex;
         flex-direction: column;
         box-sizing: border-box;
         visibility: hidden;
         pointer-events: none;
-        overflow: auto; /* Allow scrolling inside */
+        overflow: hidden; /* Hide content initially */
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
     }
 
     #description-panel.active {
@@ -440,10 +442,6 @@
         pointer-events: auto;
     }
     
-    #description-panel.active .panel-content-wrapper {
-        display: flex;
-    }
-
     .panel-header {
         display: flex;
         justify-content: space-between;
@@ -455,10 +453,13 @@
     
     .panel-content-wrapper {
         flex-grow: 1;
-        display: none; /* Initially hidden */
-        flex-direction: column;
-        overflow-y: auto;
+        overflow-y: auto; /* Allow scrolling inside */
         padding: 0 20px 20px 20px;
+    }
+    
+    #description-panel.active .panel-content-wrapper {
+        display: flex;
+        flex-direction: column;
     }
 
     .panel-header h2 {
@@ -512,25 +513,6 @@
       color:var(--highlight-color);
     }
     
-    @media (min-width: 768px) {
-        .panel-content {
-            align-items: flex-start;
-        }
-        #description-panel {
-            max-width: 50%;
-            left: 50%;
-            transform: translate(-50%, 100%);
-            border-radius: 10px 10px 0 0;
-            height: auto;
-            max-height: 80%;
-            bottom: 0;
-        }
-
-        #description-panel.active {
-            transform: translate(-50%, 0);
-        }
-    }
-
     /*======================================
       মোবাইল ভিউয়ের জন্য স্টাইল (767px এবং তার নিচে)
     ======================================*/
@@ -565,12 +547,31 @@
         /* মোবাইল ডেসক্রিপশন প্যানেল স্টাইল */
         #description-panel {
             padding: 15px;
+            height: 60vh; /* নির্দিষ্ট উচ্চতা, স্ক্রল সহ */
         }
+    }
+    
+    /*======================================
+     ডেস্কটপ ভিউয়ের জন্য স্টাইল (768px এবং তার উপরে)
+    ======================================*/
+    @media (min-width: 768px) {
         .panel-content {
-            align-items: center;
+            align-items: flex-start;
         }
-        #panel-content-container h1 {
-            font-size: 18px;
+        #description-panel {
+            width: 100%; /* সম্পূর্ণ প্রস্থ জুড়ে থাকবে */
+            max-width: 800px; /* একটি নির্দিষ্ট সর্বোচ্চ প্রস্থ দেওয়া হয়েছে */
+            left: 50%;
+            transform: translate(-50%, 100%);
+            border-radius: 10px 10px 0 0;
+            height: auto;
+            max-height: 80vh; /* স্ক্রিনের সর্বোচ্চ উচ্চতা অনুযায়ী */
+            bottom: 0;
+            padding: 20px;
+        }
+
+        #description-panel.active {
+            transform: translate(-50%, 0);
         }
     }
     
