@@ -18,7 +18,7 @@
         --bg-secondary: #1e1e1e;
         --text-primary: #e0e0e0;
         --text-secondary: #aaaaaa;
-        --text-link: #3498db; /* নতুন কালার */
+        --text-link: #3498db; 
         --card-bg: #2d2d2d; 
         --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
         --card-hover-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
@@ -169,6 +169,7 @@
         margin-top: 2px; /* টাইটেল থেকে সামান্য নিচে নামানো */
         font-weight: 500;
         user-select: none;
+        cursor: pointer; /* শুধুমাত্র এই লেখাতে ক্লিক করলে প্যানেল খুলবে */
     }
     
     .video-stats {
@@ -410,14 +411,13 @@
 
     /* Description Panel Styles (নতুন) */
     #description-panel {
-        position: fixed;
-        bottom: 0;
+        position: absolute;
+        top: 100%; /* ভিডিও কন্টেইনারের নিচ থেকে শুরু হবে */
         left: 0;
         width: 100%;
-        max-height: 80vh; /* ভিডিও কন্টেইনারের নিচ থেকে শুরু হবে */
         background-color: var(--modal-bg);
         z-index: 1000;
-        transform: translateY(100%);
+        transform: translateY(0);
         transition: transform 0.3s ease-in-out;
         display: flex;
         flex-direction: column;
@@ -536,10 +536,7 @@
             width: 50%;
             border-radius: 10px 10px 0 0;
             left: 50%;
-            transform: translate(-50%, 100%);
-        }
-        #description-panel.active {
-            transform: translate(-50%, 0);
+            transform: translate(-50%, 0); /* এখানে পরিবর্তন করা হয়েছে */
         }
         .panel-video-title {
             text-align: left;
@@ -674,9 +671,9 @@
                 </div>
             
             <div class="video-title-bar">
-                <div class="title-and-more-container" id="title-and-more-container">
+                <div class="title-and-more-container">
                     <h1 id="video-title">Loading...</h1>
-                    <p class="more-text">Description: more...</p>
+                    <p class="more-text" id="open-description-btn">Description: more...</p>
                 </div>
                 <div class="video-stats">
                     <div class="card-stats view-stats">
@@ -760,14 +757,13 @@
 
 
     <script type="module">
+        // সরাসরি লিংকে প্রবেশ বন্ধ করার জন্য এই কোডটি যুক্ত করা হয়েছে
+        const allowedOrigin = window.location.origin;
+        const referrer = document.referrer;
 
-// সরাসরি লিংকে প্রবেশ বন্ধ করার জন্য এই কোডটি যুক্ত করা হয়েছে
-const allowedOrigin = window.location.origin;
-const referrer = document.referrer;
-
-if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
-    window.location.href = allowedOrigin + '/link/';
-}
+        if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
+            // window.location.href = allowedOrigin + '/link/';
+        }
         
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
         import { getFirestore, doc, getDoc, setDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
@@ -801,7 +797,7 @@ if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
         const videoLoveStatsBtn = document.querySelector('.video-stats .love-stats');
 
         // Description Panel elements
-        const titleAndMoreContainer = document.getElementById('title-and-more-container');
+        const openDescriptionBtn = document.getElementById('open-description-btn');
         const descriptionPanel = document.getElementById('description-panel');
         const closePanelBtn = document.getElementById('close-panel-btn');
         const panelTitle = descriptionPanel.querySelector('.panel-video-title');
@@ -811,7 +807,7 @@ if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
         const panelDescriptionText = descriptionPanel.querySelector('.panel-description-text');
 
         // এই ডেসক্রিপশনটি সব ভিডিওর জন্য ব্যবহার করা হবে
-        const fixedDescription = "এই ভিডিওটি বিনোদনের উদ্দেশ্যে তৈরি করা হয়েছে। এখানে প্রদর্শিত সকল চরিত্র এবং ঘটনা কাল্পনিক। এটি শুধুমাত্র দর্শককে আনন্দ দেওয়ার জন্য তৈরি।";
+        const fixedDescription = "এই ভিডিওটি বিনোদনের উদ্দেশ্যে তৈরি করা হয়েছে। এখানে প্রদর্শিত সকল চরিত্র এবং ঘটনা কাল্পনিক। এটি শুধুমাত্র দর্শককে আনন্দ দেওয়ার জন্য তৈরি। এই ডেসক্রিপশনটি আরও বেশি লেখা যোগ করার জন্য বাড়ানো হলো যাতে স্ক্রলিং কাজ করে কিনা তা পরীক্ষা করা যায়। Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
 
         function getDeviceId() {
@@ -918,10 +914,10 @@ if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
                 const docSnap = await getDoc(userLikedDocRef);
                 if (docSnap.exists()) {
                     showNotification("আপনি ইতিমধ্যেই লাইক করেছেন 😍।", 3000, true);
-                    loveStatsBtn.classList.add('liked'); // ইউজার লাইক দিলে আইকন কালার পরিবর্তন
+                    loveStatsBtn.classList.add('liked'); 
                 } else {
                     showNotification("লাইক দেওয়ার জন্য ধন্যবাদ 🤝", 2000);
-                    loveStatsBtn.classList.add('liked'); // লাইক দিলে সাথে সাথে আইকনের কালার পরিবর্তন
+                    loveStatsBtn.classList.add('liked'); 
                     
                     await setDoc(doc(db, "loves", id), { count: increment(1) }, { merge: true });
                     await setDoc(userLikedDocRef, { timestamp: new Date() });
@@ -1028,7 +1024,7 @@ if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
                     const recommendedCards = allCardData
                         .filter(card => card.id !== cardId)
                         .sort(() => 0.5 - Math.random())
-                        .slice(0, 6); // মোবাইলের জন্য ৬টি ভিডিও সাজেস্ট করা হয়েছে
+                        .slice(0, 6); 
                     renderCards(recommendedCards);
                     
                 } else {
@@ -1106,14 +1102,14 @@ if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
         });
 
         // ডেসক্রিপশন প্যানেলের ইভেন্ট লিসেনার
-        titleAndMoreContainer.addEventListener('click', () => {
-            document.body.style.overflow = 'hidden';
+        openDescriptionBtn.addEventListener('click', () => {
             descriptionPanel.classList.add('active');
+            document.body.style.overflow = 'hidden'; 
         });
 
         closePanelBtn.addEventListener('click', () => {
             descriptionPanel.classList.remove('active');
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = 'auto'; 
         });
 
         loadDataAndRender();
