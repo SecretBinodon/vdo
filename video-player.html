@@ -965,6 +965,7 @@
 
                     getAndUpdateStats(cardId, videoViewCountEl, videoLoveCountEl, videoLoveStatsBtn);
 
+                    // ভিউ আপডেট করার জন্য কোড
                     const videoObserver = new IntersectionObserver((entries) => {
                         entries.forEach(entry => {
                             if (entry.isIntersecting) {
