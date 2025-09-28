@@ -139,8 +139,8 @@
         border-radius: 10px;
         margin-top: 3px;
         display: flex;
-        flex-direction: column; /* Changed to column for title/stats separation */
-        gap: 5px; /* Reduced gap */
+        flex-direction: column;
+        gap: 5px; 
     }
 
     .video-title-bar.open {
@@ -179,7 +179,7 @@
         align-items: center;
         width: 100%;
         gap: 5px;
-        background-color: var(--category-bg); /* Single background for all icons */
+        background-color: var(--category-bg);
         border-radius: 10px;
         padding: 8px 12px;
         box-sizing: border-box;
@@ -188,11 +188,13 @@
     .card-stats {
         display: flex;
         align-items: center;
-        /* Removed individual background for each card-stats */
         justify-content: center;
         white-space: nowrap; 
         overflow: hidden; 
         text-overflow: ellipsis; 
+        background-color: var(--category-bg);
+        border-radius: 10px;
+        padding: 5px 8px;
     }
 
     .card-stats .icon {
@@ -239,11 +241,11 @@
         transition: transform 0.2s ease;
     }
     .loader {
-        border: 4px solid #444;
-        border-top: 4px solid #3498db;
+        border: 3px solid #444;
+        border-top: 3px solid #3498db;
         border-radius: 50%;
-        width: 18px;
-        height: 18px;
+        width: 12px;
+        height: 12px;
         animation: spin 1s linear infinite;
         flex-shrink: 0;
     }
@@ -389,7 +391,7 @@
     .card-footer {
         display: flex;
         align-items: center;
-        justify-content: space-between; /* দুটি আইকনের মাঝে পর্যাপ্ত ফাঁকা স্থান তৈরি করা হয়েছে */
+        justify-content: space-between;
         padding: 0 10px 10px 10px;
         box-sizing: border-box;
     }
@@ -435,7 +437,7 @@
     }
 
     .description-container.active {
-        max-height: 1000px; /* প্রয়োজন অনুযায়ী মান পরিবর্তন করা হয়েছে */
+        max-height: 1000px;
         padding: 15px;
     }
 
@@ -457,13 +459,13 @@
         width: 24px;
         height: 24px;
         cursor: pointer;
-        transition: transform 0.2s ease; /* জুম ইফেক্টের জন্য transition */
+        transition: transform 0.2s ease;
     }
     
     .close-icon:focus,
     .close-icon:active {
-        outline: none; /* নীল আউটলাইন অপসারণ করা হয়েছে */
-        transform: scale(1.1); /* ক্লিকের সময় জুম ইফেক্ট যোগ করা হয়েছে */
+        outline: none;
+        transform: scale(1.1);
     }
 
     .close-icon svg {
@@ -478,7 +480,7 @@
 
     .description-content {
         line-height: 1.6;
-        padding-bottom: 20px; /* ডিসক্রিপশনের নিচের ফাঁকা স্থান বাড়ানো হয়েছে */
+        padding-bottom: 20px;
     }
 
     #description-content p {
@@ -504,7 +506,6 @@
     .video-title-bar {
         transition: border-radius 0.3s ease;
     }
-
 
     @media (max-width: 767px) {
         .header { padding: 8px 10px; gap: 5px; }
