@@ -43,7 +43,7 @@
         overflow-x: hidden;
         margin: 0;
         padding: 0;
-        min-height: 100%; /* Changed to min-height to ensure the body can expand */
+        min-height: 100%; 
         font-family: sans-serif; 
         background-color: var(--bg-primary); 
         color: var(--text-primary); 
@@ -414,13 +414,12 @@
 
     /* Description Panel Styles */
     #description-panel {
-        position: absolute;
-        top: 100%; /* Initially below the content */
+        position: fixed; /* Changed to fixed for proper positioning on scroll */
         left: 0;
         width: 100%;
         background-color: var(--modal-bg);
         z-index: 1000;
-        transform: translateY(0);
+        transform: translateY(100%);
         transition: transform 0.3s ease-in-out;
         display: flex;
         flex-direction: column;
@@ -428,9 +427,9 @@
         box-sizing: border-box;
         visibility: hidden;
         pointer-events: none;
-        overflow-y: auto;
+        overflow-y: auto; 
     }
-    
+
     #description-panel.active {
         transform: translateY(0);
         visibility: visible;
@@ -492,19 +491,19 @@
         margin: 0 0 14px 0;
         font-size: 20px;
         font-weight: 700;
-        color: var(--text-primary); /* Changed to use var */
+        color: var(--text-primary); 
         text-align: left;
     }
 
     #description-content p {
         margin: 0 0 12px 0;
-        color: var(--text-secondary); /* Changed to use var */
+        color: var(--text-secondary); 
         max-width: none;
         font-size: 14px;
     }
     #description-content ul {
         margin: 0 0 12px 20px;
-        color: var(--text-secondary); /* Changed to use var */
+        color: var(--text-secondary); 
         font-size: 14px;
     }
     #description-content .highlight {
@@ -522,12 +521,13 @@
         #description-panel {
             max-width: 50%;
             left: 50%;
-            transform: translate(-50%, 0);
+            transform: translate(-50%, 100%);
             border-radius: 10px 10px 0 0;
             height: auto;
-            position: fixed;
-            bottom: 0;
-            top: auto;
+        }
+
+        #description-panel.active {
+            transform: translate(-50%, 0);
         }
     }
 
@@ -565,9 +565,6 @@
         /* মোবাইল ডেসক্রিপশন প্যানেল স্টাইল */
         #description-panel {
             padding: 15px;
-            position: fixed;
-            bottom: 0;
-            top: auto;
             border-radius: 10px 10px 0 0;
             transform: translateY(100%);
         }
@@ -596,8 +593,8 @@
         color: var(--text-secondary);
         text-align: center;
         padding: 20px 10px;
-        margin-top: 20px; /* Added margin to push it down */
-        position: relative; /* Ensure it stays in the flow */
+        margin-top: 20px; 
+        position: relative; 
         width: 100%;
         box-sizing: border-box;
     }
@@ -1026,11 +1023,12 @@
         // ডেসক্রিপশন প্যানেলের ইভেন্ট লিসেনার
         openDescriptionBtn.addEventListener('click', () => {
             const videoTitleBar = document.getElementById('video-title-bar');
-            const videoTitleBarHeight = videoTitleBar.offsetHeight;
-            const descriptionPanelTop = videoTitleBar.offsetTop + videoTitleBarHeight;
-
-            descriptionPanel.style.top = `${descriptionPanelTop}px`;
-            descriptionPanel.style.height = `calc(100% - ${descriptionPanelTop}px)`;
+            const videoTitleBarRect = videoTitleBar.getBoundingClientRect();
+            const videoBottom = videoTitleBarRect.bottom;
+            
+            descriptionPanel.style.top = `${videoBottom}px`;
+            descriptionPanel.style.height = `calc(100vh - ${videoBottom}px)`;
+            
             descriptionPanel.classList.add('active');
             document.body.classList.add('no-scroll');
         });
@@ -1106,11 +1104,12 @@
         // Ensure panel position is correct on resize
         window.addEventListener('resize', () => {
             if(descriptionPanel.classList.contains('active')) {
-                 const videoTitleBar = document.getElementById('video-title-bar');
-                 const videoTitleBarHeight = videoTitleBar.offsetHeight;
-                 const descriptionPanelTop = videoTitleBar.offsetTop + videoTitleBarHeight;
-                 descriptionPanel.style.top = `${descriptionPanelTop}px`;
-                 descriptionPanel.style.height = `calc(100% - ${descriptionPanelTop}px)`;
+                const videoTitleBar = document.getElementById('video-title-bar');
+                const videoTitleBarRect = videoTitleBar.getBoundingClientRect();
+                const videoBottom = videoTitleBarRect.bottom;
+                 
+                descriptionPanel.style.top = `${videoBottom}px`;
+                descriptionPanel.style.height = `calc(100vh - ${videoBottom}px)`;
             }
         });
 
