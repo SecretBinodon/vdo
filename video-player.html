@@ -153,7 +153,7 @@
         flex-direction: column;
         align-items: flex-start;
         flex-grow: 1;
-        justify-content: center; /* এটি উল্লম্বভাবে মাঝখানে আনবে */
+        justify-content: center; 
     }
 
     .video-title-bar h1 {
@@ -411,7 +411,7 @@
         pointer-events: auto;
     }
 
-    /* Description Panel Styles (নতুন) */
+    /* Description Panel Styles */
     #description-panel {
         position: absolute; 
         left: 0;
@@ -462,12 +462,6 @@
         height: 100%;
     }
 
-    .panel-divider {
-        border: none;
-        border-top: 1px solid var(--divider-color);
-        margin: 10px 0;
-    }
-
     .panel-content {
         flex-grow: 1;
         display: flex;
@@ -487,18 +481,31 @@
     
     .panel-stats-container {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-between; /* এটি আপলোড সময়, ভিউ এবং লাইক এর মধ্যে সঠিক দূরত্ব দেবে */
         align-items: center;
         width: 100%;
         padding: 0 5px;
         margin-bottom: 10px;
     }
+
     .panel-stats-item {
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
+        flex-grow: 1; /* এটি মাঝের উপাদানটিকে মাঝখানে রাখতে সাহায্য করবে */
     }
+    
+    .panel-stats-item:first-child {
+        align-items: flex-start;
+        flex-grow: 0;
+    }
+
+    .panel-stats-item:last-child {
+        align-items: flex-end;
+        flex-grow: 0;
+    }
+
     .panel-stats-item .label {
         font-size: 12px;
         color: var(--text-secondary);
@@ -516,6 +523,8 @@
         text-align: justify;
         line-height: 1.6;
         margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid var(--divider-color); /* নতুন বর্ডার যোগ করা হয়েছে */
     }
     @media (min-width: 768px) {
         .panel-video-title {
@@ -572,11 +581,18 @@
             text-align: center;
         }
         .panel-stats-container {
-            justify-content: center;
-            gap: 20px;
+            justify-content: space-between; /* মোবাইল ভিউয়েও সঠিক স্পেস দেবে */
+            gap: 0;
+            padding: 0;
         }
         .panel-stats-item {
             align-items: center;
+        }
+        .panel-stats-item:first-child {
+            align-items: flex-start;
+        }
+        .panel-stats-item:last-child {
+            align-items: flex-end;
         }
         .panel-content {
             align-items: center;
@@ -585,11 +601,11 @@
 
     @media (min-width: 768px) {
         #description-panel {
-            max-width: 50%; /* limit width on desktop */
+            max-width: 50%; 
             left: 50%;
             transform: translate(-50%, 100%);
             border-radius: 10px 10px 0 0;
-            height: auto; /* Dynamic height */
+            height: auto; 
         }
 
         #description-panel.active {
@@ -744,7 +760,6 @@
                     <span class="value"></span>
                 </div>
             </div>
-            <hr class="panel-divider">
             <p class="panel-description-text"></p>
         </div>
     </div>
