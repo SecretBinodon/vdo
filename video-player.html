@@ -798,40 +798,51 @@
             }, duration);
         }
         
-        // ভিউ কাউন্ট আপডেট করা
-        async function updateViewCount(id) {
+        // ভিউ কাউন্ট আপডেট করার জন্য নতুন ফাংশন
+        async function updateViewAndFetch(id, viewEl) {
             if (viewUpdated) return;
-            const viewsRef = doc(db, "views", id);
+            viewUpdated = true; // শুধু একবার আপডেট হবে
+
+            const viewsDocRef = doc(db, "views", id);
             try {
-                await setDoc(viewsRef, { count: increment(1) }, { merge: true });
-                viewUpdated = true;
-                console.log(`View count for ${id} updated.`);
+                const viewsSnap = await getDoc(viewsDocRef);
+                
+                // ভিউ বৃদ্ধি করা
+                if (viewsSnap.exists()) {
+                    await setDoc(viewsDocRef, { count: increment(1) }, { merge: true });
+                } else {
+                    await setDoc(viewsDocRef, { count: 1 }, { merge: true });
+                }
+
+                // রিয়েল-টাইম লিসেনার সেট করা
+                onSnapshot(viewsDocRef, (docSnap) => {
+                    const viewCount = docSnap.exists() ? docSnap.data().count : 0;
+                    if (viewEl) viewEl.textContent = formatCount(viewCount);
+                }, (error) => {
+                    console.error("Error getting views:", error);
+                    if (viewEl) viewEl.textContent = 'Error';
+                });
+
             } catch (error) {
                 console.error("Error updating view count:", error);
-                showNotification('Failed to update view count.', 3000, true);
+                if (viewEl) viewEl.textContent = 'Error';
             }
         }
-
+        
         // লাইভ ডেটা এবং স্ট্যাটাস আপডেট করা
         function getAndUpdateStats(id, viewEl, loveEl, loveBtn) {
             if (!id) return;
             
-            const viewsDocRef = doc(db, "views", id);
             const lovesDocRef = doc(db, "loves", id);
             const userLikedDocRef = doc(db, `loves/${id}/users`, deviceId);
-
-            // Fetch and display initial data immediately, then listen for updates
+            
+            // Fetch and display initial data for loves only
             const fetchInitialData = async () => {
                 try {
-                    const [viewsSnap, lovesSnap, userLikedSnap] = await Promise.all([
-                        getDoc(viewsDocRef),
+                    const [lovesSnap, userLikedSnap] = await Promise.all([
                         getDoc(lovesDocRef),
                         getDoc(userLikedDocRef)
                     ]);
-
-                    const viewCount = viewsSnap.exists() ? viewsSnap.data().count : 0;
-                    if (viewEl) viewEl.textContent = formatCount(viewCount);
-
                     const loveCount = lovesSnap.exists() ? lovesSnap.data().count : 0;
                     if (loveEl) loveEl.textContent = formatCount(loveCount);
 
@@ -840,22 +851,13 @@
                     }
                 } catch (error) {
                     console.error("Error fetching initial stats:", error);
-                    if (viewEl) viewEl.textContent = 'Error';
                     if (loveEl) loveEl.textContent = 'Error';
                 }
             };
 
             fetchInitialData();
 
-            // Set up real-time listeners for updates
-            onSnapshot(viewsDocRef, (docSnap) => {
-                const viewCount = docSnap.exists() ? docSnap.data().count : 0;
-                if (viewEl) viewEl.textContent = formatCount(viewCount);
-            }, (error) => {
-                console.error("Error getting views:", error);
-                if (viewEl) viewEl.textContent = 'Error';
-            });
-            
+            // Set up real-time listener for loves
             onSnapshot(lovesDocRef, (docSnap) => {
                 const loveCount = docSnap.exists() ? docSnap.data().count : 0;
                 if (loveEl) loveEl.textContent = formatCount(loveCount);
@@ -940,7 +942,12 @@
             cardsToRender.forEach(data => {
                 const card = createCard(data);
                 recommendedContainer.appendChild(card);
-                getAndUpdateStats(data.id, card.querySelector('.view-stats .count'), card.querySelector('.love-stats .count'), card.querySelector('.love-stats'));
+                getAndUpdateStats(data.id, null, card.querySelector('.love-stats .count'), card.querySelector('.love-stats'));
+                
+                // রিকমেন্ডেড কার্ডের ভিউ আপডেট করা
+                const cardViewEl = card.querySelector('.view-stats .count');
+                updateViewAndFetch(data.id, cardViewEl);
+
                 setTimeout(() => {
                     card.classList.add('visible');
                 }, 50);
@@ -963,19 +970,11 @@
                     videoTitleEl.textContent = currentCardData.title;
                     videoContainer.innerHTML = currentCardData.embed_code;
 
-                    getAndUpdateStats(cardId, videoViewCountEl, videoLoveCountEl, videoLoveStatsBtn);
-
-                    // ভিউ আপডেট করার জন্য কোড
-                    const videoObserver = new IntersectionObserver((entries) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                updateViewCount(cardId);
-                                videoObserver.unobserve(entry.target);
-                            }
-                        });
-                    }, { threshold: 0.5 });
+                    // মূল ভিডিওর ভিউ আপডেট করার জন্য
+                    updateViewAndFetch(cardId, videoViewCountEl);
                     
-                    videoObserver.observe(videoContainer);
+                    // মূল ভিডিওর লাইক আপডেট করার জন্য
+                    getAndUpdateStats(cardId, null, videoLoveCountEl, videoLoveStatsBtn);
 
                     const recommendedCards = allCardData
                         .filter(card => card.id !== cardId)
