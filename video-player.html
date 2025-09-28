@@ -182,6 +182,8 @@
         background-color: var(--category-bg); 
         border-radius: 10px;
         padding: 5px 8px;
+        min-width: 65px; /* Added to fix sizing issue on mobile */
+        justify-content: center;
     }
     .card-stats .icon {
         margin-right: 5px;
@@ -193,6 +195,7 @@
         font-weight: bold;
         color: var(--text-primary); 
         font-size: 14px;
+        min-width: 25px;
     }
     .love-stats {
         cursor: pointer;
@@ -230,6 +233,7 @@
         width: 18px;
         height: 18px;
         animation: spin 1s linear infinite;
+        flex-shrink: 0;
     }
     @keyframes spin {
         0% { transform: rotate(0deg); }
@@ -407,18 +411,24 @@
         visibility: visible;
         pointer-events: auto;
     }
-    
+
     /* Description Styles (New Dropdown/Push Down) */
+    .video-title-bar.open {
+      border-radius: 10px 10px 0 0;
+    }
+    
     .description-container {
-        display: none;
+        max-height: 0;
+        overflow: hidden;
         background-color: var(--card-bg);
-        padding: 15px;
+        padding: 0 15px;
         border-radius: 0 0 10px 10px;
-        transition: padding 0.3s ease, margin-top 0.3s ease;
+        transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .description-container.active {
-        display: block;
+        max-height: 500px; /* Adjust this value as needed based on content length */
+        padding: 15px;
     }
 
     .description-header {
@@ -452,7 +462,6 @@
     }
 
     .description-content {
-        padding-top: 5px;
         line-height: 1.6;
     }
 
@@ -475,6 +484,11 @@
     #recommended-section {
         transition: margin-top 0.3s ease;
     }
+    
+    .video-title-bar {
+        transition: border-radius 0.3s ease;
+    }
+
 
     @media (max-width: 767px) {
         .header { padding: 8px 10px; gap: 5px; }
@@ -711,12 +725,13 @@
         const videoViewCountEl = document.querySelector('.video-stats .view-stats .count');
         const videoLoveCountEl = document.querySelector('.video-stats .love-stats .count');
         const videoLoveStatsBtn = document.querySelector('.video-stats .love-stats');
-
+        
         // Description elements
+        const videoTitleBar = document.getElementById('video-title-bar');
         const openDescriptionBtn = document.getElementById('open-description-btn');
         const closeDescriptionBtn = document.getElementById('close-description-btn');
         const descriptionContainer = document.getElementById('description-container');
-
+        const descriptionContent = document.getElementById('description-content');
 
         function getDeviceId() {
             let deviceId = localStorage.getItem('deviceId');
@@ -938,11 +953,13 @@
         // Description event listeners for the push-down method
         openDescriptionBtn.addEventListener('click', () => {
             descriptionContainer.classList.add('active');
+            videoTitleBar.classList.add('open');
             openDescriptionBtn.style.display = 'none';
         });
 
         closeDescriptionBtn.addEventListener('click', () => {
             descriptionContainer.classList.remove('active');
+            videoTitleBar.classList.remove('open');
             openDescriptionBtn.style.display = 'block';
         });
 
