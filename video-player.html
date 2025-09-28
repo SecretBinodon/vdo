@@ -18,13 +18,14 @@
         --bg-secondary: #1e1e1e;
         --text-primary: #e0e0e0;
         --text-secondary: #aaaaaa;
+        --text-link: #3498db; /* নতুন কালার */
         --card-bg: #2d2d2d; 
         --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
         --card-hover-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
         --divider-color: #444444;
         --category-bg: #3a3a3a;
         --category-text: #e0e0e0;
-        --modal-bg: #2d2d2d; /* ডেসক্রিপশন প্যানেলের ব্যাকগ্রাউন্ড */
+        --modal-bg: #2d2d2d;
         --input-bg: #444444;
         --input-border: #555555;
         --footer-bg: #1e1e1e;
@@ -164,9 +165,10 @@
     
     .more-text {
         font-size: 13px;
-        color: var(--text-secondary);
-        margin-top: -5px;
+        color: var(--text-link); /* লিংক কালার */
+        margin-top: 2px; /* টাইটেল থেকে সামান্য নিচে নামানো */
         font-weight: 500;
+        user-select: none;
     }
     
     .video-stats {
@@ -412,7 +414,7 @@
         bottom: 0;
         left: 0;
         width: 100%;
-        height: 100%;
+        max-height: 80vh; /* ভিডিও কন্টেইনারের নিচ থেকে শুরু হবে */
         background-color: var(--modal-bg);
         z-index: 1000;
         transform: translateY(100%);
@@ -476,21 +478,38 @@
         word-break: break-all;
         margin: 0 0 10px 0;
     }
-
-    .panel-stats {
+    
+    .panel-stats-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: 14px;
-        color: var(--text-secondary);
+        width: 100%;
+        padding: 0 5px;
         margin-bottom: 10px;
     }
-
+    .panel-stats-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .panel-stats-item .label {
+        font-size: 12px;
+        color: var(--text-secondary);
+        white-space: nowrap;
+    }
+    .panel-stats-item .value {
+        font-size: 14px;
+        color: var(--text-primary);
+        font-weight: bold;
+    }
+    
     .panel-description-text {
         font-size: 14px;
         color: var(--text-secondary);
         text-align: justify;
         line-height: 1.6;
+        margin-top: 10px;
     }
 
 
@@ -515,7 +534,6 @@
         /* ডেস্কটপ ডেসক্রিপশন প্যানেল স্টাইল */
         #description-panel {
             width: 50%;
-            height: 80%;
             border-radius: 10px 10px 0 0;
             left: 50%;
             transform: translate(-50%, 100%);
@@ -526,9 +544,12 @@
         .panel-video-title {
             text-align: left;
         }
-        .panel-stats {
+        .panel-stats-container {
             justify-content: flex-start;
             gap: 30px;
+        }
+        .panel-stats-item {
+            align-items: flex-start;
         }
         .panel-content {
             align-items: flex-start;
@@ -573,9 +594,12 @@
         .panel-video-title {
             text-align: center;
         }
-        .panel-stats {
+        .panel-stats-container {
             justify-content: center;
             gap: 20px;
+        }
+        .panel-stats-item {
+            align-items: center;
         }
         .panel-content {
             align-items: center;
@@ -715,10 +739,19 @@
         <hr class="panel-divider">
         <div class="panel-content">
             <h3 class="panel-video-title"></h3>
-            <div class="panel-stats">
-                <span class="panel-view-count">0 views</span>
-                <span class="panel-like-count">0 likes</span>
-                <span class="panel-upload-date"></span>
+            <div class="panel-stats-container">
+                <div class="panel-stats-item upload-date">
+                    <span class="label">আপলোড সময়</span>
+                    <span class="value"></span>
+                </div>
+                <div class="panel-stats-item view-count">
+                    <span class="label">Views</span>
+                    <span class="value"></span>
+                </div>
+                <div class="panel-stats-item like-count">
+                    <span class="label">Likes</span>
+                    <span class="value"></span>
+                </div>
             </div>
             <hr class="panel-divider">
             <p class="panel-description-text"></p>
@@ -772,9 +805,9 @@ if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
         const descriptionPanel = document.getElementById('description-panel');
         const closePanelBtn = document.getElementById('close-panel-btn');
         const panelTitle = descriptionPanel.querySelector('.panel-video-title');
-        const panelViewCount = descriptionPanel.querySelector('.panel-view-count');
-        const panelLikeCount = descriptionPanel.querySelector('.panel-like-count');
-        const panelUploadDate = descriptionPanel.querySelector('.panel-upload-date');
+        const panelViewCount = descriptionPanel.querySelector('.panel-stats-item.view-count .value');
+        const panelLikeCount = descriptionPanel.querySelector('.panel-stats-item.like-count .value');
+        const panelUploadDate = descriptionPanel.querySelector('.panel-stats-item.upload-date .value');
         const panelDescriptionText = descriptionPanel.querySelector('.panel-description-text');
 
         // এই ডেসক্রিপশনটি সব ভিডিওর জন্য ব্যবহার করা হবে
@@ -852,18 +885,22 @@ if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
             onSnapshot(viewsDocRef, (docSnap) => {
                 const viewCount = docSnap.exists() ? docSnap.data().count : 0;
                 if (viewEl) viewEl.textContent = formatCount(viewCount);
+                if (panelViewCount) panelViewCount.textContent = formatCount(viewCount);
             }, (error) => {
                 console.error("Error getting views:", error);
                 if (viewEl) viewEl.textContent = 'Error';
+                if (panelViewCount) panelViewCount.textContent = 'Error';
             });
             
             // লাইকের অবস্থা ও সংখ্যা অনস্নাপশট লিসেনারের মাধ্যমে আপডেট হবে
             onSnapshot(lovesDocRef, (docSnap) => {
                 const loveCount = docSnap.exists() ? docSnap.data().count : 0;
                 if (loveEl) loveEl.textContent = formatCount(loveCount);
+                if (panelLikeCount) panelLikeCount.textContent = formatCount(loveCount);
             }, (error) => {
                 console.error("Error getting loves:", error);
                 if (loveEl) loveEl.textContent = 'Error';
+                if (panelLikeCount) panelLikeCount.textContent = 'Error';
             });
 
             getDoc(userLikedDocRef).then(docSnap => {
@@ -972,6 +1009,11 @@ if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
 
                     getAndUpdateStats(cardId, videoViewCountEl, videoLoveCountEl, videoLoveStatsBtn);
 
+                    // প্যানেলের তথ্য সেট করা
+                    panelTitle.textContent = currentCardData.title;
+                    panelUploadDate.textContent = formatTimeAgo(currentCardData.uploadTime);
+                    panelDescriptionText.textContent = fixedDescription;
+
                     const videoObserver = new IntersectionObserver((entries) => {
                         entries.forEach(entry => {
                             if (entry.isIntersecting) {
@@ -1065,16 +1107,6 @@ if (referrer === '' || !referrer.startsWith(allowedOrigin)) {
 
         // ডেসক্রিপশন প্যানেলের ইভেন্ট লিসেনার
         titleAndMoreContainer.addEventListener('click', () => {
-            const currentTitle = document.getElementById('video-title').textContent;
-            const currentViews = document.querySelector('.video-stats .view-stats .count').textContent;
-            const currentLikes = document.querySelector('.video-stats .love-stats .count').textContent;
-
-            panelTitle.textContent = currentTitle;
-            panelViewCount.textContent = `${currentViews} views`;
-            panelLikeCount.textContent = `${currentLikes} likes`;
-            panelUploadDate.textContent = "আপলোড সময়: " + formatTimeAgo(Date.now());
-            panelDescriptionText.textContent = fixedDescription;
-            
             document.body.style.overflow = 'hidden';
             descriptionPanel.classList.add('active');
         });
