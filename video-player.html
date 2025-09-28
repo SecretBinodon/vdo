@@ -153,7 +153,7 @@
         flex-direction: column;
         align-items: flex-start;
         flex-grow: 1;
-        justify-content: center; 
+        justify-content: center;
     }
 
     .video-title-bar h1 {
@@ -462,6 +462,12 @@
         height: 100%;
     }
 
+    .panel-divider {
+        border: none;
+        border-top: 1px solid var(--divider-color);
+        margin: 10px 0;
+    }
+
     .panel-content {
         flex-grow: 1;
         display: flex;
@@ -479,63 +485,16 @@
         margin: 0 0 10px 0;
     }
     
-    .panel-stats-container {
-        display: flex;
-        justify-content: space-between; /* এটি আপলোড সময়, ভিউ এবং লাইক এর মধ্যে সঠিক দূরত্ব দেবে */
-        align-items: center;
-        width: 100%;
-        padding: 0 5px;
-        margin-bottom: 10px;
-    }
-
-    .panel-stats-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        flex-grow: 1; /* এটি মাঝের উপাদানটিকে মাঝখানে রাখতে সাহায্য করবে */
-    }
-    
-    .panel-stats-item:first-child {
-        align-items: flex-start;
-        flex-grow: 0;
-    }
-
-    .panel-stats-item:last-child {
-        align-items: flex-end;
-        flex-grow: 0;
-    }
-
-    .panel-stats-item .label {
-        font-size: 12px;
-        color: var(--text-secondary);
-        white-space: nowrap;
-    }
-    .panel-stats-item .value {
-        font-size: 14px;
-        color: var(--text-primary);
-        font-weight: bold;
-    }
-    
     .panel-description-text {
         font-size: 14px;
         color: var(--text-secondary);
         text-align: justify;
         line-height: 1.6;
         margin-top: 10px;
-        padding-top: 10px;
-        border-top: 1px solid var(--divider-color); /* নতুন বর্ডার যোগ করা হয়েছে */
     }
     @media (min-width: 768px) {
         .panel-video-title {
             text-align: left;
-        }
-        .panel-stats-container {
-            justify-content: flex-start;
-            gap: 30px;
-        }
-        .panel-stats-item {
-            align-items: flex-start;
         }
         .panel-content {
             align-items: flex-start;
@@ -580,20 +539,6 @@
         .panel-video-title {
             text-align: center;
         }
-        .panel-stats-container {
-            justify-content: space-between; /* মোবাইল ভিউয়েও সঠিক স্পেস দেবে */
-            gap: 0;
-            padding: 0;
-        }
-        .panel-stats-item {
-            align-items: center;
-        }
-        .panel-stats-item:first-child {
-            align-items: flex-start;
-        }
-        .panel-stats-item:last-child {
-            align-items: flex-end;
-        }
         .panel-content {
             align-items: center;
         }
@@ -601,11 +546,11 @@
 
     @media (min-width: 768px) {
         #description-panel {
-            max-width: 50%; 
+            max-width: 50%;
             left: 50%;
             transform: translate(-50%, 100%);
             border-radius: 10px 10px 0 0;
-            height: auto; 
+            height: auto;
         }
 
         #description-panel.active {
@@ -746,20 +691,6 @@
         <hr class="panel-divider">
         <div class="panel-content">
             <h3 class="panel-video-title"></h3>
-            <div class="panel-stats-container">
-                <div class="panel-stats-item upload-date">
-                    <span class="label">আপলোড সময়</span>
-                    <span class="value"></span>
-                </div>
-                <div class="panel-stats-item view-count">
-                    <span class="label">Views</span>
-                    <span class="value"></span>
-                </div>
-                <div class="panel-stats-item like-count">
-                    <span class="label">Likes</span>
-                    <span class="value"></span>
-                </div>
-            </div>
             <p class="panel-description-text"></p>
         </div>
     </div>
@@ -810,9 +741,6 @@
         const descriptionPanel = document.getElementById('description-panel');
         const closePanelBtn = document.getElementById('close-panel-btn');
         const panelTitle = descriptionPanel.querySelector('.panel-video-title');
-        const panelViewCount = descriptionPanel.querySelector('.panel-stats-item.view-count .value');
-        const panelLikeCount = descriptionPanel.querySelector('.panel-stats-item.like-count .value');
-        const panelUploadDate = descriptionPanel.querySelector('.panel-stats-item.upload-date .value');
         const panelDescriptionText = descriptionPanel.querySelector('.panel-description-text');
 
         // এই ডেসক্রিপশনটি সব ভিডিওর জন্য ব্যবহার করা হবে
@@ -890,22 +818,18 @@
             onSnapshot(viewsDocRef, (docSnap) => {
                 const viewCount = docSnap.exists() ? docSnap.data().count : 0;
                 if (viewEl) viewEl.textContent = formatCount(viewCount);
-                if (panelViewCount) panelViewCount.textContent = formatCount(viewCount);
             }, (error) => {
                 console.error("Error getting views:", error);
                 if (viewEl) viewEl.textContent = 'Error';
-                if (panelViewCount) panelViewCount.textContent = 'Error';
             });
             
             // লাইকের অবস্থা ও সংখ্যা অনস্নাপশট লিসেনারের মাধ্যমে আপডেট হবে
             onSnapshot(lovesDocRef, (docSnap) => {
                 const loveCount = docSnap.exists() ? docSnap.data().count : 0;
                 if (loveEl) loveEl.textContent = formatCount(loveCount);
-                if (panelLikeCount) panelLikeCount.textContent = formatCount(loveCount);
             }, (error) => {
                 console.error("Error getting loves:", error);
                 if (loveEl) loveEl.textContent = 'Error';
-                if (panelLikeCount) panelLikeCount.textContent = 'Error';
             });
 
             getDoc(userLikedDocRef).then(docSnap => {
@@ -1016,7 +940,6 @@
 
                     // প্যানেলের তথ্য সেট করা
                     panelTitle.textContent = currentCardData.title;
-                    panelUploadDate.textContent = formatTimeAgo(currentCardData.uploadTime);
                     panelDescriptionText.textContent = fixedDescription;
 
                     const videoObserver = new IntersectionObserver((entries) => {
