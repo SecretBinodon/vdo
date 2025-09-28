@@ -43,10 +43,11 @@
         overflow-x: hidden;
         margin: 0;
         padding: 0;
-        height: 100%;
+        min-height: 100%; /* Changed to min-height to ensure the body can expand */
         font-family: sans-serif; 
         background-color: var(--bg-primary); 
         color: var(--text-primary); 
+        position: relative;
     }
     
     body.no-scroll {
@@ -413,12 +414,13 @@
 
     /* Description Panel Styles */
     #description-panel {
-        position: absolute; 
+        position: absolute;
+        top: 100%; /* Initially below the content */
         left: 0;
         width: 100%;
         background-color: var(--modal-bg);
         z-index: 1000;
-        transform: translateY(100%);
+        transform: translateY(0);
         transition: transform 0.3s ease-in-out;
         display: flex;
         flex-direction: column;
@@ -426,9 +428,9 @@
         box-sizing: border-box;
         visibility: hidden;
         pointer-events: none;
-        overflow-y: auto; 
+        overflow-y: auto;
     }
-
+    
     #description-panel.active {
         transform: translateY(0);
         visibility: visible;
@@ -517,6 +519,16 @@
         .panel-content {
             align-items: flex-start;
         }
+        #description-panel {
+            max-width: 50%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            border-radius: 10px 10px 0 0;
+            height: auto;
+            position: fixed;
+            bottom: 0;
+            top: auto;
+        }
     }
 
     /*======================================
@@ -553,6 +565,14 @@
         /* মোবাইল ডেসক্রিপশন প্যানেল স্টাইল */
         #description-panel {
             padding: 15px;
+            position: fixed;
+            bottom: 0;
+            top: auto;
+            border-radius: 10px 10px 0 0;
+            transform: translateY(100%);
+        }
+        #description-panel.active {
+            transform: translateY(0);
         }
         .panel-video-title {
             text-align: center;
@@ -567,20 +587,6 @@
             font-size: 13px;
         }
     }
-
-    @media (min-width: 768px) {
-        #description-panel {
-            max-width: 50%;
-            left: 50%;
-            transform: translate(-50%, 100%);
-            border-radius: 10px 10px 0 0;
-            height: auto;
-        }
-
-        #description-panel.active {
-            transform: translate(-50%, 0);
-        }
-    }
     
     /*======================================
      ফুটার স্টাইল (নতুন)
@@ -590,7 +596,10 @@
         color: var(--text-secondary);
         text-align: center;
         padding: 20px 10px;
-        margin-top: 0;
+        margin-top: 20px; /* Added margin to push it down */
+        position: relative; /* Ensure it stays in the flow */
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .footer-links {
@@ -1016,7 +1025,12 @@
         
         // ডেসক্রিপশন প্যানেলের ইভেন্ট লিসেনার
         openDescriptionBtn.addEventListener('click', () => {
-            descriptionPanel.style.height = `calc(100vh - ${descriptionPanel.offsetTop}px)`;
+            const videoTitleBar = document.getElementById('video-title-bar');
+            const videoTitleBarHeight = videoTitleBar.offsetHeight;
+            const descriptionPanelTop = videoTitleBar.offsetTop + videoTitleBarHeight;
+
+            descriptionPanel.style.top = `${descriptionPanelTop}px`;
+            descriptionPanel.style.height = `calc(100% - ${descriptionPanelTop}px)`;
             descriptionPanel.classList.add('active');
             document.body.classList.add('no-scroll');
         });
@@ -1092,7 +1106,11 @@
         // Ensure panel position is correct on resize
         window.addEventListener('resize', () => {
             if(descriptionPanel.classList.contains('active')) {
-                descriptionPanel.style.height = `calc(100vh - ${descriptionPanel.offsetTop}px)`;
+                 const videoTitleBar = document.getElementById('video-title-bar');
+                 const videoTitleBarHeight = videoTitleBar.offsetHeight;
+                 const descriptionPanelTop = videoTitleBar.offsetTop + videoTitleBarHeight;
+                 descriptionPanel.style.top = `${descriptionPanelTop}px`;
+                 descriptionPanel.style.height = `calc(100% - ${descriptionPanelTop}px)`;
             }
         });
 
