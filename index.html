@@ -971,10 +971,6 @@
                     <input type="text" id="cardTitle" required>
                 </div>
                 <div class="form-group">
-                    <label for="cardImage">Image URL:</label>
-                    <input type="url" id="cardImage" required>
-                </div>
-                <div class="form-group">
                     <label for="cardEmbedCode">Embed Code:</label>
                     <textarea id="cardEmbedCode" rows="5" required></textarea>
                 </div>
@@ -1030,7 +1026,7 @@
             const authSubmit = document.getElementById('authSubmit');
             const addCardForm = document.getElementById('addCardForm');
             const cardTitleInput = document.getElementById('cardTitle');
-            const cardImageInput = document.getElementById('cardImage');
+            // const cardImageInput = document.getElementById('cardImage'); // **** পরিবর্তন: এই লাইনটি মুছে ফেলা হয়েছে ****
             const cardEmbedCodeInput = document.getElementById('cardEmbedCode');
             const cardCategorySelect = document.getElementById('cardCategory');
             const codeResultDiv = document.getElementById('codeResult');
@@ -1504,6 +1500,16 @@
             });
             
             function manageHighlight() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const urlCardId = urlParams.get('cardId');
+                
+                if (urlCardId) {
+                    // যদি URL এ cardId থাকে, তবে সেটি হাইলাইট করার জন্য লোকাল স্টোরেজে সেট করবে
+                    const endTime = new Date(Date.now() + HIGHLIGHT_DURATION).toISOString();
+                    localStorage.setItem(HIGHLIGHT_KEY, urlCardId);
+                    localStorage.setItem(END_TIME_KEY, endTime);
+                }
+                
                 const activeCardId = localStorage.getItem(HIGHLIGHT_KEY);
                 const endTime = localStorage.getItem(END_TIME_KEY);
 
@@ -1531,6 +1537,7 @@
                         showNotification('Card highlight ended.', 2000);
                     }, remainingTime);
 
+                    // URL থেকে cardId প্যারামিটার মুছে ফেলার লজিক
                     if (window.location.search.includes('cardId=')) {
                          if (window.history.replaceState) {
                              const cleanUrl = window.location.pathname + window.location.search.replace(/([?&])cardId=[^&]+(&|$)/, '$1').replace(/[?&]$/, '');
@@ -1666,18 +1673,34 @@
             addCardForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const title = cardTitleInput.value;
-                const image = cardImageInput.value;
+                // const image = cardImageInput.value; // **** পরিবর্তন: ম্যানুয়াল ইনপুট ব্যবহার করা হচ্ছে না ****
                 const embedCode = cardEmbedCodeInput.value;
                 const category = cardCategorySelect.value;
                 const newId = generateUniqueId();
                 const currentTime = new Date().toISOString();
+
+                // **** পরিবর্তন: Bitchute ID বের করা এবং থাম্বনেল URL তৈরি করার লজিক ****
+                let videoId = '';
+                const regex = /bitchute\.com\/(?:embed|video)\/([a-zA-Z0-9_-]+)/i;
+                const match = embedCode.match(regex);
+
+                if (match && match[1]) {
+                    videoId = match[1];
+                } else {
+                    showNotification('Invalid Bitchute Embed Code! Could not find Video ID.', 4000, cardCodeNotification);
+                    codeResultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    return; 
+                }
+                
+                const thumbnailUrl = `https://media.bitchute.com/thumbnails/${videoId}/thumbnail_cover.jpg`;
+                // *************************************************************************
 
                 const escapedEmbedCode = embedCode.replace(/"/g, '\\"');
                
                 const newCardCode = `{
     "id": "${newId}",
     "title": "${title}",
-    "image": "${image}",
+    "image": "${thumbnailUrl}", // **** পরিবর্তন: এখানে স্বয়ংক্রিয় URL যুক্ত করা হলো ****
     "embed_code": "${escapedEmbedCode}",
     "category": ["${category}"],
     "uploadTime": "${currentTime}"
@@ -1685,6 +1708,7 @@
                 
                 cardCodeBox.textContent = newCardCode.trim();
                 codeResultDiv.style.display = 'block';
+                codeResultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
             
             async function copyToClipboard(text, notificationEl) {
@@ -1710,19 +1734,17 @@
             });
             
             function init() {
+                // manageHighlight() ফাংশনের পূর্বে URL থেকে cardId প্যারামিটারটি চেক করা
                 const urlParams = new URLSearchParams(window.location.search);
                 const urlCardId = urlParams.get('cardId');
                 
                 if (urlCardId) {
+                    // যদি URL এ cardId থাকে, তবে সেটি হাইলাইট করার জন্য লোকাল স্টোরেজে সেট করবে
                     const endTime = new Date(Date.now() + HIGHLIGHT_DURATION).toISOString();
                     localStorage.setItem(HIGHLIGHT_KEY, urlCardId);
                     localStorage.setItem(END_TIME_KEY, endTime);
-                    if (window.history.replaceState) {
-                        const cleanUrl = window.location.pathname + window.location.search.replace(/([?&])cardId=[^&]+(&|$)/, '$1').replace(/[?&]$/, '');
-                        window.history.replaceState({path: cleanUrl}, '', cleanUrl);
-                    }
                 }
-                
+
                 manageHighlight();
                 
                 mainContent.style.display = 'block';
