@@ -1673,7 +1673,7 @@
             addCardForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const title = cardTitleInput.value;
-                // const image = cardImageInput.value; // **** পরিবর্তন: ম্যানুয়াল ইনপুট ব্যবহার করা হচ্ছে না ****
+                // const image = cardImageInput.value; 
                 const embedCode = cardEmbedCodeInput.value;
                 const category = cardCategorySelect.value;
                 const newId = generateUniqueId();
@@ -1681,6 +1681,7 @@
 
                 // **** পরিবর্তন: Bitchute ID বের করা এবং থাম্বনেল URL তৈরি করার লজিক ****
                 let videoId = '';
+                // Bitchute embed/video কোড থেকে আইডি বের করার জন্য regex
                 const regex = /bitchute\.com\/(?:embed|video)\/([a-zA-Z0-9_-]+)/i;
                 const match = embedCode.match(regex);
 
@@ -1692,7 +1693,14 @@
                     return; 
                 }
                 
-                const thumbnailUrl = `https://media.bitchute.com/thumbnails/${videoId}/thumbnail_cover.jpg`;
+                // আপনার খুঁজে বের করা স্থিতিশীল Bitchute থাম্বনেল কাঠামো:
+                // স্থির অংশ: Path Prefix (কভার আইডি সহ)
+                const URL_PREFIX = "https://static-3.bitchute.com/live/cover_images/LfoeJFMiC2SB/";
+                // স্থির অংশ: Path Suffix (রেজোলিউশন সহ)
+                const URL_SUFFIX = "_1280x720.jpg"; 
+                
+                // সম্পূর্ণ থাম্বনেল ইউআরএল জেনারেট করা হলো
+                const thumbnailUrl = URL_PREFIX + videoId + URL_SUFFIX;
                 // *************************************************************************
 
                 const escapedEmbedCode = embedCode.replace(/"/g, '\\"');
