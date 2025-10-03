@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentCardToHighlight = null;
     let observer;
 
-    const cardsPerPage = 6;
+    const cardsPerPage = 20;
     let currentPage = 1;
     let totalPages = 1;
     
