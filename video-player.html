@@ -8,14 +8,16 @@
     
     <script type='text/javascript' src='//pl27703154.revenuecpmgate.com/70/2c/67/702c67f9d1db58564142cc27691530f9.js'></script>
     <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">
+
     <script type='text/javascript' src='//pl27703153.revenuecpmgate.com/a0/08/d1/a008d17e02685c0505877ed11b7610d9.js'></script>
     
     <style>
     /*======================================
-     সাধারণ স্টাইল 
+     সাধারণ স্টাইল (মোবাইল ও ডেস্কটপ উভয়ের জন্য)
     ======================================*/
     :root {
         --bg-primary: #121212;
+        --bg-secondary: #1e1e1e;
         --text-primary: #e0e0e0;
         --text-secondary: #aaaaaa;
         --text-link: #3498db; 
@@ -24,14 +26,18 @@
         --card-hover-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
         --divider-color: #444444;
         --category-bg: #3a3a3a;
+        --category-text: #e0e0e0;
+        --modal-bg: #2d2d2d;
+        --input-bg: #444444;
+        --input-border: #555555;
         --footer-bg: #1e1e1e;
     }
 
     .ad-container {
       width: 100%;
       box-sizing: border-box;
-      margin-top: 0;
-      margin-bottom: 0;
+      margin-top: 0px;
+      margin-bottom: 0px;
       text-align: center;
     }
 
@@ -43,6 +49,7 @@
         font-family: sans-serif; 
         background-color: var(--bg-primary); 
         color: var(--text-primary); 
+        position: relative;
     }
     
     .header {
@@ -50,6 +57,8 @@
         color: #fff;
         padding: 10px 20px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
         display: flex;
         justify-content: space-between; 
         align-items: center;
@@ -82,6 +91,33 @@
     .name-part-1 {
         color: #FFD700; 
     }
+    .name-part-2 {
+        color: #fff; 
+    }
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 10px; 
+        flex-shrink: 0; 
+    }
+    .social-icons-container {
+        display: flex;
+        gap: 5px; 
+    }
+    .social-icon {
+        display: block;
+        width: 25px; 
+        height: 25px;
+        transition: transform 0.2s ease;
+    }
+    .social-icon img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+    }
+    .social-icon:hover {
+        transform: scale(1.1);
+    }
     .video-container {
         position: relative;
         padding-bottom: 56.25%; /* 16:9 aspect ratio */
@@ -107,7 +143,6 @@
         display: flex;
         flex-direction: column;
         gap: 5px; 
-        transition: border-radius 0.3s ease;
     }
 
     .video-title-bar.open {
@@ -151,7 +186,7 @@
         padding: 3px 12px;
         box-sizing: border-box;
     }
-    
+
     .card-stats {
         display: flex;
         align-items: center;
@@ -159,23 +194,23 @@
         white-space: nowrap; 
         overflow: hidden; 
         text-overflow: ellipsis; 
-        background-color: transparent; 
-        border-radius: 0; 
-        padding: 0;
-        text-decoration: none; 
+        background-color: var(--category-bg);
+        border-radius: 10px;
+        padding: 5px 8px;
     }
 
     .card-stats .icon {
-        margin-right: 2px; 
-        width: 18px;
-        height: 18px;
+        /* মূল কোড থেকে সাইজ পরিবর্তন */
+        margin-right: 2px; /* মূল কোডের গ্যাপ */
+        width: 18px; /* মূল কোডের সাইজ */
+        height: 18px; /* মূল কোডের সাইজ */
         stroke: var(--text-primary); 
     }
 
     .card-stats .count {
         font-weight: bold;
         color: var(--text-primary); 
-        font-size: 14px;
+        font-size: 14px; /* মূল কোডের সাইজ */
         flex-shrink: 0;
     }
 
@@ -192,8 +227,7 @@
         fill: #ff0000;
         stroke: #ff0000;
     }
-    .love-stats:hover svg,
-    .love-stats:active svg {
+    .love-stats:hover svg {
         transform: scale(1.1);
     }
     .love-stats:active,
@@ -201,17 +235,21 @@
         outline: none;
         -webkit-tap-highlight-color: transparent;
     }
+    .love-stats:active svg {
+        transform: scale(1.1);
+        transition: transform 0.2s ease;
+    }
     .share-stats:active .icon {
         transform: scale(1.1);
         transition: transform 0.2s ease;
     }
-    
     .loader {
-        border: 2px solid #444;
-        border-top: 2px solid #3498db;
+        /* মূল কোড থেকে সাইজ পরিবর্তন */
+        border: 4px solid #444; /* মূল কোডের সাইজ */
+        border-top: 4px solid #3498db; /* মূল কোডের সাইজ */
         border-radius: 50%;
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
         animation: spin 1s linear infinite;
         flex-shrink: 0;
     }
@@ -219,9 +257,8 @@
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
-    
     .recommended-section {
-        margin-top: 0;
+        margin-top: 0px;
     }
     .recommended-section h2 {
         font-size: 20px;
@@ -234,10 +271,11 @@
         margin-bottom: 5px;
     }
     .container {
-        /* মোবাইল ভিউতে ২টি কার্ড পাশাপাশি */
-        grid-template-columns: repeat(2, 1fr); 
-        gap: 10px; 
-        padding: 5px; 
+        /* মূল কোডের গ্রিড লেআউট */
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* 150px সর্বনিম্ন প্রস্থ */
+        gap: 15px; /* মূল কোডের গ্যাপ */
+        padding: 10px 10px 0px; /* মূল কোডের প্যাডিং */
     }
     .card {
         background-color: var(--card-bg); 
@@ -261,6 +299,7 @@
     }
     .card:active {
         box-shadow: var(--card-hover-shadow); 
+        transform: none; /* মূল কোড অনুযায়ী যোগ করা */
     }
     .card-header {
         position: relative;
@@ -298,42 +337,30 @@
         z-index: 5;
         white-space: nowrap;
     }
-    
     .card-image-container {
+        /* মূল কোডের 16:9 অনুপাত */
         position: relative;
         width: 100%;
         aspect-ratio: 16 / 9; 
+        height: auto; /* aspect-ratio দ্বারা হাইট নির্ধারিত হবে */
         overflow: hidden;
         border-radius: 15px 15px 0 0;
-    }
-    
-    .card-image-container a {
-        display: block;
-        width: 100%;
-        height: 100%;
-        text-decoration: none; 
         cursor: pointer;
-        position: relative; 
     }
-    
-    .card-image-container img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
+    /* @media (min-width: 768px) এর হাইট পরিবর্তন করা হলো */
+    @media (min-width: 768px) {
+    .card-image-container {
+        /* aspect-ratio ব্যবহার করার কারণে ফিক্সড হাইটের দরকার নেই */
     }
-
-    .card-image-container a:hover img {
-        transform: scale(1.05); 
     }
-
     .play-icon {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        /* মূল কোড থেকে সাইজ পরিবর্তন */
         width: 35px; 
-        height: 35px;
+        height: 35px; 
         background-color: rgba(0, 0, 0, 0.6);
         border-radius: 50%;
         display: flex;
@@ -347,43 +374,57 @@
     }
     .play-icon svg {
         fill: #fff;
-        width: 18px; 
-        height: 18px; 
+        /* মূল কোড থেকে সাইজ পরিবর্তন */
+        width: 18px;
+        height: 18px;
     }
-    
+    .card-image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
     .card-content {
         flex-grow: 1;
         display: flex;
         flex-direction: column;
-        align-items: flex-start; 
+        align-items: flex-start; /* টাইটেল বাম দিক থেকে শুরু */
         text-align: left;
-        padding: 5px 10px 0 10px; 
+        /* মূল কোড থেকে প্যাডিং পরিবর্তন */
+        padding: 5px 10px 0px 10px; 
         width: 100%;
         box-sizing: border-box;
     }
-    
     .card-title {
-        font-size: 16px; 
+        /* মূল কোডের স্টাইল */
+        font-size: 16px; /* ডেস্কটপে এটি পরিবর্তন হবে */
         color: var(--text-primary); 
         font-weight: bold; 
-        margin: 5px 0; 
-        text-align: left; 
-        white-space: nowrap;      
-        overflow: hidden;         
-        text-overflow: ellipsis;  
-        display: block;
+        
+        /* মার্জিন পরিবর্তন */
+        margin: 5px 0 10px 0; 
+
+        /* ১ লাইনে ফিক্সড এবং থ্রি-ডট */
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+        
+        display: block; 
+        line-height: normal; 
+        height: auto; 
         width: 100%;
-        text-decoration: none; 
+        text-align: left; /* বাম দিক থেকে শুরু নিশ্চিত */
     }
-    
     .card-footer {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        box-sizing: border-box;
+        /* মূল কোড থেকে প্যাডিং পরিবর্তন */
         padding: 2px 10px 10px 10px; 
+        box-sizing: border-box;
+        width: 100%;
     }
-    
+    /* .card-stats স্টাইল উপরেই ঠিক করা হয়েছে */
+
     .notification {
         position: fixed;
         top: 20px;
@@ -415,7 +456,7 @@
         pointer-events: auto;
     }
 
-    /* Description Styles */
+    /* Description Styles (New Dropdown/Push Down) */
     .description-container {
         max-height: 0;
         overflow: hidden;
@@ -472,49 +513,64 @@
         padding-bottom: 20px;
     }
 
-    #description-content p, #description-content ul {
+    #description-content p {
         margin: 0 0 12px 0;
         color: var(--text-secondary);
         font-size: 14px;
     }
     #description-content ul {
-        margin-left: 20px;
+        margin: 0 0 12px 20px;
+        color: var(--text-secondary);
+        font-size: 14px;
     }
     #description-content .highlight {
         font-weight: 700;
         color: #e74c3c;
     }
 
-    /*======================================
-     ডেস্কটপ ভিউয়ের জন্য স্টাইল (768px এবং তার উপরে)
-    ======================================*/
-    @media (min-width: 768px) {
-        .header { padding: 15px 40px; }
-        .website-name { font-size: 24px; }
-        .website-icon { width: 30px; height: 30px; }
-        .social-icon { width: 30px; height: 30px; }
-
-        .container {
-            grid-template-columns: 1fr 1fr 1fr; 
-            gap: 20px;
-            padding: 10px 20px; 
-        }
-        .card-title {
-            font-size: 18px; 
-        }
-        .play-icon {
-            width: 50px;
-            height: 50px;
-        }
-        .play-icon svg {
-            width: 25px;
-            height: 25px;
-        }
+    /* Transition effect for pushing content */
+    #recommended-section {
+        transition: margin-top 0.3s ease;
     }
     
-    /*======================================
-     মোবাইল ভিউয়ের জন্য স্টাইল (767px এবং তার নিচে)
-    ======================================*/
+    .video-title-bar {
+        transition: border-radius 0.3s ease;
+    }
+
+    @media (min-width: 768px) {
+        .header {
+            padding: 15px 40px;
+        }
+        .website-name {
+            font-size: 24px;
+        }
+        .website-icon {
+            width: 30px;
+            height: 30px;
+        }
+        .social-icon {
+            width: 30px;
+            height: 30px;
+        }
+        .container {
+            /* মূল কোডের ডেস্কটপ কলাম */
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px; /* মূল কোডের গ্যাপ */
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .card-title {
+            font-size: 18px; /* মূল কোডের ফন্ট সাইজ */
+        }
+        .card-upload-time {
+            font-size: 12px;
+            top: 10px;
+            left: 10px;
+            padding: 5px 8px;
+        }
+    }
+
     @media (max-width: 767px) {
         .header { padding: 8px 10px; gap: 5px; }
         .website-name { font-size: 16px; }
@@ -529,27 +585,28 @@
         .video-title-bar h1 {
             font-size: 16px;
         }
-        .card-title { 
-            font-size: 12px; 
+        .container {
+            /* মূল কোডের মোবাইল কলাম */
+            grid-template-columns: 1fr 1fr; 
+            gap: 10px; /* মূল কোডের গ্যাপ */
+            padding: 5px 10px 0px; /* মূল কোডের প্যাডিং */
         }
+        .card-title { 
+            font-size: 12px; /* মূল কোডের ফন্ট সাইজ */
+            margin: 5px 0 8px 0; /* প্যাডিং কমানো */
+        }
+        /* .card-image-container এর হাইট এখন aspect-ratio দ্বারা নিয়ন্ত্রিত */
         .card-upload-time {
             font-size: 10px;
             top: 8px;
             left: 8px;
             padding: 4px 6px;
         }
-        .play-icon {
-            width: 30px; 
-            height: 30px;
-        }
-        .play-icon svg {
-            width: 15px; 
-            height: 15px;
-        }
+        /* .play-icon-এর সাইজ গ্লোবাল স্টাইলেই ফিক্সড করা আছে (35px) */
     }
     
     /*======================================
-     ফুটার স্টাইল 
+     ফুটার স্টাইল (নতুন)
     ======================================*/
     footer {
         background-color: var(--footer-bg);
@@ -557,6 +614,7 @@
         text-align: center;
         padding: 20px 10px;
         margin-top: 5px; 
+        position: relative; 
         width: 100%;
         box-sizing: border-box;
     }
@@ -708,14 +766,14 @@
             <a href="privacy-policy.html" style="color: #3498db;">Privacy Policy</a>
         </div>
         <div class="footer-copyright">
-            <p> &copy; 2025 
-            <a href="https://secretbinodon.github.io/vdo" style="color: #3498db;">SecretBinodon</a>
-            . All Rights Reserved. </p>
+ <p> &copy; 2025 
+    <a href="https://secretbinodon.github.io/vdo" style="color: #3498db;">SecretBinodon</a>
+    . All Rights Reserved. </p>
         </div>
     </footer>
 
     <script type="module">
-        // সরাসরি লিংকে প্রবেশ বন্ধ করার জন্য এই কোডটি যুক্ত করা হয়েছে (অক্ষত রাখা হলো)
+        // কোনো লজিক পরিবর্তন করা হয়নি।
         const allowedOrigin = window.location.origin;
         const referrer = document.referrer;
 
@@ -726,7 +784,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
         import { getFirestore, doc, getDoc, setDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
-        // Firebase কনফিগারেশন (অক্ষত রাখা হলো)
+        // Firebase কনফিগারেশন
         const firebaseConfig = {
             apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q",
             authDomain: "my-ad-analytics-4560a.firebaseapp.com",
@@ -754,12 +812,14 @@
         const videoLoveCountEl = document.querySelector('.video-stats .love-stats .count');
         const videoLoveStatsBtn = document.querySelector('.video-stats .love-stats');
         
+        // ডিসক্রিপশনের জন্য ব্যবহৃত উপাদান
         const videoTitleBar = document.getElementById('video-title-bar');
         const openDescriptionBtn = document.getElementById('open-description-btn');
         const closeDescriptionBtn = document.getElementById('close-description-btn');
         const descriptionContainer = document.getElementById('description-container');
+        const descriptionContent = document.getElementById('description-content');
 
-        // ডিভাইসের আইডি তৈরি বা লোড করা (অক্ষত রাখা হলো)
+        // ডিভাইসের আইডি তৈরি বা লোড করা
         function getDeviceId() {
             let deviceId = localStorage.getItem('deviceId');
             if (!deviceId) {
@@ -770,7 +830,7 @@
         }
         const deviceId = getDeviceId();
 
-        // সময়কে সহজে পড়ার মতো ফরম্যাটে রূপান্তর (অক্ষত রাখা হলো)
+        // সময়কে সহজে পড়ার মতো ফরম্যাটে রূপান্তর
         function formatTimeAgo(timestamp) {
             const uploadDate = new Date(timestamp);
             const now = new Date();
@@ -788,7 +848,7 @@
             return "এখনই";
         }
         
-        // বড় সংখ্যাকে ছোট ফরম্যাটে রূপান্তর (অক্ষত রাখা হলো)
+        // বড় সংখ্যাকে ছোট ফরম্যাটে রূপান্তর
         function formatCount(num) {
             if (num >= 1000000000) return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B';
             if (num >= 1000000) return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
@@ -796,7 +856,7 @@
             return num;
         }
 
-        // নোটিফিকেশন দেখানো (অক্ষত রাখা হলো)
+        // নোটিফিকেশন দেখানো
         function showNotification(message, duration = 3000, isError = false) {
             notificationPopup.textContent = message;
             if (isError) {
@@ -810,7 +870,7 @@
             }, duration);
         }
         
-        // শুধুমাত্র একটি নির্দিষ্ট কার্ডের ভিউ কাউন্ট লোড করবে (অক্ষত রাখা হলো)
+        // **নতুন ফাংশন:** শুধুমাত্র একটি নির্দিষ্ট কার্ডের ভিউ কাউন্ট লোড করবে
         function getCardViews(id, viewEl) {
             const viewsDocRef = doc(db, "views", id);
             onSnapshot(viewsDocRef, (docSnap) => {
@@ -822,15 +882,17 @@
             });
         }
 
-        // মূল ভিডিওর ভিউ কাউন্ট আপডেট এবং রিয়েল-টাইম লিসেনার চালু করবে (অক্ষত রাখা হলো)
+        // **নতুন ফাংশন:** মূল ভিডিওর ভিউ কাউন্ট আপডেট এবং রিয়েল-টাইম লিসেনার চালু করবে
         async function updateMainView(id, viewEl) {
             if (mainViewUpdated) return;
             mainViewUpdated = true; 
 
             const viewsDocRef = doc(db, "views", id);
             try {
+                // ভিউ বৃদ্ধি করা
                 await setDoc(viewsDocRef, { count: increment(1) }, { merge: true });
 
+                // রিয়েল-টাইম লিসেনার সেট করা
                 onSnapshot(viewsDocRef, (docSnap) => {
                     const viewCount = docSnap.exists() ? docSnap.data().count : 0;
                     if (viewEl) viewEl.textContent = formatCount(viewCount);
@@ -845,13 +907,14 @@
             }
         }
         
-        // লাইভ ডেটা এবং স্ট্যাটাস আপডেট করা (শুধুমাত্র লাইকের জন্য) (অক্ষত রাখা হলো)
+        // লাইভ ডেটা এবং স্ট্যাটাস আপডেট করা (শুধুমাত্র লাইকের জন্য)
         function getAndUpdateStats(id, loveEl, loveBtn) {
             if (!id) return;
             
             const lovesDocRef = doc(db, "loves", id);
             const userLikedDocRef = doc(db, `loves/${id}/users`, deviceId);
             
+            // Fetch and display initial data for loves only
             const fetchInitialData = async () => {
                 try {
                     const [lovesSnap, userLikedSnap] = await Promise.all([
@@ -872,6 +935,7 @@
 
             fetchInitialData();
 
+            // Set up real-time listener for loves
             onSnapshot(lovesDocRef, (docSnap) => {
                 const loveCount = docSnap.exists() ? docSnap.data().count : 0;
                 if (loveEl) loveEl.textContent = formatCount(loveCount);
@@ -881,7 +945,7 @@
             });
         }
         
-        // লাইক কাউন্ট আপডেট করা (অক্ষত রাখা হলো)
+        // লাইক কাউন্ট আপডেট করা
         async function updateLoveCount(id, loveStatsBtn) {
             const userLikedDocRef = doc(db, `loves/${id}/users`, deviceId);
             try {
@@ -905,7 +969,7 @@
 
         // কার্ড তৈরি করার ফাংশন
         function createCard(data) {
-            const card = document.createElement('div'); 
+            const card = document.createElement('div');
             card.classList.add('card');
             card.setAttribute('data-id', data.id);
             
@@ -913,7 +977,7 @@
             
             card.innerHTML = `
                 <div class="card-header">
-                    <div class="share-icon" data-id="${data.id}" onclick="event.stopPropagation();">
+                    <div class="share-icon" data-id="${data.id}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-up" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1h-2z"/>
                             <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V9.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
@@ -921,14 +985,12 @@
                     </div>
                     <div class="card-upload-time">${timeAgoText}</div>
                     <div class="card-image-container">
-                        <a href="https://jibonpoth1.blogspot.com/?cardId=${data.id}" title="${data.title}"> 
-                            <img src="${data.image}" alt="${data.title}" loading="lazy">
-                            <div class="play-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z" />
-                                </svg>
-                            </div>
-                        </a>
+                        <img src="${data.image}" alt="${data.title}" loading="lazy">
+                        <div class="play-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z" />
+                            </svg>
+                        </div>
                     </div>
                 </div>
                 <div class="card-content">
@@ -942,7 +1004,7 @@
                         </svg>
                         <span class="count"><div class="loader"></div></span>
                     </div>
-                    <div class="card-stats love-stats" data-id="${data.id}" onclick="event.stopPropagation();">
+                    <div class="card-stats love-stats" data-id="${data.id}">
                         <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6c757d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">
                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                         </svg>
@@ -952,13 +1014,14 @@
             return card;
         }
 
-        // কার্ডগুলো রেন্ডার করার ফাংশন (অক্ষত রাখা হলো)
+        // কার্ডগুলো রেন্ডার করার ফাংশন
         function renderCards(cardsToRender) {
             recommendedContainer.innerHTML = '';
             cardsToRender.forEach(data => {
                 const card = createCard(data);
                 recommendedContainer.appendChild(card);
                 
+                // রিকমেন্ডেড কার্ডের ভিউ এবং লাইক আপডেট করা
                 getCardViews(data.id, card.querySelector('.view-stats .count'));
                 getAndUpdateStats(data.id, card.querySelector('.love-stats .count'), card.querySelector('.love-stats'));
 
@@ -968,7 +1031,7 @@
             });
         }
 
-        // ডেটা লোড এবং রেন্ডার করা (অক্ষত রাখা হলো)
+        // ডেটা লোড এবং রেন্ডার করা
         async function loadDataAndRender() {
             try {
                 const response = await fetch('cards.json');
@@ -984,7 +1047,10 @@
                     videoTitleEl.textContent = currentCardData.title;
                     videoContainer.innerHTML = currentCardData.embed_code;
 
+                    // মূল ভিডিওর ভিউ আপডেট করার জন্য
                     updateMainView(cardId, videoViewCountEl);
+                    
+                    // মূল ভিডিওর লাইক আপডেট করার জন্য
                     getAndUpdateStats(cardId, videoLoveCountEl, videoLoveStatsBtn);
 
                     const recommendedCards = allCardData
@@ -1004,29 +1070,29 @@
             }
         }
         
-        // ডিসক্রিপশন প্যানেল খোলার জন্য ইভেন্ট লিসনার (অক্ষত রাখা হলো)
+        // ডিসক্রিপশন প্যানেল খোলার জন্য ইভেন্ট লিসনার
         openDescriptionBtn.addEventListener('click', () => {
             descriptionContainer.classList.add('active');
             videoTitleBar.classList.add('open');
             openDescriptionBtn.style.display = 'none';
         });
 
-        // ডিসক্রিপশন প্যানেল বন্ধ করার জন্য ইভেন্ট লিসনার (অক্ষত রাখা হলো)
+        // ডিসক্রিপশন প্যানেল বন্ধ করার জন্য ইভেন্ট লিসনার
         closeDescriptionBtn.addEventListener('click', () => {
             descriptionContainer.classList.remove('active');
             videoTitleBar.classList.remove('open');
             openDescriptionBtn.style.display = 'block';
         });
 
-        // অন্যান্য সাধারণ ইভেন্ট লিসনার (অক্ষত রাখা হলো)
+        // অন্যান্য সাধারণ ইভেন্ট লিসনার
         document.addEventListener('click', (event) => {
             const shareIcon = event.target.closest('.share-icon');
             const loveStats = event.target.closest('.love-stats');
+            const imageContainer = event.target.closest('.card-image-container');
 
             if (shareIcon) {
-                const card = shareIcon.closest('.card') || document.getElementById('video-embed-section');
-                const cardId = card.dataset.id;
-                const cardTitle = card.querySelector('.card-title')?.textContent || document.getElementById('video-title').textContent;
+                const cardId = shareIcon.dataset.id;
+                const cardTitle = shareIcon.closest('.card').querySelector('.card-title').textContent;
                 const shareUrl = `${window.location.origin}/link/?cardId=${cardId}`;
                 
                 if (navigator.share) {
@@ -1067,9 +1133,16 @@
                 }
                 return;
             }
+
+            if (imageContainer) {
+                const card = imageContainer.closest('.card');
+                const cardId = card.dataset.id;
+                window.location.href = `https://jibonpoth1.blogspot.com/?cardId=${cardId}`;
+
+            }
         });
 
-        // মূল লাইক বাটনে ক্লিক করার জন্য ইভেন্ট লিসনার (অক্ষত রাখা হলো)
+        // মূল লাইক বাটনে ক্লিক করার জন্য ইভেন্ট লিসনার
         videoLoveStatsBtn.addEventListener('click', () => {
             if (cardId) {
                 updateLoveCount(cardId, videoLoveStatsBtn);
