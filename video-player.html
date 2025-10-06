@@ -188,7 +188,7 @@
 
     /* রিকমেন্ডেড কার্ডের .card-stats এর সাথে কনফ্লিক্ট এড়াতে */
     .video-title-bar .card-stats {
-        background-color: transparent; /* এটার আসল ব্যাকগ্রাউন্ড */
+        background-color: transparent; 
         border-radius: 0;
         padding: 0; 
     }
@@ -200,14 +200,14 @@
         white-space: nowrap; 
         overflow: hidden; 
         text-overflow: ellipsis; 
-        /* রিকমেন্ডেড কার্ডের জন্য transparent */
         background-color: transparent; 
         border-radius: 0; 
         padding: 0;
+        text-decoration: none; /* আন্ডারলাইন সরাতে */
     }
 
     .card-stats .icon {
-        margin-right: 2px; /* মূল কার্ডের মতো কমানো হলো */
+        margin-right: 2px; 
         width: 18px;
         height: 18px;
         stroke: var(--text-primary); 
@@ -286,6 +286,10 @@
         padding: 5px; /* মোবাইলের জন্য প্যাডিং কমানো */
     }
     .card {
+        /*
+          গুরুত্বপূর্ণ পরিবর্তন: এখন .card একটি <div>, <a> নয়।
+          তাই শুধুমাত্র ইমেজ কন্টেনারে ক্লিক করলেই নেভিগেট হবে।
+        */
         background-color: var(--card-bg); 
         border-radius: 15px;
         box-shadow: var(--card-shadow);
@@ -352,7 +356,28 @@
         aspect-ratio: 16 / 9; /* 16:9 অনুপাত নিশ্চিত করা */
         overflow: hidden;
         border-radius: 15px 15px 0 0;
+        /* cursor: pointer; -- এখন ভেতরের <a> তে যাবে */
+    }
+    
+    /* ইমেজ কন্টেনারের ভেতরের অ্যাঙ্কর ট্যাগকে পুরো কন্টেনার জুড়ে দেখানো */
+    .card-image-container a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-decoration: none; /* নিশ্চিত করতে যে কোনো আন্ডারলাইন যেন না আসে */
         cursor: pointer;
+        position: relative; /* প্লে আইকনের জন্য দরকার */
+    }
+    
+    .card-image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .card-image-container a:hover img {
+        transform: scale(1.05); /* হোভার ইফেক্ট */
     }
 
     .play-icon {
@@ -360,8 +385,8 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 35px; /* ছোট করা */
-        height: 35px; /* ছোট করা */
+        width: 35px; 
+        height: 35px;
         background-color: rgba(0, 0, 0, 0.6);
         border-radius: 50%;
         display: flex;
@@ -375,13 +400,8 @@
     }
     .play-icon svg {
         fill: #fff;
-        width: 18px; /* আইকন ছোট করা */
-        height: 18px; /* আইকন ছোট করা */
-    }
-    .card-image-container img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+        width: 18px; 
+        height: 18px; 
     }
     
     /* রিকমেন্ডেড কার্ডের কন্টেন্ট (বাম দিক থেকে শুরু) */
@@ -398,22 +418,17 @@
     
     /* রিকমেন্ডেড কার্ডের টাইটেল (বাম দিক থেকে শুরু, 1 লাইনে, মার্জিন) */
     .card-title {
-        font-size: 16px; /* মোবাইলের জন্য ঠিক রাখা হলো (ডেস্কটপে পরিবর্তন হবে) */
+        font-size: 16px; 
         color: var(--text-primary); 
         font-weight: bold; 
-        
-        /* মার্জিন: উপরে 5px, নিচে 5px */
         margin: 5px 0 5px 0; 
-        
-        /* বাম দিক থেকে শুরু নিশ্চিত করা */
         text-align: left; 
-        
-        /* 1 লাইনে ফিক্সড এবং থ্রি-ডট নিশ্চিত করা */
         white-space: nowrap;      
         overflow: hidden;         
         text-overflow: ellipsis;  
         display: block;
         width: 100%;
+        text-decoration: none; /* আন্ডারলাইন সরাতে */
     }
     
     /* রিকমেন্ডেড কার্ডের ফুটার (উপরে কম গ্যাপ) */
@@ -965,10 +980,10 @@
 
         // কার্ড তৈরি করার ফাংশন
         function createCard(data) {
-            const card = document.createElement('a'); // কার্ডকে <a> ট্যাগ বানানো হয়েছে
+            // গুরুত্বপূর্ণ পরিবর্তন: <a> এর বদলে <div> ব্যবহার করা হলো
+            const card = document.createElement('div'); 
             card.classList.add('card');
             card.setAttribute('data-id', data.id);
-            card.href = `https://jibonpoth1.blogspot.com/?cardId=${data.id}`; // কার্ডে ক্লিক করলে নতুন লিংকে যাবে
             
             const timeAgoText = data.uploadTime ? formatTimeAgo(data.uploadTime) : '';
             
@@ -982,12 +997,14 @@
                     </div>
                     <div class="card-upload-time">${timeAgoText}</div>
                     <div class="card-image-container">
-                        <img src="${data.image}" alt="${data.title}" loading="lazy">
-                        <div class="play-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z" />
-                            </svg>
-                        </div>
+                        <a href="https://jibonpoth1.blogspot.com/?cardId=${data.id}" title="${data.title}"> 
+                            <img src="${data.image}" alt="${data.title}" loading="lazy">
+                            <div class="play-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z" />
+                                </svg>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <div class="card-content">
@@ -1087,6 +1104,7 @@
             const loveStats = event.target.closest('.love-stats');
 
             if (shareIcon) {
+                // এটি এখন shareIcon এর parent কে দেখবে যা .card (এখন <div>)
                 const card = shareIcon.closest('.card') || document.getElementById('video-embed-section');
                 const cardId = card.dataset.id;
                 const cardTitle = card.querySelector('.card-title')?.textContent || document.getElementById('video-title').textContent;
