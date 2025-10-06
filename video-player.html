@@ -6,10 +6,11 @@
     <title>Video Play Page</title>
     <meta name="description" content="ভাইরাল ভিডিওটি উপভোগ করুন।" />
     
-    <script type='text/javascript' src='//pl27703154.revenuecpmgate.com/70/2c/67/702c67f9d1db58564142cc27691530f9.js'></script>
     <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">
+    
+    <script type='text/javascript' async src='//pl27703154.revenuecpmgate.com/70/2c/67/702c67f9d1db58564142cc27691530f9.js'></script>
+    <script type='text/javascript' async src='//pl27703153.revenuecpmgate.com/a0/08/d1/a008d17e02685c0505877ed11b7610d9.js'></script>
 
-    <script type='text/javascript' src='//pl27703153.revenuecpmgate.com/a0/08/d1/a008d17e02685c0505877ed11b7610d9.js'></script>
     
     <style>
     /*======================================
@@ -31,6 +32,8 @@
         --input-bg: #444444;
         --input-border: #555555;
         --footer-bg: #1e1e1e;
+        /* হেডারের উচ্চতা, মোবাইল এবং ডেস্কটপে ভিন্ন হতে পারে। একটি আনুমানিক মান। */
+        --header-height: 45px; 
     }
 
     .ad-container {
@@ -63,8 +66,18 @@
         justify-content: space-between; 
         align-items: center;
         gap: 10px;
-        position: sticky; top:0; z-index:50;
+        /* >>>>>> স্টিকি হেডার নিশ্চিত করা হলো <<<<<< */
+        position: fixed; /* 'sticky' এর পরিবর্তে 'fixed' ব্যবহার করা হলো, যাতে সবসময় থাকে */
+        top: 0; 
+        width: 100%; /* ফিক্সড করার পরে সম্পূর্ণ প্রস্থ নিশ্চিত করা */
+        z-index: 50; 
+        box-sizing: border-box; /* padding সহ যেন প্রস্থ ঠিক থাকে */
     }
+    /* >>>>>> হেডারের জন্য কন্টেন্টে প্যাডিং যুক্ত করা হলো <<<<<< */
+    #main-content {
+        padding-top: var(--header-height); /* হেডারের নিচে কন্টেন্ট শুরু হবে */
+    }
+
     .header-left {
         display: flex;
         align-items: center;
@@ -195,13 +208,10 @@
         white-space: nowrap; 
         overflow: hidden; 
         text-overflow: ellipsis; 
-        /* >>>>>> এই অংশটি আপডেট করা হলো <<<<<< */
         /* রিকমেন্ডেড কার্ডের stats-এ ব্যাকগ্রাউন্ড, প্যাডিং বা বর্ডার থাকবে না */
         background-color: transparent; 
         border-radius: 0;
         padding: 0;
-        /* যদি .video-stats-এর ভিতরে থাকে (যেমন মূল ভিডিও), তাহলে ব্যাকগ্রাউন্ড ও প্যাডিং থাকবে,
-           নইলে card-footer এর ভিতরে থাকলে থাকবে না। */
     }
     .video-stats .card-stats {
         /* মূল ভিডিওর stats-এর স্টাইল অক্ষত রাখা */
@@ -562,6 +572,10 @@
             left: 10px;
             padding: 5px 8px;
         }
+        /* ডেস্কটপের জন্য হেডারের উচ্চতা একটু বেশি হতে পারে */
+        :root {
+            --header-height: 55px; 
+        }
     }
 
     @media (max-width: 767px) {
@@ -571,6 +585,7 @@
         .social-icon { width: 20px; height: 20px; }
         #main-content {
             padding: 5px;
+            padding-top: var(--header-height); /* হেডার ফিক্সড হওয়ার কারণে প্যাডিং */
         }
         .video-title-bar {
             padding: 10px;
@@ -593,10 +608,14 @@
             left: 8px;
             padding: 4px 6px;
         }
+        /* মোবাইলের জন্য হেডারের উচ্চতা */
+        :root {
+            --header-height: 45px; 
+        }
     }
     
     /*======================================
-     ফুটার স্টাইল (নতুন)
+     ফুটার স্টাইল 
     ======================================*/
     footer {
         background-color: var(--footer-bg);
@@ -975,7 +994,7 @@
                     </div>
                     <div class="card-upload-time">${timeAgoText}</div>
                     <div class="card-image-container">
-                        <img src="${data.image}" alt="${data.title}" loading="lazy">
+                        <img src="${data.image}" alt="${data.title}" loading="lazy"> 
                         <div class="play-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z" />
