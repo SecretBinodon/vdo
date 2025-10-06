@@ -9,17 +9,17 @@
     --text-secondary: #AAAAAA; /* ভিউ কাউন্ট, চ্যানেল নেম, টাইম টেক্সট */
     
     /* কার্ড এবং শ্যাডো */
-    --card-bg: transparent; /* ব্যাকগ্রাউন্ডের সাথে মিশে যাবে */
+    --card-bg: transparent; /* নির্দেশিতভাবে ব্যাকগ্রাউন্ড অপসারণ */
     --card-shadow: none; 
     --card-hover-shadow: none; 
     
     /* অ্যাকসেন্ট কালার (YouTube রেড) */
     --accent-color-red: #FF0000; 
-    --accent-color-primary: #FF0000; /* বাটন এবং মেইন হাইলাইটের জন্য YouTube রেড */
+    --accent-color-primary: #FF0000;
     --tutorial-btn-bg: var(--accent-color-red); 
     
     --divider-color: #333333;
-    --category-bg: #373737; /* ক্যাটাগরি বাটন ব্যাকগ্রাউন্ড */
+    --category-bg: #373737; 
     --category-text: #FFFFFF;
     --play-icon-bg: rgba(0, 0, 0, 0.7); 
     --modal-bg: #222222;
@@ -32,7 +32,7 @@
  সাধারণ স্টাইল (ফন্ট এবং বডি)
 ======================================*/
 body {
-    font-family: 'Roboto', 'Poppins', sans-serif; /* YouTube-এর জন্য Roboto ফন্ট */
+    font-family: 'Roboto', 'Poppins', sans-serif; 
     background-color: var(--bg-primary); 
     color: var(--text-primary); 
     margin: 0;
@@ -54,9 +54,9 @@ body {
     border-radius: 5px; 
     text-decoration: none;
     color: #fff;
-    background-color: var(--tutorial-btn-bg); 
+    background-color: var(--accent-color-primary); 
     transition: background-color 0.3s ease;
-    box-shadow: none; /* YouTube-এ শ্যাডো থাকে না */
+    box-shadow: none;
     white-space: nowrap; 
     height: fit-content;
     padding: 6px 10px;
@@ -87,7 +87,7 @@ body {
     background: var(--bg-secondary); 
     color: #fff;
     padding: 10px 15px;
-    box-shadow: none; /* YouTube-এ শ্যাডো থাকে না */
+    box-shadow: none; 
     position: relative;
     overflow: hidden;
     display: flex;
@@ -106,7 +106,7 @@ body {
     height: 25px;
 }
 .website-icon svg {
-    fill: var(--accent-color-red); /* YouTube লোগো অ্যাকসেন্ট */
+    fill: var(--accent-color-red); 
     width: 100%;
     height: 100%;
 }
@@ -223,11 +223,11 @@ body {
 .container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); 
-    gap: 30px 15px;
+    gap: 30px 15px; 
     padding: 20px 15px; 
 }
 .card {
-    background-color: transparent; /* ব্যাকগ্রাউন্ডের সাথে মিশে যাবে */
+    background-color: var(--card-bg); /* Transparent */
     border-radius: 0; 
     box-shadow: none; 
     overflow: hidden;
@@ -245,7 +245,6 @@ body {
 .card:hover {
     box-shadow: none;
     transform: none; 
-    background-color: transparent;
 }
 .card.highlighted {
     animation: none;
@@ -256,11 +255,11 @@ body {
     position: relative;
     width: 100%;
 }
-/* থ্রি-ডট মেনু (শেয়ার আইকনের পরিবর্তে) */
+/* থ্রি-ডট মেনু */
 .share-icon {
     display: none; 
 }
-.options-icon { /* এই ক্লাসটি HTML-এ ব্যবহার করতে হবে */
+.options-icon { 
     position: absolute;
     top: 5px; 
     right: 5px;
@@ -276,7 +275,7 @@ body {
 .card:hover .options-icon {
     opacity: 1; 
 }
-.card-upload-time { /* ভিডিওর সময় থাম্বনেইলের নিচে ডান দিকে */
+.card-upload-time { 
     position: absolute;
     bottom: 8px;
     right: 8px;
@@ -326,10 +325,11 @@ body {
     height: 100%;
     object-fit: cover;
 }
+/* *** মুখ্য পরিবর্তন: টাইটেল এবং মেটাডেটা লেআউট *** */
 .card-content {
     flex-grow: 1;
     display: flex;
-    flex-direction: row; /* আইকন এবং টেক্সট পাশাপাশি */
+    flex-direction: row; 
     align-items: flex-start;
     gap: 8px;
     padding: 8px 0 0; 
@@ -355,16 +355,18 @@ body {
     position: relative; 
 }
 .card-title {
-    font-size: 14px;
+    /* ** টাইটেল ফিক্সড ২-লাইন স্টাইল ** */
+    font-size: 14px; /* ছোট সাইজ */
     color: var(--text-primary); 
     margin: 0 0 2px;
     font-weight: 500; 
     line-height: 1.3;
-    -webkit-line-clamp: 2; 
+    -webkit-line-clamp: 2; /* ২ লাইন */
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis; 
-    display: -webkit-box; /* 2 লাইন নিশ্চিত করার জন্য */
+    display: -webkit-box;
+    height: calc(1.3em * 2); /* ফিক্সড ২ লাইনের উচ্চতা */
 }
 .card-divider {
     display: none; 
@@ -372,7 +374,8 @@ body {
 
 /* চ্যানেলের নাম এবং মেটাডেটা */
 .card-footer {
-    display: block; /* পুরাতন ফুটার সরানো হলো */
+    /* লাইক/ভিউ স্টাইল এই সেকশনে আনা হয়েছে, ব্যাকগ্রাউন্ড ট্রান্সপারেন্ট */
+    display: block; 
     padding: 0;
     font-size: 12px;
     color: var(--text-secondary); 
@@ -402,17 +405,19 @@ body {
     content: "";
     margin: 0;
 }
-/* পুরাতন LUXEGRID স্টাইল ডিসেবল */
-.card-stats, .love-stats {
-    display: none; 
+/* কার্ড স্ট্যাটস (লাইক/ভিউ কাউন্ট) - নির্দেশ অনুসারে ব্যাকগ্রাউন্ড রিমুভ */
+.card-stats {
+    display: none; /* YouTube স্টাইলে আলাদা করে লাইক কাউন্ট দেখানোর প্রয়োজন নেই, এটি video-meta এর অংশ */
+    background-color: transparent; /* ব্যাকগ্রাউন্ড অপসারণ */
+    padding: 0;
 }
-.love-stats.liked svg {
-    fill: var(--accent-color-red); 
-    stroke: var(--accent-color-red);
+.love-stats {
+    display: none; 
 }
 
 /*======================================
  পেজিনেশন এবং অন্যান্য ইউটিলিটি
+ (সমস্ত মডাল, ফর্ম, অ্যাডমিন প্যানেল স্টাইল পূর্বের মতো অক্ষত রাখা হয়েছে)
 ======================================*/
 .pagination-container {
     display: flex;
@@ -485,7 +490,7 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* Modal and Admin Panel Styles (পূর্বের সমস্ত ফাংশনাল স্টাইল বজায় রাখা হয়েছে) */
+/* Modal and Admin Panel Styles (সমস্ত কোড পূর্বের মতো) */
 .modal {
     display: none;
     position: fixed;
@@ -685,7 +690,7 @@ body {
     display: block;
 }
 .admin-panel-content {
-    background-color: var(--card-bg); 
+    background-color: var(--modal-bg); /* Admin প্যানেল BG */
     color: var(--text-primary);
     padding: 20px;
     border-radius: 10px;
@@ -765,7 +770,7 @@ footer {
 
 
 /*======================================
-  মিডিয়া কোয়েরি (ডেস্কটপ এবং মোবাইল)
+  ডেস্কটপ ভিউয়ের জন্য স্টাইল (768px এবং তার উপরে)
 ======================================*/
 @media (min-width: 768px) {
     .tutorial-button {
@@ -795,7 +800,9 @@ footer {
         padding: 30px 40px;
     }
     .card-title {
-        font-size: 16px;
+        font-size: 16px; /* মার্জিত সাইজ */
+        line-height: 1.4;
+        height: calc(1.4em * 2); /* ফিক্সড ২ লাইনের উচ্চতা */
     }
     .card-image-container {
         height: 200px;
@@ -820,6 +827,9 @@ footer {
     }
 }
 
+/*======================================
+  মোবাইল ভিউয়ের জন্য স্টাইল (767px এবং তার নিচে)
+======================================*/
 @media (max-width: 767px) {
     .tutorial-button {
         font-size: 11px;
@@ -847,7 +857,9 @@ footer {
         padding: 10px;
     }
     .card-title {
-        font-size: 13px;
+        font-size: 12px; /* মার্জিত সাইজ */
+        line-height: 1.3;
+        height: calc(1.3em * 2); /* ফিক্সড ২ লাইনের উচ্চতা */
     }
     .card-image-container {
         height: 100px;
@@ -857,6 +869,17 @@ footer {
         max-width: 250px;
         padding: 10px;
     }
+    .profile-icon {
+        width: 28px; 
+        height: 28px;
+    }
+    .channel-name, .video-meta {
+        font-size: 11px;
+    }
+    .card-content {
+        gap: 6px;
+    }
+    /* ... অন্যান্য মোবাইল স্টাইল পূর্বের মতো অক্ষত ... */
     .form-group input, .form-group select, .form-group textarea {
         padding: 5px;
         font-size: 12px;
@@ -886,6 +909,9 @@ footer {
     }
     .card-upload-time {
         font-size: 10px;
+        top: 8px;
+        left: 8px;
+        padding: 4px 6px;
     }
     .admin-panel-header {
         flex-direction: column;
@@ -897,15 +923,5 @@ footer {
     }
     .back-btn, .restart-btn {
         width: 100%;
-    }
-    .profile-icon {
-        width: 28px; 
-        height: 28px;
-    }
-    .channel-name, .video-meta {
-        font-size: 11px;
-    }
-    .card-content {
-        gap: 6px;
     }
 }
