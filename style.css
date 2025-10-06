@@ -273,17 +273,18 @@ body {
     padding: 0 10px 10px 10px;
     box-sizing: border-box;
 }
+/* **১. ভিউ/লাইক কাউন্টারের ব্যাকগ্রাউন্ড অপসারণ** */
 .card-stats {
     display: flex;
     align-items: center;
-    background-color: var(--category-bg); 
-    border-radius: 10px;
-    padding: 5px 8px;
+    background-color: transparent; /* ব্যাকগ্রাউন্ড অপসারণ */ 
+    border-radius: 0;
+    padding: 0; /* প্যাডিং অপসারণ */
 }
 .card-stats .icon {
-    margin-right: 5px;
-    width: 20px;
-    height: 20px;
+    margin-right: 2px; /* স্পেস কমানো */
+    width: 18px; /* সাইজ সামান্য ছোট */
+    height: 18px;
     stroke: var(--text-primary); 
 }
 .card-stats .count {
@@ -356,16 +357,19 @@ font-size: 16px;
 color: var(--text-primary); 
 margin: 0;
 font-weight: bold; 
-white-space: nowrap; 
+/* ফিক্সড ২ লাইনের স্টাইল */
+display: -webkit-box;
+-webkit-line-clamp: 2; 
+-webkit-box-orient: vertical;
 overflow: hidden; 
 text-overflow: ellipsis;  
 width: 100%; 
+line-height: 1.3;
+height: calc(1.3em * 2); /* ফিক্সড ২ লাইনের উচ্চতা */
 }
+/* **২. টাইটেলের নিচের দাগ (Divider) অপসারণ** */
 .card-divider {
-    height: 1.5px;
-    width: 80%;
-    background-color: var(--divider-color); 
-    margin: 5px 0;
+    display: none; /* সম্পূর্ণরূপে হাইড */
 }
 
 .modal {
@@ -753,6 +757,8 @@ footer {
     }
     .card-title {
         font-size: 18px;
+        line-height: 1.3;
+        height: calc(1.3em * 2); 
     }
     .card-image-container {
         height: 220px;
@@ -799,8 +805,11 @@ footer {
         gap: 10px;
         padding: 10px 10px 0px;
     }
+    /* **৩. মোবাইল ভিউতে টাইটেলের ফন্ট সাইজ ছোট করা** */
     .card-title {
-        font-size: 14px;
+        font-size: 12px; /* 12px এ ছোট করা হলো */
+        line-height: 1.3;
+        height: calc(1.3em * 2); /* ফিক্সড ২ লাইনের উচ্চতা বজায় রাখা হলো */
     }
     .card-image-container {
         height: 150px;
