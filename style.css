@@ -273,7 +273,6 @@ body {
     padding: 0 10px 10px 10px;
     box-sizing: border-box;
 }
-/* **১. ভিউ/লাইক কাউন্টারের ব্যাকগ্রাউন্ড অপসারণ** */
 .card-stats {
     display: flex;
     align-items: center;
@@ -352,22 +351,25 @@ body {
     text-align: center;
     padding: 10px;
 }
+/* **টাইটেল ১-লাইনে ফিক্সড এবং হাইড হবে** */
 .card-title {
-font-size: 16px;
-color: var(--text-primary); 
-margin: 0;
-font-weight: bold; 
-/* ফিক্সড ২ লাইনের স্টাইল */
-display: -webkit-box;
--webkit-line-clamp: 2; 
--webkit-box-orient: vertical;
-overflow: hidden; 
-text-overflow: ellipsis;  
-width: 100%; 
-line-height: 1.3;
-height: calc(1.3em * 2); /* ফিক্সড ২ লাইনের উচ্চতা */
+    font-size: 16px;
+    color: var(--text-primary); 
+    margin: 0;
+    font-weight: bold; 
+    
+    /* শুধুমাত্র এক লাইন দেখাবে */
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; /* অতিরিক্ত অংশ থ্রি-ডট দিয়ে হাইড হবে */
+    
+    /* ২-লাইনের ফিক্সড হাইট স্টাইল বাতিল */
+    display: block; /* বা শুধু inline-block, flex ব্যবহার না করলে */
+    line-height: normal; /* লাইন হাইট রিসেট */
+    height: auto; /* ফিক্সড হাইট বাতিল */
+    padding-bottom: 5px; /* টাইটেলের নিচে সামান্য গ্যাপ */
+    width: 100%;
 }
-/* **২. টাইটেলের নিচের দাগ (Divider) অপসারণ** */
 .card-divider {
     display: none; /* সম্পূর্ণরূপে হাইড */
 }
@@ -757,8 +759,8 @@ footer {
     }
     .card-title {
         font-size: 18px;
-        line-height: 1.3;
-        height: calc(1.3em * 2); 
+        line-height: normal;
+        height: auto;
     }
     .card-image-container {
         height: 220px;
@@ -805,11 +807,10 @@ footer {
         gap: 10px;
         padding: 10px 10px 0px;
     }
-    /* **৩. মোবাইল ভিউতে টাইটেলের ফন্ট সাইজ ছোট করা** */
     .card-title {
-        font-size: 12px; /* 12px এ ছোট করা হলো */
-        line-height: 1.3;
-        height: calc(1.3em * 2); /* ফিক্সড ২ লাইনের উচ্চতা বজায় রাখা হলো */
+        font-size: 12px; /* ছোট ফন্ট সাইজ */
+        line-height: normal;
+        height: auto;
     }
     .card-image-container {
         height: 150px;
