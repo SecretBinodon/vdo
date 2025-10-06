@@ -1,50 +1,38 @@
 /*======================================
- সাধারণ স্টাইল (মোবাইল ও ডেস্কটপ উভয়ের জন্য)
+ LUXEGRID প্রিমিয়াম স্টাইল ভেরিয়েবল
+ (আপনার দেওয়া কোড পরিবর্তন করে)
 ======================================*/
 :root {
-    --bg-primary: #121212;
-    --bg-secondary: #1e1e1e;
-    --text-primary: #e0e0e0;
-    --text-secondary: #aaaaaa;
-    --card-bg: #2d2d2d; 
-    --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-    --card-hover-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-    --divider-color: #444444;
-    --category-bg: #3a3a3a;
-    --category-text: #e0e0e0;
-    --modal-bg: #333333;
-    --input-bg: #444444;
-    --input-border: #555555;
-    --footer-bg: #1e1e1e;
+    /* প্রিমিয়াম ডার্ক বেস কালার */
+    --bg-primary: #0F0F0F; /* Ultra Dark Background */
+    --bg-secondary: #1C1C1C; /* Header/Category Background */
+    --text-primary: #FFFFFF;
+    --text-secondary: #AAAAAA;
+    
+    /* প্রিমিয়াম কার্ড কালার এবং শ্যাডো রিমুভড */
+    --card-bg: #1A1A1A; 
+    --card-shadow: none; 
+    --card-hover-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* হোভারে হালকা শ্যাডো */
+    
+    /* অ্যাকসেন্ট কালার (প্রিমিয়াম পার্পল ও রেড) */
+    --accent-color-primary: #A200FF; /* প্রিমিয়াম পার্পল হাইলাইট */
+    --accent-color-secondary: #FF2D55; /* টিউটোরিয়াল বাটন/সেকেন্ডারি হাইলাইট */
+    --tutorial-btn-bg: var(--accent-color-secondary);
+    
+    --divider-color: #333333;
+    --category-bg: #222222;
+    --category-text: #FFFFFF;
+    --modal-bg: #222222;
+    --input-bg: #333333;
+    --input-border: #444444;
+    --footer-bg: #1C1C1C;
 }
 
-.ad-container {
-    width: 100%;
-    box-sizing: border-box;
-    margin-top: 0px;
-    margin-bottom: -30px;
-    text-align: center;
-}
-    
-.tutorial-button {
-    display: inline-block; 
-    text-align: center;
-    font-weight: bold;
-    border-radius: 5px; 
-    text-decoration: none;
-    color: #fff;
-    background-color: #2575fc;
-    transition: background-color 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    white-space: nowrap; 
-    height: fit-content;
-}
-.tutorial-button:hover,
-.tutorial-button:active {
-    background-color: #28a745;
-}
+/*======================================
+ সাধারণ স্টাইল (মোবাইল ও ডেস্কটপ উভয়ের জন্য)
+======================================*/
 body {
-    font-family: sans-serif;
+    font-family: 'Poppins', sans-serif; 
     background-color: var(--bg-primary); 
     color: var(--text-primary); 
     margin: 0;
@@ -57,6 +45,36 @@ body {
 #main-content {
     flex-grow: 1; 
 }
+
+.ad-container {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 0px;
+    margin-bottom: -30px;
+    text-align: center;
+}
+    
+/* টিউটোরিয়াল বাটন (LUXEGRID স্টাইল) */
+.tutorial-button {
+    display: inline-block; 
+    text-align: center;
+    font-weight: 600;
+    border-radius: 5px; 
+    text-decoration: none;
+    color: #fff;
+    background-color: var(--tutorial-btn-bg); /* প্রিমিয়াম রেড */
+    transition: background-color 0.3s ease, transform 0.2s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    white-space: nowrap; 
+    height: fit-content;
+}
+.tutorial-button:hover,
+.tutorial-button:active {
+    background-color: #f73059;
+    transform: translateY(-1px);
+}
+
+/* হেডার (LUXEGRID স্টাইল) */
 .sticky-wrapper-top {
     position: sticky;
     top: 0;
@@ -64,10 +82,10 @@ body {
     background-color: var(--bg-primary); 
 }
 .header {
-    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+    background: var(--bg-secondary); /* সলিড ডার্ক */
     color: #fff;
     padding: 10px 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
     position: relative;
     overflow: hidden;
     display: flex;
@@ -86,20 +104,20 @@ body {
     height: 25px;
 }
 .website-icon svg {
-    fill: #fff;
+    fill: var(--accent-color-primary); /* আইকনে অ্যাকসেন্ট কালার */
     width: 100%;
     height: 100%;
 }
 .website-name {
     font-size: 20px;
-    font-weight: 400; 
+    font-weight: 600; 
     font-family: 'Fugaz One', cursive; 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 .name-part-1 {
-    color: #FFD700; 
+    color: var(--accent-color-primary); /* প্রিমিয়াম পার্পল */
 }
 .name-part-2 {
     color: #fff; 
@@ -128,6 +146,8 @@ body {
 .social-icon:hover {
     transform: scale(1.1);
 }
+
+/* ক্যাটেগরি বার (LUXEGRID স্টাইল) */
 .category-bar {
     display: flex;
     justify-content: flex-start;
@@ -138,7 +158,7 @@ body {
     padding: 10px 10px;
     background-color: var(--bg-secondary); 
     margin: 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
     white-space: nowrap;
     position: sticky;
     top: 0;
@@ -153,19 +173,20 @@ body {
 }
 .category-bar button {
     background-color: var(--category-bg); 
-    color: var(--category-text);
+    color: var(--text-secondary);
     border: none;
     border-radius: 20px;
-    padding: 8px 10px;
+    padding: 8px 12px;
     margin: 0 5px;
     cursor: pointer;
     font-size: 14px;
     transition: background-color 0.3s ease, color 0.3s ease;
     flex-shrink: 0;
     white-space: nowrap;
+    font-weight: 500;
 }
 .category-bar button.add-card-btn {
-    background-color: #4CAF50;
+    background-color: var(--accent-color-secondary); /* উজ্জ্বল কালার */
     color: white;
     padding: 5px;
     font-size: 14px;
@@ -181,26 +202,29 @@ body {
     margin-right: 0;
 }
 .category-bar button.active {
-    background-color: #2575fc;
+    background-color: var(--accent-color-primary); /* প্রিমিয়াম পার্পল */
     color: #fff;
 }
 .category-bar button:not(.add-card-btn):hover {
-    background-color: #4a4a4a; 
+    background-color: var(--accent-color-primary); 
+    color: #fff;
 }
 .add-card-btn:hover {
-    background-color: #45a049;
+    background-color: #f73059;
 }
+
+/* কার্ড (LUXEGRID স্টাইল) */
 .card {
     background-color: var(--card-bg); 
-    border-radius: 15px;
-    box-shadow: var(--card-shadow);
+    border-radius: 8px; /* কম রাউন্ডেড কর্নার */
+    box-shadow: var(--card-shadow); /* শ্যাডো রিমুভড */
     overflow: hidden;
     display: flex;
     flex-direction: column; 
     justify-content: space-between;
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease;
+    transition: opacity 0.6s ease-out, transform 0.3s ease, box-shadow 0.3s ease;
 }
 .card.visible {
     opacity: 1;
@@ -208,28 +232,34 @@ body {
 }
 .card:hover {
     box-shadow: var(--card-hover-shadow);
+    transform: translateY(-3px); /* সামান্য উপরে উঠে আসা */
+    background-color: #252525;
 }
 .card:active {
     box-shadow: var(--card-hover-shadow); 
     transform: none; 
 }
+
+/* LUXEGRID হাইলাইট অ্যানিমেশন */
 .card.highlighted {
-    animation: highlight-pulse 1.5s infinite;
+    animation: luxury-pulse 1.5s infinite;
+    border: 2px solid var(--accent-color-primary);
 }
-@keyframes highlight-pulse {
+@keyframes luxury-pulse {
     0% {
-        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.75);
-        border: 2px solid transparent;
+        box-shadow: 0 0 0 0 rgba(162, 0, 255, 0.5);
+        border-color: var(--accent-color-primary);
     }
     50% {
-        box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
-        border: 2px solid rgba(40, 167, 69, 0.75);
+        box-shadow: 0 0 0 8px rgba(162, 0, 255, 0);
+        border-color: var(--accent-color-secondary);
     }
     100% {
-        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
-        border: 2px solid transparent;
+        box-shadow: 0 0 0 0 rgba(162, 0, 255, 0);
+        border-color: var(--accent-color-primary);
     }
 }
+
 .card-header {
     position: relative;
     width: 100%;
@@ -238,7 +268,7 @@ body {
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
     color: #fff;
     border-radius: 50%;
     width: 30px;
@@ -252,42 +282,48 @@ body {
     z-index: 5;
 }
 .share-icon:hover {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: var(--accent-color-primary);
 }
 .card-upload-time {
     position: absolute;
     top: 10px;
     left: 10px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.4);
     color: #fff;
-    padding: 5px 8px;
-    border-radius: 5px;
-    font-size: 12px;
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-size: 11px;
     z-index: 5;
     white-space: nowrap;
 }
+
+/* কার্ড ফুটার (LUXEGRID স্টাইল) */
 .card-footer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 10px 10px 10px;
+    justify-content: flex-start; /* বাম দিকে অ্যালাইনমেন্ট */
+    gap: 15px; /* ব্যবধান বাড়ানো */
+    padding: 0 10px 10px;
     box-sizing: border-box;
 }
 .card-stats {
     display: flex;
     align-items: center;
-    background-color: var(--category-bg); 
+    background-color: transparent; /* ব্যাকগ্রাউন্ড সরানো */
     border-radius: 10px;
-    padding: 5px 8px;
+    padding: 0;
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 400;
 }
 .card-stats .icon {
-    margin-right: 5px;
-    width: 20px;
-    height: 20px;
-    stroke: var(--text-primary); 
+    margin-right: 4px;
+    width: 14px;
+    height: 14px;
+    stroke: var(--accent-color-primary); /* আইকনে অ্যাকসেন্ট কালার */
 }
 .card-stats .count {
-    font-weight: bold;
+    font-weight: 600;
     color: var(--text-primary); 
     font-size: 14px;
 }
@@ -301,18 +337,20 @@ body {
     stroke: var(--text-secondary); 
 }
 .love-stats.liked svg {
-    fill: #ff0000;
-    stroke: #ff0000;
+    fill: var(--accent-color-secondary); /* লাইক হলে রেড কালার */
+    stroke: var(--accent-color-secondary);
 }
 .love-stats:hover svg {
     transform: scale(1.1);
 }
+
+/* কার্ড ইমেজ এবং প্লে আইকন */
 .card-image-container {
     position: relative;
     width: 100%;
-    height: 150px;
+    height: 180px; /* উচ্চতা সামান্য বাড়ানো */
     overflow: hidden;
-    border-radius: 15px 15px 0 0;
+    border-radius: 8px 8px 0 0; /* কার্ডের সাথে ম্যাচ করে */
     cursor: pointer;
 }
 .play-icon {
@@ -320,18 +358,19 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 50px;
-    height: 50px;
-    background-color: rgba(0, 0, 0, 0.6);
+    width: 45px;
+    height: 45px;
+    background-color: rgba(162, 0, 255, 0.8); /* অ্যাকসেন্ট কালারে প্লে বাটন */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 2;
     transition: background-color 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 .play-icon:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: var(--accent-color-secondary);
 }
 .play-icon svg {
     fill: #fff;
@@ -347,27 +386,29 @@ body {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 10px;
+    align-items: flex-start; /* বাম দিকে অ্যালাইনমেন্ট */
+    text-align: left;
+    padding: 10px 10px 5px; /* প্যাডিং ঠিক করা */
 }
 .card-title {
-font-size: 16px;
-color: var(--text-primary); 
-margin: 0;
-font-weight: bold; 
-white-space: nowrap; 
-overflow: hidden; 
-text-overflow: ellipsis;  
-width: 100%; 
+    font-size: 15px;
+    color: var(--text-primary); 
+    margin: 0;
+    font-weight: 600; 
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    width: 100%;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* টাইটেল ২ লাইন পর্যন্ত */
+    -webkit-box-orient: vertical;
+    height: 40px; 
 }
 .card-divider {
-    height: 1.5px;
-    width: 80%;
-    background-color: var(--divider-color); 
-    margin: 5px 0;
+    display: none; /* ডিভাইডার সরানো হলো */
 }
 
+/* Modal and Admin Panel Styles (No major style changes, only color variables used) */
 .modal {
     display: none;
     position: fixed;
@@ -610,6 +651,8 @@ width: 100%;
 .restart-btn:hover {
     background-color: #e0a800;
 }
+
+/* পেজিনেশন (LUXEGRID স্টাইল) */
 .pagination-container {
     display: flex;
     justify-content: center;
@@ -644,8 +687,8 @@ width: 100%;
 }
 .pagination-button {
     background-color: var(--bg-primary); 
-    color: #2575fc;
-    border: 1px solid #2575fc;
+    color: var(--accent-color-primary);
+    border: 1px solid var(--accent-color-primary);
     border-radius: 5px;
     padding: 8px 12px;
     margin: 0 5px;
@@ -655,7 +698,7 @@ width: 100%;
     flex-shrink: 0;
 }
 .pagination-button.active {
-    background-color: #2575fc;
+    background-color: var(--accent-color-primary);
     color: #fff;
 }
 .pagination-button:hover:not(.active) {
@@ -670,7 +713,7 @@ width: 100%;
 }
 .loader {
     border: 4px solid #444;
-    border-top: 4px solid #3498db;
+    border-top: 4px solid var(--accent-color-primary);
     border-radius: 50%;
     width: 12px;
     height: 12px;
@@ -681,22 +724,23 @@ width: 100%;
     100% { transform: rotate(360deg); }
 }
 
+/* গ্রিড কন্টেইনার */
 .container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); /* সাইজ সামান্য বড় করা */
     gap: 15px;
-    padding: 10px 10px 0px; 
+    padding: 15px; 
 }
 
 /*======================================
-  ফুটার স্টাইল (নতুন)
+  ফুটার স্টাইল (LUXEGRID)
 ======================================*/
 footer {
     background-color: var(--footer-bg);
     color: var(--text-secondary);
     text-align: center;
     padding: 20px 10px;
-    margin-top: 3px;
+    margin-top: 15px;
 }
 
 .footer-links {
@@ -714,7 +758,7 @@ footer {
 }
 
 .footer-links a:hover {
-    color: var(--text-primary);
+    color: var(--accent-color-primary); /* হোভার কালার পরিবর্তন */
 }
 
 .footer-copyright p {
@@ -747,15 +791,17 @@ footer {
         height: 30px;
     }
     .container {
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: repeat(4, 1fr); /* ৪টি কলাম */
         gap: 20px;
         max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
     }
     .card-title {
-        font-size: 18px;
+        font-size: 17px;
     }
     .card-image-container {
-        height: 220px;
+        height: 200px;
     }
     .admin-panel-header {
         flex-direction: row;
