@@ -8,7 +8,6 @@
     
     <script type='text/javascript' src='//pl27703154.revenuecpmgate.com/70/2c/67/702c67f9d1db58564142cc27691530f9.js'></script>
     <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">
-
     <script type='text/javascript' src='//pl27703153.revenuecpmgate.com/a0/08/d1/a008d17e02685c0505877ed11b7610d9.js'></script>
     
     <style>
@@ -187,6 +186,13 @@
         box-sizing: border-box;
     }
 
+    /* রিকমেন্ডেড কার্ডের .card-stats এর সাথে কনফ্লিক্ট এড়াতে */
+    .video-title-bar .card-stats {
+        background-color: transparent; /* এটার আসল ব্যাকগ্রাউন্ড */
+        border-radius: 0;
+        padding: 0; 
+    }
+    
     .card-stats {
         display: flex;
         align-items: center;
@@ -194,15 +200,16 @@
         white-space: nowrap; 
         overflow: hidden; 
         text-overflow: ellipsis; 
-        background-color: var(--category-bg);
-        border-radius: 10px;
-        padding: 5px 8px;
+        /* রিকমেন্ডেড কার্ডের জন্য transparent */
+        background-color: transparent; 
+        border-radius: 0; 
+        padding: 0;
     }
 
     .card-stats .icon {
-        margin-right: 5px;
-        width: 20px;
-        height: 20px;
+        margin-right: 2px; /* মূল কার্ডের মতো কমানো হলো */
+        width: 18px;
+        height: 18px;
         stroke: var(--text-primary); 
     }
 
@@ -242,12 +249,14 @@
         transform: scale(1.1);
         transition: transform 0.2s ease;
     }
+    
+    /* লোডিং স্পিনারের সাইজ (2px বর্ডার, 8px সাইজ) */
     .loader {
-        border: 3px solid #444;
-        border-top: 3px solid #3498db;
+        border: 2px solid #444;
+        border-top: 2px solid #3498db;
         border-radius: 50%;
-        width: 10px;
-        height: 10px;
+        width: 8px;
+        height: 8px;
         animation: spin 1s linear infinite;
         flex-shrink: 0;
     }
@@ -255,6 +264,7 @@
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
+    
     .recommended-section {
         margin-top: 0px;
     }
@@ -269,12 +279,12 @@
         margin-bottom: 5px;
     }
     .container {
-    display: grid;
-    /* ডেস্কটপ ভিউতে ৩টি কার্ড পাশাপাশি দেখাবে */
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 15px;
-    padding: 10px; 
-   }
+        display: grid;
+        /* মোবাইল ভিউতে ২টি কার্ড পাশাপাশি */
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 10px; /* মোবাইলের জন্য গ্যাপ কমানো */
+        padding: 5px; /* মোবাইলের জন্য প্যাডিং কমানো */
+    }
     .card {
         background-color: var(--card-bg); 
         border-radius: 15px;
@@ -334,26 +344,24 @@
         z-index: 5;
         white-space: nowrap;
     }
+    
+    /* রিকমেন্ডেড কার্ডের ইমেজ কন্টেইনার (16:9 অনুপাত) */
     .card-image-container {
         position: relative;
         width: 100%;
-        height: 150px;
+        aspect-ratio: 16 / 9; /* 16:9 অনুপাত নিশ্চিত করা */
         overflow: hidden;
         border-radius: 15px 15px 0 0;
         cursor: pointer;
     }
-    @media (min-width: 768px) {
-    .card-image-container {
-        height: 220px; /* ডেস্কটপের জন্য প্রস্তাবিত উচ্চতা */
-    }
-    }
+
     .play-icon {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 50px;
-        height: 50px;
+        width: 35px; /* ছোট করা */
+        height: 35px; /* ছোট করা */
         background-color: rgba(0, 0, 0, 0.6);
         border-radius: 50%;
         display: flex;
@@ -367,41 +375,56 @@
     }
     .play-icon svg {
         fill: #fff;
-        width: 25px;
-        height: 25px;
+        width: 18px; /* আইকন ছোট করা */
+        height: 18px; /* আইকন ছোট করা */
     }
     .card-image-container img {
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
+    
+    /* রিকমেন্ডেড কার্ডের কন্টেন্ট (বাম দিক থেকে শুরু) */
     .card-content {
         flex-grow: 1;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: 10px;
+        align-items: flex-start; /* বাম দিক থেকে শুরু */
+        text-align: left;
+        padding: 5px 10px 0px 10px; /* উপরের প্যাডিং কমানো */
         width: 100%;
         box-sizing: border-box;
     }
+    
+    /* রিকমেন্ডেড কার্ডের টাইটেল (বাম দিক থেকে শুরু, 1 লাইনে, মার্জিন) */
     .card-title {
-        font-size: 16px;
+        font-size: 16px; /* মোবাইলের জন্য ঠিক রাখা হলো (ডেস্কটপে পরিবর্তন হবে) */
         color: var(--text-primary); 
-        margin: 0;
         font-weight: bold; 
+        
+        /* মার্জিন: উপরে 5px, নিচে 5px */
+        margin: 5px 0 5px 0; 
+        
+        /* বাম দিক থেকে শুরু নিশ্চিত করা */
+        text-align: left; 
+        
+        /* 1 লাইনে ফিক্সড এবং থ্রি-ডট নিশ্চিত করা */
         white-space: nowrap;      
         overflow: hidden;         
         text-overflow: ellipsis;  
+        display: block;
         width: 100%;
     }
+    
+    /* রিকমেন্ডেড কার্ডের ফুটার (উপরে কম গ্যাপ) */
     .card-footer {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 10px 10px 10px;
         box-sizing: border-box;
+        padding: 2px 10px 10px 10px; /* উপরের দিকে প্যাডিং কমানো */
     }
+    
     .notification {
         position: fixed;
         top: 20px;
@@ -514,6 +537,37 @@
         transition: border-radius 0.3s ease;
     }
 
+    /*======================================
+     ডেস্কটপ ভিউয়ের জন্য স্টাইল (768px এবং তার উপরে)
+    ======================================*/
+    @media (min-width: 768px) {
+        .header { padding: 15px 40px; }
+        .website-name { font-size: 24px; }
+        .website-icon { width: 30px; height: 30px; }
+        .social-icon { width: 30px; height: 30px; }
+
+        .container {
+            /* ডেস্কটপ ভিউতে ৩টি কার্ড পাশাপাশি দেখাবে */
+            grid-template-columns: 1fr 1fr 1fr; 
+            gap: 20px;
+            padding: 10px 20px; 
+        }
+        .card-title {
+            font-size: 18px; /* ডেস্কটপের জন্য মানানসই ফন্ট সাইজ */
+        }
+        .play-icon {
+            width: 50px;
+            height: 50px;
+        }
+        .play-icon svg {
+            width: 25px;
+            height: 25px;
+        }
+    }
+    
+    /*======================================
+     মোবাইল ভিউয়ের জন্য স্টাইল (767px এবং তার নিচে)
+    ======================================*/
     @media (max-width: 767px) {
         .header { padding: 8px 10px; gap: 5px; }
         .website-name { font-size: 16px; }
@@ -528,23 +582,27 @@
         .video-title-bar h1 {
             font-size: 16px;
         }
-        .container {
-            grid-template-columns: 1fr 1fr; 
-            gap: 10px;
-            padding: 5px; 
+        .card-title { 
+            font-size: 12px; /* মোবাইলের জন্য ছোট ফন্ট সাইজ */
         }
-        .card-title { font-size: 14px; }
-        .card-image-container { height: 130px; }
         .card-upload-time {
             font-size: 10px;
             top: 8px;
             left: 8px;
             padding: 4px 6px;
         }
+        .play-icon {
+            width: 30px; 
+            height: 30px;
+        }
+        .play-icon svg {
+            width: 15px; 
+            height: 15px;
+        }
     }
     
     /*======================================
-     ফুটার স্টাইল (নতুন)
+     ফুটার স্টাইল 
     ======================================*/
     footer {
         background-color: var(--footer-bg);
@@ -704,9 +762,9 @@
             <a href="privacy-policy.html" style="color: #3498db;">Privacy Policy</a>
         </div>
         <div class="footer-copyright">
- <p> &copy; 2025 
-    <a href="https://secretbinodon.github.io/vdo" style="color: #3498db;">SecretBinodon</a>
-    . All Rights Reserved. </p>
+            <p> &copy; 2025 
+            <a href="https://secretbinodon.github.io/vdo" style="color: #3498db;">SecretBinodon</a>
+            . All Rights Reserved. </p>
         </div>
     </footer>
 
@@ -740,7 +798,7 @@
 
         let allCardData = [];
         let cardId = null;
-        let mainViewUpdated = false; // ভেরিয়েবলটির নাম পরিবর্তন করা হয়েছে
+        let mainViewUpdated = false; 
 
         const videoTitleEl = document.getElementById('video-title');
         const videoContainer = document.getElementById('video-container');
@@ -808,7 +866,7 @@
             }, duration);
         }
         
-        // **নতুন ফাংশন:** শুধুমাত্র একটি নির্দিষ্ট কার্ডের ভিউ কাউন্ট লোড করবে
+        // শুধুমাত্র একটি নির্দিষ্ট কার্ডের ভিউ কাউন্ট লোড করবে
         function getCardViews(id, viewEl) {
             const viewsDocRef = doc(db, "views", id);
             onSnapshot(viewsDocRef, (docSnap) => {
@@ -820,7 +878,7 @@
             });
         }
 
-        // **নতুন ফাংশন:** মূল ভিডিওর ভিউ কাউন্ট আপডেট এবং রিয়েল-টাইম লিসেনার চালু করবে
+        // মূল ভিডিওর ভিউ কাউন্ট আপডেট এবং রিয়েল-টাইম লিসেনার চালু করবে
         async function updateMainView(id, viewEl) {
             if (mainViewUpdated) return;
             mainViewUpdated = true; 
@@ -907,15 +965,16 @@
 
         // কার্ড তৈরি করার ফাংশন
         function createCard(data) {
-            const card = document.createElement('div');
+            const card = document.createElement('a'); // কার্ডকে <a> ট্যাগ বানানো হয়েছে
             card.classList.add('card');
             card.setAttribute('data-id', data.id);
+            card.href = `https://jibonpoth1.blogspot.com/?cardId=${data.id}`; // কার্ডে ক্লিক করলে নতুন লিংকে যাবে
             
             const timeAgoText = data.uploadTime ? formatTimeAgo(data.uploadTime) : '';
             
             card.innerHTML = `
                 <div class="card-header">
-                    <div class="share-icon" data-id="${data.id}">
+                    <div class="share-icon" data-id="${data.id}" onclick="event.preventDefault(); event.stopPropagation();">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-up" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1h-2z"/>
                             <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V9.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
@@ -942,7 +1001,7 @@
                         </svg>
                         <span class="count"><div class="loader"></div></span>
                     </div>
-                    <div class="card-stats love-stats" data-id="${data.id}">
+                    <div class="card-stats love-stats" data-id="${data.id}" onclick="event.preventDefault(); event.stopPropagation();">
                         <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6c757d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">
                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                         </svg>
@@ -1026,11 +1085,11 @@
         document.addEventListener('click', (event) => {
             const shareIcon = event.target.closest('.share-icon');
             const loveStats = event.target.closest('.love-stats');
-            const imageContainer = event.target.closest('.card-image-container');
 
             if (shareIcon) {
-                const cardId = shareIcon.dataset.id;
-                const cardTitle = shareIcon.closest('.card').querySelector('.card-title').textContent;
+                const card = shareIcon.closest('.card') || document.getElementById('video-embed-section');
+                const cardId = card.dataset.id;
+                const cardTitle = card.querySelector('.card-title')?.textContent || document.getElementById('video-title').textContent;
                 const shareUrl = `${window.location.origin}/link/?cardId=${cardId}`;
                 
                 if (navigator.share) {
@@ -1070,13 +1129,6 @@
                     updateLoveCount(cardId, loveStats);
                 }
                 return;
-            }
-
-            if (imageContainer) {
-                const card = imageContainer.closest('.card');
-                const cardId = card.dataset.id;
-                window.location.href = `https://jibonpoth1.blogspot.com/?cardId=${cardId}`;
-
             }
         });
 
