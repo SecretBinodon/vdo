@@ -176,6 +176,7 @@
     }
     
     .video-stats {
+        /* এটি শুধুমাত্র মূল ভিডিওর stats বারের জন্য, তাই ব্যাকগ্রাউন্ড থাকবে */
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -194,23 +195,32 @@
         white-space: nowrap; 
         overflow: hidden; 
         text-overflow: ellipsis; 
+        /* >>>>>> এই অংশটি আপডেট করা হলো <<<<<< */
+        /* রিকমেন্ডেড কার্ডের stats-এ ব্যাকগ্রাউন্ড, প্যাডিং বা বর্ডার থাকবে না */
+        background-color: transparent; 
+        border-radius: 0;
+        padding: 0;
+        /* যদি .video-stats-এর ভিতরে থাকে (যেমন মূল ভিডিও), তাহলে ব্যাকগ্রাউন্ড ও প্যাডিং থাকবে,
+           নইলে card-footer এর ভিতরে থাকলে থাকবে না। */
+    }
+    .video-stats .card-stats {
+        /* মূল ভিডিওর stats-এর স্টাইল অক্ষত রাখা */
         background-color: var(--category-bg);
         border-radius: 10px;
         padding: 5px 8px;
     }
 
     .card-stats .icon {
-        /* মূল কোড থেকে সাইজ পরিবর্তন */
-        margin-right: 2px; /* মূল কোডের গ্যাপ */
-        width: 18px; /* মূল কোডের সাইজ */
-        height: 18px; /* মূল কোডের সাইজ */
+        margin-right: 2px;
+        width: 18px; 
+        height: 18px; 
         stroke: var(--text-primary); 
     }
 
     .card-stats .count {
         font-weight: bold;
         color: var(--text-primary); 
-        font-size: 14px; /* মূল কোডের সাইজ */
+        font-size: 14px; 
         flex-shrink: 0;
     }
 
@@ -244,9 +254,8 @@
         transition: transform 0.2s ease;
     }
     .loader {
-        /* মূল কোড থেকে সাইজ পরিবর্তন */
-        border: 4px solid #444; /* মূল কোডের সাইজ */
-        border-top: 4px solid #3498db; /* মূল কোডের সাইজ */
+        border: 4px solid #444; 
+        border-top: 4px solid #3498db; 
         border-radius: 50%;
         width: 10px;
         height: 10px;
@@ -271,11 +280,10 @@
         margin-bottom: 5px;
     }
     .container {
-        /* মূল কোডের গ্রিড লেআউট */
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* 150px সর্বনিম্ন প্রস্থ */
-        gap: 15px; /* মূল কোডের গ্যাপ */
-        padding: 10px 10px 0px; /* মূল কোডের প্যাডিং */
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+        gap: 15px; 
+        padding: 10px 10px 0px; 
     }
     .card {
         background-color: var(--card-bg); 
@@ -299,7 +307,7 @@
     }
     .card:active {
         box-shadow: var(--card-hover-shadow); 
-        transform: none; /* মূল কোড অনুযায়ী যোগ করা */
+        transform: none; 
     }
     .card-header {
         position: relative;
@@ -338,16 +346,14 @@
         white-space: nowrap;
     }
     .card-image-container {
-        /* মূল কোডের 16:9 অনুপাত */
         position: relative;
         width: 100%;
         aspect-ratio: 16 / 9; 
-        height: auto; /* aspect-ratio দ্বারা হাইট নির্ধারিত হবে */
+        height: auto; 
         overflow: hidden;
         border-radius: 15px 15px 0 0;
         cursor: pointer;
     }
-    /* @media (min-width: 768px) এর হাইট পরিবর্তন করা হলো */
     @media (min-width: 768px) {
     .card-image-container {
         /* aspect-ratio ব্যবহার করার কারণে ফিক্সড হাইটের দরকার নেই */
@@ -358,7 +364,6 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        /* মূল কোড থেকে সাইজ পরিবর্তন */
         width: 35px; 
         height: 35px; 
         background-color: rgba(0, 0, 0, 0.6);
@@ -374,7 +379,6 @@
     }
     .play-icon svg {
         fill: #fff;
-        /* মূল কোড থেকে সাইজ পরিবর্তন */
         width: 18px;
         height: 18px;
     }
@@ -387,44 +391,34 @@
         flex-grow: 1;
         display: flex;
         flex-direction: column;
-        align-items: flex-start; /* টাইটেল বাম দিক থেকে শুরু */
+        align-items: flex-start; 
         text-align: left;
-        /* মূল কোড থেকে প্যাডিং পরিবর্তন */
         padding: 5px 10px 0px 10px; 
         width: 100%;
         box-sizing: border-box;
     }
     .card-title {
-        /* মূল কোডের স্টাইল */
-        font-size: 16px; /* ডেস্কটপে এটি পরিবর্তন হবে */
+        font-size: 16px; 
         color: var(--text-primary); 
         font-weight: bold; 
-        
-        /* মার্জিন পরিবর্তন */
         margin: 5px 0 10px 0; 
-
-        /* ১ লাইনে ফিক্সড এবং থ্রি-ডট */
         white-space: nowrap; 
         overflow: hidden; 
         text-overflow: ellipsis; 
-        
         display: block; 
         line-height: normal; 
         height: auto; 
         width: 100%;
-        text-align: left; /* বাম দিক থেকে শুরু নিশ্চিত */
+        text-align: left; 
     }
     .card-footer {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        /* মূল কোড থেকে প্যাডিং পরিবর্তন */
         padding: 2px 10px 10px 10px; 
         box-sizing: border-box;
         width: 100%;
     }
-    /* .card-stats স্টাইল উপরেই ঠিক করা হয়েছে */
-
     .notification {
         position: fixed;
         top: 20px;
@@ -456,7 +450,7 @@
         pointer-events: auto;
     }
 
-    /* Description Styles (New Dropdown/Push Down) */
+    /* Description Styles */
     .description-container {
         max-height: 0;
         overflow: hidden;
@@ -553,15 +547,14 @@
             height: 30px;
         }
         .container {
-            /* মূল কোডের ডেস্কটপ কলাম */
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 20px; /* মূল কোডের গ্যাপ */
+            gap: 20px; 
             max-width: 1200px;
             margin-left: auto;
             margin-right: auto;
         }
         .card-title {
-            font-size: 18px; /* মূল কোডের ফন্ট সাইজ */
+            font-size: 18px; 
         }
         .card-upload-time {
             font-size: 12px;
@@ -586,23 +579,20 @@
             font-size: 16px;
         }
         .container {
-            /* মূল কোডের মোবাইল কলাম */
             grid-template-columns: 1fr 1fr; 
-            gap: 10px; /* মূল কোডের গ্যাপ */
-            padding: 5px 10px 0px; /* মূল কোডের প্যাডিং */
+            gap: 10px; 
+            padding: 5px 10px 0px; 
         }
         .card-title { 
-            font-size: 12px; /* মূল কোডের ফন্ট সাইজ */
-            margin: 5px 0 8px 0; /* প্যাডিং কমানো */
+            font-size: 12px; 
+            margin: 5px 0 8px 0; 
         }
-        /* .card-image-container এর হাইট এখন aspect-ratio দ্বারা নিয়ন্ত্রিত */
         .card-upload-time {
             font-size: 10px;
             top: 8px;
             left: 8px;
             padding: 4px 6px;
         }
-        /* .play-icon-এর সাইজ গ্লোবাল স্টাইলেই ফিক্সড করা আছে (35px) */
     }
     
     /*======================================
