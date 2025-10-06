@@ -322,7 +322,7 @@ body {
     font-weight: bold; 
     
     /* ফাঁকা স্থান কমানো: টাইটেলের নিচে মার্জিন সেট করা */
-    margin: 0 0 2px 0; 
+    margin: 1px 0 3px 0; 
 
     /* ১ লাইনে ফিক্সড এবং থ্রি-ডট */
     white-space: nowrap; 
