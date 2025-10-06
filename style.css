@@ -276,13 +276,13 @@ body {
 .card-stats {
     display: flex;
     align-items: center;
-    background-color: transparent; /* ব্যাকগ্রাউন্ড অপসারণ */ 
+    background-color: transparent; 
     border-radius: 0;
-    padding: 0; /* প্যাডিং অপসারণ */
+    padding: 0; 
 }
 .card-stats .icon {
-    margin-right: 2px; /* স্পেস কমানো */
-    width: 18px; /* সাইজ সামান্য ছোট */
+    margin-right: 2px; 
+    width: 18px; 
     height: 18px;
     stroke: var(--text-primary); 
 }
@@ -347,31 +347,34 @@ body {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    /* টাইটেল বাম দিক থেকে শুরু করার জন্য */
+    align-items: flex-start; 
+    text-align: left;
     padding: 10px;
 }
-/* **টাইটেল ১-লাইনে ফিক্সড এবং হাইড হবে** */
+/* **টাইটেল ১-লাইনে ফিক্সড এবং বামদিক থেকে শুরু** */
 .card-title {
     font-size: 16px;
     color: var(--text-primary); 
     margin: 0;
     font-weight: bold; 
     
-    /* শুধুমাত্র এক লাইন দেখাবে */
+    /* বাম দিক থেকে শুরু */
+    text-align: left; 
+
+    /* ১ লাইনে ফিক্সড এবং থ্রি-ডট */
     white-space: nowrap; 
     overflow: hidden; 
-    text-overflow: ellipsis; /* অতিরিক্ত অংশ থ্রি-ডট দিয়ে হাইড হবে */
+    text-overflow: ellipsis; 
     
-    /* ২-লাইনের ফিক্সড হাইট স্টাইল বাতিল */
-    display: block; /* বা শুধু inline-block, flex ব্যবহার না করলে */
-    line-height: normal; /* লাইন হাইট রিসেট */
-    height: auto; /* ফিক্সড হাইট বাতিল */
-    padding-bottom: 5px; /* টাইটেলের নিচে সামান্য গ্যাপ */
+    display: block; 
+    line-height: normal; 
+    height: auto; 
+    padding-bottom: 5px; 
     width: 100%;
 }
 .card-divider {
-    display: none; /* সম্পূর্ণরূপে হাইড */
+    display: none; 
 }
 
 .modal {
@@ -759,8 +762,6 @@ footer {
     }
     .card-title {
         font-size: 18px;
-        line-height: normal;
-        height: auto;
     }
     .card-image-container {
         height: 220px;
@@ -809,8 +810,6 @@ footer {
     }
     .card-title {
         font-size: 12px; /* ছোট ফন্ট সাইজ */
-        line-height: normal;
-        height: auto;
     }
     .card-image-container {
         height: 150px;
