@@ -607,7 +607,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (imageContainer && card) {
             const cardId = card.dataset.id;
             
-            window.location.href = `https://jibonpoth1.blogspot.com/?cardId=${cardId}`;
+            window.location.href = `https://jibonpoth2.blogspot.com/?cardId=${cardId}`;
         }
     });
 
