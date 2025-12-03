@@ -42,6 +42,25 @@
       margin-top: 0px;
       margin-bottom: 0px;
       text-align: center;
+      /* বিজ্ঞাপনের জন্য অটো হাইট এবং ফ্লুইড উইডথ */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* বিজ্ঞাপনের উপরের নিচে সামান্য গ্যাপের জন্য */
+      padding: 10px 0; 
+      min-height: 50px; /* লোডিং এর সময় গ্যাপ ধরে রাখার জন্য */
+    }
+
+    /* নতুন মিড-এড কন্টেইনার স্টাইল */
+    .ad-inline-placement {
+        grid-column: 1 / -1; /* গ্রিডের সম্পূর্ণ প্রস্থ জুড়ে বসানোর জন্য */
+        margin-top: 15px; 
+        margin-bottom: 15px;
+        padding: 0; /* অতিরিক্ত প্যাডিং সরানো হলো */
+        background-color: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     html, body {
@@ -763,6 +782,10 @@
             <h2>⬇️ আপনার জন্য নির্বাচিত কিছু ভিডিও ⬇️</h2>
             <div class="container" id="recommended-container">
                 </div>
+            
+            <div class="ad-container" id="footer-ad-container" style="margin-top: 20px;">
+                </div>
+
         </div>
     </main>
     
@@ -816,6 +839,7 @@
         const videoTitleEl = document.getElementById('video-title');
         const videoContainer = document.getElementById('video-container');
         const recommendedContainer = document.getElementById('recommended-container');
+        const footerAdContainer = document.getElementById('footer-ad-container'); // নতুন সংযোজন
         const notificationPopup = document.getElementById('notificationPopup');
         const videoViewCountEl = document.querySelector('.video-stats .view-stats .count');
         const videoLoveCountEl = document.querySelector('.video-stats .love-stats .count');
@@ -1022,24 +1046,64 @@
                 </div>`;
             return card;
         }
+        
+        // **নতুন কোড: প্লেসমেন্ট ১ এর জন্য অ্যাড HTML (৬টি কার্ডের নিচে)**
+        const adMidHTML = `
+            <div class="ad-container ad-inline-placement">
+                <script async="async" data-cfasync="false" src="//pl27703152.revenuecpmgate.com/YOUR_NEW_AD_CODE_SLOT_1/invoke.js"></script>
+                <div id="container-YOUR_NEW_AD_CODE_SLOT_1"></div>
+            </div>
+        `;
+        
+        // **নতুন কোড: প্লেসমেন্ট ২ এর জন্য অ্যাড HTML (সব কার্ডের নিচে)**
+        const adFooterHTML = `
+            <script async="async" data-cfasync="false" src="//pl27703152.revenuecpmgate.com/YOUR_NEW_AD_CODE_SLOT_2/invoke.js"></script>
+            <div id="container-YOUR_NEW_AD_CODE_SLOT_2"></div>
+        `;
 
-        // কার্ডগুলো রেন্ডার করার ফাংশন
+        // **পরিবর্তিত রেন্ডার ফাংশন: renderCards**
         function renderCards(cardsToRender) {
             recommendedContainer.innerHTML = '';
-            cardsToRender.forEach(data => {
-                const card = createCard(data);
-                recommendedContainer.appendChild(card);
-                
-                // রিকমেন্ডেড কার্ডের ভিউ এবং লাইক আপডেট করা
-                getCardViews(data.id, card.querySelector('.view-stats .count'));
-                getAndUpdateStats(data.id, card.querySelector('.love-stats .count'), card.querySelector('.love-stats'));
+            
+            // প্লেসমেন্ট ২ - ফুটারের অ্যাড লোড করা
+            footerAdContainer.innerHTML = adFooterHTML;
 
-                setTimeout(() => {
-                    card.classList.add('visible');
-                }, 50);
+            const finalElements = [];
+            
+            // ৬ষ্ঠ কার্ডের পরে অ্যাড ঢুকানোর জন্য লুপ
+            for (let i = 0; i < cardsToRender.length; i++) {
+                
+                // i = 6 মানে, ৭ম কার্ডের আগে, অর্থাৎ ৬টি কার্ডের পর
+                if (i === 6) { 
+                    // প্লেসমেন্ট ১: Mid-Ad ইনজেক্ট করা
+                    const adDiv = document.createElement('div');
+                    adDiv.innerHTML = adMidHTML.trim();
+                    finalElements.push(adDiv.firstChild); 
+                }
+
+                // কার্ড তৈরি এবং finalElements-এ যোগ করা
+                const data = cardsToRender[i];
+                const card = createCard(data);
+                finalElements.push(card);
+            }
+            
+            // finalElements-এর সব উপাদান ডমে রেন্ডার করা
+            finalElements.forEach(element => {
+                recommendedContainer.appendChild(element);
+                
+                // যদি উপাদানটি কার্ড হয়, তাহলে ডেটা আপডেট এবং ট্রানজিশন যোগ করা
+                if (element.classList.contains('card')) {
+                    const cardId = element.dataset.id;
+                    getCardViews(cardId, element.querySelector('.view-stats .count'));
+                    getAndUpdateStats(cardId, element.querySelector('.love-stats .count'), element.querySelector('.love-stats'));
+                    
+                    setTimeout(() => {
+                        element.classList.add('visible');
+                    }, 50);
+                }
             });
         }
-
+        
         // ডেটা লোড এবং রেন্ডার করা
         async function loadDataAndRender() {
             try {
@@ -1062,10 +1126,12 @@
                     // মূল ভিডিওর লাইক আপডেট করার জন্য
                     getAndUpdateStats(cardId, videoLoveCountEl, videoLoveStatsBtn);
 
+                    // এখানে আপনি যতগুলো কার্ড রিকমেন্ড করতে চান তা নির্ধারণ করতে পারবেন (যেমন: 10, 12, 14...)
                     const recommendedCards = allCardData
                         .filter(card => card.id !== cardId)
                         .sort(() => 0.5 - Math.random())
-                        .slice(0, 10); 
+                        .slice(0, 10); // এখন 10টি কার্ড সিলেক্ট করা আছে
+                    
                     renderCards(recommendedCards);
                     
                 } else {
