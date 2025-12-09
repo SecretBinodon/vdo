@@ -57,17 +57,30 @@ body {
     display: flex; 
     flex-direction: column;
 }
+
+/*
+======================================
+  সমস্যা ১ ও ২ সমাধানের জন্য নতুন CSS 
+======================================
+*/
+/* ১. মাস্টার স্টিকি র‍্যাপার: হেডার, ক্যাটাগরি এবং প্রথম অ্যাডকে স্থির রাখবে */
+.master-sticky-wrapper {
+    position: sticky;
+    top: 0; 
+    z-index: 1000; 
+    background-color: var(--bg-deep); /* স্থির থাকার সময় নিচে স্ক্রল করা কন্টেন্ট যেন দেখা না যায় */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+}
+
 #main-content {
     flex-grow: 1; 
 }
+/* পুরাতন sticky-wrapper-top এর প্রয়োজন নেই */
 .sticky-wrapper-top {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background-color: var(--bg-primary); 
+    display: none; 
 }
 
-/* --- নতুন Header স্টাইল --- */
+/* ২. হেডার: এখন স্থির নয়, বরং মাস্টার র‍্যাপারের সাথে চলবে */
 header {
     display: flex;
     justify-content: space-between;
@@ -75,14 +88,63 @@ header {
     padding: 5px 20px;
     background: rgba(0, 0, 0, 0.85);
     border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-    position: sticky;
-    top: 0;
+    position: static; /* sticky পজিশন সরালাম */
+    top: initial;
     z-index: 1000;
     backdrop-filter: blur(15px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+    box-shadow: none; /* ছায়া মাস্টার র‍্যাপারে সরালাম */
     margin-bottom: 0px; 
 }
+/* ৩. ক্যাটাগরি বার: এখন স্থির নয়, মাস্টার র‍্যাপারের সাথে স্থির থাকবে */
+.category-bar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px 10px;
+    background-color: var(--bg-secondary); 
+    margin: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    white-space: nowrap;
+    position: static; /* sticky পজিশন সরালাম */
+    top: initial;
+    z-index: 999;
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+}
 
+/* ৪. অ্যাড সাইজ ফিক্সিং: সমস্ত অ্যাড কন্টেইনারকে স্ক্রিনের মাঝে এনে অতিরিক্ত অংশ হাইড করবে */
+.ad-container,
+.top-ad-container { /* নতুন অ্যাড কন্টেইনার ক্লাস */
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 0px;
+    margin-bottom: -30px;
+    text-align: center;
+    overflow: hidden; /* **গুরুত্বপূর্ণ:** অতিরিক্ত অ্যাড কন্টেন্টকে হাইড করবে। */
+    position: relative; 
+    padding: 0;
+}
+
+/* ৫. ইনলাইন অ্যাড কন্টেইনার ফিক্সিং: অ্যাডের iframe/element-কে মাঝখানে আনার জন্য */
+.ad-container > div,
+.top-ad-container > div,
+.ad-container script + div {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+/* যদি প্রয়োজন হয়, iframe কেও ফিক্স করুন */
+.ad-container iframe,
+.top-ad-container iframe {
+    max-width: none; /* ডিফল্ট ম্যাক্স উইডথ বাতিল করুন */
+    /* অ্যাড কন্টেন্টকে মাঝখানে রাখার জন্য। */
+}
+/*======================================
+  অন্যান্য স্টাইল (পরিবর্তন করা হয়নি) 
+======================================*/
 .brand-logo {
     font-family: 'Orbitron', sans-serif;
     font-weight: 900;
@@ -108,7 +170,6 @@ header {
     filter: drop-shadow(0 0 5px rgba(0,136,204,0.4));
 }
 
-/* --- নতুন Wait Section স্টাইল --- */
 .wait-section {
     text-align: center;
     padding: 10px 10px;
@@ -137,14 +198,6 @@ header {
 }
 
 /* পুরাতন tutorial-button স্টাইল */
-.ad-container {
-    width: 100%;
-    box-sizing: border-box;
-    margin-top: 0px;
-    margin-bottom: -30px;
-    text-align: center;
-}
-    
 .tutorial-button {
     display: inline-block; 
     text-align: center;
@@ -163,26 +216,6 @@ header {
     background-color: #28a745;
 }
 
-/*... অন্যান্য CSS অপরিবর্তিত ...*/
-
-.category-bar {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 10px 10px;
-    background-color: var(--bg-secondary); 
-    margin: 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    white-space: nowrap;
-    position: sticky;
-    top: 0;
-    z-index: 999;
-    -ms-overflow-style: none;  
-    scrollbar-width: none;  
-}
 .category-bar::-webkit-scrollbar {
     display: none;
     width: 0 !important;
@@ -303,24 +336,21 @@ header {
     z-index: 5;
     white-space: nowrap;
 }
-/* ২. ইমেজের হাইট 16:9 অনুপাতে করা */
 .card-image-container {
     position: relative;
     width: 100%;
-    aspect-ratio: 16 / 9; /* 16:9 অনুপাত নিশ্চিত করা হলো */
-    /* height: 150px; (আগের ফিক্সড হাইট রিমুভ) */
+    aspect-ratio: 16 / 9; 
     overflow: hidden;
     border-radius: 15px 15px 0 0;
     cursor: pointer;
 }
-/* ৩. প্লে আইকনের সাইজ ছোট করা */
 .play-icon {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 35px; /* সাইজ ছোট করা হলো */
-    height: 35px; /* সাইজ ছোট করা হলো */
+    width: 35px; 
+    height: 35px; 
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 50%;
     display: flex;
@@ -334,54 +364,48 @@ header {
 }
 .play-icon svg {
     fill: #fff;
-    width: 18px; /* ভেতরের আইকনের সাইজ ছোট করা হলো */
-    height: 18px; /* ভেতরের আইকনের সাইজ ছোট করা হলো */
+    width: 18px; 
+    height: 18px; 
 }
 .card-image-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-/* ১. ভিউ/লাইক কাউন্টার এবং টাইটেলের মাঝের অতিরিক্ত ফাঁকা স্থান কমানো */
 .card-content {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* টাইটেল বাম দিক থেকে শুরু */
+    align-items: flex-start; 
     text-align: left;
-    padding: 5px 10px 0px 10px; /* উপরের প্যাডিং কমানো হলো */
+    padding: 5px 10px 0px 10px; 
 }
-
-/* **টাইটেল ১-লাইনে ফিক্সড এবং বামদিক থেকে শুরু** */
 .card-title {
-    font-size: 16px; /* ডেস্কটপে এটি পরিবর্তন হবে */
+    font-size: 16px; 
     color: var(--text-primary); 
     font-weight: bold; 
     
-    /* ফাঁকা স্থান কমানো: টাইটেলের নিচে মার্জিন সেট করা */
     margin: 5px 0 10px 0; 
 
-    /* ১ লাইনে ফিক্সড এবং থ্রি-ডট */
     white-space: nowrap; 
     overflow: hidden; 
     text-overflow: ellipsis; 
     
     display: block; 
-    line-height: normal; /* ওভারফ্লো/অক্ষর কাটার সমস্যা এড়াতে */
+    line-height: normal; 
     height: auto; 
     width: 100%;
-    text-align: left; /* বাম দিক থেকে শুরু নিশ্চিত */
+    text-align: left; 
 }
 .card-divider {
     display: none; 
 }
-/* ১. ভিউ/লাইক কাউন্টার এবং টাইটেলের মাঝের অতিরিক্ত ফাঁকা স্থান কমানো */
 .card-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
-    padding: 2px 10px 10px 10px; /* উপরের প্যাডিং কমানো হলো */
+    padding: 2px 10px 10px 10px; 
 }
 .card-stats {
     display: flex;
@@ -417,7 +441,6 @@ header {
 .love-stats:hover svg {
     transform: scale(1.1);
 }
-/* ... বাকি modal, pagination, loading স্টাইল ... */
 .modal {
     display: none;
     position: fixed;
@@ -788,9 +811,8 @@ footer {
         max-width: 1200px;
     }
     .card-title {
-        font-size: 18px; /* ডেস্কটপের জন্য মানানসই ফন্ট সাইজ */
+        font-size: 18px; 
     }
-    /*...পুরাতন হেডারের স্টাইল সরিয়ে দেওয়া হয়েছে...*/
     .admin-panel-header {
         flex-direction: row;
         gap: 10px;
@@ -813,14 +835,13 @@ footer {
         padding: 6px 8px;
         margin: 2px 0;
     }
-    /*...পুরাতন হেডারের স্টাইল সরিয়ে দেওয়া হয়েছে...*/
     .container {
         grid-template-columns: 1fr 1fr;
         gap: 10px;
         padding: 10px 10px 0px;
     }
     .card-title {
-        font-size: 12px; /* মোবাইলের জন্য ছোট ফন্ট সাইজ */
+        font-size: 12px; 
     }
     .modal-content {
         width: 95%;
@@ -878,7 +899,7 @@ footer {
 <body>
     <div id="loading-bar"></div>
 
-    <div id="main-content">
+    <div class="master-sticky-wrapper">
         <header>
             <a href="https://secretbinodon.blogspot.com" class="brand-logo"> 
                 <i class="fa-solid fa-user-secret"></i>
@@ -893,8 +914,7 @@ footer {
             🔜 First Step Wait for <span id="timer">20</span> Second ⬅️
         </div>
 
-
-        <div class="sticky-wrapper-top">
+        <div>
             <div class="category-bar">
                 <button data-category="all" class="active">All</button>
                 <button data-category="viral" class="category-btn">Viral video 😻</button>
@@ -905,27 +925,28 @@ footer {
         </div>
         
 
-<div style="text-align: center; margin: 0 auto;">
-        <script type="text/javascript">
-  atOptions = {
-  	'key' : 'fe5e23bc5bdf1a2a65486ec3cbb7cd02',
-  	'format' : 'iframe',
-  	'height' : 60,
-  	'width' : 468,
-  	'params' : {}
-  };
-</script>
-<script
-  type="text/javascript"
-  src="//prototypesorting.com/fe5e23bc5bdf1a2a65486ec3cbb7cd02/invoke.js"
-></script>
+        <div class="top-ad-container">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : 'fe5e23bc5bdf1a2a65486ec3cbb7cd02',
+                    'format' : 'iframe',
+                    'height' : 60,
+                    'width' : 468,
+                    'params' : {}
+                };
+            </script>
+            <script
+                type="text/javascript"
+                src="//prototypesorting.com/fe5e23bc5bdf1a2a65486ec3cbb7cd02/invoke.js"
+            ></script>
         </div>
-        
+        </div>
+
+    <div id="main-content">
         
         <div class="container"></div>
 
         <div class="ad-container">
-            
             <script async="async" data-cfasync="false" src="//pl27703152.revenuecpmgate.com/247476cdf6d68a31797ec615e7b10572/invoke.js"></script>
             <div id="container-247476cdf6d68a31797ec615e7b10572"></div>
         </div>
@@ -1300,10 +1321,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     card.classList.add('highlighted');
                      
                      setTimeout(() => {
-                         const headerHeight = document.querySelector('.header').offsetHeight;
+                         const headerHeight = document.querySelector('.master-sticky-wrapper').offsetHeight; // মাস্টার র‍্যাপারের হাইট নিলাম
                          const viewportHeight = window.innerHeight;
                          const cardTop = card.getBoundingClientRect().top;
-                         const scrollPosition = window.scrollY + cardTop - (viewportHeight / 2) + (card.offsetHeight / 2) + (headerHeight / 2);
+                         const scrollPosition = window.scrollY + cardTop - (headerHeight) - 20; // হেডার হাইটের কিছুটা নিচে স্ক্রল করুন
 
                          window.scrollTo({
                              top: scrollPosition,
