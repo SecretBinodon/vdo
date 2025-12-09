@@ -121,7 +121,7 @@ header {
     width: 100%;
     box-sizing: border-box;
     margin-top: 0px;
-    margin-bottom: -30px;
+    margin-bottom: 0px; /* **সংশোধন:** নেগেটিভ মার্জিন বাতিল করা হলো */
     text-align: center;
     overflow: hidden; /* **গুরুত্বপূর্ণ:** অতিরিক্ত অ্যাড কন্টেন্টকে হাইড করবে। */
     position: relative; 
@@ -759,6 +759,8 @@ header {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 15px;
     padding: 10px 10px 0px; 
+    /* **সংশোধন:** স্টিকি র‍্যাপারের নিচে গ্যাপ তৈরি করার জন্য প্যাডিং যোগ করা হলো */
+    padding-top: 140px; 
 }
 
 /*======================================
@@ -809,6 +811,8 @@ footer {
         grid-template-columns: 1fr 1fr 1fr;
         gap: 20px;
         max-width: 1200px;
+        /* **সংশোধন:** ডেস্কটপের জন্য প্যাডিং কমানো হলো */
+        padding-top: 110px;
     }
     .card-title {
         font-size: 18px; 
@@ -838,6 +842,7 @@ footer {
     .container {
         grid-template-columns: 1fr 1fr;
         gap: 10px;
+        /* প্যাডিং-টপ উপরে সাধারণ .container এ যোগ করা হয়েছে */
         padding: 10px 10px 0px;
     }
     .card-title {
@@ -940,7 +945,7 @@ footer {
                 src="//prototypesorting.com/fe5e23bc5bdf1a2a65486ec3cbb7cd02/invoke.js"
             ></script>
         </div>
-        </div>
+    </div>
 
     <div id="main-content">
         
