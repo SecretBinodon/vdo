@@ -6,7 +6,8 @@
     <title>Video Play Page</title>
     <meta name="description" content="ভাইরাল ভিডিওটি উপভোগ করুন।" />
     
-    <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
     
     <script type='text/javascript' async src='//pl27703154.revenuecpmgate.com/70/2c/67/702c67f9d1db58564142cc27691530f9.js'></script>
     <script type='text/javascript' async src='//pl27703153.revenuecpmgate.com/a0/08/d1/a008d17e02685c0505877ed11b7610d9.js'></script>
@@ -17,7 +18,15 @@
      সাধারণ স্টাইল (মোবাইল ও ডেস্কটপ উভয়ের জন্য)
     ======================================*/
     :root {
-        --bg-primary: #121212;
+        /* নতুন হেডার স্টাইল অনুযায়ী কালার ভেরিয়েবল আপডেট */
+        --gold-primary: #D4AF37;
+        --gold-light: #FFD700; 
+        --gold-dark: #AA8C2C;
+        --bg-deep: #050505; /* এখন ব্যাকগ্রাউন্ড কালার হিসেবে ব্যবহার হবে */
+        --text-silver: #c0c0c0;
+        
+        /* বিদ্যমান ভেরিয়েবলগুলি নতুন কালার ভেরিয়েবল দিয়ে প্রতিস্থাপিত */
+        --bg-primary: var(--bg-deep);
         --bg-secondary: #1e1e1e;
         --text-primary: #e0e0e0;
         --text-secondary: #aaaaaa;
@@ -32,7 +41,8 @@
         --input-bg: #444444;
         --input-border: #555555;
         --footer-bg: #1e1e1e;
-        /* হেডারের উচ্চতা, মোবাইল এবং ডেস্কটপে ভিন্ন হতে পারে। একটি আনুমানিক মান। */
+        
+        /* নতুন হেডারের জন্য উচ্চতা ভেরিয়েবল */
         --header-height: 45px; 
     }
 
@@ -49,91 +59,69 @@
         margin: 0;
         padding: 0;
         min-height: 100%; 
-        font-family: sans-serif; 
-        background-color: var(--bg-primary); 
-        color: var(--text-primary); 
+        /* নতুন কোড থেকে বডি স্টাইল */
+        background-color: var(--bg-deep);
+        background-image: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+        color: var(--text-silver);
+        font-family: 'Rajdhani', sans-serif;
+        /* নতুন কোড থেকে বডি স্টাইল শেষ */
         position: relative;
     }
     
-    /* >>>>>> সংশোধিত হেডার স্টাইল (নতুন কোড থেকে) <<<<<< */
-    .header {
-        background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
-        color: #fff;
-        padding: 10px 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        position: relative;
-        overflow: hidden;
+    /* >>>>>> নতুন হেডার স্টাইল <<<<<< */
+    header {
         display: flex;
-        justify-content: space-between; 
+        justify-content: space-between;
         align-items: center;
-        gap: 10px;
+        padding: 10px 20px;
+        background: rgba(0, 0, 0, 0.85);
+        border-bottom: 1px solid rgba(212, 175, 55, 0.3);
         /* স্টিকি হেডার নিশ্চিত করা */
         position: fixed; 
         top: 0; 
         width: 100%; 
-        z-index: 50; 
-        box-sizing: border-box; 
+        z-index: 1000;
+        backdrop-filter: blur(15px);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+        margin-bottom: 0px; 
+        box-sizing: border-box;
+        height: var(--header-height); /* উচ্চতা ভেরিয়েবল ব্যবহার */
     }
 
-    /* >>>>>> হেডারের জন্য কন্টেন্টে প্যাডিং যুক্ত করা হলো <<<<<< */
+    .brand-logo {
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 900;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        background: linear-gradient(45deg, var(--gold-primary), #fff, var(--gold-primary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: 1px;
+        display: flex; align-items: center; gap: 10px;
+        text-decoration: none; /* নিশ্চিত করা */
+    }
+
+    .brand-logo i {
+        font-size: 1.4rem;
+        color: var(--gold-light);
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+
+    .telegram-btn {
+        color: #0088cc;
+        font-size: 1.5rem;
+        transition: 0.3s;
+        filter: drop-shadow(0 0 5px rgba(0,136,204,0.4));
+        display: flex; /* আইকনের উল্লম্ব কেন্দ্রিকতা নিশ্চিত করা */
+        align-items: center;
+    }
+    /* >>>>>> নতুন হেডার স্টাইল শেষ <<<<<< */
+
+    /* >>>>>> হেডারের জন্য কন্টেন্টে প্যাডিং যুক্ত করা হলো (ভেরিয়েবল ব্যবহার করে) <<<<<< */
     #main-content {
         padding-top: var(--header-height); /* হেডারের নিচে কন্টেন্ট শুরু হবে */
+        padding: 5px; /* ছোট স্ক্রিনের জন্য ডিফল্ট প্যাডিং বজায় রাখা */
     }
-
-    .header-left {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        min-width: 0;
-    }
-    .website-icon {
-        width: 25px; 
-        height: 25px;
-    }
-    .website-icon svg {
-        fill: #fff;
-        width: 100%;
-        height: 100%;
-    }
-    .website-name {
-        font-size: 20px;
-        font-weight: 400; 
-        font-family: 'Fugaz One', cursive; 
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    .name-part-1 {
-        color: #FFD700; /* পরিবর্তন করা হয়েছে: নতুন কোডের রং */
-    }
-    .name-part-2 {
-        color: #fff; 
-    }
-    .header-right {
-        display: flex;
-        align-items: center;
-        gap: 10px; 
-        flex-shrink: 0; 
-    }
-    .social-icons-container {
-        display: flex;
-        gap: 5px; 
-    }
-    .social-icon {
-        display: block;
-        width: 25px; 
-        height: 25px;
-        transition: transform 0.2s ease;
-    }
-    .social-icon img {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-    }
-    .social-icon:hover {
-        transform: scale(1.1);
-    }
-    /* >>>>>> সংশোধিত হেডার স্টাইল শেষ <<<<<< */
 
     .video-container {
         position: relative;
@@ -546,20 +534,20 @@
     }
 
     @media (min-width: 768px) {
-        .header {
-            padding: 15px 40px;
+        /* হেডার স্টাইল ওভাররাইড (ডেস্কটপ) */
+        header {
+            padding: 10px 40px;
         }
-        .website-name {
-            font-size: 24px;
+        .brand-logo {
+            font-size: 1.4rem;
         }
-        .website-icon {
-            width: 30px;
-            height: 30px;
+        .brand-logo i {
+            font-size: 1.6rem;
         }
-        .social-icon {
-            width: 30px;
-            height: 30px;
+        .telegram-btn {
+            font-size: 1.8rem;
         }
+        
         .container {
             grid-template-columns: 1fr 1fr 1fr;
             gap: 20px; 
@@ -576,17 +564,23 @@
             left: 10px;
             padding: 5px 8px;
         }
-        /* ডেস্কটপের জন্য হেডারের উচ্চতা একটু বেশি হতে পারে */
+        /* ডেস্কটপের জন্য হেডারের উচ্চতা */
         :root {
             --header-height: 55px; 
+        }
+        #main-content {
+            padding: 10px; /* ডেস্কটপে চারিদিকে প্যাডিং যোগ করা */
+            padding-top: var(--header-height);
         }
     }
 
     @media (max-width: 767px) {
-        .header { padding: 8px 10px; gap: 5px; }
-        .website-name { font-size: 16px; }
-        .website-icon { width: 20px; height: 20px; }
-        .social-icon { width: 20px; height: 20px; }
+        /* হেডার স্টাইল ওভাররাইড (মোবাইল) */
+        header { padding: 8px 10px; }
+        .brand-logo { font-size: 1rem; gap: 5px; }
+        .brand-logo i { font-size: 1.2rem; }
+        .telegram-btn { font-size: 1.4rem; }
+        
         #main-content {
             padding: 5px;
             padding-top: var(--header-height); /* হেডার ফিক্সড হওয়ার কারণে প্যাডিং */
@@ -658,30 +652,14 @@
 </head>
 <body>
     
-    <header class="header">
-        <div class="header-left">
-            <div class="website-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M17 7h-4V4h4c2.21 0 4 1.79 4 4v4h-2V8c0-1.1-.9-2-2-2zm-6 8H7c-1.1 0-2-.9-2-2V9h2V7H7c-2.21 0-4 1.79-4 4v4c0 2.21 1.79 4 4 4h4v-2zm-1 3H7c-1.1 0-2-.9-2-2V9h2V7h2v2h4v2H9c-.55 0-1-.45-1-1s.45-1 1-1h4v2H9c-1.66 0-3 1.34-3 3v2c0 1.1.9 2 2 2h3v-2z"/>
-                </svg>
-            </div>
-            <div class="website-name">
-                <span class="name-part-1">Secret</span><span class="name-part-2">Binodon</span>
-            </div>
-        </div>
-        <div class="header-right">
-            <div class="social-icons-container">
-                <a href="https://t.me/virallink_market" target="_blank" class="social-icon">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
-                </a>
-                <a href="#" target="_blank" class="social-icon">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook">
-                </a>
-                <a href="https://wa.me/" target="_blank" class="social-icon">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-                </a>
-            </div>
-        </div>
+    <header>
+        <a href="https://secretbinodon.blogspot.com" class="brand-logo"> 
+            <i class="fa-solid fa-user-secret"></i>
+            <span>Secret Binodon</span>
+        </a>
+        <a href="https://t.me/virallink_market" target="_blank" class="telegram-btn">
+            <i class="fa-brands fa-telegram"></i>
+        </a>
     </header>
     <main id="main-content">
         <div id="video-embed-section">
@@ -1040,7 +1018,7 @@
 
                 setTimeout(() => {
                     card.classList.add('visible');
-                }, 50);
+                } , 50);
             });
         }
 
