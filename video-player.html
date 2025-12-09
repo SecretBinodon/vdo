@@ -55,6 +55,7 @@
         position: relative;
     }
     
+    /* >>>>>> সংশোধিত হেডার স্টাইল (নতুন কোড থেকে) <<<<<< */
     .header {
         background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
         color: #fff;
@@ -66,13 +67,14 @@
         justify-content: space-between; 
         align-items: center;
         gap: 10px;
-        /* >>>>>> স্টিকি হেডার নিশ্চিত করা হলো <<<<<< */
-        position: fixed; /* 'sticky' এর পরিবর্তে 'fixed' ব্যবহার করা হলো, যাতে সবসময় থাকে */
+        /* স্টিকি হেডার নিশ্চিত করা */
+        position: fixed; 
         top: 0; 
-        width: 100%; /* ফিক্সড করার পরে সম্পূর্ণ প্রস্থ নিশ্চিত করা */
+        width: 100%; 
         z-index: 50; 
-        box-sizing: border-box; /* padding সহ যেন প্রস্থ ঠিক থাকে */
+        box-sizing: border-box; 
     }
+
     /* >>>>>> হেডারের জন্য কন্টেন্টে প্যাডিং যুক্ত করা হলো <<<<<< */
     #main-content {
         padding-top: var(--header-height); /* হেডারের নিচে কন্টেন্ট শুরু হবে */
@@ -102,7 +104,7 @@
         text-overflow: ellipsis;
     }
     .name-part-1 {
-        color: #FFD700; 
+        color: #FFD700; /* পরিবর্তন করা হয়েছে: নতুন কোডের রং */
     }
     .name-part-2 {
         color: #fff; 
@@ -131,6 +133,8 @@
     .social-icon:hover {
         transform: scale(1.1);
     }
+    /* >>>>>> সংশোধিত হেডার স্টাইল শেষ <<<<<< */
+
     .video-container {
         position: relative;
         padding-bottom: 56.25%; /* 16:9 aspect ratio */
@@ -653,6 +657,7 @@
     </style>
 </head>
 <body>
+    
     <header class="header">
         <div class="header-left">
             <div class="website-icon">
@@ -678,7 +683,6 @@
             </div>
         </div>
     </header>
-
     <main id="main-content">
         <div id="video-embed-section">
             <div class="video-container" id="video-container">
