@@ -1233,6 +1233,7 @@ footer {
             async function loadData() {
                 loadingBar.style.width = '20%';
                 try {
+                    // ডেটা লোড করার চেষ্টা করা হচ্ছে
                     const response = await fetch('cards.json');
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
@@ -1240,6 +1241,9 @@ footer {
                     loadingBar.style.width = '60%';
                     const data = await response.json();
                     loadingBar.style.width = '80%';
+                    
+                    // ডেটা সর্ট করা
+                    data.sort((a, b) => new Date(b.uploadTime).getTime() - new Date(a.uploadTime).getTime());
                     allCardData = data;
                     
                     filterAndLoadCards(currentFilter);
@@ -1253,7 +1257,7 @@ footer {
                     
                 } catch (error) {
                     console.error('Error loading card data:', error);
-                    showNotification('Error loading data. Please try again later.');
+                    showNotification('Error loading data. Please check your "cards.json" file.', 5000);
                     loadingBar.style.width = '0%';
                 }
             }
@@ -1292,7 +1296,8 @@ footer {
                 const card = document.createElement('div');
                 card.classList.add('card');
                 card.setAttribute('data-id', data.id);
-                card.setAttribute('data-video-link', data.videoLink);
+                // **পরিবর্তন:** ভিডিও লিংক এর বদলে embed_code ডেটা অ্যাট্রিবিউটে রাখা হলো
+                card.setAttribute('data-embed-code', data.embed_code || ''); 
                 card.setAttribute('data-category', data.category.join(','));
                 if (data.uploadTime) {
                     card.setAttribute('data-upload-time', data.uploadTime);
@@ -1699,6 +1704,7 @@ footer {
                 if (imageContainer && card) {
                     const cardId = card.dataset.id;
                     
+                    // **পরিবর্তন:** মূল লজিকটি অপরিবর্তিত রাখা হলো
                     window.location.href = `https://jibonpoth2.blogspot.com/?cardId=${cardId}`;
                 }
             });
