@@ -68,25 +68,21 @@
         position: relative;
     }
     
-    /* >>>>>> নতুন হেডার স্টাইল <<<<<< */
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 5px 20px;
-        background: rgba(0, 0, 0, 0.85);
-        border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-        /* স্টিকি হেডার নিশ্চিত করা */
-        position: fixed; 
-        top: 0; 
-        width: 100%; 
-        z-index: 1000;
-        backdrop-filter: blur(15px);
-        box-shadow: 0 4px 20px rgba(0,0,0,0.8);
-        margin-bottom: 0px; 
-        box-sizing: border-box;
-        height: var(--header-height); /* উচ্চতা ভেরিয়েবল ব্যবহার */
-    }
+    /* --- নতুন Header স্টাইল --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 20px;
+    background: rgba(0, 0, 0, 0.85);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+    margin-bottom: 0px; 
+}
 
     .brand-logo {
         font-family: 'Orbitron', sans-serif;
