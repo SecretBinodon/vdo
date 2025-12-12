@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Post Generator (Finalized)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #e9ecef; 
+            padding: 20px; 
+            color: #34495e;
+        }
+        .container { 
+            max-width: 900px; 
+            margin: 0 auto 20px;
+            background: white; 
+            padding: 30px; 
+            border-radius: 12px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+        }
+        h2 { 
+            text-align: center; 
+            color: #2c3e50; 
+            margin-bottom: 25px; 
+        }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
+        input, textarea { 
+            width: 100%; 
+            padding: 12px; 
+            border: 1px solid #ced4da; 
+            border-radius: 6px; 
+            font-size: 14px; 
+            transition: 0.3s; 
+            box-sizing: border-box; 
+        }
+        input:focus, textarea:focus { border-color: #1da1f2; outline: none; box-shadow: 0 0 5px rgba(29, 161, 242, 0.3); }
+        textarea { height: 150px; resize: vertical; }
+        .hidden-field { display: none; }
+        .row { display: flex; gap: 15px; }
+        .col { flex: 1; }
+        
+        button {
+            width: 100%; padding: 14px; background: #1da1f2; color: white; border: none; 
+            border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px;
+            transition: background 0.3s, transform 0.1s;
+        }
+        button:hover { background: #0d8bd9; }
+        button:active { transform: scale(0.99); }
+
+        .output-area { 
+            max-width: 900px; 
+            margin: 20px auto; 
+            position: relative; 
+            display: none; 
+            background: #282c34; 
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        pre { 
+            background: transparent; 
+            color: #61dafb; 
+            padding: 20px; 
+            padding-top: 50px; 
+            border-radius: 8px; 
+            overflow-x: auto; 
+            white-space: pre-wrap; 
+            font-family: 'Courier New', monospace; 
+            font-size: 13px;
+            max-height: 400px; 
+            overflow-y: auto;
+        }
+        .copy-btn { 
+            position: absolute; top: 10px; right: 10px; width: auto; 
+            padding: 6px 12px; font-size: 12px; border: 1px solid #444;
+            background: #3c4046; color: #fff; font-weight: normal;
+            transition: background 0.3s; margin: 0;
+        }
+        .copy-btn:hover { background: #50555c; }
+        .copy-btn.copied { background: #28a745; color: white; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2><i class="fa-solid fa-wand-magic-sparkles"></i> Secret Binodon Post Generator</h2>
+    
+    <div class="form-group">
+        <label>Post Title</label>
+        <input type="text" id="title" placeholder="আপনার টাইটেল এখানে দিন" required>
+    </div>
+
+    <div class="row">
+        <div class="col form-group">
+            <label>Thumbnail URL (Image Link)</label>
+            <input type="text" id="media" value="" placeholder="এখানে থাম্বনেইল বা পোস্টের ইমেজ লিংক দিন" required>
+        </div>
+        <div class="col form-group">
+            <label>Video Duration (HH:MM:SS)</label>
+            <input type="text" id="duration" placeholder="00:10:00" value="" required>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Article Paragraphs (এন্টার চাপলে নতুন প্যারাগ্রাফ হিসেবে গণ্য হবে)</label>
+        <textarea id="paragraphs" placeholder="প্রথম প্যারাগ্রাফ। এইখানে এন্টার দিলে সেটা দ্বিতীয় প্যারাগ্রাফ হবে। উদাহরণস্বরূপ:&#10;&#10;এইটা ১ নাম্বার প্যারাগ্রাফ।&#10;এইটা ২ নাম্বার প্যারাগ্রাফ।&#10;এইটা ৩ নাম্বার প্যারাগ্রাফ।" required></textarea>
+    </div>
+
+    <div class="row">
+        <div class="col form-group">
+            <label>Download Link 1 (Primary)</label>
+            <input type="url" id="link1" placeholder="https://example.com/download-link-1" required>
+        </div>
+        <div class="col form-group">
+            <label>Download Link 2 (Optional)</label>
+            <input type="url" id="link2" placeholder="https://example.com/download-link-2 (ঐচ্ছিক)">
+        </div>
+    </div>
+    
+    <input type="hidden" id="generatedId" class="hidden-field"> 
+    <input type="hidden" id="hashtags" value="#SecretBinodon #viralvideo #trending #virallink #viral_video_2026" class="hidden-field">
+
+    <button onclick="generateJSON()">Generate Code for posts.json</button>
+</div>
+
+<div class="output-area" id="output-box">
+    <button class="copy-btn" id="copyBtn" onclick="copyCode()"><i class="fa-solid fa-copy"></i> Copy Code</button>
+    <pre id="json-output"></pre>
+</div>
+
+<script>
+    const usedIds = new Set();
+    const ID_LENGTH = 6;
+    const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    function generateUniqueId() {
+        let id;
+        do {
+            id = '';
+            for (let i = 0; i < ID_LENGTH; i++) {
+                id += CHARACTERS.charAt(Math.floor(Math.random() * CHARACTERS.length));
+            }
+        } while (usedIds.has(id)); 
+        usedIds.add(id); 
+        return id;
+    }
+
+    // নতুন লজিক: 1 মিনিট থেকে 10 মিনিটের মধ্যে র্যান্ডম ডিউরেশন তৈরি করা 
+    function generateRandomDuration() {
+        // মিনিট: 1 (ইনক্লুসিভ) থেকে 9 (ইনক্লুসিভ)
+        const randomMinutes = Math.floor(Math.random() * 9) + 1; // 1 to 9
+        
+        // সেকেন্ড: 0 থেকে 59 (র্যান্ডম)
+        const randomSeconds = Math.floor(Math.random() * 60);
+
+        // মিনিট এবং সেকেন্ডকে HH:MM:SS ফরম্যাটে প্যাড করা
+        const mm = String(randomMinutes).padStart(2, '0');
+        const ss = String(randomSeconds).padStart(2, '0');
+
+        return `00:${mm}:${ss}`; // 00:01:00 থেকে 00:09:59 পর্যন্ত দেবে
+    }
+
+    function getCurrentISOString() {
+        const date = new Date();
+        const utc = date.getTime() + (date.getTimezoneOffset() * 60000);
+        const bdtOffset = 6 * 60 * 60000; 
+        const bdtDate = new Date(utc + bdtOffset);
+        
+        const Y = bdtDate.getFullYear();
+        const M = String(bdtDate.getMonth() + 1).padStart(2, '0');
+        const D = String(bdtDate.getDate()).padStart(2, '0');
+        const h = String(bdtDate.getHours()).padStart(2, '0');
+        const m = String(bdtDate.getMinutes()).padStart(2, '0');
+        const s = String(bdtDate.getSeconds()).padStart(2, '0');
+
+        return `${Y}-${M}-${D}T${h}:${m}:${s}`;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // পেজ লোডে র্যান্ডম ডিউরেশন সেট করা
+        document.getElementById('duration').value = generateRandomDuration();
+
+        // প্রথম আইডি জেনারেট করা
+        document.getElementById('generatedId').value = generateUniqueId();
+    });
+    
+    function generateJSON() {
+        const id = document.getElementById('generatedId').value;
+        const title = document.getElementById('title').value;
+        const duration = document.getElementById('duration').value; // ম্যানুয়াল ভ্যালু বা র্যান্ডম ভ্যালু নেবে
+        const media = document.getElementById('media').value;
+        const paraText = document.getElementById('paragraphs').value;
+        const link1 = document.getElementById('link1').value;
+        const link2 = document.getElementById('link2').value;
+        const uploadTime = getCurrentISOString(); 
+        const hashtags = document.getElementById('hashtags').value;
+
+        const paragraphs = paraText.split('\n').map(p => p.trim()).filter(p => p.length > 0);
+
+        if (!title || !media || !duration || !paraText || !link1) {
+             alert("অনুগ্রহ করে টাইটেল, থাম্বনেইল, ভিডিও ডিউরেশন, প্যারাগ্রাফ এবং ডাউনলোড লিংক ১ পূরণ করুন।");
+             return;
+        }
+
+        const postObj = {
+            id: id,
+            uploadTime: uploadTime,
+            title: title,
+            mediaImage: media,
+            paragraphs: paragraphs,
+            hashtags: hashtags,
+            downloadLink1: link1,
+            videoDuration: duration
+        };
+
+        if (link2) postObj.downloadLink2 = link2;
+
+        const jsonString = JSON.stringify(postObj, null, 2);
+        
+        // JSON আউটপুট: কমা } ব্র‍্যাকেটের সঙ্গেই যুক্ত করা হয়েছে
+        const finalJsonOutput = jsonString.slice(0, -1) + "},";
+
+        document.getElementById('json-output').innerText = finalJsonOutput;
+        document.getElementById('output-box').style.display = 'block';
+        
+        // কোড জেনারেট হওয়ার পর, পরবর্তী পোস্টের জন্য নতুন আইডি এবং নতুন র্যান্ডম ডিউরেশন সেট করা
+        document.getElementById('generatedId').value = generateUniqueId();
+        document.getElementById('duration').value = generateRandomDuration(); 
+    }
+
+    function copyCode() {
+        const code = document.getElementById('json-output').innerText;
+        const copyBtn = document.getElementById('copyBtn');
+        
+        // সম্পূর্ণ কোড (কমা সহ) কপি হবে
+        const codeToCopy = code; 
+        
+        navigator.clipboard.writeText(codeToCopy).then(() => {
+            const originalText = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+            copyBtn.classList.add('copied');
+            
+            setTimeout(() => {
+                copyBtn.innerHTML = originalText;
+                copyBtn.classList.remove('copied');
+            }, 3000);
+        }).catch(err => {
+            console.error('Could not copy text: ', err);
+        });
+    }
+</script>
+
+</body>
+</html>
