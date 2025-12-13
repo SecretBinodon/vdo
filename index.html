@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,11 +93,44 @@
         }
         .read-more-text { color: #1da1f2; font-weight: 600; font-size: 14px; }
         .hashtags { color: #1d9bf0; font-size: 15px; margin-bottom: 10px; cursor: default; }
+        
+        /* --- 🔥 পোস্ট মিডিয়া কন্টেইনারে চূড়ান্ত পরিবর্তন (অপরিবর্তিত) 🔥 --- */
         .media-container {
-            position: relative; width: 100%; border-radius: 12px; overflow: hidden;
-            margin-top: 5px; display: block; max-height: 720px; cursor: pointer; background: #000;
+            position: relative; 
+            width: 100%; 
+            border-radius: 12px; 
+            overflow: hidden;
+            margin-top: 5px; 
+            display: block; 
+            cursor: pointer; 
+            background: #000;
+            
+            /* ডিফল্ট: লম্বা ইমেজ (যেমন 9:16) এর জন্য 3:4 অ্যাসপেক্ট রেশিও */
+            aspect-ratio: 3 / 4; 
+            max-height: 720px; 
         }
-        .media-container img { width: 100%; height: auto; display: block; object-fit: contain; margin: 0 auto; max-height: 720px; }
+        
+        .media-container img { 
+            width: 100%; 
+            height: 100%; /* কন্টেইনারের পুরো হাইট নেবে */
+            display: block; 
+            /* 9:16 ইমেজের উপরে-নিচে অংশ কাটার জন্য */
+            object-fit: cover; 
+            margin: 0 auto; 
+            max-height: none; 
+        }
+        
+        /* চওড়া বা স্কোয়ার ইমেজ (যেমন 16:9, 1:1, 4:3) এর জন্য */
+        .media-container.auto-fit {
+            aspect-ratio: initial; /* 3:4 রেশিও বাতিল করা হলো */
+            height: auto; 
+        }
+        .media-container.auto-fit img { 
+            height: auto; /* ইমেজ তার আসল হাইট নেবে */
+            object-fit: contain; /* ইমেজ পুরোটা দৃশ্যমান হবে, কোনো অংশ কাটবে না */
+        }
+        /* --- 🔥 পরিবর্তন শেষ 🔥 --- */
+        
         .play-icon {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 60px; height: 60px; background-color: rgba(0, 0, 0, 0.6);
@@ -163,10 +197,6 @@
             0%, 80%, 100% { transform: scale(0); } 
             40% { transform: scale(1.0); } 
         }
-
-        /* --- ছোট স্পিনার (কমেন্ট করা হলো - আর ব্যবহার হবে না) --- */
-        /*.spinner { width: 14px; height: 14px; border: 2px solid #ccc; border-top: 2px solid #000; border-radius: 50%; animation: spin 1s linear infinite; display: inline-block; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }*/
 
         /* Infinite Scroll Loader (Sentinel) */
         #sentinel { width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; }
@@ -302,8 +332,6 @@
             }, 100); 
         });
 
-
-        // ... [বাকি সব কনফিগারেশন, Firebase, Utility Functions অপরিবর্তিত] ...
         const PERMANENT_PROFILE_IMAGE_URL = "https://raw.githubusercontent.com/SecretBinodon/vdo/refs/heads/main/Image%20Files/secretbinodon.jpg";
 
         const firebaseConfig = { apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q", authDomain: "my-ad-analytics-4560a.firebaseapp.com", databaseURL: "https://my-ad-analytics-4560a-default-rtdb.firebaseio.com", projectId: "my-ad-analytics-4560a", storageBucket: "my-ad-analytics-4560a.firebasestorage.app", messagingSenderId: "104213283950", appId: "1:104213283950:web:b5a25ecd54df809625127f", measurementId: "G-WS7QSQ9H0Y" };
@@ -352,6 +380,38 @@
             else { navigator.clipboard.writeText(url); showNotification("Link copied! 📋"); }
         }
 
+        // 🔥 নতুন ফাংশন: ইমেজের আসল ডাইমেনশন চেক করা এবং ক্লাস যুক্ত করা 🔥
+        function adjustImageAspectRatio(imgElement) {
+            const mediaContainer = imgElement.closest('.media-container');
+            
+            // ইমেজের লোড ইভেন্ট শেষ হওয়ার অপেক্ষা করা
+            imgElement.onload = function() {
+                const originalWidth = this.naturalWidth;
+                const originalHeight = this.naturalHeight;
+                
+                // W/H রেশিও: 3:4 = 0.75, 4:3 = 1.333
+                const ratio = originalWidth / originalHeight;
+                
+                // যদি ইমেজের Width/Height রেশিও 4/3 (1.333...) এর চেয়ে বেশি বা সমান হয়, 
+                // তবে এটি 3:4 এর চেয়ে চওড়া (যেমন 16:9, 4:3, 1:1)। 
+                // তাই অটো-হাইট মোড ব্যবহার করা হবে।
+                if (ratio >= (3 / 4) * (4 / 3)) { // এখানে 1.333 রেশিও চেক করা হলো
+                    mediaContainer.classList.add('auto-fit');
+                } else {
+                    // যদি 4:3 এর চেয়ে লম্বা হয় (যেমন 3:4, 9:16), 
+                    // তাহলে ডিফল্ট 3:4 কন্টেইনার এবং object-fit: cover ব্যবহার করা হবে।
+                    mediaContainer.classList.remove('auto-fit');
+                }
+            };
+
+            // যদি ইমেজটি ইতিমধ্যেই ক্যাশে লোড হয়ে থাকে, তবে onload ইভেন্টটি ট্রিগার হবে না।
+            // সেই ক্ষেত্রে, ম্যানুয়ালি একবার চেক করা দরকার।
+            if (imgElement.complete) {
+                imgElement.onload();
+            }
+        }
+        // 🔥 নতুন ফাংশন শেষ 🔥
+
         // --- ইনফিনিটি স্ক্রল লজিক ---
         async function loadNextBatch(size = CONFIG.BATCH_SIZE) {
             const container = document.getElementById('feed-container');
@@ -389,7 +449,7 @@
                         <div class="hashtags">${post.hashtags}</div>
                         <div class="clickable-area" onclick="openPost('${post.id}')">
                             <div class="media-container">
-                                <img src="${post.mediaImage}" loading="lazy">
+                                <img src="${post.mediaImage}" loading="lazy" data-post-id="${post.id}">
                                 <div class="play-icon"></div>
                                 <div class="duration-badge">${post.videoDuration}</div>
                             </div>
@@ -406,6 +466,11 @@
                 
                 const newCard = cardWrapper.firstElementChild;
                 container.appendChild(newCard);
+
+                // 🔥 নতুন সংযোজন: রেন্ডার করার পর ইমেজ অ্যাডজাস্টমেন্ট ফাংশন কল করা 🔥
+                const imgElement = newCard.querySelector('.media-container img');
+                adjustImageAspectRatio(imgElement);
+
                 initializeFirebaseForCard(newCard, post.id);
             });
 
@@ -427,7 +492,7 @@
             observer.observe(sentinel);
         }
         
-        // --- ফায়ারবেস লজিক (সংশোধিত: স্পিনার লজিক বাতিল) ---
+        // --- ফায়ারবেস লজিক (অপরিবর্তিত) ---
         function initializeFirebaseForCard(card, id) {
             const viewEl = card.querySelector('.view-count');
             const likeEl = card.querySelector('.like-count');
@@ -500,7 +565,7 @@
                 allPosts = posts.sort((a, b) => new Date(b.uploadTime).getTime() - new Date(a.uploadTime).getTime());
                 
                 document.getElementById('total-videos-count').innerText = formatCount(allPosts.length);
-                calculateTotalViews(); // এখানেও স্পিনার সরানো হয়েছে
+                calculateTotalViews(); 
 
                 const savedScrollPos = sessionStorage.getItem('scrollPos');
                 let batchSize = CONFIG.INITIAL_LOAD;
