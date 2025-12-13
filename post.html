@@ -45,6 +45,7 @@
         .author-text span { font-size: 14px; color: #536471; }
         .post-time { font-size: 13px; color: #536471; font-weight: bold; }
 
+        /* মূল পোস্ট ভিডিও কন্টেইনার (অপরিবর্তিত) */
         .video-container { width: 100%; aspect-ratio: 16/9; background: #000; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: 5px; cursor: pointer; }
         .video-container img { width: 100%; height: 100%; object-fit: contain; }
         .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }
@@ -110,9 +111,43 @@
         .read-more-text { color: #1da1f2; font-weight: 600; font-size: 14px; }
         .hashtags { color: #1d9bf0; font-size: 15px; margin-bottom: 10px; cursor: default; }
 
-        .media-container { position: relative; width: 100%; border-radius: 12px; overflow: hidden; margin-top: 5px; display: block; max-height: 720px; cursor: pointer; background: #000; }
-        /* ✅ লেজি লোডিং: loading="lazy" ইমেজ ট্যাগে যুক্ত আছে */
-        .media-container img { width: 100%; height: auto; display: block; object-fit: contain; margin: 0 auto; max-height: 720px; }
+        /* 🔥 রিলেটেড পোস্টের ইমেজ কন্টেইনার আপডেট 🔥 */
+        .media-container { 
+            position: relative; 
+            width: 100%; 
+            border-radius: 12px; 
+            overflow: hidden;
+            margin-top: 5px; 
+            display: block; 
+            cursor: pointer; 
+            background: #000;
+            
+            /* ডিফল্ট: লম্বা ইমেজ (যেমন 9:16) এর জন্য 3:4 অ্যাসপেক্ট রেশিও */
+            aspect-ratio: 3 / 4; 
+            max-height: 720px; 
+        }
+        
+        .media-container img { 
+            width: 100%; 
+            height: 100%; /* কন্টেইনারের পুরো হাইট নেবে */
+            display: block; 
+            /* 9:16 ইমেজের উপরে-নিচে অংশ কাটার জন্য */
+            object-fit: cover; 
+            margin: 0 auto; 
+            max-height: none; 
+        }
+        
+        /* চওড়া বা স্কোয়ার ইমেজ (যেমন 16:9, 1:1, 4:3) এর জন্য */
+        .media-container.auto-fit {
+            aspect-ratio: initial; /* 3:4 রেশিও বাতিল করা হলো */
+            height: auto; 
+        }
+        .media-container.auto-fit img { 
+            height: auto; /* ইমেজ তার আসল হাইট নেবে */
+            object-fit: contain; /* ইমেজ পুরোটা দৃশ্যমান হবে, কোনো অংশ কাটবে না */
+        }
+        /* 🔥 রিলেটেড পোস্টের ইমেজ কন্টেইনার আপডেট শেষ 🔥 */
+
         .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background-color: rgba(0, 0, 0, 0.6); border-radius: 50%; display: flex; justify-content: center; align-items: center; pointer-events: none; border: 2px solid rgba(255,255,255,0.8); }
         .play-icon::after { content: ''; display: block; width: 0; height: 0; border-left: 18px solid white; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 4px; }
         .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0, 0, 0, 0.8); color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; pointer-events: none; z-index: 5; }
@@ -226,6 +261,33 @@
 
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get('id');
+
+    // 🔥 নতুন ফাংশন: রিলেটেড পোস্টের ইমেজের আসল ডাইমেনশন চেক করা এবং ক্লাস যুক্ত করা 🔥
+    function adjustImageAspectRatio(imgElement) {
+        const mediaContainer = imgElement.closest('.media-container');
+        
+        imgElement.onload = function() {
+            const originalWidth = this.naturalWidth;
+            const originalHeight = this.naturalHeight;
+            
+            // W/H রেশিও: 3:4 = 0.75, 1:1 = 1.0, 16:9 = 1.777
+            const ratio = originalWidth / originalHeight;
+            
+            // যদি ইমেজের W/H রেশিও 3/4 (0.75) এর চেয়ে বেশি বা সমান হয় (অর্থাৎ চওড়া বা স্কোয়ার), 
+            // তবে এটি অরিজিনাল সাইজে দেখাবে।
+            if (ratio >= (3 / 4)) { 
+                mediaContainer.classList.add('auto-fit');
+            } else {
+                // যদি 3:4 এর চেয়ে লম্বা হয় (যেমন 9:16 = 0.5625), 
+                // তাহলে ডিফল্ট 3:4 কন্টেইনার এবং object-fit: cover ব্যবহার করা হবে।
+                mediaContainer.classList.remove('auto-fit');
+            }
+        };
+
+        if (imgElement.complete) {
+            imgElement.onload();
+        }
+    }
     
     // ==================================================
     //  ✅ ইনিট এবং ডেটা প্রিপারেশন
@@ -360,12 +422,23 @@
                     </div>
                     <div class="clickable-area" onclick="openPost('${post.id}')"><div class="post-title">${post.title}</div><div class="post-excerpt">${excerpt} <span class="read-more-text">See more</span></div></div>
                     <div class="hashtags">${post.hashtags}</div>
-                    <div class="clickable-area" onclick="openPost('${post.id}')"><div class="media-container"><img src="${post.mediaImage}" loading="lazy"><div class="play-icon"></div><div class="duration-badge">${post.videoDuration}</div></div></div>
+                    <div class="clickable-area" onclick="openPost('${post.id}')">
+                        <div class="media-container">
+                            <img src="${post.mediaImage}" loading="lazy">
+                            <div class="play-icon"></div>
+                            <div class="duration-badge">${post.videoDuration}</div>
+                        </div>
+                    </div>
                     <div class="post-footer"><div class="footer-left"><i class="fa-solid fa-chart-simple"></i> <span class="count-text view-count-rel">...</span> <span class="label-text">Views</span></div><div class="footer-right"><div class="love-btn-rel"><i class="fa-regular fa-heart"></i> <span class="count-text like-count-rel">...</span> <span class="label-text">Likes</span></div><div class="post-date-display">${formatDate(post.uploadTime)}</div><div class="footer-share-btn" onclick="sharePost('${post.id}', '${safeTitle}')"><i class="fa-solid fa-share-from-square"></i></div></div></div>
                 </div>`;
             
             const newCard = cardWrapper.firstElementChild;
             container.appendChild(newCard);
+
+            // 🔥 নতুন সংযোজন: রেন্ডার করার পর ইমেজ অ্যাডজাস্টমেন্ট ফাংশন কল করা 🔥
+            const imgElement = newCard.querySelector('.media-container img');
+            adjustImageAspectRatio(imgElement);
+
             setupFirebaseForSingleCard(newCard, post.id);
         });
     }
