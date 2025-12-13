@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -250,12 +251,48 @@
     let currentStartIndex = 0; // বর্তমানে কতগুলো পোস্ট রেন্ডার হয়েছে তার ইন্ডেক্স
     let observer; // স্ক্রল অবজার্ভার
     let sentinelObserver; // ইনফিনিটি স্ক্রল ডিটেক্টর
+    
+    // 🔥 রিয়েল-টাইম আপডেটের জন্য সমস্ত টাইম এলিমেন্ট স্টোর করার অ্যারে 🔥
+    let timeElementsToUpdate = [];
 
     
     // --- ইউটিলিটি ফাংশনস ---
     function getRandomColor() { const c=['#e0245e','#17bf63','#1da1f2','#ffad1f','#794bc4']; return c[Math.floor(Math.random()*c.length)]; }
     function formatCount(n) { if(!n) return 0; return n >= 1000000 ? (n/1000000).toFixed(1)+'M' : n >= 1000 ? (n/1000).toFixed(1)+'K' : n; }
-    function timeAgo(d) { const s=Math.floor((new Date()-new Date(d))/1000); let i=s/31536000; if(i>1)return Math.floor(i)+"y ago"; i=s/86400; if(i>1)return Math.floor(i)+"d ago"; i=s/3600; if(i>1)return Math.floor(i)+"h ago"; return "Just now"; }
+    
+    // 🔥 আপডেট করা timeAgo() ফাংশন: এটি এখন শুধুমাত্র স্ট্রিং রিটার্ন করে 🔥
+    function timeAgo(dateString) { 
+        const d = new Date(dateString);
+        const seconds = Math.floor((new Date() - d) / 1000);
+        
+        let interval = seconds / 31536000;
+        if (interval > 1) return Math.floor(interval) + "y ago";
+        
+        interval = seconds / 86400;
+        if (interval > 1) return Math.floor(interval) + "d ago";
+        
+        interval = seconds / 3600;
+        if (interval > 1) return Math.floor(interval) + "h ago";
+        
+        interval = seconds / 60;
+        if (interval > 1) return Math.floor(interval) + "m ago";
+        
+        return "Just now";
+    }
+
+    // 🔥 নতুন ফাংশন: সমস্ত টাইম এলিমেন্ট আপডেট করা 🔥
+    function updateAllTimeElements() {
+        timeElementsToUpdate.forEach(item => {
+            if (item.element && item.element.parentNode) {
+                 // element যদি DOM এ এখনও থাকে
+                item.element.innerText = timeAgo(item.dateString);
+            } else {
+                // element যদি DOM থেকে রিমুভ হয়ে যায়, অ্যারে থেকে বাদ দেওয়া
+                timeElementsToUpdate = timeElementsToUpdate.filter(i => i !== item);
+            }
+        });
+    }
+
     function formatDate(d) { return new Date(d).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }); }
     function showNotification(msg) { const n=document.getElementById('notification'); n.innerText=msg; n.classList.add('show'); setTimeout(()=>n.classList.remove('show'),3000); }
 
@@ -309,6 +346,9 @@
             setupFirebaseForMainPost(mainPost.id);
             mainWrapper.classList.add('loaded'); // দ্রুত দৃশ্যমান করা
 
+            // 🔥 রিয়েল-টাইম আপডেটের জন্য ইনটার্ভাল শুরু করা 🔥
+            setInterval(updateAllTimeElements, 60000); // প্রতি 60 সেকেন্ডে আপডেট
+            
             const anchorPostTime = new Date(mainPost.uploadTime).getTime();
             
             // 2. মোট রিলেটেড পোস্টের ডেটা শুধুমাত্র প্রসেস করে রাখা
@@ -418,7 +458,7 @@
                 <div class="post-card" data-id="${post.id}">
                     <div class="post-header">
                         <div class="post-pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div>
-                        <div class="post-meta-text"><div class="name-row"><h3>Secret Binodon</h3><span class="post-username">@SecretBinodon</span><span class="dot-separator">·</span><span class="time-ago">${timeAgo(post.uploadTime)}</span></div></div>
+                        <div class="post-meta-text"><div class="name-row"><h3>Secret Binodon</h3><span class="post-username">@SecretBinodon</span><span class="dot-separator">·</span><span class="time-ago" data-upload-time="${post.uploadTime}">${timeAgo(post.uploadTime)}</span></div></div>
                     </div>
                     <div class="clickable-area" onclick="openPost('${post.id}')"><div class="post-title">${post.title}</div><div class="post-excerpt">${excerpt} <span class="read-more-text">See more</span></div></div>
                     <div class="hashtags">${post.hashtags}</div>
@@ -435,9 +475,18 @@
             const newCard = cardWrapper.firstElementChild;
             container.appendChild(newCard);
 
-            // 🔥 নতুন সংযোজন: রেন্ডার করার পর ইমেজ অ্যাডজাস্টমেন্ট ফাংশন কল করা 🔥
+            // ইমেজের আচরণ আপডেট করা
             const imgElement = newCard.querySelector('.media-container img');
             adjustImageAspectRatio(imgElement);
+
+            // 🔥 রিয়েল-টাইম আপডেটের জন্য টাইম এলিমেন্ট যুক্ত করা 🔥
+            const timeElement = newCard.querySelector('.time-ago');
+            if (timeElement) {
+                timeElementsToUpdate.push({
+                    element: timeElement,
+                    dateString: post.uploadTime
+                });
+            }
 
             setupFirebaseForSingleCard(newCard, post.id);
         });
@@ -463,10 +512,19 @@
                     <div class="pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div>
                     <div class="author-text"><h3>Secret Binodon</h3><span>@SecretBinodon</span></div>
                 </div>
-                <div class="post-time">${timeAgo(post.uploadTime)}</div>
+                <div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div>
             </div>
             <div class="video-container" onclick="handleVideoClick()"><img src="${post.mediaImage}" loading="lazy"><div class="play-btn-center" id="main-play-btn"></div><div class="main-video-spinner" id="main-spinner"></div><div class="video-controls"><span>${post.videoDuration}</span><span><i class="fa-solid fa-volume-high"></i> HD</span></div></div>
             <div class="content-body">${content}<div class="stats-section"><div class="stats-left"><div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="view-cnt">...</span> Views</div><div class="like-stat-container"><div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="like-cnt">...</span> Likes</div></div></div><div class="share-icons"><div class="share-icon" style="background:#1877f2" onclick="share('fb', '${post.title}')"><i class="fa-brands fa-facebook-f"></i></div><div class="share-icon" style="background:#0084ff" onclick="share('msg', '${post.title}')"><i class="fa-brands fa-facebook-messenger"></i></div><div class="share-icon" style="background:#25d366" onclick="share('wa', '${post.title}')"><i class="fa-brands fa-whatsapp"></i></div><div class="share-icon" style="background:#1da1f2" onclick="share('tw', '${post.title}')"><i class="fa-brands fa-twitter"></i></div><div class="share-icon" style="background:#0088cc" onclick="share('tg', '${post.title}')"><i class="fa-brands fa-telegram"></i></div></div></div></div>`;
+        
+        // 🔥 মূল পোস্টের টাইম এলিমেন্ট রিয়েল-টাইম আপডেটের জন্য যুক্ত করা 🔥
+        const mainTimeElement = document.getElementById('main-post-time');
+        if (mainTimeElement) {
+            timeElementsToUpdate.push({
+                element: mainTimeElement,
+                dateString: post.uploadTime
+            });
+        }
     }
     
     function setupFirebaseForMainPost(id) {
