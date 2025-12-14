@@ -33,14 +33,31 @@
         .btn-email { background-color: #1da1f2; }
         .btn-share { background-color: #000; }
 
+        /* ✅ প্রোফাইল সেকশনের কম্প্যাক্ট স্টাইল শুরু */
         .info-section { padding: 5px 15px 15px 15px; }
         .website-name { font-size: 22px; font-weight: 800; color: #1c1e21; text-transform: uppercase; }
-        .username { font-size: 15px; color: #65676b; margin-bottom: 8px; }
-        .stats { font-size: 14px; color: #050505; margin-bottom: 8px; }
+        .username { 
+            font-size: 15px; 
+            color: #1da1f2; /* ✅ ইউজারনেম নীল করা হলো */ 
+            margin-bottom: 2px; /* ✅ গ্যাপ কমানো হয়েছে */ 
+            cursor: pointer; /* ক্লিকযোগ্য ইঙ্গিত */
+        }
+        .stats { 
+            font-size: 14px; color: #050505; 
+            margin-bottom: 2px; /* ✅ গ্যাপ কমানো হয়েছে */ 
+        }
         .stats b { font-weight: 800; }
-        .meta-info { display: flex; gap: 15px; color: #65676b; font-size: 13px; margin-bottom: 12px; align-items: center; }
+        .meta-info { 
+            display: flex; gap: 15px; color: #65676b; font-size: 13px; 
+            margin-bottom: 4px; /* ✅ গ্যাপ কমানো হয়েছে (বায়োর উপরের গ্যাপ) */ 
+            align-items: center; 
+        }
         .meta-info i { margin-right: 4px; }
-        .bio { font-size: 14px; color: #1c1e21; line-height: 1.4; text-align: justify; margin-bottom: 15px; }
+        .bio { 
+            font-size: 14px; color: #1c1e21; line-height: 1.4; text-align: justify; 
+            margin-bottom: 5px; /* ✅ গ্যাপ কমানো হয়েছে (বায়োর নিচের গ্যাপ) */ 
+        }
+        /* ✅ প্রোফাইল সেকশনের কম্প্যাক্ট স্টাইল শেষ */
 
         /* --- নেভিগেশন বার --- */
         .nav-bar {
@@ -49,7 +66,8 @@
             align-items: center;
             padding: 10px 15px;
             border-top: 1px solid #e1e8ed; border-bottom: 1px solid #e1e8ed;
-            margin-bottom: 5px; background: #fff; position: sticky; top: 0; z-index: 100;
+            margin-bottom: 0px; /* ✅ প্রথম পোস্টের উপরের গ্যাপ দূর করা হয়েছে */ 
+            background: #fff; position: sticky; top: 0; z-index: 100;
         }
         .nav-btn {
             flex: 1; 
@@ -98,7 +116,11 @@
         .post-meta-text { display: flex; flex-direction: column; justify-content: center; }
         .name-row { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
         .name-row h3 { font-size: 18px; font-weight: 800; color: #0f1419; margin: 0; }
-        .post-username { font-size: 14px; color: #536471; }
+        .post-username { 
+            font-size: 14px; 
+            color: #1da1f2; /* ✅ পোস্টের ইউজারনেম নীল করা হলো */
+            cursor: pointer; /* ক্লিকযোগ্য ইঙ্গিত */
+        }
         .time-ago { font-size: 15px; color: #536471; }
         .dot-separator { font-size: 15px; color: #536471; margin: 0 2px; }
         .clickable-area { cursor: pointer; }
@@ -169,13 +191,12 @@
             display: flex; justify-content: space-between; align-items: center;
             margin-top: 12px; 
             color: #536471; 
-            font-size: 16px; /* এইটা পোস্ট ফুটারে থাকা ডিফল্ট ফন্ট সাইজ */
-            font-weight: 500; /* এইটা পোস্ট ফুটারে থাকা ডিফল্ট ফন্ট ওয়েট */
+            font-size: 16px; 
+            font-weight: 500; 
         }
         .footer-left { display: flex; align-items: center; gap: 6px; }
         .footer-right { display: flex; align-items: center; gap: 20px; }
         
-        /* 🔥 তৃতীয় অনুরোধের পরিবর্তন: post.html-এর রিলেটেড পোস্ট স্টাইল প্রয়োগ 🔥 */
         /* লাভ বাটন স্টাইল */
         .love-btn { 
             cursor: pointer; 
@@ -184,39 +205,38 @@
             gap: 5px; 
             transition: all 0.2s; 
             user-select: none; 
-            font-weight: 500; /* post.html এর সাথে মিল রেখে */
+            font-weight: 500; 
         }
         .love-btn i { 
-            font-size: 18px; /* post.html এর সাথে মিল রেখে */
+            font-size: 18px; 
         }
         .love-btn:hover { color: #e0245e; background-color: rgba(224, 36, 94, 0.1); padding: 4px 8px; border-radius: 15px; margin: -4px -8px; }
         .love-btn.liked { color: #e0245e; } .love-btn.liked i { font-weight: 900; }
         
         /* ভিউ/লাইক কাউন্টার সংখ্যা এবং লেখা (Count & Label Text) */
         .count-text, .label-text { 
-            font-weight: 500; /* post.html এর সাথে হুবহু মিল রেখে */
-            font-size: 15px; /* post.html এর সাথে হুবহু মিল রেখে */
+            font-weight: 500; 
+            font-size: 15px; 
         }
         
         /* ভিউ আইকন সাইজ (বাম দিকের ভিউ কাউন্টার আইকন) */
         .footer-left i { 
-            font-size: 16px; /* post.html এর সাথে মিল রেখে */
+            font-size: 16px; 
         }
 
         /* ডেট ডিসপ্লে */
         .post-date-display { 
             font-size: 14px; 
             color: #65676b; 
-            font-weight: 500; /* post.html এর সাথে মিল রেখে */
+            font-weight: 500; 
         }
 
         /* শেয়ার বাটন আইকন */
         .footer-share-btn i {
-            font-size: 16px; /* post.html এর সাথে মিল রেখে */
+            font-size: 16px; 
             color: #536471;
         }
-        /* 🔥 পরিবর্তন শেষ 🔥 */
-
+        
         .footer-share-btn {
             cursor: pointer; padding: 8px; border-radius: 50%; transition: all 0.2s ease;
             display: flex; align-items: center; justify-content: center;
@@ -369,7 +389,7 @@
             </div>
 
             <p class="bio">
-                Secret Binodon this is one of the most popular and best websites for Secret Binodon Viral Video, YouTube Viral Video, Facebook Viral Video, Instagram Viral Video, TikTok Viral Video and much more. Which can be very helpful for your daily life.
+                Your ultimate destination for premium, high-quality cinematic content. We deliver the freshest releases and the hottest trending movies directly to your device. Skip the search—download the unique, must-watch films that define the moment, all in crystal-clear quality. Join the hub where every download is a premiere.
             </p>
         </div>
 
