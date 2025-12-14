@@ -249,7 +249,7 @@
 
 <div class="main-wrapper">
     <header>
-        <div class="logo-area">FILMIFY-HUB</div>
+        <div class="logo-area">FILMIXO</div>
         <div>
             <span class="header-btn" onclick="window.location.href='https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea'">Sign Up</span>
             <span class="header-btn" onclick="window.location.href='index.html'">Home</span>
@@ -273,7 +273,7 @@
             <a href="#" id="link-terms">Terms of Service</a>
         </div>
         <div class="footer-copyright">
-            Copyright © 2026 <a href="index.html">FilmifyHub.com</a>. All rights reserved.
+            Copyright © 2026 <a href="index.html">Filmixo.com</a>. All rights reserved.
         </div>
     </footer>
     <div id="notification" class="notification"></div>
@@ -436,7 +436,7 @@
             <div class="post-author-area">
                 <div class="author-info">
                     <div class="pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div>
-                    <div class="author-text"><h3>FILMIFY</h3><span>@filmify</span></div>
+                    <div class="author-text"><h3>FILMIXO</h3><span>@filmixo</span></div>
                 </div>
                 <div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div>
             </div>
@@ -576,7 +576,7 @@
                 <div class="post-card" data-id="${post.id}">
                     <div class="post-header">
                         <div class="post-pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div>
-                        <div class="post-meta-text"><div class="name-row"><h3>FILMIFY-HUB</h3><span class="post-username">@filmify-hub</span><span class="dot-separator">·</span><span class="time-ago" data-upload-time="${post.uploadTime}">${timeAgo(post.uploadTime)}</span></div></div>
+                        <div class="post-meta-text"><div class="name-row"><h3>FILMIXO</h3><span class="post-username">@filmixo</span><span class="dot-separator">·</span><span class="time-ago" data-upload-time="${post.uploadTime}">${timeAgo(post.uploadTime)}</span></div></div>
                     </div>
                     <div class="clickable-area" onclick="openPost('${post.id}')"><div class="post-title">${post.title}</div><div class="post-excerpt">${excerpt} <span class="read-more-text">See more</span></div></div>
                     <div class="hashtags">${post.hashtags}</div>
@@ -638,8 +638,8 @@
         if(p) p.style.display = 'flex'; if(s) s.style.display = 'none';
     });
 
-    window.openPost = (id) => window.location.href = `/vdo/post.html?id=${id}`;
-    window.sharePost = (id, title) => { const url = window.location.origin + `/vdo/post.html?id=${id}`; if (navigator.share) { navigator.share({ title: title, text: title, url: url }).catch((e) => console.log('Share failed', e)); } else { navigator.clipboard.writeText(url); showNotification("Link copied! 📋"); } }
+    window.openPost = (id) => window.location.href = `/movie/post.html?id=${id}`;
+    window.sharePost = (id, title) => { const url = window.location.origin + `/movie/post.html?id=${id}`; if (navigator.share) { navigator.share({ title: title, text: title, url: url }).catch((e) => console.log('Share failed', e)); } else { navigator.clipboard.writeText(url); showNotification("Link copied! 📋"); } }
 
     window.share = (platform, title) => {
         const url = encodeURIComponent(window.location.href);
