@@ -42,15 +42,27 @@
         .author-info { display: flex; align-items: center; gap: 10px; }
         .pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }
         .pfp img { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* 🔥 পরিবর্তন: author-text থেকে ফ্লেক্স মোড সরানো হলো, যাতে h3 এবং span আলাদা লাইনে আসে */
+        .author-text { 
+            /* display: flex; -- এই লাইনটি সরিয়ে দেওয়া হলো */
+        } 
+        
         .author-text h3 { 
             font-size: 16px; 
             margin: 0; 
             color: #0f1419; 
-            /* ফ্লেক্স-বক্স ব্যবহার করে মেইন নাম ও ব্লু টিক একই লাইনে রাখছি */
+            /* ✅ নিশ্চিত করা হলো: মেইন নাম (FILMIXO) ও ব্লু টিক এক লাইনে থাকবে */
             display: inline-flex;
             align-items: center;
         }
-        .author-text span { font-size: 14px; color: #536471; }
+        /* ✅ পরিবর্তন: ইউজারনেম নীল করা হয়েছে এবং স্বাভাবিক স্পেস পাচ্ছে */
+        .author-text span { 
+            font-size: 14px; 
+            color: #1da1f2; /* ইউজারনেম নীল রঙ */
+            display: block; /* যাতে এটি h3-এর নিচে চলে যায় */
+            margin-top: -2px; /* h3-এর সাথে একটু কম স্পেস রাখার জন্য */
+        }
         .post-time { font-size: 13px; color: #536471; font-weight: bold; }
 
         /* মূল পোস্ট ভিডিও কন্টেইনার (অপরিবর্তিত) */
@@ -120,7 +132,7 @@
         .share-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 13px; transition: 0.2s; }
         .share-icon:hover { opacity: 0.8; transform: scale(1.1); }
 
-        /* রিলেটেড পোস্ট (কার্ড) - অপরিবর্তিত */
+        /* রিলেটেড পোস্ট (কার্ড) */
         .related-section { background: #fff; margin-top: 0; }
         .related-header { padding: 15px; font-weight: 800; color: #536471; border-bottom: 1px solid #e1e8ed; text-transform: uppercase; background: #fff; }
         
@@ -133,7 +145,15 @@
         .post-header { display: flex; gap: 10px; align-items: center; }
         .post-pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }
         .post-pfp img { width: 100%; height: 100%; object-fit: cover; }
-        .post-meta-text { display: flex; flex-direction: column; justify-content: center; }
+        
+        /* 🔥 পরিবর্তন: post-meta-text এখন দুটি ভিন্ন লাইনের কন্টেন্ট ধরবে */
+        .post-meta-text { 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+        }
+        
+        /* name-row এখন শুধুমাত্র প্রথম লাইন (নাম, টিক, টাইম) নিয়ন্ত্রণ করবে */
         .name-row { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
         
         .name-row h3 { 
@@ -141,15 +161,16 @@
             font-weight: 800; 
             color: #0f1419; 
             margin: 0; 
-            /* ফ্লেক্স-বক্স ব্যবহার করে মেইন নাম ও ব্লু টিক একই লাইনে রাখছি */
+            /* ✅ নিশ্চিত করা হলো: মেইন নাম ও ব্লু টিক এক লাইনে থাকবে */
             display: inline-flex;
             align-items: center;
         }
         
-        /* ✅ পরিবর্তন: পোস্টের ইউজারনেম সবসময় নীল দেখাবে */
+        /* ✅ পরিবর্তন: পোস্টের ইউজারনেম নীল হবে (এটি .post-meta-text এর সরাসরি সন্তান হবে) */
         .post-username { 
             font-size: 14px; 
             color: #1da1f2; 
+            margin-top: -2px; /* নাম থেকে স্পেস কমানো */
         }
 
         /* 🔥 নতুন: প্রফেশনাল ব্লু টিক ব্যাজ স্টাইল */
@@ -579,10 +600,10 @@
                         <div class="post-meta-text">
                             <div class="name-row">
                                 <h3>FILMIXO <i class="verified-badge fa-solid fa-circle-check"></i></h3> 
-                                <span class="post-username">@filmixo</span>
                                 <span class="dot-separator">·</span>
                                 <span class="time-ago" data-upload-time="${post.uploadTime}">${timeAgo(post.uploadTime)}</span>
                             </div>
+                            <span class="post-username">@filmixo</span>
                         </div>
                     </div>
                     <div class="clickable-area" onclick="openPost('${post.id}')"><div class="post-title">${post.title}</div><div class="post-excerpt">${excerpt} <span class="read-more-text">See more</span></div></div>
