@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -80,8 +79,6 @@
             gap: 10px; /* প্রতিটি বাটনের মাঝে 10px গ্যাপ */
         }
 
-        /* ✅ top-download-buttons ক্লাস সরিয়ে দেওয়া হয়েছে */
-
         .download-btn-v2 {
             display: flex;
             align-items: center;
@@ -103,8 +100,6 @@
             transform: scale(0.98);
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
-
-        /* full-width-download-btn ক্লাসের আর প্রয়োজন নেই, কারণ সব বাটনই এখন পূর্ণ প্রস্থের */
         
         /* অ্যাডের জন্য কন্টেইনার */
         .ad-slot-container {
@@ -118,10 +113,14 @@
         }
 
         /* ✅ অ্যাড স্লট ১ এর নতুন স্টাইল: টাইটেলের নিচে প্যাডিং যোগ করা */
+        /* এই অ্যাডটি 468x60 হওয়ায়, এটিকে মাঝখানে (center) দেখানোর জন্য কন্টেইনার দরকার */
         #ad-slot-1 {
             margin-top: -10px; 
             margin-bottom: 15px; 
             padding: 0 5px; 
+            /* 468px ব্যানারকে মোবাইল স্ক্রিনে মাঝখানে রাখার জন্য */
+            display: flex; 
+            justify-content: center;
         }
         /* --- নতুন ডাউনলোড সেকশনের স্টাইল শেষ --- */
 
@@ -387,6 +386,19 @@
         let content = `
             <h1 class="article-title">${post.title}</h1>
             <div class="ad-slot-container" id="ad-slot-1">
+                <script type="text/javascript">
+                  atOptions = {
+                    'key' : 'da9154b956691d2aa7c677010e7b6501',
+                    'format' : 'iframe',
+                    'height' : 60,
+                    'width' : 468,
+                    'params' : {}
+                  };
+                </script>
+                <script
+                  type="text/javascript"
+                  src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"
+                ></script>
                 </div>
         `;
         
@@ -427,8 +439,13 @@
             // ✅ ৩. ডাউনলোড সেকশনের নিচে অ্যাড স্লট ২
             downloadSectionHTML += `
                 <div class="ad-slot-container" id="ad-slot-2">
-                
-                    </div>
+                <script
+                  async="async"
+                  data-cfasync="false"
+                  src="https://prototypesorting.com/1608cb6a976841a38e804d64801334bb/invoke.js"
+                ></script>
+                <div id="container-1608cb6a976841a38e804d64801334bb"></div>
+                </div>
             `;
         }
         
