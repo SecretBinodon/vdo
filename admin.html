@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,8 +40,10 @@
         input:focus, textarea:focus { border-color: #1da1f2; outline: none; box-shadow: 0 0 5px rgba(29, 161, 242, 0.3); }
         textarea { height: 150px; resize: vertical; }
         .hidden-field { display: none; }
-        .row-3-col { display: flex; gap: 15px; } 
-        .col-3 { flex: 1; }
+        
+        /* শুধুমাত্র এই রো-টি কলামে বিভক্ত থাকবে (থাম্বনেইল ও ডিউরেশন) */
+        .row-2-col { display: flex; gap: 15px; } 
+        .col-2 { flex: 1; }
         
         /* নতুন স্টাইল: ডাউনলোড সেকশনটিকে আলাদাভাবে হাইলাইট করা */
         .download-section-header {
@@ -103,12 +106,12 @@
         <input type="text" id="title" placeholder="আপনার টাইটেল এখানে দিন" required>
     </div>
 
-    <div class="row-3-col">
-        <div class="col-3 form-group">
+    <div class="row-2-col">
+        <div class="col-2 form-group">
             <label>Thumbnail URL (Image Link)</label>
             <input type="text" id="media" value="" placeholder="এখানে থাম্বনেইল বা পোস্টের ইমেজ লিংক দিন" required>
         </div>
-        <div class="col-3 form-group">
+        <div class="col-2 form-group">
             <label>Video Duration (HH:MM:SS)</label>
             <input type="text" id="duration" placeholder="00:10:00" value="" required>
         </div>
@@ -119,23 +122,21 @@
         <textarea id="paragraphs" placeholder="এইটা ১ নাম্বার প্যারাগ্রাফ।&#10;এইটা ২ নাম্বার প্যারাগ্রাফ।&#10;এইটা ৩ নাম্বার প্যারাগ্রাফ।" required></textarea>
     </div>
 
-    <div class="download-section-header">🎬 ডাউনলোড লিংক ইনপুট (পোস্টের বাটনের ক্রম অনুযায়ী)</div>
+    <div class="download-section-header">🎬 ডাউনলোড লিংক ইনপুট (পোস্টের বাটনের উল্লম্ব ক্রম)</div>
     
-    <div class="row-3-col">
-        <div class="col-3 form-group">
-            <label>Download Link 3 (480p SD)</label>
-            <input type="url" id="link3" placeholder="https://example.com/download-link-480p (ঐচ্ছিক)">
-        </div>
-        
-        <div class="col-3 form-group">
-            <label>Download Link 1 (720p HD)</label>
-            <input type="url" id="link1" placeholder="https://example.com/download-link-720p" required>
-        </div>
+    <div class="form-group">
+        <label>Download Link 2 (1080p Full HD - প্রথম বাটন)</label>
+        <input type="url" id="link2" placeholder="https://example.com/download-link-1080p (ঐচ্ছিক)">
+    </div>
 
-        <div class="col-3 form-group">
-            <label>Download Link 2 (1080p Full HD)</label>
-            <input type="url" id="link2" placeholder="https://example.com/download-link-1080p (ঐচ্ছিক)">
-        </div>
+    <div class="form-group">
+        <label>Download Link 1 (720p HD - দ্বিতীয় বাটন)</label>
+        <input type="url" id="link1" placeholder="https://example.com/download-link-720p (আবশ্যিক)" required>
+    </div>
+
+    <div class="form-group">
+        <label>Download Link 3 (480p SD - তৃতীয় বাটন)</label>
+        <input type="url" id="link3" placeholder="https://example.com/download-link-480p (ঐচ্ছিক)">
     </div>
     
     <input type="hidden" id="generatedId" class="hidden-field"> 
@@ -204,10 +205,10 @@
         const media = document.getElementById('media').value;
         const paraText = document.getElementById('paragraphs').value;
         
-        // ইনপুট ভ্যালু গ্রহণ (ইনপুট ফিল্ডের id অনুযায়ী)
-        const link1 = document.getElementById('link1').value; // 720p HD
-        const link2 = document.getElementById('link2').value; // 1080p FHD
-        const link3 = document.getElementById('link3').value; // 480p SD
+        // ইনপুট ভ্যালু গ্রহণ (পোস্টের ক্রম অনুযায়ী লেবেল করা হয়েছে)
+        const link2 = document.getElementById('link2').value; // 1080p FHD (প্রথম বাটন)
+        const link1 = document.getElementById('link1').value; // 720p HD (দ্বিতীয় বাটন - আবশ্যিক)
+        const link3 = document.getElementById('link3').value; // 480p SD (তৃতীয় বাটন)
 
         const uploadTime = getCurrentISOString(); 
         const hashtags = document.getElementById('hashtags').value;
@@ -216,7 +217,7 @@
 
         // Required field validation: 720p HD link টি অবশ্যই দিতে হবে।
         if (!title || !media || !duration || !paraText || !link1) {
-             alert("অনুগ্রহ করে টাইটেল, থাম্বনেইল, ভিডিও ডিউরেশন, প্যারাগ্রাফ এবং ডাউনলোড লিংক ১ (720p HD) পূরণ করুন।");
+             alert("অনুগ্রহ করে টাইটেল, থাম্বনেইল, ভিডিও ডিউরেশন, প্যারাগ্রাফ এবং ডাউনলোড লিংক (720p HD) পূরণ করুন।");
              return;
         }
 
@@ -227,7 +228,7 @@
             mediaImage: media,
             paragraphs: paragraphs,
             hashtags: hashtags,
-            // JSON আউটপুটে নামগুলো কিন্তু অপরিবর্তিত থাকবে
+            // JSON আউটপুটে নামগুলো অপরিবর্তিত থাকবে
             downloadLink1: link1, // 720p HD
             videoDuration: duration
         };
@@ -244,6 +245,7 @@
         document.getElementById('json-output').innerText = finalJsonOutput;
         document.getElementById('output-box').style.display = 'block';
         
+        // পরবর্তী পোস্টের জন্য নতুন আইডি এবং ডিউরেশন তৈরি করা
         document.getElementById('generatedId').value = generateUniqueId();
         document.getElementById('duration').value = generateRandomDuration(); 
     }
