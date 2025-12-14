@@ -34,14 +34,25 @@
         .btn-share { background-color: #000; }
 
         .info-section { padding: 5px 15px 15px 15px; }
-        .website-name { font-size: 22px; font-weight: 800; color: #1c1e21; text-transform: uppercase; }
         
-        /* ✅ পরিবর্তন ১: ইউজারনেম নীল এবং ক্লিকযোগ্য */
+        /* 🔥 পরিবর্তন: ওয়েবসাইট নামের পাশে ব্লু টিকের জন্য ফ্লেক্স যোগ এবং গ্যাপ সেট */
+        .website-name { 
+            font-size: 22px; 
+            font-weight: 800; 
+            color: #1c1e21; 
+            text-transform: uppercase; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 8px; 
+        }
+        
+        /* ✅ পরিবর্তন ১: ইউজারনেম নীল থাকবে এবং ক্লিক ইফেক্ট বন্ধ */
         .username { 
             font-size: 15px; 
             color: #1da1f2; 
             margin-bottom: 8px; 
-            cursor: pointer; 
+            cursor: default; /* ক্লিক ইফেক্ট বন্ধ */
+            -webkit-tap-highlight-color: transparent; /* মোবাইল ব্রাউজার ইফেক্ট বন্ধের চেষ্টা */
         }
         
         .stats { font-size: 14px; color: #050505; margin-bottom: 8px; }
@@ -55,7 +66,7 @@
             color: #1c1e21; 
             line-height: 1.4; 
             text-align: justify; 
-            margin-bottom: 5px; /* আগের ১৫px থেকে ৫px করা হলো */
+            margin-bottom: 5px; 
         }
 
         /* --- নেভিগেশন বার --- */
@@ -65,7 +76,7 @@
             align-items: center;
             padding: 10px 15px;
             border-top: 1px solid #e1e8ed; border-bottom: 1px solid #e1e8ed;
-            margin-bottom: 0px; /* ✅ পরিবর্তন ৩: নেভিগেশন বারের নিচের গ্যাপ কমানো */ 
+            margin-bottom: 0px; 
             background: #fff; position: sticky; top: 0; z-index: 100;
         }
         .nav-btn {
@@ -113,14 +124,33 @@
         .post-pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background-color: #ddd; }
         .post-pfp img { width: 100%; height: 100%; object-fit: cover; }
         .post-meta-text { display: flex; flex-direction: column; justify-content: center; }
-        .name-row { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
-        .name-row h3 { font-size: 18px; font-weight: 800; color: #0f1419; margin: 0; }
         
-        /* ✅ পরিবর্তন ১: পোস্টের ইউজারনেম নীল এবং ক্লিকযোগ্য */
+        .name-row { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+        
+        /* 🔥 পরিবর্তন: পোস্ট কার্ডের নামের সাথে ব্লু টিকের জন্য ফ্লেক্স যোগ */
+        .name-row h3 { 
+            font-size: 18px; 
+            font-weight: 800; 
+            color: #0f1419; 
+            margin: 0; 
+            display: inline-flex; 
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* ✅ পরিবর্তন ২: পোস্টের ইউজারনেম নীল থাকবে এবং ক্লিক ইফেক্ট বন্ধ */
         .post-username { 
             font-size: 14px; 
             color: #1da1f2; 
-            cursor: pointer; 
+            cursor: default; /* ক্লিক ইফেক্ট বন্ধ */
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* ✅ নতুন: ব্লু টিক স্টাইল */
+        .verified-badge {
+            color: #1da1f2; 
+            font-size: 16px; 
+            margin-left: -2px; 
         }
         
         .time-ago { font-size: 15px; color: #536471; }
@@ -377,7 +407,7 @@
         </div>
 
         <div class="info-section">
-            <h1 class="website-name">FILMIXO-HUB</h1>
+            <h1 class="website-name">FILMIXO-HUB <i class="verified-badge fa-solid fa-circle-check"></i></h1>
             <p class="username">@filmixo</p>
 
             <div class="stats">
@@ -583,7 +613,12 @@
                         <div class="post-header">
                             <div class="post-pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div>
                             <div class="post-meta-text">
-                                <div class="name-row"><h3>FILMIXO</h3><span class="post-username">@filmixo</span><span class="dot-separator">·</span><span class="time-ago" data-upload-time="${post.uploadTime}">${timeAgo(post.uploadTime)}</span></div>
+                                <div class="name-row">
+                                    <h3>FILMIXO <i class="verified-badge fa-solid fa-circle-check"></i></h3>
+                                    <span class="post-username">@filmixo</span>
+                                    <span class="dot-separator">·</span>
+                                    <span class="time-ago" data-upload-time="${post.uploadTime}">${timeAgo(post.uploadTime)}</span>
+                                </div>
                             </div>
                         </div>
                         <div class="clickable-area" onclick="openPost('${post.id}')">
