@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,38 +100,21 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
         
-        /* 🛑 অ্যাডের জন্য কন্টেইনার (সাইজ ফিক্স) 🛑 */
-        .ad-slot-container {
-            width: 100%;
+        /* 🛑 অ্যাডের জন্য নতুন CSS: কোনো কন্টেইনার স্টাইল নেই, শুধুমাত্র সেন্টারিং ও মার্জিন 🛑 */
+        .ad-placement-center {
+            width: 100%; /* সম্পূর্ণ প্রস্থ নেবে */
             display: flex;
-            justify-content: center; 
-            margin: 15px 0; 
-            padding: 0 10px; 
-            /* ✅ min-height এবং overflow: hidden রিমুভ করা হয়েছে যাতে অ্যাড নিজস্ব সাইজে লোড হয় */
-            /* min-height: 50px; */ 
-            /* overflow: hidden; */ 
-        }
-
-        /* ✅ অ্যাড স্লট ১ এর স্টাইল (শুধুমাত্র মাঝখানে রাখা) */
-        #ad-slot-1 {
-            margin-top: -10px; 
-            margin-bottom: 15px; 
-            padding: 0 5px; 
-            display: flex; 
-            justify-content: center;
+            justify-content: center; /* অ্যাডটিকে মাঝখানে রাখবে */
+            margin: 15px 0; /* উপরে ও নিচে মার্জিন দেবে */
         }
         
-        /* ✅ অ্যাড স্লট ২ এর স্টাইল (ডাউনলোডের নিচে) */
-        #ad-slot-2 {
-            margin-top: 15px;
-            margin-bottom: 15px;
-            padding: 0 5px;
-            display: flex;
-            justify-content: center;
-        }
-        /* --- নতুন ডাউনলোড সেকশনের স্টাইল শেষ --- */
+        /* অ্যাড ১ এর বিশেষ মার্জিন */
+        #ad-spot-1 { margin-top: -10px; margin-bottom: 15px; }
+        /* অ্যাড ২ এর বিশেষ মার্জিন */
+        #ad-spot-2 { margin-top: 15px; margin-bottom: 15px; }
 
-        /* স্ট্যাটস বার (অপরিবর্তিত) */
+
+        /* --- অন্যান্য স্টাইল অপরিবর্তিত --- */
         .stats-section { padding: 12px 0; margin-top: 15px; border-top: 1px solid #e1e8ed; border-bottom: 1px solid #e1e8ed; display: flex; align-items: center; background: #fff; }
         .stats-left { display: flex; align-items: center; gap: 20px; flex-grow: 1; overflow: hidden; }
         .view-stat { flex: 0 0 auto; display: flex; align-items: center; gap: 5px; font-weight: bold; font-size: 15px; color: #536471; }
@@ -142,109 +126,49 @@
         .share-icons { flex: 0 0 auto; display: flex; gap: 8px; }
         .share-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 13px; transition: 0.2s; }
         .share-icon:hover { opacity: 0.8; transform: scale(1.1); }
-
-        /* রিলেটেড পোস্ট (কার্ড) - অপরিবর্তিত */
         .related-section { background: #fff; margin-top: 0; }
         .related-header { padding: 15px; font-weight: 800; color: #536471; border-bottom: 1px solid #e1e8ed; text-transform: uppercase; background: #fff; }
         
-        .post-card { 
-            background: white; padding: 15px; border-bottom: 1px solid #e1e8ed; 
-            display: flex; flex-direction: column; 
-            gap: 6px; 
-        }
-
+        .post-card { background: white; padding: 15px; border-bottom: 1px solid #e1e8ed; display: flex; flex-direction: column; gap: 6px; }
         .post-header { display: flex; gap: 10px; align-items: center; }
         .post-pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }
         .post-pfp img { width: 100%; height: 100%; object-fit: cover; }
         .post-meta-text { display: flex; flex-direction: column; justify-content: center; }
         .name-row { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
-        
         .name-row h3 { font-size: 18px; font-weight: 800; color: #0f1419; margin: 0; }
-        
         .post-username { font-size: 14px; color: #536471; }
-        
         .time-ago { font-size: 15px; color: #536471; }
         .dot-separator { font-size: 15px; color: #536471; margin: 0 2px; }
-
         .clickable-area { cursor: pointer; }
-        
-        .post-title { 
-            font-size: 18px; 
-            font-weight: 700; 
-            color: #0f1419; 
-            margin-bottom: 8px; 
-            margin-top: -3px; 
-            line-height: 1.3; 
-        }
-        
+        .post-title { font-size: 18px; font-weight: 700; color: #0f1419; margin-bottom: 8px; margin-top: -3px; line-height: 1.3; }
         .post-excerpt { font-size: 15px; color: #0f1419; line-height: 1.4; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
         .read-more-text { color: #1da1f2; font-weight: 600; font-size: 14px; }
         .hashtags { color: #1d9bf0; font-size: 15px; margin-bottom: 10px; cursor: default; }
-
-        /* 🔥 রিলেটেড পোস্টের ইমেজ কন্টেইনার আপডেট 🔥 */
-        .media-container { 
-            position: relative; 
-            width: 100%; 
-            border-radius: 12px; 
-            overflow: hidden;
-            margin-top: 5px; 
-            display: block; 
-            cursor: pointer; 
-            background: #000;
-            
-            /* ডিফল্ট: লম্বা ইমেজ (যেমন 9:16) এর জন্য 3:4 অ্যাসপেক্ট রেশিও */
-            aspect-ratio: 3 / 4; 
-            max-height: 720px; 
-        }
-        
-        .media-container img { 
-            width: 100%; 
-            height: 100%; 
-            display: block; 
-            object-fit: cover; 
-            margin: 0 auto; 
-            max-height: none; 
-        }
-        
-        /* চওড়া বা স্কোয়ার ইমেজ (যেমন 16:9, 1:1, 4:3) এর জন্য */
-        .media-container.auto-fit {
-            aspect-ratio: initial; 
-            height: auto; 
-        }
-        .media-container.auto-fit img { 
-            height: auto; 
-            object-fit: contain; 
-        }
-        /* 🔥 রিলেটেড পোস্টের ইমেজ কন্টেইনার আপডেট শেষ 🔥 */
-
+        .media-container { position: relative; width: 100%; border-radius: 12px; overflow: hidden; margin-top: 5px; display: block; cursor: pointer; background: #000; aspect-ratio: 3 / 4; max-height: 720px; }
+        .media-container img { width: 100%; height: 100%; display: block; object-fit: cover; margin: 0 auto; max-height: none; }
+        .media-container.auto-fit { aspect-ratio: initial; height: auto; }
+        .media-container.auto-fit img { height: auto; object-fit: contain; }
         .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background-color: rgba(0, 0, 0, 0.6); border-radius: 50%; display: flex; justify-content: center; align-items: center; pointer-events: none; border: 2px solid rgba(255,255,255,0.8); }
         .play-icon::after { content: ''; display: block; width: 0; height: 0; border-left: 18px solid white; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 4px; }
         .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0, 0, 0, 0.8); color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; pointer-events: none; z-index: 5; }
-
         .post-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; color: #536471; font-size: 16px; font-weight: 500; }
         .footer-left { display: flex; align-items: center; gap: 6px; }
         .footer-right { display: flex; align-items: center; gap: 20px; }
-        
         .love-btn-rel { cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all 0.2s; user-select: none; }
         .love-btn-rel:hover { color: #e0245e; background-color: rgba(224, 36, 94, 0.1); padding: 4px 8px; border-radius: 15px; margin: -4px -8px; }
         .love-btn-rel.liked { color: #e0245e !important; } .love-btn-rel.liked i { font-weight: 900; }
         .footer-share-btn { cursor: pointer; padding: 8px; border-radius: 50%; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; }
         .footer-share-btn:hover { background-color: rgba(0,0,0,0.05); }
-
-        /* ফুটার এবং লোডার (অপরিবর্তিত) */
         .site-footer { background-color: #fff; padding: 30px 20px; text-align: center; border-top: none; margin-top: 0; }
         .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }
         .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; }
         .footer-links a:hover { color: #1da1f2; text-decoration: underline; }
         .footer-copyright { color: #536471; font-size: 13px; }
         .footer-copyright a { color: #1da1f2; font-weight: bold; }
-        
         .spinner { width: 14px; height: 14px; border: 2px solid #ccc; border-top: 2px solid #000; border-radius: 50%; animation: spin 1s linear infinite; display: inline-block; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .notification { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); color: white; padding: 10px 20px; border-radius: 30px; z-index: 1002; opacity: 0; transition: 0.3s; pointer-events: none; }
         .notification.show { opacity: 1; }
-
-        /* Infinite Scroll Sentinel */
         #sentinel { width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; }
         .load-more-spinner { width: 24px; height: 24px; border: 3px solid #ccc; border-top: 3px solid #1da1f2; border-radius: 50%; animation: spin 1s linear infinite; display: none; }
         #sentinel.loading .load-more-spinner { display: block; }
@@ -294,7 +218,7 @@
     // ============================================
     const PERMANENT_PROFILE_IMAGE_URL = "https://raw.githubusercontent.com/SecretBinodon/vdo/refs/heads/main/Image%20Files/secretbinodon.jpg";
 
-    const firebaseConfig = { apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q", authDomain: "my-ad-analytics-4560a.firebaseapp.com", databaseURL: "https://my-ad-analytics-4560a-default-rtdb.firebaseio.com", projectId: "my-ad-analytics-4560a", storageBucket: "my-ad-analytics-4560a.firebasestorage.app", messagingSenderId: "104213283950", appId: "1:104213283950:web:b5a25ecd54df809625127f", measurementId: "G-WS7QSQ9H0Y" };
+    const firebaseConfig = { apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q", authDomain: "my-ad-analytics-4560a.firebaseapp.com", databaseURL: "https://my-ad-analytics-4560a-default-rtdb.firebaseio.com", projectId: "my-ad-analytics-4560a", storageBucket: "my-ad-analytics-4560a.firebaseapp.com", messagingSenderId: "104213283950", appId: "1:104213283950:web:b5a25ecd54df809625127f", measurementId: "G-WS7QSQ9H0Y" };
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const deviceId = localStorage.getItem('deviceId') || 'device-'+Date.now(); 
@@ -383,67 +307,53 @@
     }
     
     // ==================================================
-    //  ✅ অ্যাড স্ক্রিপ্ট লোড করার ফাংশন 
+    //  🛑 অ্যাড কোড স্ট্রিং (অরজিনাল কোড পেস্ট) 🛑
     // ==================================================
-    function loadAdScripts() {
-        // --- অ্যাড স্লট ১: টাইটেলের নিচে ---
-        const adSlot1 = document.getElementById('ad-slot-1');
-        if (adSlot1) {
-            // ১. atOptions ভ্যারিয়েবল গ্লোবালি তৈরি করা
-            window.atOptions = {
-                'key' : 'da9154b956691d2aa7c677010e7b6501',
-                'format' : 'iframe',
-                'height' : 60,
-                'width' : 468,
-                'params' : {}
-            };
-            
-            // ২. স্ক্রিপ্ট ট্যাগ তৈরি করা
-            const scriptTag2 = document.createElement('script');
-            scriptTag2.type = 'text/javascript';
-            scriptTag2.src = 'https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js';
-            
-            // ৩. DOM এ যুক্ত করা
-            adSlot1.appendChild(scriptTag2); 
-        }
+    // আপনার অরজিনাল অ্যাড কোড স্ট্রিংগুলি এখানে ব্যবহার করা হচ্ছে।
+    const AD_CODE_1 = `
+        <div class="ad-placement-center" id="ad-spot-1">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : 'da9154b956691d2aa7c677010e7b6501',
+                    'format' : 'iframe',
+                    'height' : 60,
+                    'width' : 468,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
+        </div>
+    `;
 
-        // --- অ্যাড স্লট ২: ডাউনলোড বাটনের নিচে ---
-        const adSlot2 = document.getElementById('ad-slot-2');
-        if (adSlot2) {
-            // ১. Ad Container Div তৈরি করা
-            const adContainerDiv = document.createElement('div');
-            adContainerDiv.id = 'container-1608cb6a976841a38e804d64801334bb';
-            adSlot2.appendChild(adContainerDiv);
-
-            // ২. স্ক্রিপ্ট ট্যাগ তৈরি করা
-            const scriptTag3 = document.createElement('script');
-            scriptTag3.async = true;
-            scriptTag3.setAttribute('data-cfasync', 'false');
-            scriptTag3.src = 'https://prototypesorting.com/1608cb6a976841a38e804d64801334bb/invoke.js';
-            
-            // ৩. DOM এ যুক্ত করা
-            adSlot2.appendChild(scriptTag3);
-        }
-    }
+    const AD_CODE_2 = `
+        <div class="ad-placement-center" id="ad-spot-2">
+            <div id="container-1608cb6a976841a38e804d64801334bb"></div>
+            <script async data-cfasync="false" src="https://prototypesorting.com/1608cb6a976841a38e804d64801334bb/invoke.js"></script>
+        </div>
+    `;
 
 
     function renderMainPost(post) {
         
-        // ১. টাইটেল এবং প্রথম অ্যাড স্লট যুক্ত করা (স্ক্রিপ্ট ট্যাগ ছাড়া)
+        // ১. টাইটেল এবং প্রথম অ্যাড স্লট যুক্ত করা (সম্পূর্ণ অ্যাড কোড পেস্ট)
         let content = `
             <h1 class="article-title">${post.title}</h1>
-            <div class="ad-slot-container" id="ad-slot-1">
-                </div>
+            
+            ${AD_CODE_1} 
         `;
         
         post.paragraphs.forEach((p, i) => {
             content += `<p class="article-para">${p}</p>`;
         });
 
-        // ✅ ২. ডাউনলোড সেকশন এবং তিনটি বাটন (নতুন ক্রম অনুযায়ী: 1080p, 720p, 480p)
+        // ✅ ২. বাটন লজিক চেক ও ডাউনলোড সেকশন তৈরি
+        
+        // চেক করা হচ্ছে কোনো লিংক সেট করা আছে কিনা
+        const hasDownloadLinks = post.downloadLink1 || post.downloadLink2 || post.downloadLink3;
+        
         let downloadSectionHTML = '';
 
-        if (post.downloadLink1 || post.downloadLink2 || post.downloadLink3) {
+        if (hasDownloadLinks) {
             downloadSectionHTML += `
                 <div class="download-title-text">
                     DOWNLOAD FULL MOVIE IN HD
@@ -469,13 +379,12 @@
                     ` : ''}
                 </div>
             `;
-            
-            // ✅ ৩. ডাউনলোড সেকশনের নিচে অ্যাড স্লট ২ (শুধুমাত্র কন্টেইনার div)
-            downloadSectionHTML += `
-                <div class="ad-slot-container" id="ad-slot-2">
-                </div>
-            `;
         }
+        
+        // ✅ ৩. ডাউনলোড সেকশনের নিচে অ্যাড স্লট ২ (সম্পূর্ণ অ্যাড কোড পেস্ট)
+        // যদি ডাউনলোড সেকশন থাকে বা না থাকে, অ্যাডটি অবশ্যই তার জায়গায় দেখাবে
+        downloadSectionHTML += AD_CODE_2;
+
         
         // সম্পূর্ণ পোস্ট বডি রেন্ডার করা
         document.getElementById('post-details-container').innerHTML = `
@@ -505,9 +414,6 @@
                 </div>
             </div>`;
         
-        // 🚨 গুরুত্বপূর্ণ পদক্ষেপ: HTML তৈরি করার পর অ্যাড লোড করা
-        loadAdScripts(); 
-
         // মূল পোস্টের টাইম এলিমেন্ট রিয়েল-টাইম আপডেটের জন্য যুক্ত করা
         const mainTimeElement = document.getElementById('main-post-time');
         if (mainTimeElement) {
