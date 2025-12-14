@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +15,7 @@
         .main-wrapper { 
             width: 100%; 
             max-width: 600px; 
-            min-height: 100vh; 
+            min-height: 10vh; 
             background: #fff; 
             position: relative; 
             border-left: 1px solid #eee; 
@@ -58,8 +57,80 @@
         .article-title { font-size: 20px; font-weight: 800; margin-bottom: 15px; color: #0f1419; line-height: 1.3; }
         .article-para { font-size: 15px; line-height: 1.2; color: #1c1e21; margin-bottom: 12px; text-align: left; letter-spacing: -0.3px; }
 
-        .download-btn { display: block; width: fit-content; margin: 15px auto; padding: 10px 20px; border-radius: 5px; font-weight: bold; font-size: 14px; text-align: center; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s; }
-        .download-btn:active { transform: scale(0.98); }
+        /* --- ডাউনলোড বাটনের পুরাতন স্টাইল সরিয়ে নতুন কোড --- */
+        .download-btn { display: none; } /* পুরাতন বাটন নিষ্ক্রিয় */
+
+        /* --- নতুন ডাউনলোড সেকশনের জন্য স্টাইল --- */
+        .download-title-text {
+            font-size: 18px;
+            font-weight: 800; 
+            color: #0f1419;
+            text-align: center;
+            margin: 20px 0 10px 0; 
+            padding: 0 15px; 
+            border-top: 1px solid #e1e8ed; 
+            padding-top: 15px;
+        }
+
+        .download-buttons-container {
+            padding: 0 15px;
+            margin-bottom: 20px;
+        }
+
+        .top-download-buttons {
+            display: flex;
+            justify-content: space-between; 
+            gap: 10px; 
+            margin-bottom: 10px; 
+        }
+
+        .download-btn-v2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 10px;
+            border-radius: 8px; 
+            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
+            color: white;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+            transition: transform 0.2s, background-color 0.2s;
+            flex-grow: 1; 
+            min-height: 40px; 
+        }
+
+        .download-btn-v2:active {
+            transform: scale(0.98);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .full-width-download-btn {
+            width: 100%; 
+            margin: 0;
+            margin-top: 5px; /* ছোট গ্যাপ */
+        }
+        
+        /* অ্যাডের জন্য কন্টেইনার */
+        .ad-slot-container {
+            width: 100%;
+            display: flex;
+            justify-content: center; /* অ্যাড কোডকে মাঝখানে আনার জন্য */
+            margin: 15px 0; /* উপরে এবং নিচে গ্যাপ */
+            padding: 0 10px; /* সাইড প্যাডিং */
+            min-height: 50px; /* অ্যাড কোড লোড না হলেও স্থান ধরে রাখতে */
+            overflow: hidden; /* অ্যাডের ওভারফ্লো এড়াতে */
+        }
+
+        /* প্রথম প্যারাগ্রাফের নিচে অ্যাডের কন্টেইনার */
+        #ad-slot-1 {
+            margin-top: 10px; 
+            margin-bottom: 15px; 
+            padding: 0 5px; 
+        }
+        /* --- নতুন ডাউনলোড সেকশনের স্টাইল শেষ --- */
 
         /* স্ট্যাটস বার */
         .stats-section { padding: 12px 0; margin-top: 15px; border-top: 1px solid #e1e8ed; border-bottom: 1px solid #e1e8ed; display: flex; align-items: center; background: #fff; }
@@ -236,8 +307,8 @@
     // ============================================
     const CONFIG = {
         GLOBAL_VIDEO_LINK: "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea",
-        TOTAL_RELATED_POSTS: 6, /* 🛑 মোট কতটি রিলেটেড পোস্ট দেখানো হবে (যেমন ২০, ৫০, ১০০) */
-        BATCH_SIZE_SCROLL: 6,  /* 🛑 প্রতিবার স্ক্রল করলে কতগুলো কার্ড লোড হবে (যেমন ৫, ২)। এতে লোডিং দ্রুত হবে। */
+        TOTAL_RELATED_POSTS: 6, 
+        BATCH_SIZE_SCROLL: 6,  
         footer: { about: "#", contact: "#", privacy: "#", terms: "#" }
     };
 
@@ -247,17 +318,17 @@
     document.getElementById('link-terms').href = CONFIG.footer.terms;
 
     // গ্লোবাল ভ্যারিয়েবল
-    let availablePosts = []; // মোট লোড করার জন্য নির্বাচিত পোস্ট
-    let currentStartIndex = 0; // বর্তমানে কতগুলো পোস্ট রেন্ডার হয়েছে তার ইন্ডেক্স
-    let observer; // স্ক্রল অবজার্ভার
-    let sentinelObserver; // ইনফিনিটি স্ক্রল ডিটেক্টর
+    let availablePosts = []; 
+    let currentStartIndex = 0; 
+    let observer; 
+    let sentinelObserver; 
     
     // 🔥 রিয়েল-টাইম আপডেটের জন্য সমস্ত টাইম এলিমেন্ট স্টোর করার অ্যারে 🔥
     let timeElementsToUpdate = [];
 
     
     // --- ইউটিলিটি ফাংশনস ---
-    function getRandomColor() { const c=['#e0245e','#17bf63','#1da1f2','#ffad1f','#794bc4']; return c[Math.floor(Math.random()*c.length)]; }
+    function getRandomColor() { const c=['#1da1f2','#e0245e','#17bf63']; return c[Math.floor(Math.random()*c.length)]; } /* রংগুলো ডাউনলোডের জন্য সামঞ্জস্যপূর্ণ করা হয়েছে */
     function formatCount(n) { if(!n) return 0; return n >= 1000000 ? (n/1000000).toFixed(1)+'M' : n >= 1000 ? (n/1000).toFixed(1)+'K' : n; }
     
     // 🔥 আপডেট করা timeAgo() ফাংশন: এটি এখন শুধুমাত্র স্ট্রিং রিটার্ন করে 🔥
@@ -284,10 +355,8 @@
     function updateAllTimeElements() {
         timeElementsToUpdate.forEach(item => {
             if (item.element && item.element.parentNode) {
-                 // element যদি DOM এ এখনও থাকে
                 item.element.innerText = timeAgo(item.dateString);
             } else {
-                // element যদি DOM থেকে রিমুভ হয়ে যায়, অ্যারে থেকে বাদ দেওয়া
                 timeElementsToUpdate = timeElementsToUpdate.filter(i => i !== item);
             }
         });
@@ -307,16 +376,11 @@
             const originalWidth = this.naturalWidth;
             const originalHeight = this.naturalHeight;
             
-            // W/H রেশিও: 3:4 = 0.75, 1:1 = 1.0, 16:9 = 1.777
             const ratio = originalWidth / originalHeight;
             
-            // যদি ইমেজের W/H রেশিও 3/4 (0.75) এর চেয়ে বেশি বা সমান হয় (অর্থাৎ চওড়া বা স্কোয়ার), 
-            // তবে এটি অরিজিনাল সাইজে দেখাবে।
             if (ratio >= (3 / 4)) { 
                 mediaContainer.classList.add('auto-fit');
             } else {
-                // যদি 3:4 এর চেয়ে লম্বা হয় (যেমন 9:16 = 0.5625), 
-                // তাহলে ডিফল্ট 3:4 কন্টেইনার এবং object-fit: cover ব্যবহার করা হবে।
                 mediaContainer.classList.remove('auto-fit');
             }
         };
@@ -341,13 +405,13 @@
             const mainPost = posts.find(p => p.id === postId) || posts[0];
             if (!mainPost) throw new Error("Post not found.");
 
-            // 1. মূল পোস্ট লোড করা (দ্রুত ওভারভিউ)
+            // 1. মূল পোস্ট লোড করা 
             renderMainPost(mainPost);
             setupFirebaseForMainPost(mainPost.id);
-            mainWrapper.classList.add('loaded'); // দ্রুত দৃশ্যমান করা
+            mainWrapper.classList.add('loaded'); 
 
             // 🔥 রিয়েল-টাইম আপডেটের জন্য ইনটার্ভাল শুরু করা 🔥
-            setInterval(updateAllTimeElements, 60000); // প্রতি 60 সেকেন্ডে আপডেট
+            setInterval(updateAllTimeElements, 60000); 
             
             const anchorPostTime = new Date(mainPost.uploadTime).getTime();
             
@@ -368,19 +432,12 @@
         }
     }
 
-    /**
-     * যখন ব্যবহারকারী রিলেটেড সেকশনের কাছাকাছি আসবে, তখন এটি প্রথম ব্যাচ লোড করবে।
-     */
     function setupRelatedSectionObserver() {
         const relatedSection = document.getElementById('related-section-id');
         observer = new IntersectionObserver((entries, obs) => {
             if (entries[0].isIntersecting) {
-                obs.unobserve(relatedSection); // একবার লোড হলে আর মনিটর করবে না
-
-                // প্রথম ব্যাচ লোড করা (যা BATCH_SIZE_SCROLL দ্বারা নিয়ন্ত্রিত)
+                obs.unobserve(relatedSection); 
                 loadNextBatch();
-                
-                // প্রথম ব্যাচ লোড হওয়ার পরে ইনফিনিটি স্ক্রল সেনটিনেল সেটআপ করা
                 setupSentinelObserver();
             }
         }, { rootMargin: '100px 0px' });
@@ -388,33 +445,27 @@
         observer.observe(relatedSection);
     }
 
-    /**
-     * ইনফিনিটি স্ক্রলিং ডিটেক্টর সেটআপ।
-     */
     function setupSentinelObserver() {
         const sentinel = document.getElementById('sentinel');
         if (availablePosts.length > CONFIG.BATCH_SIZE_SCROLL) {
             sentinelObserver = new IntersectionObserver((entries) => {
                 if (entries[0].isIntersecting && !sentinel.classList.contains('loading')) {
-                    // স্ক্রল করে সেনটিনেলের কাছাকাছি গেলে পরবর্তী ব্যাচ লোড হবে
                     setTimeout(() => loadNextBatch(), 500); 
                 }
             }, { rootMargin: '100px' });
             sentinelObserver.observe(sentinel);
         } else {
-             // যদি মোট কার্ডের সংখ্যা প্রথম ব্যাচের চেয়ে কম বা সমান হয়, তবে সেনটিনেল লুকানো হবে।
             sentinel.style.display = 'none';
         }
     }
     
     // ==================================================
-    //  ✅ ইনফিনিটি স্ক্রলিং লজিক (TOTAL_RELATED_POSTS এর সীমার মধ্যে)
+    //  ✅ ইনফিনিটি স্ক্রলিং লজিক 
     // ==================================================
 
     function loadNextBatch() { 
         const sentinel = document.getElementById('sentinel');
         
-        // 1. শেষ হওয়ার শর্ত পরীক্ষা
         if (currentStartIndex >= availablePosts.length) {
             sentinel.style.display = 'none'; 
             return;
@@ -422,20 +473,17 @@
 
         sentinel.classList.add('loading');
         
-        const batchSize = CONFIG.BATCH_SIZE_SCROLL; // 🛑 প্রতিবারের ব্যাচ সাইজ ব্যবহার
+        const batchSize = CONFIG.BATCH_SIZE_SCROLL; 
         
-        // লোড করার জন্য পোস্টের ইন্ডেক্স এবং সংখ্যা নির্ধারণ
         const endIndex = Math.min(currentStartIndex + batchSize, availablePosts.length);
         const postsToLoad = availablePosts.slice(currentStartIndex, endIndex);
 
         renderBatch(postsToLoad); 
         
-        // ইন্ডেক্স আপডেট
         currentStartIndex = endIndex;
 
         sentinel.classList.remove('loading');
         
-        // 2. লোড শেষে আবার শেষ হওয়ার শর্ত পরীক্ষা
         if (currentStartIndex >= availablePosts.length) {
             sentinel.style.display = 'none';
             if(sentinelObserver) sentinelObserver.unobserve(sentinel);
@@ -498,14 +546,55 @@
         
         post.paragraphs.forEach((p, i) => {
             content += `<p class="article-para">${p}</p>`;
-            if (totalPara <= 2) {
-                if (i === 0 && post.downloadLink1) content += `<a href="${post.downloadLink1}" class="download-btn" style="background:${getRandomColor()}">DOWNLOAD FULL VIDEO</a>`;   
-            } else {
-                if (i === 0 && post.downloadLink1) content += `<a href="${post.downloadLink1}" class="download-btn" style="background:${getRandomColor()}">DOWNLOAD FULL VIDEO</a>`;
-                if (i === totalPara - 2 && post.downloadLink2) content += `<a href="${post.downloadLink2}" class="download-btn" style="background:${getRandomColor()}">DOWNLOAD FULL VIDEO</a>`;
+            
+            // ✅ ১. প্রথম প্যারাগ্রাফের পরে অ্যাড স্লট ১
+            if (i === 0) {
+                // এখানে প্রথম অ্যাড কোডটি বসাতে হবে।
+                content += `<div class="ad-slot-container" id="ad-slot-1">
+                                </div>`;
             }
         });
 
+        // ✅ ২. ডাউনলোড সেকশন এবং তিনটি বাটন
+        let downloadSectionHTML = '';
+
+        // বাটন ১, ২, ৩ এর যেকোনো একটির লিংক পেলেই ডাউনলোড সেকশন দেখাবে
+        if (post.downloadLink1 || post.downloadLink2 || post.downloadLink3) {
+            downloadSectionHTML += `
+                <div class="download-title-text">
+                    DOWNLOAD FULL MOVIE IN HD
+                </div>
+                <div class="download-buttons-container">
+                    <div class="top-download-buttons">
+                        ${post.downloadLink1 ? `
+                            <a href="${post.downloadLink1}" target="_blank" class="download-btn-v2" style="background:${getRandomColor()};">
+                                <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 720p HD
+                            </a>
+                        ` : ''}
+                        
+                        ${post.downloadLink2 ? `
+                            <a href="${post.downloadLink2}" target="_blank" class="download-btn-v2" style="background:${getRandomColor()};">
+                                <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 1080p Full HD
+                            </a>
+                        ` : ''}
+                    </div>
+                    
+                    ${post.downloadLink3 ? `
+                        <a href="${post.downloadLink3}" target="_blank" class="download-btn-v2 full-width-download-btn" style="background:${getRandomColor()};">
+                            <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 480p SD
+                        </a>
+                    ` : ''}
+                </div>
+            `;
+            
+            // ✅ ৩. ডাউনলোড সেকশনের নিচে অ্যাড স্লট ২
+            downloadSectionHTML += `
+                <div class="ad-slot-container" id="ad-slot-2">
+                    </div>
+            `;
+        }
+        
+        // সম্পূর্ণ পোস্ট বডি রেন্ডার করা
         document.getElementById('post-details-container').innerHTML = `
             <div class="post-author-area">
                 <div class="author-info">
@@ -515,7 +604,23 @@
                 <div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div>
             </div>
             <div class="video-container" onclick="handleVideoClick()"><img src="${post.mediaImage}" loading="lazy"><div class="play-btn-center" id="main-play-btn"></div><div class="main-video-spinner" id="main-spinner"></div><div class="video-controls"><span>${post.videoDuration}</span><span><i class="fa-solid fa-volume-high"></i> HD</span></div></div>
-            <div class="content-body">${content}<div class="stats-section"><div class="stats-left"><div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="view-cnt">...</span> Views</div><div class="like-stat-container"><div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="like-cnt">...</span> Likes</div></div></div><div class="share-icons"><div class="share-icon" style="background:#1877f2" onclick="share('fb', '${post.title}')"><i class="fa-brands fa-facebook-f"></i></div><div class="share-icon" style="background:#0084ff" onclick="share('msg', '${post.title}')"><i class="fa-brands fa-facebook-messenger"></i></div><div class="share-icon" style="background:#25d366" onclick="share('wa', '${post.title}')"><i class="fa-brands fa-whatsapp"></i></div><div class="share-icon" style="background:#1da1f2" onclick="share('tw', '${post.title}')"><i class="fa-brands fa-twitter"></i></div><div class="share-icon" style="background:#0088cc" onclick="share('tg', '${post.title}')"><i class="fa-brands fa-telegram"></i></div></div></div></div>`;
+            <div class="content-body">
+                ${content}
+                ${downloadSectionHTML} 
+                <div class="stats-section">
+                    <div class="stats-left">
+                        <div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="view-cnt">...</span> Views</div>
+                        <div class="like-stat-container"><div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="like-cnt">...</span> Likes</div></div>
+                    </div>
+                    <div class="share-icons">
+                        <div class="share-icon" style="background:#1877f2" onclick="share('fb', '${post.title}')"><i class="fa-brands fa-facebook-f"></i></div>
+                        <div class="share-icon" style="background:#0084ff" onclick="share('msg', '${post.title}')"><i class="fa-brands fa-facebook-messenger"></i></div>
+                        <div class="share-icon" style="background:#25d366" onclick="share('wa', '${post.title}')"><i class="fa-brands fa-whatsapp"></i></div>
+                        <div class="share-icon" style="background:#1da1f2" onclick="share('tw', '${post.title}')"><i class="fa-brands fa-twitter"></i></div>
+                        <div class="share-icon" style="background:#0088cc" onclick="share('tg', '${post.title}')"><i class="fa-brands fa-telegram"></i></div>
+                    </div>
+                </div>
+            </div>`;
         
         // 🔥 মূল পোস্টের টাইম এলিমেন্ট রিয়েল-টাইম আপডেটের জন্য যুক্ত করা 🔥
         const mainTimeElement = document.getElementById('main-post-time');
