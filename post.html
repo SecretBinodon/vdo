@@ -100,10 +100,6 @@
             transform: scale(0.98);
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
-
-        /* ❌ অ্যাড কন্টেনার CSS সরানো হয়েছে */
-        /* ❌ .ad-slot-container {} */
-        /* ❌ #ad-slot-1 {} */
         
         /* স্ট্যাটস বার (অপরিবর্তিত) */
         .stats-section { padding: 12px 0; margin-top: 15px; border-top: 1px solid #e1e8ed; border-bottom: 1px solid #e1e8ed; display: flex; align-items: center; background: #fff; }
@@ -136,10 +132,20 @@
         
         .name-row h3 { font-size: 18px; font-weight: 800; color: #0f1419; margin: 0; }
         
-        /* ✅ পরিবর্তন: পোস্টের ইউজারনেম সবসময় নীল দেখাবে */
         .post-username { 
             font-size: 14px; 
             color: #1da1f2; 
+        }
+
+        /* 🔥 নতুন: প্রফেশনাল ব্লু টিক ব্যাজ স্টাইল */
+        .verified-badge {
+            color: #1da1f2; /* ব্লু টিকের রং */
+            font-size: 16px; /* আইকন সাইজ, মেইন নামের সাথে মেলাতে */
+            margin-left: -2px; /* স্পেস কমানো বা অ্যাডজাস্ট করা */
+            margin-right: 2px;
+            /* ভার্টিকাল অ্যালাইনমেন্ট নিশ্চিত করতে */
+            display: inline-flex;
+            align-items: center;
         }
         
         .time-ago { font-size: 15px; color: #536471; }
@@ -367,7 +373,7 @@
 
     function renderMainPost(post) {
         
-        // ১. টাইটেল যুক্ত করা (অ্যাড স্লট ১ কন্টেইনার সরানো হয়েছে)
+        // ১. টাইটেল যুক্ত করা
         let content = `
             <h1 class="article-title">${post.title}</h1>
         `;
@@ -376,7 +382,7 @@
             content += `<p class="article-para">${p}</p>`;
         });
 
-        // ✅ ২. ডাউনলোড সেকশন এবং তিনটি বাটন (নতুন ক্রম অনুযায়ী: 1080p, 720p, 480p)
+        // ✅ ২. ডাউনলোড সেকশন
         let downloadSectionHTML = '';
 
         if (post.downloadLink1 || post.downloadLink2 || post.downloadLink3) {
@@ -405,9 +411,6 @@
                     ` : ''}
                 </div>
             `;
-            
-            // ❌ ৩. ডাউনলোড সেকশনের নিচে থাকা অ্যাড স্লট ২ কন্টেইনার সরানো হয়েছে
-            // downloadSectionHTML += `<div class="ad-slot-container" id="ad-slot-2"></div>`;
         }
         
         // সম্পূর্ণ পোস্ট বডি রেন্ডার করা
@@ -415,7 +418,10 @@
             <div class="post-author-area">
                 <div class="author-info">
                     <div class="pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div>
-                    <div class="author-text"><h3>FILMIXO</h3><span>@filmixo</span></div>
+                    <div class="author-text">
+                        <h3>FILMIXO</h3>
+                        <i class="verified-badge fa-solid fa-circle-check"></i> <span>@filmixo</span>
+                    </div>
                 </div>
                 <div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div>
             </div>
@@ -555,7 +561,14 @@
                 <div class="post-card" data-id="${post.id}">
                     <div class="post-header">
                         <div class="post-pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div>
-                        <div class="post-meta-text"><div class="name-row"><h3>FILMIXO</h3><span class="post-username">@filmixo</span><span class="dot-separator">·</span><span class="time-ago" data-upload-time="${post.uploadTime}">${timeAgo(post.uploadTime)}</span></div></div>
+                        <div class="post-meta-text">
+                            <div class="name-row">
+                                <h3>FILMIXO</h3>
+                                <i class="verified-badge fa-solid fa-circle-check"></i> <span class="post-username">@filmixo</span>
+                                <span class="dot-separator">·</span>
+                                <span class="time-ago" data-upload-time="${post.uploadTime}">${timeAgo(post.uploadTime)}</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="clickable-area" onclick="openPost('${post.id}')"><div class="post-title">${post.title}</div><div class="post-excerpt">${excerpt} <span class="read-more-text">See more</span></div></div>
                     <div class="hashtags">${post.hashtags}</div>
