@@ -57,10 +57,7 @@
         .article-title { font-size: 20px; font-weight: 800; margin-bottom: 15px; color: #0f1419; line-height: 1.3; }
         .article-para { font-size: 15px; line-height: 1.2; color: #1c1e21; margin-bottom: 12px; text-align: left; letter-spacing: -0.3px; }
 
-        /* --- ডাউনলোড বাটনের পুরাতন স্টাইল সরিয়ে নতুন কোড --- */
-        .download-btn { display: none; } /* পুরাতন বাটন নিষ্ক্রিয় */
-
-        /* --- নতুন ডাউনলোড সেকশনের জন্য স্টাইল --- */
+        /* --- ডাউনলোড সেকশনের জন্য স্টাইল --- */
         .download-title-text {
             font-size: 18px;
             font-weight: 800; 
@@ -117,16 +114,16 @@
         .ad-slot-container {
             width: 100%;
             display: flex;
-            justify-content: center; /* অ্যাড কোডকে মাঝখানে আনার জন্য */
-            margin: 15px 0; /* উপরে এবং নিচে গ্যাপ */
-            padding: 0 10px; /* সাইড প্যাডিং */
-            min-height: 50px; /* অ্যাড কোড লোড না হলেও স্থান ধরে রাখতে */
-            overflow: hidden; /* অ্যাডের ওভারফ্লো এড়াতে */
+            justify-content: center; 
+            margin: 15px 0; 
+            padding: 0 10px; 
+            min-height: 50px; 
+            overflow: hidden; 
         }
 
-        /* প্রথম প্যারাগ্রাফের নিচে অ্যাডের কন্টেইনার */
+        /* ✅ অ্যাড স্লট ১ এর নতুন স্টাইল: টাইটেলের নিচে প্যাডিং যোগ করা */
         #ad-slot-1 {
-            margin-top: 10px; 
+            margin-top: -10px; /* টাইটেল থেকে অতিরিক্ত গ্যাপ কমানো */
             margin-bottom: 15px; 
             padding: 0 5px; 
         }
@@ -201,9 +198,8 @@
         
         .media-container img { 
             width: 100%; 
-            height: 100%; /* কন্টেইনারের পুরো হাইট নেবে */
+            height: 100%; 
             display: block; 
-            /* 9:16 ইমেজের উপরে-নিচে অংশ কাটার জন্য */
             object-fit: cover; 
             margin: 0 auto; 
             max-height: none; 
@@ -211,12 +207,12 @@
         
         /* চওড়া বা স্কোয়ার ইমেজ (যেমন 16:9, 1:1, 4:3) এর জন্য */
         .media-container.auto-fit {
-            aspect-ratio: initial; /* 3:4 রেশিও বাতিল করা হলো */
+            aspect-ratio: initial; 
             height: auto; 
         }
         .media-container.auto-fit img { 
-            height: auto; /* ইমেজ তার আসল হাইট নেবে */
-            object-fit: contain; /* ইমেজ পুরোটা দৃশ্যমান হবে, কোনো অংশ কাটবে না */
+            height: auto; 
+            object-fit: contain; 
         }
         /* 🔥 রিলেটেড পোস্টের ইমেজ কন্টেইনার আপডেট শেষ 🔥 */
 
@@ -541,24 +537,22 @@
     }
 
     function renderMainPost(post) {
-        let content = `<h1 class="article-title">${post.title}</h1>`;
-        const totalPara = post.paragraphs.length;
+        
+        // ✅ ১. টাইটেল এবং প্রথম অ্যাড স্লট যুক্ত করা
+        let content = `
+            <h1 class="article-title">${post.title}</h1>
+            <div class="ad-slot-container" id="ad-slot-1">
+                </div>
+        `;
         
         post.paragraphs.forEach((p, i) => {
             content += `<p class="article-para">${p}</p>`;
-            
-            // ✅ ১. প্রথম প্যারাগ্রাফের পরে অ্যাড স্লট ১
-            if (i === 0) {
-                // এখানে প্রথম অ্যাড কোডটি বসাতে হবে।
-                content += `<div class="ad-slot-container" id="ad-slot-1">
-                                </div>`;
-            }
         });
 
-        // ✅ ২. ডাউনলোড সেকশন এবং তিনটি বাটন
+        // ✅ ২. ডাউনলোড সেকশন এবং তিনটি বাটন (নতুন ক্রম অনুযায়ী)
         let downloadSectionHTML = '';
 
-        // বাটন ১, ২, ৩ এর যেকোনো একটির লিংক পেলেই ডাউনলোড সেকশন দেখাবে
+        // বাটন ১ (480p - Link 3), বাটন ২ (720p - Link 1), বাটন ৩ (1080p - Link 2)
         if (post.downloadLink1 || post.downloadLink2 || post.downloadLink3) {
             downloadSectionHTML += `
                 <div class="download-title-text">
@@ -566,22 +560,22 @@
                 </div>
                 <div class="download-buttons-container">
                     <div class="top-download-buttons">
+                        ${post.downloadLink3 ? `
+                            <a href="${post.downloadLink3}" target="_blank" class="download-btn-v2" style="background:${getRandomColor()};">
+                                <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 480p SD
+                            </a>
+                        ` : ''}
+                        
                         ${post.downloadLink1 ? `
                             <a href="${post.downloadLink1}" target="_blank" class="download-btn-v2" style="background:${getRandomColor()};">
                                 <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 720p HD
                             </a>
                         ` : ''}
-                        
-                        ${post.downloadLink2 ? `
-                            <a href="${post.downloadLink2}" target="_blank" class="download-btn-v2" style="background:${getRandomColor()};">
-                                <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 1080p Full HD
-                            </a>
-                        ` : ''}
                     </div>
                     
-                    ${post.downloadLink3 ? `
-                        <a href="${post.downloadLink3}" target="_blank" class="download-btn-v2 full-width-download-btn" style="background:${getRandomColor()};">
-                            <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 480p SD
+                    ${post.downloadLink2 ? `
+                        <a href="${post.downloadLink2}" target="_blank" class="download-btn-v2 full-width-download-btn" style="background:${getRandomColor()};">
+                            <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 1080p Full HD
                         </a>
                     ` : ''}
                 </div>
