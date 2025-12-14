@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,31 +73,30 @@
         .download-buttons-container {
             padding: 0 15px;
             margin-bottom: 20px;
+            
+            /* ✅ বাটনগুলো উলম্ব (vertical) লেআউটে রাখার জন্য */
+            display: flex;
+            flex-direction: column; 
+            gap: 10px; /* প্রতিটি বাটনের মাঝে 10px গ্যাপ */
         }
 
-        .top-download-buttons {
-            display: flex;
-            justify-content: space-between; 
-            gap: 10px; 
-            margin-bottom: 10px; 
-        }
+        /* ✅ top-download-buttons ক্লাস সরিয়ে দেওয়া হয়েছে */
 
         .download-btn-v2 {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 10px 10px;
+            width: 100%; /* প্রতিটি বাটন পূর্ণ প্রস্থ নেবে */
+            padding: 12px 10px; /* প্যাডিং সামান্য বাড়ানো হয়েছে */
             border-radius: 8px; 
             font-weight: bold;
-            font-size: 14px;
+            font-size: 15px; /* ফন্ট সাইজ সামান্য বাড়ানো হয়েছে */
             text-align: center;
             color: white;
             cursor: pointer;
             text-transform: uppercase;
             box-shadow: 0 3px 6px rgba(0,0,0,0.15);
             transition: transform 0.2s, background-color 0.2s;
-            flex-grow: 1; 
-            min-height: 40px; 
         }
 
         .download-btn-v2:active {
@@ -104,11 +104,7 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
 
-        .full-width-download-btn {
-            width: 100%; 
-            margin: 0;
-            margin-top: 5px; /* ছোট গ্যাপ */
-        }
+        /* full-width-download-btn ক্লাসের আর প্রয়োজন নেই, কারণ সব বাটনই এখন পূর্ণ প্রস্থের */
         
         /* অ্যাডের জন্য কন্টেইনার */
         .ad-slot-container {
@@ -123,13 +119,13 @@
 
         /* ✅ অ্যাড স্লট ১ এর নতুন স্টাইল: টাইটেলের নিচে প্যাডিং যোগ করা */
         #ad-slot-1 {
-            margin-top: -10px; /* টাইটেল থেকে অতিরিক্ত গ্যাপ কমানো */
+            margin-top: -10px; 
             margin-bottom: 15px; 
             padding: 0 5px; 
         }
         /* --- নতুন ডাউনলোড সেকশনের স্টাইল শেষ --- */
 
-        /* স্ট্যাটস বার */
+        /* স্ট্যাটস বার (অপরিবর্তিত) */
         .stats-section { padding: 12px 0; margin-top: 15px; border-top: 1px solid #e1e8ed; border-bottom: 1px solid #e1e8ed; display: flex; align-items: center; background: #fff; }
         .stats-left { display: flex; align-items: center; gap: 20px; flex-grow: 1; overflow: hidden; }
         .view-stat { flex: 0 0 auto; display: flex; align-items: center; gap: 5px; font-weight: bold; font-size: 15px; color: #536471; }
@@ -142,7 +138,7 @@
         .share-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 13px; transition: 0.2s; }
         .share-icon:hover { opacity: 0.8; transform: scale(1.1); }
 
-        /* রিলেটেড পোস্ট (কার্ড) */
+        /* রিলেটেড পোস্ট (কার্ড) - অপরিবর্তিত */
         .related-section { background: #fff; margin-top: 0; }
         .related-header { padding: 15px; font-weight: 800; color: #536471; border-bottom: 1px solid #e1e8ed; text-transform: uppercase; background: #fff; }
         
@@ -230,7 +226,7 @@
         .footer-share-btn { cursor: pointer; padding: 8px; border-radius: 50%; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; }
         .footer-share-btn:hover { background-color: rgba(0,0,0,0.05); }
 
-        /* ফুটার এবং লোডার */
+        /* ফুটার এবং লোডার (অপরিবর্তিত) */
         .site-footer { background-color: #fff; padding: 30px 20px; text-align: center; border-top: none; margin-top: 0; }
         .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }
         .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; }
@@ -284,12 +280,12 @@
 </div>
 
 <script type="module">
-    // Firebase SDK Imports
+    // Firebase SDK Imports (অপরিবর্তিত)
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
     import { getFirestore, doc, getDoc, setDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
     // ============================================
-    //  ১. স্থায়ী প্রোফাইল ইমেজ URL এবং Firebase Configuration
+    //  ১. স্থায়ী প্রোফাইল ইমেজ URL এবং Firebase Configuration (অপরিবর্তিত)
     // ============================================
     const PERMANENT_PROFILE_IMAGE_URL = "https://raw.githubusercontent.com/SecretBinodon/vdo/refs/heads/main/Image%20Files/secretbinodon.jpg";
 
@@ -318,16 +314,13 @@
     let currentStartIndex = 0; 
     let observer; 
     let sentinelObserver; 
-    
-    // 🔥 রিয়েল-টাইম আপডেটের জন্য সমস্ত টাইম এলিমেন্ট স্টোর করার অ্যারে 🔥
     let timeElementsToUpdate = [];
 
     
-    // --- ইউটিলিটি ফাংশনস ---
-    function getRandomColor() { const c=['#1da1f2','#e0245e','#17bf63']; return c[Math.floor(Math.random()*c.length)]; } /* রংগুলো ডাউনলোডের জন্য সামঞ্জস্যপূর্ণ করা হয়েছে */
+    // --- ইউটিলিটি ফাংশনস (অপরিবর্তিত) ---
+    function getRandomColor() { const c=['#1da1f2','#e0245e','#17bf63']; return c[Math.floor(Math.random()*c.length)]; } 
     function formatCount(n) { if(!n) return 0; return n >= 1000000 ? (n/1000000).toFixed(1)+'M' : n >= 1000 ? (n/1000).toFixed(1)+'K' : n; }
     
-    // 🔥 আপডেট করা timeAgo() ফাংশন: এটি এখন শুধুমাত্র স্ট্রিং রিটার্ন করে 🔥
     function timeAgo(dateString) { 
         const d = new Date(dateString);
         const seconds = Math.floor((new Date() - d) / 1000);
@@ -347,7 +340,6 @@
         return "Just now";
     }
 
-    // 🔥 নতুন ফাংশন: সমস্ত টাইম এলিমেন্ট আপডেট করা 🔥
     function updateAllTimeElements() {
         timeElementsToUpdate.forEach(item => {
             if (item.element && item.element.parentNode) {
@@ -364,7 +356,6 @@
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get('id');
 
-    // 🔥 নতুন ফাংশন: রিলেটেড পোস্টের ইমেজের আসল ডাইমেনশন চেক করা এবং ক্লাস যুক্ত করা 🔥
     function adjustImageAspectRatio(imgElement) {
         const mediaContainer = imgElement.closest('.media-container');
         
@@ -387,8 +378,99 @@
     }
     
     // ==================================================
-    //  ✅ ইনিট এবং ডেটা প্রিপারেশন
+    //  ✅ রেন্ডারিং ফাংশন এবং অন্যান্য
     // ==================================================
+
+    function renderMainPost(post) {
+        
+        // ১. টাইটেল এবং প্রথম অ্যাড স্লট যুক্ত করা
+        let content = `
+            <h1 class="article-title">${post.title}</h1>
+            <div class="ad-slot-container" id="ad-slot-1">
+                </div>
+        `;
+        
+        post.paragraphs.forEach((p, i) => {
+            content += `<p class="article-para">${p}</p>`;
+        });
+
+        // ✅ ২. ডাউনলোড সেকশন এবং তিনটি বাটন (নতুন ক্রম অনুযায়ী: 1080p, 720p, 480p)
+        let downloadSectionHTML = '';
+
+        if (post.downloadLink1 || post.downloadLink2 || post.downloadLink3) {
+            downloadSectionHTML += `
+                <div class="download-title-text">
+                    DOWNLOAD FULL MOVIE IN HD
+                </div>
+                <div class="download-buttons-container">
+                    
+                    ${post.downloadLink2 ? `
+                        <a href="${post.downloadLink2}" class="download-btn-v2" style="background:${getRandomColor()};">
+                            <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 1080p Full HD
+                        </a>
+                    ` : ''}
+                    
+                    ${post.downloadLink1 ? `
+                        <a href="${post.downloadLink1}" class="download-btn-v2" style="background:${getRandomColor()};">
+                            <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 720p HD
+                        </a>
+                    ` : ''}
+
+                    ${post.downloadLink3 ? `
+                        <a href="${post.downloadLink3}" class="download-btn-v2" style="background:${getRandomColor()};">
+                            <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 480p SD
+                        </a>
+                    ` : ''}
+                </div>
+            `;
+            
+            // ✅ ৩. ডাউনলোড সেকশনের নিচে অ্যাড স্লট ২
+            downloadSectionHTML += `
+                <div class="ad-slot-container" id="ad-slot-2">
+                    </div>
+            `;
+        }
+        
+        // সম্পূর্ণ পোস্ট বডি রেন্ডার করা
+        document.getElementById('post-details-container').innerHTML = `
+            <div class="post-author-area">
+                <div class="author-info">
+                    <div class="pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div>
+                    <div class="author-text"><h3>Secret Binodon</h3><span>@SecretBinodon</span></div>
+                </div>
+                <div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div>
+            </div>
+            <div class="video-container" onclick="handleVideoClick()"><img src="${post.mediaImage}" loading="lazy"><div class="play-btn-center" id="main-play-btn"></div><div class="main-video-spinner" id="main-spinner"></div><div class="video-controls"><span>${post.videoDuration}</span><span><i class="fa-solid fa-volume-high"></i> HD</span></div></div>
+            <div class="content-body">
+                ${content}
+                ${downloadSectionHTML} 
+                <div class="stats-section">
+                    <div class="stats-left">
+                        <div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="view-cnt">...</span> Views</div>
+                        <div class="like-stat-container"><div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="like-cnt">...</span> Likes</div></div>
+                    </div>
+                    <div class="share-icons">
+                        <div class="share-icon" style="background:#1877f2" onclick="share('fb', '${post.title}')"><i class="fa-brands fa-facebook-f"></i></div>
+                        <div class="share-icon" style="background:#0084ff" onclick="share('msg', '${post.title}')"><i class="fa-brands fa-facebook-messenger"></i></div>
+                        <div class="share-icon" style="background:#25d366" onclick="share('wa', '${post.title}')"><i class="fa-brands fa-whatsapp"></i></div>
+                        <div class="share-icon" style="background:#1da1f2" onclick="share('tw', '${post.title}')"><i class="fa-brands fa-twitter"></i></div>
+                        <div class="share-icon" style="background:#0088cc" onclick="share('tg', '${post.title}')"><i class="fa-brands fa-telegram"></i></div>
+                    </div>
+                </div>
+            </div>`;
+        
+        // মূল পোস্টের টাইম এলিমেন্ট রিয়েল-টাইম আপডেটের জন্য যুক্ত করা
+        const mainTimeElement = document.getElementById('main-post-time');
+        if (mainTimeElement) {
+            timeElementsToUpdate.push({
+                element: mainTimeElement,
+                dateString: post.uploadTime
+            });
+        }
+    }
+
+    // --- অন্যান্য ফাংশনস (অপরিবর্তিত) ---
+
     async function init() {
         const postContainer = document.getElementById('post-details-container');
         const mainWrapper = document.querySelector('.main-wrapper'); 
@@ -406,7 +488,7 @@
             setupFirebaseForMainPost(mainPost.id);
             mainWrapper.classList.add('loaded'); 
 
-            // 🔥 রিয়েল-টাইম আপডেটের জন্য ইনটার্ভাল শুরু করা 🔥
+            // রিয়েল-টাইম আপডেটের জন্য ইনটার্ভাল শুরু করা 
             setInterval(updateAllTimeElements, 60000); 
             
             const anchorPostTime = new Date(mainPost.uploadTime).getTime();
@@ -455,10 +537,6 @@
         }
     }
     
-    // ==================================================
-    //  ✅ ইনফিনিটি স্ক্রলিং লজিক 
-    // ==================================================
-
     function loadNextBatch() { 
         const sentinel = document.getElementById('sentinel');
         
@@ -485,10 +563,6 @@
             if(sentinelObserver) sentinelObserver.unobserve(sentinel);
         }
     }
-
-    // ==================================================
-    //  ✅ রেন্ডারিং ফাংশন এবং অন্যান্য
-    // ==================================================
 
     function renderBatch(postsToLoad) {
         const container = document.getElementById('related-posts-container');
@@ -523,7 +597,7 @@
             const imgElement = newCard.querySelector('.media-container img');
             adjustImageAspectRatio(imgElement);
 
-            // 🔥 রিয়েল-টাইম আপডেটের জন্য টাইম এলিমেন্ট যুক্ত করা 🔥
+            // রিয়েল-টাইম আপডেটের জন্য টাইম এলিমেন্ট যুক্ত করা 
             const timeElement = newCard.querySelector('.time-ago');
             if (timeElement) {
                 timeElementsToUpdate.push({
@@ -536,96 +610,6 @@
         });
     }
 
-    function renderMainPost(post) {
-        
-        // ✅ ১. টাইটেল এবং প্রথম অ্যাড স্লট যুক্ত করা
-        let content = `
-            <h1 class="article-title">${post.title}</h1>
-            <div class="ad-slot-container" id="ad-slot-1">
-                </div>
-        `;
-        
-        post.paragraphs.forEach((p, i) => {
-            content += `<p class="article-para">${p}</p>`;
-        });
-
-        // ✅ ২. ডাউনলোড সেকশন এবং তিনটি বাটন (নতুন ক্রম অনুযায়ী)
-        let downloadSectionHTML = '';
-
-        // বাটন ১ (480p - Link 3), বাটন ২ (720p - Link 1), বাটন ৩ (1080p - Link 2)
-        if (post.downloadLink1 || post.downloadLink2 || post.downloadLink3) {
-            downloadSectionHTML += `
-                <div class="download-title-text">
-                    DOWNLOAD FULL MOVIE IN HD
-                </div>
-                <div class="download-buttons-container">
-                    <div class="top-download-buttons">
-                        ${post.downloadLink3 ? `
-                            <a href="${post.downloadLink3}" target="_blank" class="download-btn-v2" style="background:${getRandomColor()};">
-                                <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 480p SD
-                            </a>
-                        ` : ''}
-                        
-                        ${post.downloadLink1 ? `
-                            <a href="${post.downloadLink1}" target="_blank" class="download-btn-v2" style="background:${getRandomColor()};">
-                                <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 720p HD
-                            </a>
-                        ` : ''}
-                    </div>
-                    
-                    ${post.downloadLink2 ? `
-                        <a href="${post.downloadLink2}" target="_blank" class="download-btn-v2 full-width-download-btn" style="background:${getRandomColor()};">
-                            <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 1080p Full HD
-                        </a>
-                    ` : ''}
-                </div>
-            `;
-            
-            // ✅ ৩. ডাউনলোড সেকশনের নিচে অ্যাড স্লট ২
-            downloadSectionHTML += `
-                <div class="ad-slot-container" id="ad-slot-2">
-                    </div>
-            `;
-        }
-        
-        // সম্পূর্ণ পোস্ট বডি রেন্ডার করা
-        document.getElementById('post-details-container').innerHTML = `
-            <div class="post-author-area">
-                <div class="author-info">
-                    <div class="pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div>
-                    <div class="author-text"><h3>Secret Binodon</h3><span>@SecretBinodon</span></div>
-                </div>
-                <div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div>
-            </div>
-            <div class="video-container" onclick="handleVideoClick()"><img src="${post.mediaImage}" loading="lazy"><div class="play-btn-center" id="main-play-btn"></div><div class="main-video-spinner" id="main-spinner"></div><div class="video-controls"><span>${post.videoDuration}</span><span><i class="fa-solid fa-volume-high"></i> HD</span></div></div>
-            <div class="content-body">
-                ${content}
-                ${downloadSectionHTML} 
-                <div class="stats-section">
-                    <div class="stats-left">
-                        <div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="view-cnt">...</span> Views</div>
-                        <div class="like-stat-container"><div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="like-cnt">...</span> Likes</div></div>
-                    </div>
-                    <div class="share-icons">
-                        <div class="share-icon" style="background:#1877f2" onclick="share('fb', '${post.title}')"><i class="fa-brands fa-facebook-f"></i></div>
-                        <div class="share-icon" style="background:#0084ff" onclick="share('msg', '${post.title}')"><i class="fa-brands fa-facebook-messenger"></i></div>
-                        <div class="share-icon" style="background:#25d366" onclick="share('wa', '${post.title}')"><i class="fa-brands fa-whatsapp"></i></div>
-                        <div class="share-icon" style="background:#1da1f2" onclick="share('tw', '${post.title}')"><i class="fa-brands fa-twitter"></i></div>
-                        <div class="share-icon" style="background:#0088cc" onclick="share('tg', '${post.title}')"><i class="fa-brands fa-telegram"></i></div>
-                    </div>
-                </div>
-            </div>`;
-        
-        // 🔥 মূল পোস্টের টাইম এলিমেন্ট রিয়েল-টাইম আপডেটের জন্য যুক্ত করা 🔥
-        const mainTimeElement = document.getElementById('main-post-time');
-        if (mainTimeElement) {
-            timeElementsToUpdate.push({
-                element: mainTimeElement,
-                dateString: post.uploadTime
-            });
-        }
-    }
-    
     function setupFirebaseForMainPost(id) {
         setDoc(doc(db, "views", id), { count: increment(1) }, { merge: true });
         onSnapshot(doc(db, "views", id), s => document.getElementById('view-cnt').innerText = formatCount(s.data()?.count || 0));
