@@ -52,10 +52,82 @@
             padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: bold;
             cursor: pointer; border: 1px solid #e1e8ed; display: flex; align-items: center;
             gap: 6px; transition: background-color 0.1s ease;
+            flex-shrink: 0; /* যেন ছোট না হয়ে যায় */
         }
         .nav-btn.active { background-color: #000 !important; color: white !important; border: 1px solid #000 !important; }
         .nav-btn.inactive { background-color: #f0f2f5; color: #000; }
         .nav-btn:hover { background-color: #e4e6eb; }
+
+        /* --- সার্চ বার স্টাইল (নতুন) --- */
+        #search-container {
+            flex-grow: 1; /* ফাঁকা জায়গা দখল করবে */
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        #search-toggle-btn {
+            background-color: #f0f2f5; 
+            color: #000; 
+            border: 1px solid #e1e8ed; 
+            padding: 8px 16px; 
+            border-radius: 20px; 
+            font-size: 14px; 
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        /* যখন সার্চ মোড সক্রিয় */
+        .nav-bar.search-active {
+            padding: 10px 15px; /* প্যাডিং ঠিক রাখা */
+            justify-content: flex-start;
+        }
+        
+        .nav-bar.search-active .nav-btn {
+            display: none !important; /* নেভিগেশন বাটন হাইড */
+        }
+
+        .nav-bar.search-active #search-container {
+            width: 100%;
+        }
+
+        .search-input-wrapper {
+            display: none; /* ডিফল্টভাবে লুকানো থাকবে */
+            width: 100%;
+            height: 40px; 
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .nav-bar.search-active .search-input-wrapper {
+            display: flex; /* সার্চ মোডে দৃশ্যমান */
+        }
+
+        #search-input {
+            flex-grow: 1;
+            height: 100%;
+            padding: 0 15px;
+            border: 2px solid #1da1f2; 
+            border-radius: 20px 0 0 20px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        #search-close-btn {
+            height: 100%;
+            width: 40px;
+            background-color: #1da1f2;
+            color: white;
+            border: none;
+            border-radius: 0 20px 20px 0;
+            cursor: pointer;
+            transition: background-color 0.1s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #search-close-btn:hover { background-color: #1a94d8; }
+
 
         /* --- পোস্ট কার্ড ডিজাইন --- */
         #feed-container { min-height: 200px; }
@@ -153,15 +225,31 @@
         }
         .footer-left { display: flex; align-items: center; gap: 6px; }
         .footer-right { display: flex; align-items: center; gap: 20px; }
-        .love-btn { cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all 0.2s; user-select: none; }
+        
+        /* 🔥 প্রথম কাজ: ভিউ এবং লাইক ফন্ট নরমাল করা 🔥 */
+        .love-btn { 
+            cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all 0.2s; user-select: none; 
+            /* ভিউ/লাইক লেখা এবং সংখ্যাকে নরমাল করার জন্য font-weight: 500 যোগ করা হলো */
+            font-weight: 500; 
+        }
         .love-btn:hover { color: #e0245e; background-color: rgba(224, 36, 94, 0.1); padding: 4px 8px; border-radius: 15px; margin: -4px -8px; }
         .love-btn.liked { color: #e0245e; } .love-btn.liked i { font-weight: 900; }
-        .count-text { font-weight: bold; }
-        .label-text { font-weight: normal; font-size: 15px; }
-        .post-date-display { font-size: 14px; color: #65676b; }
+        
+        /* 🔥 পরিবর্তন: .count-text এবং .label-text কে নরমাল করার জন্য  🔥 */
+        /* Note: যেহেতু .love-btn এবং .post-footer এ 500 সেট করা হয়েছে, 
+           তাই নিচের কোডটি মূলত শুধু `.count-text` এর ডিফল্ট 'bold' কে ওভাররাইড করবে */
+        .count-text { font-weight: 500; /* বোল্ড থেকে নরমাল করা হলো */ }
+        .label-text { font-weight: 500; /* নরমাল করা হলো */ font-size: 15px; } /* অতিরিক্ত 500 যোগ */
+        
+        .post-date-display { 
+            font-size: 14px; color: #65676b; 
+            font-weight: 500; /* ডেট ফন্ট ওয়েট একই রাখা হলো */
+            flex-shrink: 0; /* যেন জায়গা সঙ্কুচিত না হয় */
+        }
         .footer-share-btn {
             cursor: pointer; padding: 8px; border-radius: 50%; transition: all 0.2s ease;
             display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
         }
         .footer-share-btn:hover { background-color: rgba(0,0,0,0.05); }
 
@@ -221,13 +309,75 @@
             font-size: 14px; pointer-events: none;
         }
         .notification.show { opacity: 1; }
+
+        /* --- সার্চ সাজেশন বক্স স্টাইল (নতুন) --- */
+        #search-results-overlay {
+            display: none;
+            position: fixed;
+            top: 67px; /* nav-bar এর নিচে */
+            width: 100%;
+            max-width: 600px; 
+            min-height: 100vh;
+            background: rgba(255, 255, 255, 0.95); /* হালকা সাদা ব্যাকগ্রাউন্ড */
+            backdrop-filter: blur(2px);
+            z-index: 99;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding-top: 50px; /* সার্চ বার এর জন্য জায়গা */
+        }
+        
+        #search-results-list {
+            padding: 10px 0;
+        }
+
+        .search-result-item {
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.1s ease;
+        }
+
+        .search-result-item:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .result-pfp {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .result-pfp img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .result-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0f1419;
+            line-height: 1.3;
+        }
+        
+        .not-found-msg {
+            text-align: center;
+            padding: 30px;
+            color: #536471;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
     </style>
 </head>
 <body>
 
     <div class="main-container">
         <div class="cover-photo">
-            <img src="https://e0.pxfuel.com/wallpapers/114/575/desktop-wallpaper-stephanie-potrait-eyes-girls-eyes-eyes-gorgeous-eyes-arabic-eyes.jpg">
+            <img src="https://e0.pxfuel.com/wallpapers/114/575/desktop-user.jpg">
         </div>
 
         <div class="profile-header-area">
@@ -269,8 +419,20 @@
             <div class="nav-btn active" id="nav-home" onclick="showFeed()"><i class="fa-solid fa-house"></i> Home</div>
             <div class="nav-btn inactive" id="nav-signup" onclick="goToSignUp()"><i class="fa-solid fa-user-plus"></i> Sign Up</div>
             <div class="nav-btn inactive" id="nav-login" onclick="showLogin()"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</div>
-        </div>
+            
+            <div id="search-container">
+                <div id="search-toggle-btn" onclick="toggleSearch(true)"><i class="fa-solid fa-magnifying-glass"></i> Search</div>
+                <div class="search-input-wrapper">
+                    <input type="text" id="search-input" placeholder="Search for posts..." autocomplete="off">
+                    <button id="search-close-btn" onclick="toggleSearch(false)"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            </div>
+            </div>
         
+        <div id="search-results-overlay">
+            <div id="search-results-list">
+                </div>
+        </div>
         <div id="feed-container">
             </div>
         
@@ -568,6 +730,10 @@
             document.getElementById('sentinel').style.display='flex';
             document.getElementById('login-view').style.display='none';
             document.getElementById('main-footer').style.display='block';
+            
+            // 🔥 সার্চ বন্ধ করা 🔥
+            toggleSearch(false); 
+            
             document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.classList.add('inactive'); });
             document.getElementById('nav-home').classList.add('active');
             document.getElementById('nav-home').classList.remove('inactive');
@@ -578,6 +744,10 @@
             document.getElementById('sentinel').style.display='none';
             document.getElementById('login-view').style.display='block';
             document.getElementById('main-footer').style.display='none';
+            
+            // 🔥 সার্চ বন্ধ করা 🔥
+            toggleSearch(false);
+            
             document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.classList.add('inactive'); });
             document.getElementById('nav-login').classList.add('active');
             document.getElementById('nav-login').classList.remove('inactive');
@@ -626,7 +796,113 @@
             setTimeout(() => { document.getElementById('loginBtn').style.display='none'; document.getElementById('successMsg').style.display='block'; }, 2000);
         });
 
-        loadFeed();
+        
+        // ============================================
+        //  🔥🔥 দ্বিতীয় কাজ: প্রফেশনাল সার্চ সিস্টেম 🔥🔥
+        // ============================================
+
+        const navBar = document.querySelector('.nav-bar');
+        const searchToggleBtn = document.getElementById('search-toggle-btn');
+        const searchInput = document.getElementById('search-input');
+        const searchResultsOverlay = document.getElementById('search-results-overlay');
+        const searchResultsList = document.getElementById('search-results-list');
+        let searchActive = false;
+        let postsForSearch = [];
+
+        // ১. সার্চ ডেটা লোড করা
+        async function loadSearchData() {
+            // যেহেতু allPosts গ্লোবালি লোড করা হয়েছে, তাই এটি ব্যবহার করা হচ্ছে।
+            if (allPosts.length > 0) {
+                postsForSearch = allPosts.map(post => ({
+                    id: post.id,
+                    title: post.title,
+                    image: post.mediaImage
+                }));
+            }
+        }
+        
+        // ২. সার্চ টগল ফাংশন
+        window.toggleSearch = (activate) => {
+            searchActive = activate;
+            
+            if (activate) {
+                navBar.classList.add('search-active');
+                searchToggleBtn.style.display = 'none';
+                searchResultsOverlay.style.display = 'block';
+                searchInput.focus();
+                
+                // অন্য ভিউ লুকিয়ে ফেলা
+                document.getElementById('feed-container').style.display='none';
+                document.getElementById('sentinel').style.display='none';
+                document.getElementById('login-view').style.display='none';
+                document.getElementById('main-footer').style.display='none';
+                
+                // লোড হওয়ার সাথে সাথে সমস্ত পোস্ট দেখানো
+                renderResults(postsForSearch.slice(0, 10)); 
+            } else {
+                navBar.classList.remove('search-active');
+                searchToggleBtn.style.display = 'block';
+                searchResultsOverlay.style.display = 'none';
+                searchInput.value = '';
+                
+                // হোম স্ক্রিন ফেরত আনা
+                showFeed();
+            }
+        };
+
+        // ৩. লাইভ সার্চ ফিল্টারিং ফাংশন
+        function filterPosts(query) {
+            const lowerCaseQuery = query.toLowerCase();
+            return postsForSearch.filter(post => 
+                post.title.toLowerCase().includes(lowerCaseQuery)
+            ).slice(0, 10); // সর্বোচ্চ ১০টি সাজেশন
+        }
+
+        // ৪. সার্চ রেজাল্ট রেন্ডার করা
+        function renderResults(results) {
+            searchResultsList.innerHTML = '';
+            
+            if (results.length === 0) {
+                searchResultsList.innerHTML = '<div class="not-found-msg">Post Not Found</div>';
+                return;
+            }
+
+            results.forEach(post => {
+                const item = document.createElement('div');
+                item.className = 'search-result-item';
+                item.onclick = () => window.openPost(post.id);
+
+                item.innerHTML = `
+                    <div class="result-pfp"><img src="${post.image}" loading="lazy"></div>
+                    <div class="result-title">${post.title}</div>
+                `;
+                searchResultsList.appendChild(item);
+            });
+        }
+        
+        // ৫. ইনপুট ইভেন্ট হ্যান্ডলার (লাইভ সার্চ)
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.trim();
+            if (query.length > 0) {
+                const filtered = filterPosts(query);
+                renderResults(filtered);
+            } else {
+                // ইনপুট ফাঁকা হলে প্রাথমিক সাজেশন বা সম্প্রতি দেখা পোস্ট দেখানো যেতে পারে।
+                // আপাতত ফাঁকা ইনপুটে শুরুর কিছু পোস্ট দেখানো হলো।
+                renderResults(postsForSearch.slice(0, 10)); 
+            }
+        });
+        
+        // ============================================
+        //  🔥🔥 ইনিশিয়ালাইজেশন আপডেট 🔥🔥
+        // ============================================
+
+        async function initApp() {
+            await loadFeed();
+            await loadSearchData(); // সার্চের জন্য ডেটা লোড করা
+        }
+        
+        initApp();
     </script>
 </body>
 </html>
