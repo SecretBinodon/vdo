@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -103,13 +104,13 @@
     .stats-section { padding: 12px 0; margin-top: 15px; border-top: 1px solid #e1e8ed; border-bottom: 1px solid #e1e8ed; display: flex; align-items: center; background: #fff; }
     .stats-left { display: flex; align-items: center; gap: 20px; flex-grow: 1; overflow: hidden; }
     
-    /* ✅ পরিবর্তন: ভিউ কাউন্টের ফন্ট ওয়েট 500 */
+    /* ভিউ কাউন্টের প্যারেন্ট স্টাইল */
     .view-stat { flex: 0 0 auto; display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; }
     
     .view-stat i { font-size: 16px; }
     .like-stat-container { flex: 1 1 auto; display: flex; justify-content: center; }
     
-    /* ✅ পরিবর্তন: লাইক কাউন্টের ফন্ট ওয়েট 500 */
+    /* লাইক কাউন্টের প্যারেন্ট স্টাইল */
     .love-btn { display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: 0.2s; user-select: none; }
     
     .love-btn:active { background-color: rgba(224, 36, 94, 0.1); transform: scale(0.95); }
@@ -117,6 +118,12 @@
     .share-icons { flex: 0 0 auto; display: flex; gap: 8px; }
     .share-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 13px; transition: 0.2s; }
     .share-icon:hover { opacity: 0.8; transform: scale(1.1); }
+    
+    /* ✅ পরিবর্তন: সংখ্যাগুলো যেন নরমাল ফন্টে দেখায় */
+    .view-stat .view-cnt,
+    .love-btn .like-cnt {
+        font-weight: normal !important; 
+    }
 
     /* রিলেটেড পোস্ট (কার্ড) */
     .related-section { background: #fff; margin-top: 0; }
