@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,7 +42,14 @@
         .author-info { display: flex; align-items: center; gap: 10px; }
         .pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }
         .pfp img { width: 100%; height: 100%; object-fit: cover; }
-        .author-text h3 { font-size: 16px; margin: 0; color: #0f1419; }
+        .author-text h3 { 
+            font-size: 16px; 
+            margin: 0; 
+            color: #0f1419; 
+            /* ফ্লেক্স-বক্স ব্যবহার করে মেইন নাম ও ব্লু টিক একই লাইনে রাখছি */
+            display: inline-flex;
+            align-items: center;
+        }
         .author-text span { font-size: 14px; color: #536471; }
         .post-time { font-size: 13px; color: #536471; font-weight: bold; }
 
@@ -72,22 +80,20 @@
         .download-buttons-container {
             padding: 0 15px;
             margin-bottom: 20px;
-            
-            /* ✅ বাটনগুলো উলম্ব (vertical) লেআউটে রাখার জন্য */
             display: flex;
             flex-direction: column; 
-            gap: 10px; /* প্রতিটি বাটনের মাঝে 10px গ্যাপ */
+            gap: 10px; 
         }
 
         .download-btn-v2 {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 100%; /* প্রতিটি বাটন পূর্ণ প্রস্থ নেবে */
-            padding: 12px 10px; /* প্যাডিং সামান্য বাড়ানো হয়েছে */
+            width: 100%; 
+            padding: 12px 10px; 
             border-radius: 8px; 
             font-weight: bold;
-            font-size: 15px; /* ফন্ট সাইজ সামান্য বাড়ানো হয়েছে */
+            font-size: 15px; 
             text-align: center;
             color: white;
             cursor: pointer;
@@ -130,8 +136,17 @@
         .post-meta-text { display: flex; flex-direction: column; justify-content: center; }
         .name-row { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
         
-        .name-row h3 { font-size: 18px; font-weight: 800; color: #0f1419; margin: 0; }
+        .name-row h3 { 
+            font-size: 18px; 
+            font-weight: 800; 
+            color: #0f1419; 
+            margin: 0; 
+            /* ফ্লেক্স-বক্স ব্যবহার করে মেইন নাম ও ব্লু টিক একই লাইনে রাখছি */
+            display: inline-flex;
+            align-items: center;
+        }
         
+        /* ✅ পরিবর্তন: পোস্টের ইউজারনেম সবসময় নীল দেখাবে */
         .post-username { 
             font-size: 14px; 
             color: #1da1f2; 
@@ -141,7 +156,7 @@
         .verified-badge {
             color: #1da1f2; /* ব্লু টিকের রং */
             font-size: 16px; /* আইকন সাইজ, মেইন নামের সাথে মেলাতে */
-            margin-left: -2px; /* স্পেস কমানো বা অ্যাডজাস্ট করা */
+            margin-left: 5px; /* নাম থেকে স্পেস */
             margin-right: 2px;
             /* ভার্টিকাল অ্যালাইনমেন্ট নিশ্চিত করতে */
             display: inline-flex;
@@ -419,8 +434,8 @@
                 <div class="author-info">
                     <div class="pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div>
                     <div class="author-text">
-                        <h3>FILMIXO</h3>
-                        <i class="verified-badge fa-solid fa-circle-check"></i> <span>@filmixo</span>
+                        <h3>FILMIXO <i class="verified-badge fa-solid fa-circle-check"></i></h3> 
+                        <span>@filmixo</span>
                     </div>
                 </div>
                 <div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div>
@@ -563,8 +578,8 @@
                         <div class="post-pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div>
                         <div class="post-meta-text">
                             <div class="name-row">
-                                <h3>FILMIXO</h3>
-                                <i class="verified-badge fa-solid fa-circle-check"></i> <span class="post-username">@filmixo</span>
+                                <h3>FILMIXO <i class="verified-badge fa-solid fa-circle-check"></i></h3> 
+                                <span class="post-username">@filmixo</span>
                                 <span class="dot-separator">·</span>
                                 <span class="time-ago" data-upload-time="${post.uploadTime}">${timeAgo(post.uploadTime)}</span>
                             </div>
