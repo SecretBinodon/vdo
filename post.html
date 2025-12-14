@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -113,12 +114,11 @@
         }
 
         /* ✅ অ্যাড স্লট ১ এর নতুন স্টাইল: টাইটেলের নিচে প্যাডিং যোগ করা */
-        /* এই অ্যাডটি 468x60 হওয়ায়, এটিকে মাঝখানে (center) দেখানোর জন্য কন্টেইনার দরকার */
+        /* 468x60 ব্যানারকে মোবাইল স্ক্রিনে মাঝখানে রাখার জন্য */
         #ad-slot-1 {
             margin-top: -10px; 
             margin-bottom: 15px; 
             padding: 0 5px; 
-            /* 468px ব্যানারকে মোবাইল স্ক্রিনে মাঝখানে রাখার জন্য */
             display: flex; 
             justify-content: center;
         }
@@ -377,28 +377,61 @@
     }
     
     // ==================================================
-    //  ✅ রেন্ডারিং ফাংশন এবং অন্যান্য
+    //  ✅ অ্যাড স্ক্রিপ্ট লোড করার নতুন ফাংশন (সমাধান)
     // ==================================================
+    function loadAdScripts() {
+        // --- অ্যাড স্লট ১: টাইটেলের নিচে ---
+        const adSlot1 = document.getElementById('ad-slot-1');
+        if (adSlot1) {
+            // ১. atOptions ভ্যারিয়েবল গ্লোবালি তৈরি করা
+            window.atOptions = {
+                'key' : 'da9154b956691d2aa7c677010e7b6501',
+                'format' : 'iframe',
+                'height' : 60,
+                'width' : 468,
+                'params' : {}
+            };
+            
+            // ২. স্ক্রিপ্ট ট্যাগ তৈরি করা
+            const scriptTag1 = document.createElement('script');
+            scriptTag1.type = 'text/javascript';
+            // scriptTag1.text = `atOptions = ${JSON.stringify(window.atOptions)};`; // যদিও atOptions গ্লোবালি সেট, কিছু অ্যাড নেটওয়ার্ক এটি চায়।
+            
+            const scriptTag2 = document.createElement('script');
+            scriptTag2.type = 'text/javascript';
+            scriptTag2.src = 'https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js';
+            
+            // ৩. DOM এ যুক্ত করা
+            // adSlot1.appendChild(scriptTag1); 
+            adSlot1.appendChild(scriptTag2); // বেশিরভাগ ক্ষেত্রে শুধুমাত্র src স্ক্রিপ্টটিই যথেষ্ট।
+        }
+
+        // --- অ্যাড স্লট ২: ডাউনলোড বাটনের নিচে ---
+        const adSlot2 = document.getElementById('ad-slot-2');
+        if (adSlot2) {
+            // ১. Ad Container Div তৈরি করা (যদিও এটি HTML স্ট্রিং এ আছে, তবুও নিশ্চিত করলাম)
+            const adContainerDiv = document.createElement('div');
+            adContainerDiv.id = 'container-1608cb6a976841a38e804d64801334bb';
+            adSlot2.appendChild(adContainerDiv);
+
+            // ২. স্ক্রিপ্ট ট্যাগ তৈরি করা
+            const scriptTag3 = document.createElement('script');
+            scriptTag3.async = true;
+            scriptTag3.setAttribute('data-cfasync', 'false');
+            scriptTag3.src = 'https://prototypesorting.com/1608cb6a976841a38e804d64801334bb/invoke.js';
+            
+            // ৩. DOM এ যুক্ত করা
+            adSlot2.appendChild(scriptTag3);
+        }
+    }
+
 
     function renderMainPost(post) {
         
-        // ১. টাইটেল এবং প্রথম অ্যাড স্লট যুক্ত করা
+        // ১. টাইটেল এবং প্রথম অ্যাড স্লট যুক্ত করা (স্ক্রিপ্ট ট্যাগ ছাড়া)
         let content = `
             <h1 class="article-title">${post.title}</h1>
             <div class="ad-slot-container" id="ad-slot-1">
-                <script type="text/javascript">
-                  atOptions = {
-                    'key' : 'da9154b956691d2aa7c677010e7b6501',
-                    'format' : 'iframe',
-                    'height' : 60,
-                    'width' : 468,
-                    'params' : {}
-                  };
-                </script>
-                <script
-                  type="text/javascript"
-                  src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"
-                ></script>
                 </div>
         `;
         
@@ -436,15 +469,9 @@
                 </div>
             `;
             
-            // ✅ ৩. ডাউনলোড সেকশনের নিচে অ্যাড স্লট ২
+            // ✅ ৩. ডাউনলোড সেকশনের নিচে অ্যাড স্লট ২ (শুধুমাত্র কন্টেইনার div)
             downloadSectionHTML += `
                 <div class="ad-slot-container" id="ad-slot-2">
-                <script
-                  async="async"
-                  data-cfasync="false"
-                  src="https://prototypesorting.com/1608cb6a976841a38e804d64801334bb/invoke.js"
-                ></script>
-                <div id="container-1608cb6a976841a38e804d64801334bb"></div>
                 </div>
             `;
         }
@@ -477,6 +504,9 @@
                 </div>
             </div>`;
         
+        // 🚨 গুরুত্বপূর্ণ পদক্ষেপ: HTML তৈরি করার পর অ্যাড লোড করা
+        loadAdScripts(); 
+
         // মূল পোস্টের টাইম এলিমেন্ট রিয়েল-টাইম আপডেটের জন্য যুক্ত করা
         const mainTimeElement = document.getElementById('main-post-time');
         if (mainTimeElement) {
