@@ -4,270 +4,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Post Generator (Finalized)</title>
+    <title>Filmixo Admin - Unrestricted Generator</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root { --primary: #1da1f2; --dark: #34495e; --bg: #f4f6f8; }
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: #e9ecef; 
+            background: var(--bg); 
             padding: 20px; 
-            color: #34495e;
+            color: var(--dark);
         }
         .container { 
-            max-width: 900px; 
-            margin: 0 auto 20px;
+            max-width: 850px; 
+            margin: 0 auto;
             background: white; 
-            padding: 30px; 
-            border-radius: 12px; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+            padding: 40px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
         }
-        h2 { 
-            text-align: center; 
-            color: #2c3e50; 
-            margin-bottom: 25px; 
-        }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
+        h2 { text-align: center; color: var(--primary); margin-bottom: 30px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #555; }
+        
         input, textarea { 
             width: 100%; 
-            padding: 12px; 
-            border: 1px solid #ced4da; 
-            border-radius: 6px; 
-            font-size: 14px; 
+            padding: 14px; 
+            border: 1px solid #e1e8ed; 
+            border-radius: 8px; 
+            font-size: 15px; 
+            background: #f9f9f9;
             transition: 0.3s; 
             box-sizing: border-box; 
         }
-        input:focus, textarea:focus { border-color: #1da1f2; outline: none; box-shadow: 0 0 5px rgba(29, 161, 242, 0.3); }
-        textarea { height: 150px; resize: vertical; }
-        .hidden-field { display: none; }
+        input:focus, textarea:focus { border-color: var(--primary); background: #fff; outline: none; box-shadow: 0 0 0 4px rgba(29, 161, 242, 0.1); }
+        textarea { height: 120px; resize: vertical; }
         
-        /* শুধুমাত্র এই রো-টি কলামে বিভক্ত থাকবে (থাম্বনেইল ও ডিউরেশন) */
-        .row-2-col { display: flex; gap: 15px; } 
-        .col-2 { flex: 1; }
+        /* গ্রিড লেআউট */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         
-        /* নতুন স্টাইল: ডাউনলোড সেকশনটিকে আলাদাভাবে হাইলাইট করা */
-        .download-section-header {
+        /* লিংক সেকশন ডিজাইন */
+        .link-section {
+            background: #f8fbff;
+            border: 1px solid #e1e8ed;
+            padding: 20px;
+            border-radius: 10px;
             margin-top: 25px;
-            margin-bottom: 10px;
-            padding: 10px 0;
-            border-top: 1px solid #e9ecef;
-            color: #1da1f2;
-            font-weight: 700;
-            font-size: 16px;
         }
-        
-        button {
-            width: 100%; padding: 14px; background: #1da1f2; color: white; border: none; 
-            border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px;
-            transition: background 0.3s, transform 0.1s;
+        .section-title {
+            font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 15px; border-bottom: 2px solid #e1e8ed; padding-bottom: 10px; display: inline-block;
         }
-        button:hover { background: #0d8bd9; }
-        button:active { transform: scale(0.99); }
 
-        .output-area { 
-            max-width: 900px; 
-            margin: 20px auto; 
-            position: relative; 
-            display: none; 
-            background: #282c34; 
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        .generate-btn {
+            width: 100%; padding: 16px; background: var(--primary); color: white; border: none; 
+            border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 25px;
+            transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(29, 161, 242, 0.3);
+        }
+        .generate-btn:hover { background: #0d8bd9; transform: translateY(-2px); }
+        .generate-btn:active { transform: scale(0.98); }
+
+        /* আউটপুট এরিয়া */
+        .output-box { 
+            margin-top: 30px; display: none; position: relative; 
+            background: #282c34; border-radius: 10px; overflow: hidden;
         }
         pre { 
-            background: transparent; 
-            color: #61dafb; 
-            padding: 20px; 
-            padding-top: 50px; 
-            border-radius: 8px; 
-            overflow-x: auto; 
-            white-space: pre-wrap; 
-            font-family: 'Courier New', monospace; 
-            font-size: 13px;
-            max-height: 400px; 
-            overflow-y: auto;
+            color: #61dafb; padding: 25px; font-family: 'Consolas', monospace; font-size: 14px; 
+            white-space: pre-wrap; margin: 0; max-height: 500px; overflow-y: auto;
         }
         .copy-btn { 
-            position: absolute; top: 10px; right: 10px; width: auto; 
-            padding: 6px 12px; font-size: 12px; border: 1px solid #444;
-            background: #3c4046; color: #fff; font-weight: normal;
-            transition: background 0.3s; margin: 0;
+            position: absolute; top: 15px; right: 15px; 
+            background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);
+            padding: 5px 12px; border-radius: 5px; cursor: pointer; font-size: 13px; transition: 0.2s;
         }
-        .copy-btn:hover { background: #50555c; }
-        .copy-btn.copied { background: #28a745; color: white; }
+        .copy-btn:hover { background: rgba(255,255,255,0.2); }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2><i class="fa-solid fa-wand-magic-sparkles"></i> Secret Binodon Post Generator</h2>
+    <h2><i class="fa-solid fa-code"></i> JSON Post Generator</h2>
     
+    <!-- বেসিক ইনফরমেশন -->
     <div class="form-group">
         <label>Post Title</label>
-        <input type="text" id="title" placeholder="আপনার টাইটেল এখানে দিন" required>
+        <input type="text" id="title" placeholder="মুভির নাম বা টাইটেল (ফাঁকা রাখা যাবে)">
     </div>
 
-    <div class="row-2-col">
-        <div class="col-2 form-group">
-            <label>Thumbnail URL (Image Link)</label>
-            <input type="text" id="media" value="" placeholder="এখানে থাম্বনেইল বা পোস্টের ইমেজ লিংক দিন" required>
+    <div class="grid-2">
+        <div class="form-group">
+            <label>Thumbnail / Poster Image URL</label>
+            <input type="text" id="media" placeholder="ইমেজ লিংক">
         </div>
-        <div class="col-2 form-group">
-            <label>Video Duration (HH:MM:SS)</label>
-            <input type="text" id="duration" placeholder="00:10:00" value="" required>
+        <div class="form-group">
+            <label>Video Duration</label>
+            <input type="text" id="duration" placeholder="যেমন: 02:30:00">
         </div>
     </div>
 
     <div class="form-group">
-        <label>Article Paragraphs (এন্টার চাপলে নতুন প্যারাগ্রাফ হিসেবে গণ্য হবে)</label>
-        <textarea id="paragraphs" placeholder="এইটা ১ নাম্বার প্যারাগ্রাফ।&#10;এইটা ২ নাম্বার প্যারাগ্রাফ।&#10;এইটা ৩ নাম্বার প্যারাগ্রাফ।" required></textarea>
+        <label>Article Paragraphs (New Line = New Paragraph)</label>
+        <textarea id="paragraphs" placeholder="আর্টিকেলের লেখা এখানে দিন..."></textarea>
     </div>
 
-    <div class="download-section-header">🎬 ডাউনলোড লিংক ইনপুট (পোস্টের বাটনের উল্লম্ব ক্রম)</div>
+    <!-- লিংক সেকশন (আপডেটেড লজিক অনুযায়ী) -->
+    <div class="link-section">
+        <div class="section-title"><i class="fa-solid fa-link"></i> ডাউনলোড বাটন কনফিগারেশন</div>
+        
+        <!-- লজিক: Frontend এ downloadLink2 হলো প্রথম বাটন (1080p) -->
+        <div class="form-group">
+            <label>১. ভিজিট লিংক - 1080p (প্রথম বাটন)</label>
+            <input type="text" id="link2" placeholder="ভিজিট লিংক ১ দিন (Step 1)">
+        </div>
+
+        <!-- লজিক: Frontend এ downloadLink1 হলো দ্বিতীয় বাটন (720p) -->
+        <div class="form-group">
+            <label>২. ভিজিট লিংক - 720p (দ্বিতীয় বাটন)</label>
+            <input type="text" id="link1" placeholder="ভিজিট লিংক ২ দিন (Step 2)">
+        </div>
+
+        <!-- লজিক: Frontend এ downloadLink1 ই মূলত ফাইনাল লিংক হিসেবে কাজ করে (Current Logic)। 
+             কিন্তু ইউজার ইন্টারফেসে এটি আলাদা দেখাচ্ছি যাতে আপনি বুঝেন এটাই মেইন মুভি লিংক -->
+        <div class="form-group">
+            <label style="color:#e0245e;">৩. মুভি ডাউনলোড লিংক (ফাইনাল বাটন)</label>
+            <input type="text" id="finalMovieLink" placeholder="অরজিনাল মুভি/ফাইল লিংক এখানে দিন">
+            <small style="color:#666; display:block; margin-top:5px;">* নোট: এই লিংকটিই ক্রাইটেরিয়া পূরণের পর ফাইনাল বাটনে কাজ করবে।</small>
+        </div>
+    </div>
     
-    <div class="form-group">
-        <label>Download Link 2 (1080p Full HD - প্রথম বাটন)</label>
-        <input type="url" id="link2" placeholder="https://example.com/download-link-1080p (ঐচ্ছিক)">
+    <input type="hidden" id="generatedId">
+    <button class="generate-btn" onclick="generateJSON()">Generate JSON Code</button>
+
+    <div class="output-box" id="output-area">
+        <button class="copy-btn" onclick="copyCode()" id="copyBtn"><i class="fa-regular fa-copy"></i> Copy</button>
+        <pre id="json-output"></pre>
     </div>
-
-    <div class="form-group">
-        <label>Download Link 1 (720p HD - দ্বিতীয় বাটন)</label>
-        <input type="url" id="link1" placeholder="https://example.com/download-link-720p (আবশ্যিক)" required>
-    </div>
-
-    <div class="form-group">
-        <label>Download Link 3 (480p SD - তৃতীয় বাটন)</label>
-        <input type="url" id="link3" placeholder="https://example.com/download-link-480p (ঐচ্ছিক)">
-    </div>
-    
-    <input type="hidden" id="generatedId" class="hidden-field"> 
-    <input type="hidden" id="hashtags" value="#SecretBinodon #viralvideo #trending #virallink #viral_video_2026" class="hidden-field">
-
-    <button onclick="generateJSON()">Generate Code for posts.json</button>
-</div>
-
-<div class="output-area" id="output-box">
-    <button class="copy-btn" id="copyBtn" onclick="copyCode()"><i class="fa-solid fa-copy"></i> Copy Code</button>
-    <pre id="json-output"></pre>
 </div>
 
 <script>
-    const usedIds = new Set();
-    const ID_LENGTH = 6;
-    const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-    function generateUniqueId() {
-        let id;
-        do {
-            id = '';
-            for (let i = 0; i < ID_LENGTH; i++) {
-                id += CHARACTERS.charAt(Math.floor(Math.random() * CHARACTERS.length));
-            }
-        } while (usedIds.has(id)); 
-        usedIds.add(id); 
-        return id;
-    }
-
-    function generateRandomDuration() {
-        const randomMinutes = Math.floor(Math.random() * 9) + 1; 
-        const randomSeconds = Math.floor(Math.random() * 60);
-
-        const mm = String(randomMinutes).padStart(2, '0');
-        const ss = String(randomSeconds).padStart(2, '0');
-
-        return `00:${mm}:${ss}`; 
-    }
-
-    function getCurrentISOString() {
-        const date = new Date();
-        const utc = date.getTime() + (date.getTimezoneOffset() * 60000);
-        const bdtOffset = 6 * 60 * 60000; 
-        const bdtDate = new Date(utc + bdtOffset);
-        
-        const Y = bdtDate.getFullYear();
-        const M = String(bdtDate.getMonth() + 1).padStart(2, '0');
-        const D = String(bdtDate.getDate()).padStart(2, '0');
-        const h = String(bdtDate.getHours()).padStart(2, '0');
-        const m = String(bdtDate.getMinutes()).padStart(2, '0');
-        const s = String(bdtDate.getSeconds()).padStart(2, '0');
-
-        return `${Y}-${M}-${D}T${h}:${m}:${s}`;
-    }
-
+    // অটোমেটিক আইডি এবং ডিউরেশন জেনারেটর (পেজ লোড হলেই)
     document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('duration').value = generateRandomDuration();
-        document.getElementById('generatedId').value = generateUniqueId();
+        setupDefaults();
     });
-    
-    function generateJSON() {
-        const id = document.getElementById('generatedId').value;
-        const title = document.getElementById('title').value;
-        const duration = document.getElementById('duration').value; 
-        const media = document.getElementById('media').value;
-        const paraText = document.getElementById('paragraphs').value;
+
+    function setupDefaults() {
+        // Random ID
+        const id = 'post-' + Math.random().toString(36).substr(2, 6);
+        document.getElementById('generatedId').value = id;
         
-        // ইনপুট ভ্যালু গ্রহণ (পোস্টের ক্রম অনুযায়ী লেবেল করা হয়েছে)
-        const link2 = document.getElementById('link2').value; // 1080p FHD (প্রথম বাটন)
-        const link1 = document.getElementById('link1').value; // 720p HD (দ্বিতীয় বাটন - আবশ্যিক)
-        const link3 = document.getElementById('link3').value; // 480p SD (তৃতীয় বাটন)
+        // Random Duration (যদি ইউজার না দেয়, তবে প্লেসহোল্ডার হিসেবে থাকবে না, ভ্যালু হিসেবে জেনারেট হবে না, জাস্ট রেডি থাকবে)
+        const h = Math.floor(Math.random() * 2);
+        const m = Math.floor(Math.random() * 59);
+        const s = Math.floor(Math.random() * 59);
+        document.getElementById('duration').value = `0${h}:${m}:${s}`;
+    }
 
-        const uploadTime = getCurrentISOString(); 
-        const hashtags = document.getElementById('hashtags').value;
+    function generateJSON() {
+        // ১. ভ্যালু নেওয়া (ফাঁকা থাকলেও সমস্যা নেই)
+        const id = document.getElementById('generatedId').value;
+        const title = document.getElementById('title').value.trim();
+        const media = document.getElementById('media').value.trim();
+        const duration = document.getElementById('duration').value.trim();
+        const paraRaw = document.getElementById('paragraphs').value.trim();
+        
+        // লিংক ভ্যালু নেওয়া
+        const visitLink1080 = document.getElementById('link2').value.trim(); // JSON key: downloadLink2
+        const visitLink720 = document.getElementById('link1').value.trim();  // JSON key: downloadLink1 (partially used)
+        const movieLink = document.getElementById('finalMovieLink').value.trim(); // This will govern the final logic
 
-        const paragraphs = paraText.split('\n').map(p => p.trim()).filter(p => p.length > 0);
+        // প্যারাগ্রাফ প্রসেসিং (ফাঁকা থাকলে খালি অ্যারে)
+        const paragraphs = paraRaw ? paraRaw.split('\n').filter(line => line.trim() !== '') : [];
 
-        // Required field validation: 720p HD link টি অবশ্যই দিতে হবে।
-        if (!title || !media || !duration || !paraText || !link1) {
-             alert("অনুগ্রহ করে টাইটেল, থাম্বনেইল, ভিডিও ডিউরেশন, প্যারাগ্রাফ এবং ডাউনলোড লিংক (720p HD) পূরণ করুন।");
-             return;
-        }
+        // টাইমস্ট্যাম্প
+        const date = new Date();
+        // Bangladesh Time Offset fix (Simple ISO string)
+        const uploadTime = date.toISOString();
 
-        const postObj = {
+        // ২. অবজেক্ট তৈরি করা (কোনো ভ্যালিডেশন চেক নেই)
+        const postData = {
             id: id,
             uploadTime: uploadTime,
             title: title,
             mediaImage: media,
+            videoDuration: duration,
             paragraphs: paragraphs,
-            hashtags: hashtags,
-            // JSON আউটপুটে নামগুলো অপরিবর্তিত থাকবে
-            downloadLink1: link1, // 720p HD
-            videoDuration: duration
+            hashtags: "#Filmixo #Movies #Viral",
+            
+            // ৩. লিংকিং লজিক (Frontend কোড অনুযায়ী ম্যাপিং)
+            // Frontend logic: 
+            // - Button 1 (1080p) -> downloadLink2
+            // - Button 2 (720p) -> downloadLink1
+            // - Final Button -> downloadLink1 (Previous logic) OR we can pass the movie link here.
+            
+            // এখানে ট্রিক হলো: আমরা "Movie Link" ইনপুটটিকে `downloadLink1` এ সেট করবো কারণ ফ্রন্টএন্ডে `finalDl(p.downloadLink1)` কল হয়।
+            // আবার `btn-720` ও `downloadLink1` ব্যবহার করে। 
+            
+            // সুতরাং: 
+            downloadLink2: visitLink1080, // 1080p বাটন লিংক
+            downloadLink1: movieLink || visitLink720 // যদি মুভি লিংক দেওয়া থাকে, সেটাই downloadLink1 হবে (কারণ ফাইনাল বাটন এটা ইউজ করে)।
         };
 
-        // ঐচ্ছিক লিংকগুলো যুক্ত করা 
-        if (link2) postObj.downloadLink2 = link2; // 1080p FHD
-        if (link3) postObj.downloadLink3 = link3; // 480p SD
+        // ৪. JSON আউটপুট দেখানো
+        // আমরা একটি কমা (,) যুক্ত করে ফরম্যাট করবো যাতে সরাসরি lists এ পেস্ট করা যায়
+        const jsonString = JSON.stringify(postData, null, 4);
+        const finalString = jsonString.trim() + ","; // কমা যুক্ত করা হলো
 
-
-        const jsonString = JSON.stringify(postObj, null, 2);
+        document.getElementById('json-output').innerText = finalString;
+        document.getElementById('output-area').style.display = 'block';
         
-        const finalJsonOutput = jsonString.slice(0, -1) + "},";
-
-        document.getElementById('json-output').innerText = finalJsonOutput;
-        document.getElementById('output-box').style.display = 'block';
-        
-        // পরবর্তী পোস্টের জন্য নতুন আইডি এবং ডিউরেশন তৈরি করা
-        document.getElementById('generatedId').value = generateUniqueId();
-        document.getElementById('duration').value = generateRandomDuration(); 
+        // নতুন আইডি রেডি করা পরের পোস্টের জন্য
+        setupDefaults();
     }
 
     function copyCode() {
         const code = document.getElementById('json-output').innerText;
-        const copyBtn = document.getElementById('copyBtn');
-        
-        const codeToCopy = code; 
-        
-        navigator.clipboard.writeText(codeToCopy).then(() => {
-            const originalText = copyBtn.innerHTML;
-            copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
-            copyBtn.classList.add('copied');
-            
-            setTimeout(() => {
-                copyBtn.innerHTML = originalText;
-                copyBtn.classList.remove('copied');
-            }, 3000);
-        }).catch(err => {
-            console.error('Could not copy text: ', err);
-        });
+        navigator.clipboard.writeText(code);
+        const btn = document.getElementById('copyBtn');
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied';
+        setTimeout(() => btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy', 2000);
     }
 </script>
 
