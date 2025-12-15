@@ -11,7 +11,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; text-decoration: none; }  
     body { background: #fff; display: flex; justify-content: center; }  
 
-    /* --- মেইন র্যাপার (ঝাঁকুনি এবং ফেডিং ফিক্স) --- */  
+    /* মেইন র্যাপার */  
     .main-wrapper {   
         width: 100%;   
         max-width: 600px;   
@@ -21,17 +21,10 @@
         border-left: 1px solid #eee;   
         border-right: 1px solid #eee;   
         padding-bottom: 0;   
-        
-        /* প্রথমে সবকিছু অদৃশ্য থাকবে যাতে ভাঙা লেআউট না দেখা যায় */
         opacity: 0;   
-        
-        /* লক্ষ্য করুন: এখানে কোনো transition নেই, তাই লোড হলে ধপ করে আসবে না, আবার আস্তেও আসবে না, ইনস্ট্যান্ট আসবে */
+        transition: opacity 0.3s ease;
     }  
-    
-    /* যখন ডেটা রেডি হবে, তখন এই ক্লাসটি যুক্ত হবে */
-    .main-wrapper.loaded { 
-        opacity: 1 !important; 
-    }  
+    .main-wrapper.loaded { opacity: 1 !important; }  
 
     /* হেডার */  
     header {   
@@ -51,28 +44,9 @@
     .author-text span { font-size: 14px; color: #1da1f2; display: block; margin-top: -2px; }  
     .post-time { font-size: 13px; color: #536471; font-weight: bold; }  
 
-    /* --- ভিডিও কন্টেইনার (ফিক্সড সাইজ) --- */  
-    .video-container { 
-        width: 100%; 
-        aspect-ratio: 16 / 9; 
-        background: #000; 
-        position: relative; 
-        display: flex; 
-        align-items: center; 
-        justify-content: center; 
-        overflow: hidden; 
-        margin-top: 5px; 
-        cursor: pointer; 
-        contain: content; 
-    }  
-    .video-container img { 
-        width: 100%; 
-        height: 100%; 
-        object-fit: contain; 
-        display: block; 
-        will-change: transform; 
-    }  
-    
+    /* ভিডিও কন্টেইনার */  
+    .video-container { width: 100%; aspect-ratio: 16/9; background: #000; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: 5px; cursor: pointer; }  
+    .video-container img { width: 100%; height: 100%; object-fit: contain; }  
     .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }  
     .play-btn-center::after { content: ''; border-left: 20px solid white; border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 5px; }  
     .main-video-spinner { display: none; position: absolute; width: 50px; height: 50px; border: 5px solid rgba(255, 255, 255, 0.3); border-top: 5px solid #fff; border-radius: 50%; animation: spin 1s linear infinite; z-index: 6; }  
@@ -82,38 +56,34 @@
     .article-title { font-size: 20px; font-weight: 800; margin-bottom: 15px; color: #0f1419; line-height: 1.3; }  
     .article-para { font-size: 15px; line-height: 1.2; color: #1c1e21; margin-bottom: 12px; text-align: left; letter-spacing: -0.3px; }  
 
-    /* --- ডাউনলোড সেকশন --- */  
+    /* --- ডাউনলোড সেকশন ডিজাইন --- */  
     .download-title-text { font-size: 18px; font-weight: 800; color: #0f1419; text-align: center; margin: 20px 0 10px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }  
     .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 12px; }  
     
     .download-btn-v2 { display: flex; align-items: center; justify-content: center; width: 100%; padding: 14px 10px; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: all 0.2s; position: relative; }  
     .download-btn-v2:active { transform: scale(0.98); }  
 
-    /* ভিজিটেড বাটন */
+    /* সফল ভিজিট বাটনের স্টাইল (রঙ একই থাকবে, শুধু ক্লিক বন্ধ হবে) */
     .download-btn-v2.completed-step {
         cursor: default;
-        pointer-events: none; 
+        pointer-events: none; /* আর ক্লিক করা যাবে না */
         box-shadow: none;
     }
 
-    /* 🔥 লাক্সারিয়াস ফাইনাল বাটন 🔥 */
+    /* 🔥 লাক্সারিয়াস ফাইনাল বাটন ডিজাইন 🔥 */
+    /* পরিবর্তন ১: শ্যাডো (Shadow) এবং অ্যানিমেশন (Animation) সরানো হয়েছে, শুধু স্টক (Border) আছে */
     .final-download-btn {
-        display: none; 
-        background: linear-gradient(135deg, #1e1e2f, #3a3a5e, #1e1e2f) !important; 
-        color: #FFD700 !important; 
+        display: none; /* প্রথমে লুকানো */
+        background: linear-gradient(135deg, #1e1e2f, #3a3a5e, #1e1e2f) !important; /* ডার্ক লাক্সারি বেস */
+        color: #FFD700 !important; /* গোল্ডেন টেক্সট */
         border: 2px solid #FFD700;
         text-transform: uppercase;
         letter-spacing: 1px;
         font-weight: 900;
         font-size: 16px;
-        box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-        animation: luxuryGlow 2s infinite alternate;
+        box-shadow: none !important; /* শ্যাডো রিমুভ করা হয়েছে */
+        animation: none; /* অ্যানিমেশন রিমুভ করা হয়েছে */
         margin-top: 10px;
-    }
-
-    @keyframes luxuryGlow {
-        0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); transform: scale(1); }
-        100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.7); transform: scale(1.02); }
     }
 
     /* স্ট্যাটস ও ফুটার */  
@@ -166,7 +136,8 @@
     .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; }  
     .footer-copyright { color: #536471; font-size: 13px; }  
     
-    .notification { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.9); color: white; padding: 12px 25px; border-radius: 30px; z-index: 1002; opacity: 0; transition: 0.3s; pointer-events: none; font-weight: 600; font-size: 14px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); text-align: center; width: 90%; max-width: 400px; }  
+    /* পরিবর্তন ২: নোটিফিকেশন সাইজ ছোট করা হয়েছে, এক লাইনে রাখা হয়েছে */
+    .notification { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.9); color: white; padding: 8px 15px; border-radius: 30px; z-index: 1002; opacity: 0; transition: 0.3s; pointer-events: none; font-weight: 600; font-size: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); text-align: center; width: auto; white-space: nowrap; max-width: 90%; }  
     .notification.show { opacity: 1; }  
 
     #sentinel { width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; }  
@@ -251,7 +222,7 @@
                 // শর্ত পূরণ হয়েছে
                 localStorage.setItem(getVisitedKey(pendingBtn), 'true');
             } else {
-                // শর্ত পূরণ হয়নি
+                // শর্ত পূরণ হয়নি -> নোটিফিকেশন ১০ সেকেন্ডের কথা বলবে
                 showNotification("Please stay on the new page for at least 10 seconds! ⏳");
             }
             
@@ -269,7 +240,7 @@
         localStorage.setItem(PENDING_CLICK_BTN_KEY, btnId);
         localStorage.setItem(CLICK_TIME_KEY, Date.now());
 
-        // একই ট্যাবে ওপেন হবে
+        // একই ট্যাবে ওপেন হবে (নতুন ট্যাব নয়)
         window.location.href = url;
     };
 
@@ -298,7 +269,7 @@
             if (localStorage.getItem(getVisitedKey('btn-1080')) === 'true') {
                 totalVisited++;
                 btn1080.innerHTML = '<i class="fa-solid fa-circle-check"></i> Step 1 Successful';
-                btn1080.classList.add('completed-step');
+                btn1080.classList.add('completed-step'); // ধূসর হবে না, কিন্তু ক্লিক করা যাবে না
             }
         }
 
@@ -318,6 +289,7 @@
         if (totalRequired > 0 && totalVisited === totalRequired) {
             if(finalBtn) {
                 finalBtn.style.display = 'flex';
+                // টাইটেল আপডেট অপশনাল, ইউজার বলেনি তাই আগেরটাই থাকবে অথবা চাইলে আপডেট করা যায়
             }
         } else {
             if(finalBtn) finalBtn.style.display = 'none';
@@ -368,17 +340,17 @@
             post.paragraphs.forEach((p) => { content += `<p class="article-para">${p}</p>`; });  
         }
   
-        // CORRECTED LINK MAPPING
+        // ডাউনলোড সেকশন সব সময় দেখাবে, প্যারাগ্রাফ থাকুক বা না থাকুক
         let downloadSectionHTML = '';  
-        if (post.downloadLink2 || post.downloadLink3) {  
-            
-            const finalMovieUrl = post.downloadLink1; // Final Movie Link
+        if (post.downloadLink1 || post.downloadLink2) {  
+            // ফাইনাল লিঙ্ক হিসেবে Link1 কে ধরা হলো (অথবা আপনার ডাটাবেস অনুযায়ী)
+            const finalMovieUrl = post.downloadLink1; 
 
             downloadSectionHTML += `  
                 <div class="download-title-text">DOWNLOAD FULL MOVIE IN HD</div>  
                 <div class="download-buttons-container">  
                     
-                    <!-- 1080p Button (Step 1) -> Mapped to downloadLink2 -->
+                    <!-- 1080p Button (Step 1) -->
                     ${post.downloadLink2 ? `  
                         <div id="btn-1080" class="download-btn-v2" 
                              style="background:${getRandomColor()};" 
@@ -387,16 +359,16 @@
                         </div>  
                     ` : ''}  
                     
-                    <!-- 720p Button (Step 2) -> Mapped to downloadLink3 -->
-                    ${post.downloadLink3 ? `  
+                    <!-- 720p Button (Step 2 or 1) -->
+                    ${post.downloadLink1 ? `  
                         <div id="btn-720" class="download-btn-v2" 
                              style="background:${getRandomColor()};" 
-                             onclick="handleAdClick('btn-720', '${post.downloadLink3}')">  
+                             onclick="handleAdClick('btn-720', '${post.downloadLink1}')">  
                             <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 720p HD  
                         </div>  
                     ` : ''}  
 
-                    <!-- FINAL BUTTON -> Mapped to downloadLink1 -->
+                    <!-- FINAL BUTTON (Hidden Initially, Luxury Design) -->
                     <div id="btn-final" class="download-btn-v2 final-download-btn" 
                          onclick="handleFinalDownload('${finalMovieUrl}')">  
                         <i class="fa-solid fa-film" style="margin-right: 8px;"></i> DOWNLOAD FULL MOVIE  
@@ -404,7 +376,8 @@
                 </div>  
             `;  
         }  
-          
+        
+        // পরিবর্তন ৩: HTML থেকে ... (থ্রি ডট) সরিয়ে ফেলা হয়েছে যাতে লোডিং ইফেক্ট না দেখায়
         document.getElementById('post-details-container').innerHTML = `  
             <div class="post-author-area">  
                 <div class="author-info">  
@@ -413,22 +386,14 @@
                 </div>  
                 <div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div>  
             </div>  
-            
-            <!-- FIXED MAIN IMAGE (EAGER LOAD) -->
-            <div class="video-container" onclick="handleVideoClick()">
-                <img src="${post.mediaImage}" loading="eager" decoding="async">
-                <div class="play-btn-center" id="main-play-btn"></div>
-                <div class="main-video-spinner" id="main-spinner"></div>
-                <div class="video-controls"><span>${post.videoDuration}</span><span><i class="fa-solid fa-volume-high"></i> HD</span></div>
-            </div>
-
+            <div class="video-container" onclick="handleVideoClick()"><img src="${post.mediaImage}" loading="lazy"><div class="play-btn-center" id="main-play-btn"></div><div class="main-video-spinner" id="main-spinner"></div><div class="video-controls"><span>${post.videoDuration}</span><span><i class="fa-solid fa-volume-high"></i> HD</span></div></div>  
             <div class="content-body">  
                 ${content}  
                 ${downloadSectionHTML}   
                 <div class="stats-section">  
                     <div class="stats-left">  
-                        <div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="view-cnt">...</span> Views</div>  
-                        <div class="like-stat-container"><div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="like-cnt">...</span> Likes</div></div>  
+                        <div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="view-cnt"></span> Views</div>  
+                        <div class="like-stat-container"><div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="like-cnt"></span> Likes</div></div>  
                     </div>  
                     <div class="share-icons">  
                         <div class="share-icon" style="background:#1877f2" onclick="share('fb', '${post.title}')"><i class="fa-brands fa-facebook-f"></i></div>  
@@ -460,7 +425,7 @@
   
             renderMainPost(mainPost);  
             setupFirebaseForMainPost(mainPost.id);  
-            mainWrapper.classList.add('loaded'); // INSTANT VISIBILITY (Opacity 1)
+            mainWrapper.classList.add('loaded');   
             setInterval(updateAllTimeElements, 60000);   
               
             const anchorPostTime = new Date(mainPost.uploadTime).getTime();  
@@ -509,6 +474,7 @@
         postsToLoad.forEach(post => {  
             let excerpt = post.paragraphs && post.paragraphs.length > 0 ? post.paragraphs[0].substring(0, 200) + "..." : "";  
             const safeTitle = post.title.replace(/'/g, "\\'");  
+            // পরিবর্তন ৩ (Cards): HTML থেকে ... (থ্রি ডট) সরিয়ে ফেলা হয়েছে
             const cardWrapper = document.createElement('div');  
             cardWrapper.innerHTML = `  
                 <div class="post-card" data-id="${post.id}">  
@@ -519,7 +485,7 @@
                     <div class="clickable-area" onclick="openPost('${post.id}')"><div class="post-title">${post.title}</div><div class="post-excerpt">${excerpt} <span class="read-more-text">See more</span></div></div>  
                     <div class="hashtags">${post.hashtags}</div>  
                     <div class="clickable-area" onclick="openPost('${post.id}')"><div class="media-container"><img src="${post.mediaImage}" loading="lazy"><div class="play-icon"></div><div class="duration-badge">${post.videoDuration}</div></div></div>  
-                    <div class="post-footer"><div class="footer-left"><i class="fa-solid fa-chart-simple"></i> <span class="count-text view-count-rel">...</span> <span class="label-text">Views</span></div><div class="footer-right"><div class="love-btn-rel"><i class="fa-regular fa-heart"></i> <span class="count-text like-count-rel">...</span> <span class="label-text">Likes</span></div><div class="post-date-display">${formatDate(post.uploadTime)}</div><div class="footer-share-btn" onclick="sharePost('${post.id}', '${safeTitle}')"><i class="fa-solid fa-share-from-square"></i></div></div></div>  
+                    <div class="post-footer"><div class="footer-left"><i class="fa-solid fa-chart-simple"></i> <span class="count-text view-count-rel"></span> <span class="label-text">Views</span></div><div class="footer-right"><div class="love-btn-rel"><i class="fa-regular fa-heart"></i> <span class="count-text like-count-rel"></span> <span class="label-text">Likes</span></div><div class="post-date-display">${formatDate(post.uploadTime)}</div><div class="footer-share-btn" onclick="sharePost('${post.id}', '${safeTitle}')"><i class="fa-solid fa-share-from-square"></i></div></div></div>  
                 </div>`;  
             const newCard = cardWrapper.firstElementChild;  
             container.appendChild(newCard);  
@@ -531,12 +497,27 @@
     }  
   
     function setupFirebaseForMainPost(id) {  
-        setDoc(doc(db, "views", id), { count: increment(1) }, { merge: true });  
+        // পরিবর্তন ৪: ভিউ কাউন্টারে "1" তারপর "Real" দেখানোর সমস্যা সমাধান
+        // আগে onSnapshot কল করা হচ্ছে যাতে রিয়েল ডাটা আসে, তারপর increment করা হচ্ছে
         onSnapshot(doc(db, "views", id), s => document.getElementById('view-cnt').innerText = formatCount(s.data()?.count || 0));  
+        setDoc(doc(db, "views", id), { count: increment(1) }, { merge: true });  
+        
         const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users`, deviceId), lBtn = document.querySelector('.love-btn');  
         onSnapshot(lRef, s => document.getElementById('like-cnt').innerText = formatCount(s.data()?.count || 0));  
         getDoc(uRef).then(s => { if(s.exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); } });  
-        lBtn.addEventListener('click', async () => { if((await getDoc(uRef)).exists()) showNotification("Already Liked! ❤️"); else { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); showNotification("Liked! ❤️"); } });  
+        
+        // পরিবর্তন ৫: লাইক নোটিফিকেশন বন্ধ করা হয়েছে (showNotification removed)
+        lBtn.addEventListener('click', async () => { 
+            if((await getDoc(uRef)).exists()) {
+                // showNotification("Already Liked! ❤️"); // বন্ধ করা হয়েছে
+            } else { 
+                lBtn.classList.add('liked'); 
+                lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); 
+                await setDoc(lRef, { count: increment(1) }, { merge: true }); 
+                await setDoc(uRef, { t: new Date() }); 
+                // showNotification("Liked! ❤️"); // বন্ধ করা হয়েছে
+            } 
+        });  
     }  
   
     function setupFirebaseForSingleCard(card, id) {  
@@ -545,7 +526,19 @@
         const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users`, deviceId);  
         onSnapshot(lRef, s => lEl.innerText = formatCount(s.data()?.count || 0));  
         getDoc(uRef).then(s => { if(s.exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); } });  
-        lBtn.addEventListener('click', async () => { if((await getDoc(uRef)).exists()) showNotification("Already Liked! ❤️"); else { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); showNotification("Liked! ❤️"); } });  
+        
+        // পরিবর্তন ৫: লাইক নোটিফিকেশন বন্ধ করা হয়েছে (showNotification removed)
+        lBtn.addEventListener('click', async () => { 
+            if((await getDoc(uRef)).exists()) {
+                // showNotification("Already Liked! ❤️"); // বন্ধ করা হয়েছে
+            } else { 
+                lBtn.classList.add('liked'); 
+                lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); 
+                await setDoc(lRef, { count: increment(1) }, { merge: true }); 
+                await setDoc(uRef, { t: new Date() }); 
+                // showNotification("Liked! ❤️"); // বন্ধ করা হয়েছে
+            } 
+        });  
     }  
   
     window.handleVideoClick = function() {  
