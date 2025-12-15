@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filmixo - Download Link</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* Base Reset */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #dcdcdc; 
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .main-header {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 8px 15px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box; 
+            border-bottom: 3px solid #e50914;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Icon Button Styles */
+        .header-icon-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+            transition: color 0.2s, transform 0.1s;
+        }
+        .header-icon-btn:hover { color: #ffcc00; }
+        .header-icon-btn:active { color: #007bff; transform: scale(0.9); }
+
+        /* Site Branding */
+        .site-branding {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-grow: 1;
+            justify-content: center;
+            min-width: 0; 
+        }
+
+        .site-title {
+            margin: 0;
+            font-size: 1.8em;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: #ffffff;
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .movie-icon {
+            font-size: 2em;
+            color: #e50914;
+        }
+
+        /* Main Content & Paragraphs */
+        .main-content {
+            padding: 10px 15px 30px 15px; 
+            text-align: center;
+            flex-grow: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Paragraph Styles (Full Body) */
+        .download-text {
+            text-align: center;
+            font-size: 1.1em;
+            line-height: 1.7;
+            color: #333;
+            margin: 15px 0; 
+            padding: 0 10px;
+            background: transparent; 
+        }
+        
+        .download-text strong {
+            color: #e50914; 
+            font-weight: 700;
+        }
+
+        /* Download Button Container */
+        .download-button-container {
+            width: 100%;
+            text-align: center;
+            margin: 30px 0; 
+        }
+
+        /* Download Button Styles */
+        .download-button {
+            display: inline-block;
+            padding: 15px 40px; 
+            color: white;
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: bold;
+            border-radius: 8px; 
+            transition: background-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+            border: none;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .download-button:active {
+            transform: translateY(3px); 
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); 
+        }
+
+        .download-button:hover {
+            opacity: 0.95;
+        }
+
+        /* Footer Styles */
+        .main-footer {
+            background-color: #1a1a1a;
+            color: #777;
+            text-align: center;
+            padding: 10px 20px; 
+            font-size: 0.9em;
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: auto; 
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <button class="header-icon-btn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+        <div class="site-branding">
+            <i class="fas fa-video movie-icon"></i>
+            <h1 class="site-title">Filmixo</h1>
+        </div>
+        <button class="header-icon-btn" aria-label="Search"><i class="fas fa-search"></i></button>
+    </header>
+
+    <main class="main-content">
+        
+        <p class="download-text">
+            Congratulations! <strong>You have arrived at the right place.</strong> We know you've been waiting for your desired movie, and we assure you—<strong>your wait is almost over!</strong> At Filmixo, we are committed to providing you with the best quality and fastest download experience. No more fake links or unnecessary waiting.
+        </p>
+        
+        <div class="download-button-container">
+            <button id="download-btn" class="download-button">
+                DOWNLOAD LINK
+            </button>
+        </div>
+
+        <p class="download-text">
+            <strong>Click the "DOWNLOAD LINK" button above</strong> to start downloading the movie immediately. Our servers are optimized for maximum speed, ensuring your download begins in just a few seconds.
+        </p>
+        
+        <p class="download-text">
+            Remember, <strong>you are just one step away</strong> from enjoying your favorite movie! Don't waste another moment navigating confusing websites. Trust Filmixo for a seamless and premium experience. <strong>Happy watching!</strong>
+        </p>
+
+    </main>
+
+    <footer class="main-footer">
+        <p>Copyright &copy; 2026 Filmixo. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // 1. অ্যাড লিংক অ্যারে সেটআপ (post.html থেকে স্বাধীন)
+        const AD_LINKS = [
+            'https://your-ad-link-A.com/direct', 
+            'https://your-ad-link-B.com/direct', 
+            'https://your-ad-link-C.com/direct'
+            // এখানে আপনার প্রয়োজনীয় অ্যাড লিংক যোগ করুন
+        ];
+        
+        // লোকালস্টোরেজ এবং সেশনস্টোরেজ কী (download.html এর জন্য নতুন নাম)
+        const AD_INDEX_KEY = 'filmixo_download_ad_index'; 
+        const VISIT_COUNT_KEY = 'filmixo_download_visit_count';
+        
+        // লোড করা
+        let currentAdIndex = parseInt(localStorage.getItem(AD_INDEX_KEY)) || 0;
+        let visitCount = parseInt(sessionStorage.getItem(VISIT_COUNT_KEY)) || 0;
+        
+        // POST ID এবং MAIN FILE LINK লোড করা হবে
+        let postId = null;
+        let mainFileLink = null;
+        
+        const downloadButton = document.getElementById('download-btn');
+        
+        // --- ইউটিলিটি ফাংশনস ---
+        function getRandomColor() {
+            const colors = ['#E50914', '#00FF7F', '#FFD700', '#1E90FF', '#FF6347', '#9400D3', '#3CB371', '#FF8C00'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+        
+        // ** ১. মেইন ফাইল লিংক লোড করার ফাংশন **
+        async function loadMainFileLink() {
+            const urlParams = new URLSearchParams(window.location.search);
+            postId = urlParams.get('id');
+            
+            if (!postId) {
+                console.error("Error: Post ID not found in URL.");
+                downloadButton.innerText = "Error Loading Link";
+                downloadButton.style.backgroundColor = 'gray';
+                downloadButton.disabled = true;
+                return;
+            }
+
+            try {
+                const res = await fetch('posts.json');
+                if (!res.ok) throw new Error("Failed to load posts data.");
+                const posts = await res.json();
+                
+                const post = posts.find(p => p.id === postId);
+                if (!post) throw new Error("Post data not found.");
+
+                // আপনার প্রয়োজনীয়তা অনুযায়ী একটি Link1, Link2, বা Link3 থেকে মেইন লিংক সেট করা 
+                // আমরা এখানে Link1 (720p) কে ডিফল্ট মেইন লিংক ধরলাম, কিন্তু আপনি চাইলে সবথেকে ভালো কোয়ালিটি সেট করতে পারেন।
+                mainFileLink = post.downloadLink1 || post.downloadLink2 || post.downloadLink3;
+
+                if (!mainFileLink) throw new Error("No download link found in post data.");
+                
+                downloadButton.style.backgroundColor = getRandomColor();
+                downloadButton.disabled = false;
+
+            } catch (e) {
+                console.error("Error loading main file link:", e);
+                downloadButton.innerText = "Error Loading Link";
+                downloadButton.style.backgroundColor = 'gray';
+                downloadButton.disabled = true;
+            }
+        }
+
+        // ** ২. ডাইনামিক রোটেশন লজিক (বাটনে ক্লিক হ্যান্ডলার) **
+        downloadButton.addEventListener('click', function() {
+            if (!mainFileLink || downloadButton.disabled) return;
+            
+            let targetLink;
+            
+            // 1. যদি ভিজিট কাউন্ট 0 হয় (প্রথম ক্লিক / নতুন ভিজিটর / পেজ রিফ্রেশ)
+            if (visitCount === 0) {
+                targetLink = AD_LINKS[currentAdIndex];
+                
+                sessionStorage.setItem(VISIT_COUNT_KEY, 1);
+                
+                let nextIndex = (currentAdIndex + 1) % AD_LINKS.length;
+                localStorage.setItem(AD_INDEX_KEY, nextIndex);
+            } 
+            // 2. যদি ভিজিট কাউন্ট 1 হয় (অ্যাড ভিজিট করার পর ব্যাক করে এসেছে, পেজ রিফ্রেশ হয়নি)
+            else if (visitCount === 1) {
+                // মেইন ফাইল লিঙ্কে পাঠানো হবে (posts.json থেকে লোড করা)
+                targetLink = mainFileLink;
+                
+                // ভিজিট কাউন্ট রিসেট করা
+                sessionStorage.removeItem(VISIT_COUNT_KEY); 
+            }
+            
+            if (targetLink) {
+                window.location.href = targetLink; 
+            }
+        });
+
+        // ইনিশিয়ালাইজেশন
+        document.addEventListener('DOMContentLoaded', loadMainFileLink);
+    </script>
+
+</body>
+</html>
