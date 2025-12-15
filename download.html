@@ -1,283 +1,128 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmixo - Download Link</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+    <title>Download Ready - Filmixo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Base Reset */
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #dcdcdc; 
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        /* Header Styles */
-        .main-header {
-            background-color: #1a1a1a;
-            color: white;
-            padding: 8px 15px; 
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            box-sizing: border-box; 
-            border-bottom: 3px solid #e50914;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        /* Icon Button Styles */
-        .header-icon-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 5px;
-            transition: color 0.2s, transform 0.1s;
-        }
-        .header-icon-btn:hover { color: #ffcc00; }
-        .header-icon-btn:active { color: #007bff; transform: scale(0.9); }
-
-        /* Site Branding */
-        .site-branding {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-grow: 1;
-            justify-content: center;
-            min-width: 0; 
-        }
-
-        .site-title {
-            margin: 0;
-            font-size: 1.8em;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            color: #ffffff;
-            white-space: nowrap; 
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .movie-icon {
-            font-size: 2em;
-            color: #e50914;
-        }
-
-        /* Main Content & Paragraphs */
-        .main-content {
-            padding: 10px 15px 30px 15px; 
-            text-align: center;
-            flex-grow: 1;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        /* Paragraph Styles (Full Body) */
-        .download-text {
-            text-align: center;
-            font-size: 1.1em;
-            line-height: 1.7;
-            color: #333;
-            margin: 15px 0; 
-            padding: 0 10px;
-            background: transparent; 
-        }
-        
-        .download-text strong {
-            color: #e50914; 
-            font-weight: 700;
-        }
-
-        /* Download Button Container */
-        .download-button-container {
-            width: 100%;
-            text-align: center;
-            margin: 30px 0; 
-        }
-
-        /* Download Button Styles */
-        .download-button {
-            display: inline-block;
-            padding: 15px 40px; 
-            color: white;
-            text-decoration: none;
-            font-size: 22px;
-            font-weight: bold;
-            border-radius: 8px; 
-            transition: background-color 0.3s, box-shadow 0.3s;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
-            border: none;
-            text-transform: uppercase;
-            cursor: pointer;
-        }
-
-        .download-button:active {
-            transform: translateY(3px); 
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); 
-        }
-
-        .download-button:hover {
-            opacity: 0.95;
-        }
-
-        /* Footer Styles */
-        .main-footer {
-            background-color: #1a1a1a;
-            color: #777;
-            text-align: center;
-            padding: 10px 20px; 
-            font-size: 0.9em;
-            width: 100%;
-            box-sizing: border-box;
-            margin-top: auto; 
-        }
+        /* --- স্টাইল (অপরিবর্তিত) --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; text-decoration: none; }
+        body { background: #f0f2f5; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 20px 10px; }
+        .download-container { width: 100%; max-width: 500px; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); padding: 30px; text-align: center; }
+        .status-icon { color: #17bf63; font-size: 60px; margin-bottom: 20px; }
+        .main-title { font-size: 26px; font-weight: 800; color: #0f1419; margin-bottom: 10px; }
+        .sub-title { font-size: 16px; color: #536471; margin-bottom: 30px; line-height: 1.4; }
+        .info-box { background: #e6f7ff; border: 1px solid #91d5ff; border-radius: 8px; padding: 15px; margin-bottom: 20px; font-size: 14px; color: #0050b3; font-weight: 500; }
+        .quality-buttons-container { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; }
+        .download-btn { display: flex; align-items: center; justify-content: center; width: 100%; padding: 15px 10px; border-radius: 8px; font-weight: bold; font-size: 16px; text-align: center; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: transform 0.2s, background-color 0.2s; border: none; background: #1da1f2; /* একক বাটন, নির্দিষ্ট রং */ }
+        .download-btn:active { transform: scale(0.98); box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+        .btn-icon { margin-right: 10px; }
+        .footer-text { font-size: 12px; color: #aab8c2; margin-top: 15px; }
+        .back-link { display: inline-block; margin-top: 15px; color: #1da1f2; font-weight: bold; font-size: 14px; }
+        .loading-text { font-size: 16px; color: #1da1f2; }
     </style>
 </head>
 <body>
 
-    <header class="main-header">
-        <button class="header-icon-btn" aria-label="Menu"><i class="fas fa-bars"></i></button>
-        <div class="site-branding">
-            <i class="fas fa-video movie-icon"></i>
-            <h1 class="site-title">Filmixo</h1>
-        </div>
-        <button class="header-icon-btn" aria-label="Search"><i class="fas fa-search"></i></button>
-    </header>
+<div class="download-container">
+    <div id="content-area">
+        <div class="status-icon"><i class="fa-solid fa-spinner fa-spin"></i></div>
+        <div class="main-title">Loading Download Link...</div>
+        <div class="sub-title loading-text">Please wait while we prepare your file.</div>
+    </div>
+</div>
 
-    <main class="main-content">
-        
-        <p class="download-text">
-            Congratulations! <strong>You have arrived at the right place.</strong> We know you've been waiting for your desired movie, and we assure you—<strong>your wait is almost over!</strong> At Filmixo, we are committed to providing you with the best quality and fastest download experience. No more fake links or unnecessary waiting.
-        </p>
-        
-        <div class="download-button-container">
-            <button id="download-btn" class="download-button">
-                DOWNLOAD LINK
-            </button>
-        </div>
+<script type="module">
+    // --- ইউটিলিটি ফাংশনস ---
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
 
-        <p class="download-text">
-            <strong>Click the "DOWNLOAD LINK" button above</strong> to start downloading the movie immediately. Our servers are optimized for maximum speed, ensuring your download begins in just a few seconds.
-        </p>
-        
-        <p class="download-text">
-            Remember, <strong>you are just one step away</strong> from enjoying your favorite movie! Don't waste another moment navigating confusing websites. Trust Filmixo for a seamless and premium experience. <strong>Happy watching!</strong>
-        </p>
-
-    </main>
-
-    <footer class="main-footer">
-        <p>Copyright &copy; 2026 Filmixo. All Rights Reserved.</p>
-    </footer>
-
-    <script>
-        // 1. অ্যাড লিংক অ্যারে সেটআপ (post.html থেকে স্বাধীন)
-        const AD_LINKS = [
-            'https://your-ad-link-A.com/direct', 
-            'https://your-ad-link-B.com/direct', 
-            'https://your-ad-link-C.com/direct'
-            // এখানে আপনার প্রয়োজনীয় অ্যাড লিংক যোগ করুন
-        ];
-        
-        // লোকালস্টোরেজ এবং সেশনস্টোরেজ কী (download.html এর জন্য নতুন নাম)
-        const AD_INDEX_KEY = 'filmixo_download_ad_index'; 
-        const VISIT_COUNT_KEY = 'filmixo_download_visit_count';
-        
-        // লোড করা
-        let currentAdIndex = parseInt(localStorage.getItem(AD_INDEX_KEY)) || 0;
-        let visitCount = parseInt(sessionStorage.getItem(VISIT_COUNT_KEY)) || 0;
-        
-        // POST ID এবং MAIN FILE LINK লোড করা হবে
-        let postId = null;
-        let mainFileLink = null;
-        
-        const downloadButton = document.getElementById('download-btn');
-        
-        // --- ইউটিলিটি ফাংশনস ---
-        function getRandomColor() {
-            const colors = ['#E50914', '#00FF7F', '#FFD700', '#1E90FF', '#FF6347', '#9400D3', '#3CB371', '#FF8C00'];
-            return colors[Math.floor(Math.random() * colors.length)];
-        }
-        
-        // ** ১. মেইন ফাইল লিংক লোড করার ফাংশন **
-        async function loadMainFileLink() {
-            const urlParams = new URLSearchParams(window.location.search);
-            postId = urlParams.get('id');
+    async function getDownloadLink(postId) {
+        try {
+            const response = await fetch('posts.json');
+            if (!response.ok) throw new Error("Failed to load posts data.");
+            const posts = await response.json();
             
-            if (!postId) {
-                console.error("Error: Post ID not found in URL.");
-                downloadButton.innerText = "Error Loading Link";
-                downloadButton.style.backgroundColor = 'gray';
-                downloadButton.disabled = true;
-                return;
+            const post = posts.find(p => p.id === postId);
+            
+            // 🔥 শুধুমাত্র 'downloadLink' প্রপার্টিটি রিটার্ন করা হচ্ছে
+            if (post && post.downloadLink) {
+                return {
+                    title: post.title,
+                    link: post.downloadLink 
+                };
+            } else {
+                return null;
             }
+        } catch (error) {
+            console.error("Error fetching download link:", error);
+            return null;
+        }
+    }
 
-            try {
-                const res = await fetch('posts.json');
-                if (!res.ok) throw new Error("Failed to load posts data.");
-                const posts = await res.json();
-                
-                const post = posts.find(p => p.id === postId);
-                if (!post) throw new Error("Post data not found.");
+    // --- রেন্ডারিং ফাংশন (একটি মাত্র বাটন) ---
+    function renderDownloadPage(postTitle, downloadLink) {
+        const contentArea = document.getElementById('content-area');
+        
+        contentArea.innerHTML = `
+            <div class="status-icon"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="main-title">${postTitle || "Your Download is Ready"}</div>
+            <div class="sub-title">Click the button below to start your download.</div>
+            
+            <div class="info-box">
+                <i class="fa-solid fa-circle-info"></i> Your download should start immediately.
+            </div>
 
-                // আপনার প্রয়োজনীয়তা অনুযায়ী একটি Link1, Link2, বা Link3 থেকে মেইন লিংক সেট করা 
-                // আমরা এখানে Link1 (720p) কে ডিফল্ট মেইন লিংক ধরলাম, কিন্তু আপনি চাইলে সবথেকে ভালো কোয়ালিটি সেট করতে পারেন।
-                mainFileLink = post.downloadLink1 || post.downloadLink2 || post.downloadLink3;
+            <div class="quality-buttons-container">
+                <a href="${downloadLink}" class="download-btn" target="_blank">
+                    <i class="btn-icon fa-solid fa-download"></i> Start Download
+                </a>
+            </div>
 
-                if (!mainFileLink) throw new Error("No download link found in post data.");
-                
-                downloadButton.style.backgroundColor = getRandomColor();
-                downloadButton.disabled = false;
+            <div class="footer-text">
+                Note: This link is direct and secure.
+            </div>
+            <a href="post.html?id=${getQueryParam('id')}" class="back-link">
+                <i class="fa-solid fa-arrow-left"></i> Go Back to Post
+            </a>
+        `;
+    }
 
-            } catch (e) {
-                console.error("Error loading main file link:", e);
-                downloadButton.innerText = "Error Loading Link";
-                downloadButton.style.backgroundColor = 'gray';
-                downloadButton.disabled = true;
-            }
+    function renderErrorPage(message) {
+        document.getElementById('content-area').innerHTML = `
+            <div class="status-icon" style="color: #ff4d4f;"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div class="main-title">Download Error</div>
+            <div class="sub-title" style="color: #ff4d4f;">${message}</div>
+            <a href="index.html" class="back-link">
+                <i class="fa-solid fa-house"></i> Go to Homepage
+            </a>
+        `;
+    }
+
+    // --- ইনিশিয়ালাইজেশন ---
+    async function initDownload() {
+        const postId = getQueryParam('id');
+
+        if (!postId) {
+            renderErrorPage("No Post ID found in the URL. Cannot locate download link.");
+            return;
         }
 
-        // ** ২. ডাইনামিক রোটেশন লজিক (বাটনে ক্লিক হ্যান্ডলার) **
-        downloadButton.addEventListener('click', function() {
-            if (!mainFileLink || downloadButton.disabled) return;
-            
-            let targetLink;
-            
-            // 1. যদি ভিজিট কাউন্ট 0 হয় (প্রথম ক্লিক / নতুন ভিজিটর / পেজ রিফ্রেশ)
-            if (visitCount === 0) {
-                targetLink = AD_LINKS[currentAdIndex];
-                
-                sessionStorage.setItem(VISIT_COUNT_KEY, 1);
-                
-                let nextIndex = (currentAdIndex + 1) % AD_LINKS.length;
-                localStorage.setItem(AD_INDEX_KEY, nextIndex);
-            } 
-            // 2. যদি ভিজিট কাউন্ট 1 হয় (অ্যাড ভিজিট করার পর ব্যাক করে এসেছে, পেজ রিফ্রেশ হয়নি)
-            else if (visitCount === 1) {
-                // মেইন ফাইল লিঙ্কে পাঠানো হবে (posts.json থেকে লোড করা)
-                targetLink = mainFileLink;
-                
-                // ভিজিট কাউন্ট রিসেট করা
-                sessionStorage.removeItem(VISIT_COUNT_KEY); 
-            }
-            
-            if (targetLink) {
-                window.location.href = targetLink; 
-            }
-        });
+        // 🔥 পরিবর্তিত ফাংশন কল করা হলো
+        const data = await getDownloadLink(postId);
 
-        // ইনিশিয়ালাইজেশন
-        document.addEventListener('DOMContentLoaded', loadMainFileLink);
-    </script>
+        if (data && data.link) {
+            renderDownloadPage(data.title, data.link);
+        } else {
+            renderErrorPage(`Download link for Post ID: ${postId} could not be found in posts.json.`);
+        }
+    }
 
+    initDownload();
+</script>
 </body>
 </html>
