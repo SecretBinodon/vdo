@@ -44,9 +44,28 @@
     .author-text span { font-size: 14px; color: #1da1f2; display: block; margin-top: -2px; }  
     .post-time { font-size: 13px; color: #536471; font-weight: bold; }  
 
-    /* ভিডিও কন্টেইনার */  
-    .video-container { width: 100%; aspect-ratio: 16/9; background: #000; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: 5px; cursor: pointer; }  
-    .video-container img { width: 100%; height: 100%; object-fit: contain; }  
+    /* --- ভিডিও কন্টেইনার (ফিক্সড) --- */  
+    .video-container { 
+        width: 100%; 
+        aspect-ratio: 16 / 9; /* হার্ডকোডেড রেশিও: লোড হওয়ার আগেই জায়গা দখল করবে */
+        background: #000; 
+        position: relative; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        overflow: hidden; 
+        margin-top: 5px; 
+        cursor: pointer; 
+        contain: content; /* ব্রাউজারকে বলে দেয় এর কন্টেন্ট ফিক্সড */
+    }  
+    .video-container img { 
+        width: 100%; 
+        height: 100%; 
+        object-fit: contain; 
+        display: block; 
+        will-change: transform; 
+    }  
+    
     .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }  
     .play-btn-center::after { content: ''; border-left: 20px solid white; border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 5px; }  
     .main-video-spinner { display: none; position: absolute; width: 50px; height: 50px; border: 5px solid rgba(255, 255, 255, 0.3); border-top: 5px solid #fff; border-radius: 50%; animation: spin 1s linear infinite; z-index: 6; }  
@@ -63,18 +82,18 @@
     .download-btn-v2 { display: flex; align-items: center; justify-content: center; width: 100%; padding: 14px 10px; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: all 0.2s; position: relative; }  
     .download-btn-v2:active { transform: scale(0.98); }  
 
-    /* সফল ভিজিট বাটনের স্টাইল (রঙ একই থাকবে, শুধু ক্লিক বন্ধ হবে) */
+    /* সফল ভিজিট বাটনের স্টাইল */
     .download-btn-v2.completed-step {
         cursor: default;
-        pointer-events: none; /* আর ক্লিক করা যাবে না */
+        pointer-events: none; 
         box-shadow: none;
     }
 
     /* 🔥 লাক্সারিয়াস ফাইনাল বাটন ডিজাইন 🔥 */
     .final-download-btn {
-        display: none; /* প্রথমে লুকানো */
-        background: linear-gradient(135deg, #1e1e2f, #3a3a5e, #1e1e2f) !important; /* ডার্ক লাক্সারি বেস */
-        color: #FFD700 !important; /* গোল্ডেন টেক্সট */
+        display: none; 
+        background: linear-gradient(135deg, #1e1e2f, #3a3a5e, #1e1e2f) !important; 
+        color: #FFD700 !important; 
         border: 2px solid #FFD700;
         text-transform: uppercase;
         letter-spacing: 1px;
@@ -388,7 +407,15 @@
                 </div>  
                 <div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div>  
             </div>  
-            <div class="video-container" onclick="handleVideoClick()"><img src="${post.mediaImage}" loading="lazy"><div class="play-btn-center" id="main-play-btn"></div><div class="main-video-spinner" id="main-spinner"></div><div class="video-controls"><span>${post.videoDuration}</span><span><i class="fa-solid fa-volume-high"></i> HD</span></div></div>  
+            
+            <!-- FIXED MAIN IMAGE CONTAINER (EAGER LOADING) -->
+            <div class="video-container" onclick="handleVideoClick()">
+                <img src="${post.mediaImage}" loading="eager" decoding="async">
+                <div class="play-btn-center" id="main-play-btn"></div>
+                <div class="main-video-spinner" id="main-spinner"></div>
+                <div class="video-controls"><span>${post.videoDuration}</span><span><i class="fa-solid fa-volume-high"></i> HD</span></div>
+            </div>
+
             <div class="content-body">  
                 ${content}  
                 ${downloadSectionHTML}   
@@ -485,7 +512,16 @@
                     </div>  
                     <div class="clickable-area" onclick="openPost('${post.id}')"><div class="post-title">${post.title}</div><div class="post-excerpt">${excerpt} <span class="read-more-text">See more</span></div></div>  
                     <div class="hashtags">${post.hashtags}</div>  
-                    <div class="clickable-area" onclick="openPost('${post.id}')"><div class="media-container"><img src="${post.mediaImage}" loading="lazy"><div class="play-icon"></div><div class="duration-badge">${post.videoDuration}</div></div></div>  
+                    
+                    <!-- RELATED POSTS: KEEPING LAZY LOADING FOR PERFORMANCE -->
+                    <div class="clickable-area" onclick="openPost('${post.id}')">
+                        <div class="media-container">
+                            <img src="${post.mediaImage}" loading="lazy">
+                            <div class="play-icon"></div>
+                            <div class="duration-badge">${post.videoDuration}</div>
+                        </div>
+                    </div>
+                    
                     <div class="post-footer"><div class="footer-left"><i class="fa-solid fa-chart-simple"></i> <span class="count-text view-count-rel">...</span> <span class="label-text">Views</span></div><div class="footer-right"><div class="love-btn-rel"><i class="fa-regular fa-heart"></i> <span class="count-text like-count-rel">...</span> <span class="label-text">Likes</span></div><div class="post-date-display">${formatDate(post.uploadTime)}</div><div class="footer-share-btn" onclick="sharePost('${post.id}', '${safeTitle}')"><i class="fa-solid fa-share-from-square"></i></div></div></div>  
                 </div>`;  
             const newCard = cardWrapper.firstElementChild;  
