@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -107,16 +108,94 @@
         .post-pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }
         .post-pfp img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* 🔥 পরিবর্তন: post-meta-text এখন একটি লাইন কন্টেন্ট রাখবে */
-        .post-meta-text { 
-            display: flex; 
-            flex-direction: column; /* যাতে .name-row এর ভেতরের কন্টেন্ট ফ্লেক্স-মুক্ত থাকে */
-            justify-content: center; 
-        }
+        /* 🔥 প্রধান পোস্টের CSS: নাম এক লাইনে, ইউজারনেম নিচে (নীল) - এটি ঠিক আছে */
+        .author-text { 
+            /* এটি ফ্লেক্স মুক্ত থাকবে */
+        } 
         
-        /* ✅ রিলেটেড পোস্টের নাম-ইউজারনেম-টাইম এক লাইনে আনতে এটি অপরিহার্য */
+        .author-text h3 { 
+            font-size: 16px; 
+            margin: 0; 
+            color: #0f1419; 
+            display: inline-flex;
+            align-items: center;
+        }
+        .author-text span { 
+            font-size: 14px; 
+            color: #1da1f2; /* ইউজারনেম নীল রঙ */
+            display: block; /* যাতে এটি h3-এর নিচে চলে যায় */
+            margin-top: -2px; 
+        }
+        .post-time { font-size: 13px; color: #536471; font-weight: bold; }
+
+        /* মূল পোস্ট ভিডিও কন্টেইনার (অপরিবর্তিত) */
+        .video-container { width: 100%; aspect-ratio: 16/9; background: #000; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: 5px; cursor: pointer; }
+        .video-container img { width: 100%; height: 100%; object-fit: contain; }
+        .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }
+        .play-btn-center::after { content: ''; border-left: 20px solid white; border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 5px; }
+        .main-video-spinner { display: none; position: absolute; width: 50px; height: 50px; border: 5px solid rgba(255, 255, 255, 0.3); border-top: 5px solid #fff; border-radius: 50%; animation: spin 1s linear infinite; z-index: 6; }
+        .video-controls { position: absolute; bottom: 0; left: 0; width: 100%; padding: 10px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; display: flex; justify-content: space-between; font-size: 12px; z-index: 5; }
+
+        .content-body { padding: 15px 15px 0 15px; }
+        .article-title { font-size: 20px; font-weight: 800; margin-bottom: 15px; color: #0f1419; line-height: 1.3; }
+        .article-para { font-size: 15px; line-height: 1.2; color: #1c1e21; margin-bottom: 12px; text-align: left; letter-spacing: -0.3px; }
+
+        /* ডাউনলোড সেকশন (অপরিবর্তিত) */
+        .download-title-text { font-size: 18px; font-weight: 800; color: #0f1419; text-align: center; margin: 20px 0 10px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }
+        .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .download-btn-v2 { display: flex; align-items: center; justify-content: center; width: 100%; padding: 12px 10px; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: transform 0.2s, background-color 0.2s; }
+        .download-btn-v2:active { transform: scale(0.98); box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+        
+        /* স্ট্যাটস বার (অপরিবর্তিত) */
+        .stats-section { padding: 12px 0; margin-top: 15px; border-top: 1px solid #e1e8ed; border-bottom: 1px solid #e1e8ed; display: flex; align-items: center; background: #fff; }
+        .stats-left { display: flex; align-items: center; gap: 20px; flex-grow: 1; overflow: hidden; }
+        .view-stat { flex: 0 0 auto; display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; }
+        .view-stat i { font-size: 16px; }
+        .like-stat-container { flex: 1 1 auto; display: flex; justify-content: center; }
+        .love-btn { display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: 0.2s; user-select: none; }
+        .love-btn:active { background-color: rgba(224, 36, 94, 0.1); transform: scale(0.95); }
+        .love-btn.liked { color: #e0245e; } .love-btn.liked i { font-weight: 900; } .love-btn i { font-size: 18px; }
+        .share-icons { flex: 0 0 auto; display: flex; gap: 8px; }
+        .share-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 13px; transition: 0.2s; }
+        .share-icon:hover { opacity: 0.8; transform: scale(1.1); }
+
+        /* রিলেটেড পোস্ট (কার্ড) */
+        .related-section { background: #fff; margin-top: 0; }
+        .related-header { padding: 15px; font-weight: 800; color: #536471; border-bottom: 1px solid #e1e8ed; text-transform: uppercase; background: #fff; }
+        
+        .post-card { 
+            background: white; padding: 5px 15px 5px 15px; border-bottom: 1px solid #e1e8ed; 
+            display: flex; flex-direction: column; 
+            gap: 6px; 
+        }
+
+        .post-header { display: flex; gap: 10px; align-items: center; }
+        .post-pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }
+        .post-pfp img { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* 🔥 প্রধান পোস্টের CSS: নাম এক লাইনে, ইউজারনেম নিচে (নীল) - এটি ঠিক আছে */
+        .author-text { 
+            /* এটি ফ্লেক্স মুক্ত থাকবে */
+        } 
+        
+        .author-text h3 { 
+            font-size: 16px; 
+            margin: 0; 
+            color: #0f1419; 
+            display: inline-flex;
+            align-items: center;
+        }
+        .author-text span { 
+            font-size: 14px; 
+            color: #1da1f2; 
+            display: block; 
+            margin-top: -2px; 
+        }
+        .post-time { font-size: 13px; color: #536471; font-weight: bold; }
+
+        /* রিলটেড পোস্ট লজিক (অপরিবর্তিত) */
         .name-row { 
-            display: flex; /* 🔥 এটি সব উপাদান এক লাইনে আনবে */
+            display: flex; 
             align-items: center; 
             gap: 5px; 
             flex-wrap: wrap; 
@@ -127,19 +206,16 @@
             font-weight: 800; 
             color: #0f1419; 
             margin: 0; 
-            /* ✅ নিশ্চিত করা হলো: মেইন নাম ও ব্লু টিক এক লাইনে থাকবে */
             display: inline-flex;
             align-items: center;
         }
         
-        /* ✅ পরিবর্তন: পোস্টের ইউজারনেম নীল হবে এবং এখন .name-row এর ভেতরে থাকবে */
         .post-username { 
             font-size: 14px; 
             color: #1da1f2; 
-            margin-top: 0; /* এক লাইনে আনার জন্য মার্জিন সরানো হলো */
+            margin-top: 0; 
         }
 
-        /* 🔥 ব্লু টিক স্টাইল (অপরিবর্তিত) */
         .verified-badge {
             color: #1da1f2; 
             font-size: 16px; 
@@ -197,7 +273,6 @@
         
         .spinner { width: 14px; height: 14px; border: 2px solid #ccc; border-top: 2px solid #000; border-radius: 50%; animation: spin 1s linear infinite; display: inline-block; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        /* 🔥 নোটিফিকেশন CSS অপসারিত */
         
         /* Infinite Scroll Sentinel */
         #sentinel { width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; }
@@ -236,7 +311,7 @@
             Copyright © 2026 <a href="index.html">Filmixo.com</a>. All rights reserved.
         </div>
     </footer>
-    </div>
+</div>
 
 <script type="module">
     // Firebase SDK Imports (অপরিবর্তিত)
@@ -338,7 +413,7 @@
     }
     
     // ==================================================
-    //  🔥🔥🔥 উন্নত ডাউনলোড লজিক এবং ট্র্যাকিং (সংশোধিত) 🔥🔥🔥
+    //  🔥🔥🔥 উন্নত ডাউনলোড লজিক এবং ট্র্যাকিং (চূড়ান্ত সংশোধিত) 🔥🔥🔥
     // ==================================================
     
     const AD_CLICK_COUNT_KEY = 'adClickCount_' + postId; 
@@ -490,27 +565,26 @@
         const HIGH_TRAFFIC_THRESHOLD_MS = 1000; // 1 সেকেন্ড
         const HIGH_TRAFFIC_CLICK_COUNT = 3; // 1 সেকেন্ডে 3 ক্লিক
 
-        // 🔥 ১. পেজ লোড হলে বা ম্যানুয়াল রিফ্রেশ হলে SUCCESS STATE রিসেট করা
-        // pageshow ইভেন্ট ছাড়া অন্য লোডগুলো (ম্যানুয়াল রিফ্রেশ) ধরবে। 
+        // 🔥 ১. SUCCESS STATE ফ্ল্যাগটি রিসেট করার লজিক
+        // এই লজিক নিশ্চিত করবে যে ম্যানুয়াল রিফ্রেশ বা নতুন লোডে অ্যাড লিংকে যেতে হবে।
         window.addEventListener('load', function() {
-            // যদি ব্রাউজার ক্যাশ থেকে না আসে (যেমন ব্যাক বাটন নয়)
-            if (performance.navigation.type === 1 || performance.navigation.type === 0) { 
+            // performance.navigation.type 2 (Deprecated API)
+            // তবে এটি অনেক ব্রাউজারে RELOAD বা NAVIGATE কে ধরতে সাহায্য করে।
+            if (window.performance.navigation.type !== 2) { 
                 localStorage.removeItem(AD_VISITED_SUCCESS_KEY);
             }
         });
-
+        
         // 🔥 ২. অ্যাড ভিজিট সফল হয়েছে কিনা, তা পেজ রিফ্রেশ না হওয়া পর্যন্ত ট্র্যাক করা
         window.addEventListener('pageshow', function(event) {
-            // event.persisted = true মানে ব্রাউজারের ক্যাশ (bfcache) থেকে লোড হয়েছে (যেমন ব্যাক বাটন)
-            if (event.persisted) { 
+            if (event.persisted) { // event.persisted = true মানে ব্রাউজারের ক্যাশ (bfcache) থেকে লোড হয়েছে (অর্থাৎ ব্যাক বাটন)
                 localStorage.setItem(AD_VISITED_SUCCESS_KEY, 'true'); 
                 console.log("Back button detected. Ad visit successful flag set.");
             } else {
-                 // যদি সাধারণ রিফ্রেশ হয় (pageshow fires for all loads) 
-                 // তবে load listener এর logic টিই যথেষ্ট, তবে অতিরিক্ত নিশ্চিত করার জন্য:
+                 // যদি সাধারণ লোড বা রিফ্রেশ হয় (bfcache ব্যবহার না করে)
                  localStorage.removeItem(AD_VISITED_SUCCESS_KEY);
             }
-        }, { once: false }); // once: true ছিল, কিন্তু এখন সব লোডই শুনতে হবে
+        }, { once: false }); 
 
         document.querySelectorAll('.download-btn-v2').forEach(button => {
             
