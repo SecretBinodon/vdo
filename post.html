@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -500,27 +501,23 @@
         const HIGH_TRAFFIC_THRESHOLD_MS = 1000; // 1 সেকেন্ড
         const HIGH_TRAFFIC_CLICK_COUNT = 3; // 1 সেকেন্ডে 3 ক্লিক
 
-        // 🔥 ১. SUCCESS STATE ফ্ল্যাগটি রিসেট করার লজিক (ম্যানুয়াল রিফ্রেশ বা নতুন লোড)
-        // load event ব্যবহার করে নিশ্চিত করা হলো যে এটি ক্যাশড লোড (bfcache) নয়।
-        window.addEventListener('load', function() {
-            // performance.navigation.type 2 (TYPE_BACK_FORWARD) মানে ব্যাক বাটন। 
-            // 2 ছাড়া অন্য লোড হলে (যেমন RELOAD, NAVIGATE) রিসেট করা হবে।
-            if (window.performance.navigation.type !== 2) { 
-                localStorage.removeItem(AD_VISITED_SUCCESS_KEY);
-                console.log("Load/Refresh detected (Not Back/Forward): Success State cleared.");
-            }
-        });
+        // 🔥 ১. SUCCESS STATE ফ্ল্যাগটি রিসেট করার লজিক (কঠোর রিসেট)
         
-        // 🔥 ২. অ্যাড ভিজিট সফল হয়েছে কিনা, তা ব্যাক বাটন ব্যবহার করে ট্র্যাক করা
+        // (A) ব্রাউজার লোড/রিফ্রেশ চেক: যদি এটি ব্যাক-ফরোয়ার্ড নেভিগেশন না হয়, তবে রিসেট করো।
+        if (window.performance.navigation.type !== 2) { 
+            localStorage.removeItem(AD_VISITED_SUCCESS_KEY);
+            console.log("Initial load or Refresh detected: Success State cleared.");
+        }
+
+        // (B) pageshow চেক: শুধুমাত্র যদি bfcache থেকে লোড হয় (ব্যাক বাটন), তবেই Success State সেট হবে।
         window.addEventListener('pageshow', function(event) {
-            if (event.persisted) { // event.persisted = true মানে ব্রাউজারের ক্যাশ (bfcache) থেকে লোড হয়েছে (অর্থাৎ ব্যাক বাটন)
+            if (event.persisted) { 
                 localStorage.setItem(AD_VISITED_SUCCESS_KEY, 'true'); 
                 console.log("Back button detected. Ad visit successful flag set to TRUE.");
             } else {
-                 // যদি সাধারণ লোড বা রিফ্রেশ হয় (bfcache ব্যবহার না করে)
-                 // এই অতিরিক্ত রিসেটটি ensures যে কোনোভাবেই Success State টিকে থাকবে না।
+                 // Non-persisted (রিফ্রেশ, নতুন নেভিগেট): নিশ্চিত রিসেট।
                  localStorage.removeItem(AD_VISITED_SUCCESS_KEY);
-                 console.log("Pageshow (Non-persisted): Success State confirmed cleared.");
+                 console.log("Pageshow (Non-persisted load): Success State confirmed cleared.");
             }
         }, { once: false }); 
 
@@ -541,39 +538,39 @@
                 }
                 // ------------------------------------
 
-                // 🔥 সফলতার অবস্থা চেক (পেজ রিফ্রেশ না হলে)
+                // 🔥 ১. সফলতার অবস্থা চেক
                 if (localStorage.getItem(AD_VISITED_SUCCESS_KEY) === 'true') {
                     // ✅ সফল: সরাসরি ফাইনাল মুভি লিংকে নিয়ে যাও 
-                    console.log(`Success State TRUE: Redirecting to final movie URL: ${finalUrl}`);
-                    // Success state ব্যবহার হওয়ার পর রিসেট করার দরকার নেই, কারণ এটি পেজ রিফ্রেশ না হওয়া পর্যন্ত কার্যকর।
+                    console.log(`[SUCCESS] Redirecting to final movie URL: ${finalUrl}`);
                     window.location.href = finalUrl;
                     return;
                 }
 
-                // 🔥 অ্যাড লিংকের নির্বাচন (মোড অনুযায়ী)
+                // 🔥 ২. অ্যাড লিংকের নির্বাচন (যদি সফল না হয়)
                 let adUrl;
                 let adIndex;
 
                 if (isHighTrafficMode) {
                     // 🛑 হাই ট্র্যাফিক মোড: র্যান্ডম নির্বাচন
                     adIndex = Math.floor(Math.random() * MAX_AD_LINKS);
-                    console.log(`High Traffic: Ad #${adIndex + 1} (RANDOM)`);
+                    console.log(`[AD] High Traffic: Ad #${adIndex + 1} (RANDOM)`);
                 } else {
                     // ➡️ স্বাভাবিক মোড: এই ব্যক্তির জন্য সিরিয়াল অনুযায়ী নির্বাচন
                     adIndex = getNextPersonalAdIndex(); 
-                    console.log(`Normal Traffic: Ad #${adIndex + 1} (SERIAL)`);
+                    console.log(`[AD] Normal Traffic: Ad #${adIndex + 1} (SERIAL)`);
                 }
                 
                 adUrl = GLOBAL_AD_LINKS[adIndex];
                 
                 if (adUrl) {
-                    // 🔥 অ্যাড লিংকে পাঠানো
-                    
-                    localStorage.removeItem(AD_VISITED_SUCCESS_KEY); // অ্যাড ভিজিট শুরু
+                    // 🔥 ৩. অ্যাড লিংকে পাঠানো
+                    console.log(`[REDIRECT] Sending user to Ad URL: ${adUrl}`);
                     window.location.href = adUrl;
                     
                 } else {
-                     window.location.href = finalUrl; // ফলব্যাক
+                     // ফলব্যাক
+                     console.warn("[FALLBACK] Ad URL not found, going to final URL.");
+                     window.location.href = finalUrl; 
                 }
             });
         });
