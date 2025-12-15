@@ -169,7 +169,7 @@
 
         /* রিলেটেড পোস্টের ইমেজ কন্টেইনার (অপরিবর্তিত) */
         .media-container { position: relative; width: 100%; border-radius: 12px; overflow: hidden; margin-top: 5px; display: block; cursor: pointer; background: #000; aspect-ratio: 3 / 4; max-height: 720px; }
-        .media-container img { width: 100%; height: 100%; display: block; object-fit: cover; margin: 0 auto; max-height: none; }
+        .media-container img { width: 100%; height: 100%; object-fit: cover; margin: 0 auto; max-height: none; }
         .media-container.auto-fit { aspect-ratio: initial; height: auto; }
         .media-container.auto-fit img { height: auto; object-fit: contain; }
 
@@ -197,9 +197,8 @@
         
         .spinner { width: 14px; height: 14px; border: 2px solid #ccc; border-top: 2px solid #000; border-radius: 50%; animation: spin 1s linear infinite; display: inline-block; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .notification { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); color: white; padding: 10px 20px; border-radius: 30px; z-index: 1002; opacity: 0; transition: 0.3s; pointer-events: none; }
-        .notification.show { opacity: 1; }
-
+        /* 🔥 নোটিফিকেশন CSS অপসারিত */
+        
         /* Infinite Scroll Sentinel */
         #sentinel { width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; }
         .load-more-spinner { width: 24px; height: 24px; border: 3px solid #ccc; border-top: 3px solid #1da1f2; border-radius: 50%; animation: spin 1s linear infinite; display: none; }
@@ -237,8 +236,7 @@
             Copyright © 2026 <a href="index.html">Filmixo.com</a>. All rights reserved.
         </div>
     </footer>
-    <div id="notification" class="notification"></div>
-</div>
+    </div>
 
 <script type="module">
     // Firebase SDK Imports (অপরিবর্তিত)
@@ -312,7 +310,8 @@
     }
 
     function formatDate(d) { return new Date(d).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }); }
-    function showNotification(msg) { const n=document.getElementById('notification'); n.innerText=msg; n.classList.add('show'); setTimeout(()=>n.classList.remove('show'),3000); }
+    
+    // 🔥 নোটিফিকেশন ফাংশন অপসারিত
 
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get('id');
@@ -339,20 +338,23 @@
     }
     
     // ==================================================
-    //  🔥🔥🔥 উন্নত ডাউনলোড লজিক এবং ট্র্যাকিং 🔥🔥🔥
+    //  🔥🔥🔥 উন্নত ডাউনলোড লজিক এবং ট্র্যাকিং (সংশোধিত) 🔥🔥🔥
     // ==================================================
     
-    const AD_CLICK_COUNT_KEY = 'adClickCount_' + postId; // এই ব্যক্তির এই পোস্টের জন্য কাউন্টার
+    const AD_CLICK_COUNT_KEY = 'adClickCount_' + postId; 
     const AD_VISITED_SUCCESS_KEY = 'adVisitedSuccess_' + postId;
 
     // 🔥 অ্যাড লিংক অ্যারে (কোডের মধ্যে হার্ডকোড করা)
     const GLOBAL_AD_LINKS = [
-        "https://google.com",
-        "https://youtube.com"
+        "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea",
+        "https://prototypesorting.com/p99vwjq2?key=d4529edb158097d74d89a77045df636e",
+        "https://prototypesorting.com/p99vwjq2?key=e0c1f51390310243447997576f7f2b1d",
+        "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea",
+        "https://prototypesorting.com/p99vwjq2?key=d4529edb158097d74d89a77045df636e"
     ];
     const MAX_AD_LINKS = GLOBAL_AD_LINKS.length; 
     let isHighTrafficMode = false;
-    let clickTimestamps = []; // ট্র্যাফিক চাপ পরিমাপের জন্য
+    let clickTimestamps = []; 
 
     /**
      * এই ব্যবহারকারীর জন্য পরবর্তী সিরিয়াল অ্যাড ইনডেক্স নির্ধারণ করে এবং localStorage আপডেট করে।
@@ -488,15 +490,27 @@
         const HIGH_TRAFFIC_THRESHOLD_MS = 1000; // 1 সেকেন্ড
         const HIGH_TRAFFIC_CLICK_COUNT = 3; // 1 সেকেন্ডে 3 ক্লিক
 
-        // 🔥 অ্যাড ভিজিট সফল হয়েছে কিনা, তা পেজ রিফ্রেশ না হওয়া পর্যন্ত ট্র্যাক করা
-        window.addEventListener('pageshow', function(event) {
-            if (event.persisted) { // ব্রাউজার ক্যাশ থেকে ফিরে এলে (সাধারণত ব্যাক বাটন)
-                localStorage.setItem(AD_VISITED_SUCCESS_KEY, 'true'); 
-                showNotification("Ad visit detected. Click again for Movie Link! 🎬");
-                console.log("Back button detected. Ad visit successful flag set.");
-            } 
-        }, { once: true });
+        // 🔥 ১. পেজ লোড হলে বা ম্যানুয়াল রিফ্রেশ হলে SUCCESS STATE রিসেট করা
+        // pageshow ইভেন্ট ছাড়া অন্য লোডগুলো (ম্যানুয়াল রিফ্রেশ) ধরবে। 
+        window.addEventListener('load', function() {
+            // যদি ব্রাউজার ক্যাশ থেকে না আসে (যেমন ব্যাক বাটন নয়)
+            if (performance.navigation.type === 1 || performance.navigation.type === 0) { 
+                localStorage.removeItem(AD_VISITED_SUCCESS_KEY);
+            }
+        });
 
+        // 🔥 ২. অ্যাড ভিজিট সফল হয়েছে কিনা, তা পেজ রিফ্রেশ না হওয়া পর্যন্ত ট্র্যাক করা
+        window.addEventListener('pageshow', function(event) {
+            // event.persisted = true মানে ব্রাউজারের ক্যাশ (bfcache) থেকে লোড হয়েছে (যেমন ব্যাক বাটন)
+            if (event.persisted) { 
+                localStorage.setItem(AD_VISITED_SUCCESS_KEY, 'true'); 
+                console.log("Back button detected. Ad visit successful flag set.");
+            } else {
+                 // যদি সাধারণ রিফ্রেশ হয় (pageshow fires for all loads) 
+                 // তবে load listener এর logic টিই যথেষ্ট, তবে অতিরিক্ত নিশ্চিত করার জন্য:
+                 localStorage.removeItem(AD_VISITED_SUCCESS_KEY);
+            }
+        }, { once: false }); // once: true ছিল, কিন্তু এখন সব লোডই শুনতে হবে
 
         document.querySelectorAll('.download-btn-v2').forEach(button => {
             
@@ -504,27 +518,26 @@
                 e.preventDefault();
                 const finalUrl = this.getAttribute('data-final-url');
                 
-                // --- ১. ট্র্যাফিক চাপ পরিমাপ লজিক ---
+                // --- ট্র্যাফিক চাপ পরিমাপ লজিক ---
                 const now = Date.now();
                 clickTimestamps.push(now);
-                // শেষ 1 সেকেন্ডের মধ্যে হওয়া ক্লিকগুলি ফিল্টার করা
                 clickTimestamps = clickTimestamps.filter(timestamp => now - timestamp < HIGH_TRAFFIC_THRESHOLD_MS); 
 
-                // যদি 1 সেকেন্ডের মধ্যে 3 বা তার বেশি ক্লিক হয়, হাই ট্র্যাফিক মোড সক্রিয় করা
                 if (clickTimestamps.length >= HIGH_TRAFFIC_CLICK_COUNT) {
                     isHighTrafficMode = true;
+                    console.warn("High Traffic Mode Activated: Random Ad Selection.");
                 }
                 // ------------------------------------
 
-                // 🔥 ২. সফলতার অবস্থা চেক (পেজ রিফ্রেশ না হলে)
+                // 🔥 সফলতার অবস্থা চেক (পেজ রিফ্রেশ না হলে)
                 if (localStorage.getItem(AD_VISITED_SUCCESS_KEY) === 'true') {
-                    // ✅ সফল: সরাসরি ফাইনাল মুভি লিংকে নিয়ে যাও (যে কোনো বাটনে ক্লিক করুক না কেন)
+                    // ✅ সফল: সরাসরি ফাইনাল মুভি লিংকে নিয়ে যাও 
                     console.log(`Success State: Redirecting to final URL: ${finalUrl}`);
                     window.location.href = finalUrl;
                     return;
                 }
 
-                // 🔥 ৩. অ্যাড লিংকের নির্বাচন (মোড অনুযায়ী)
+                // 🔥 অ্যাড লিংকের নির্বাচন (মোড অনুযায়ী)
                 let adUrl;
                 let adIndex;
 
@@ -707,7 +720,7 @@
         const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users`, deviceId), lBtn = document.querySelector('.love-btn');
         onSnapshot(lRef, s => document.getElementById('like-cnt').innerText = formatCount(s.data()?.count || 0));
         getDoc(uRef).then(s => { if(s.exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); } });
-        lBtn.addEventListener('click', async () => { if((await getDoc(uRef)).exists()) showNotification("Already Liked! ❤️"); else { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); showNotification("Liked! ❤️"); } });
+        lBtn.addEventListener('click', async () => { if((await getDoc(uRef)).exists()) console.log("Already Liked! ❤️"); else { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); console.log("Liked! ❤️"); } });
     }
 
     function setupFirebaseForSingleCard(card, id) {
@@ -716,7 +729,7 @@
         const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users`, deviceId);
         onSnapshot(lRef, s => lEl.innerText = formatCount(s.data()?.count || 0));
         getDoc(uRef).then(s => { if(s.exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); } });
-        lBtn.addEventListener('click', async () => { if((await getDoc(uRef)).exists()) showNotification("Already Liked! ❤️"); else { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); showNotification("Liked! ❤️"); } });
+        lBtn.addEventListener('click', async () => { if((await getDoc(uRef)).exists()) console.log("Already Liked! ❤️"); else { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); console.log("Liked! ❤️"); } });
     }
 
     window.handleVideoClick = function() {
@@ -730,7 +743,7 @@
     });
 
     window.openPost = (id) => window.location.href = `/movie/post.html?id=${id}`;
-    window.sharePost = (id, title) => { const url = window.location.origin + `/movie/post.html?id=${id}`; if (navigator.share) { navigator.share({ title: title, text: title, url: url }).catch((e) => console.log('Share failed', e)); } else { navigator.clipboard.writeText(url); showNotification("Link copied! 📋"); } }
+    window.sharePost = (id, title) => { const url = window.location.origin + `/movie/post.html?id=${id}`; if (navigator.share) { navigator.share({ title: title, text: title, url: url }).catch((e) => console.log('Share failed', e)); } else { navigator.clipboard.writeText(url); console.log("Link copied! 📋"); } }
 
     window.share = (platform, title) => {
         const url = encodeURIComponent(window.location.href);
