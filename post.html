@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* CSS কোড (পূর্বের কোড থেকে কোনো পরিবর্তন নেই) */
+        /* --- CSS styles (No change from last version) --- */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; text-decoration: none; }
         body { background: #fff; display: flex; justify-content: center; }
         .main-wrapper { 
@@ -79,7 +79,7 @@
         .read-more-text { color: #1da1f2; font-weight: 600; font-size: 14px; }
         .hashtags { color: #1d9bf0; font-size: 15px; margin-bottom: 10px; cursor: default; }
         .media-container { position: relative; width: 100%; border-radius: 12px; overflow: hidden; margin-top: 5px; display: block; cursor: pointer; background: #000; aspect-ratio: 3 / 4; max-height: 720px; }
-        .media-container img { width: 100%; height: 100%; display: block; object-fit: cover; margin: 0 auto; max-height: none; }
+        .media-container img { width: 100%; height: 100%; object-fit: cover; margin: 0 auto; max-height: none; }
         .media-container.auto-fit { aspect-ratio: initial; height: auto; }
         .media-container.auto-fit img { height: auto; object-fit: contain; }
         .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background-color: rgba(0, 0, 0, 0.6); border-radius: 50%; display: flex; justify-content: center; align-items: center; pointer-events: none; border: 2px solid rgba(255,255,255,0.8); }
@@ -144,7 +144,7 @@
     </header>
 
     <div id="post-details-container">
-    </div>
+        </div>
 
     <div class="related-section" id="related-section-id" style="display: none;">
         <div class="related-header">RELATED POSTS</div>
@@ -175,12 +175,20 @@
     //  ১. ডেটা এবং কনফিগারেশন সেটআপ
     // ============================================
 
-    // Firebase ফাংশনগুলির জন্য গ্লোবাল ভেরিয়েবল সেট করা হয়েছে
+    // Firebase ফাংশনগুলির জন্য গ্লোবাল ভেরিয়েবল সেট করা হয়েছে (যদি SDK লোড হয়)
     let initializeApp, getFirestore, doc, getDoc, setDoc, increment, onSnapshot;
 
-    // 🔥 ফিক্স: ফায়ারবেস ইনিশিয়ালাইজেশন মডিউলের উপর নির্ভর করে না, স্ক্রিপ্ট লোডের উপর নির্ভর করে
     const PERMANENT_PROFILE_IMAGE_URL = "https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/FILMIXO.jpg";
-    const firebaseConfig = { apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q", authDomain: "my-ad-analytics-4560a.firebaseapp.com", databaseURL: "https://my-ad-analytics-4560a-default-rtdb.firebaseio.com", projectId: "my-ad-analytics-4560a", storageBucket: "my-ad-analytics-4560a.firebasestorage.app", messagingSenderId: "104213283950", appId: "1:104213283950:web:b5a25ecd54df809625127f", measurementId: "G-WS7QSQ9H0Y" };
+    const firebaseConfig = { 
+        apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q", 
+        authDomain: "my-ad-analytics-4560a.firebaseapp.com", 
+        databaseURL: "https://my-ad-analytics-4560a-default-rtdb.firebaseio.com", 
+        projectId: "my-ad-analytics-4560a", 
+        storageBucket: "my-ad-analytics-4560a.firebasestorage.app", 
+        messagingSenderId: "104213283950", 
+        appId: "1:104213283950:web:b5a25ecd54df809625127f", 
+        measurementId: "G-WS7QSQ9H0Y" 
+    };
     
     let db;
     
@@ -212,10 +220,9 @@
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get('id');
 
-    // --- ইউটিলিটি ফাংশনস (অপরিবর্তিত) ---
+    // --- ইউটিলিটি ফাংশনস ---
     function formatCount(n) { if(!n) return 0; return n >= 1000000 ? (n/1000000).toFixed(1)+'M' : n >= 1000 ? (n/1000).toFixed(1)+'K' : n; }
     function timeAgo(dateString) { 
-        //... (অপরিবর্তিত কোড)
         const d = new Date(dateString);
         const seconds = Math.floor((new Date() - d) / 1000);
         let interval = seconds / 31536000;
@@ -238,14 +245,16 @@
         });
     }
     function formatDate(d) { return new Date(d).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }); }
-    function showNotification(msg) { const n=document.getElementById('notification'); n.innerText=msg; n.classList.add('show'); setTimeout(()=>n.classList.remove('show'),3000); }
+    function showNotification(msg) { 
+        const n=document.getElementById('notification'); 
+        n.innerText=msg; 
+        n.classList.add('show'); 
+        setTimeout(()=>n.classList.remove('show'),3000); 
+    }
     function adjustImageAspectRatio(imgElement) {
-        //... (অপরিবর্তিত কোড)
         const mediaContainer = imgElement.closest('.media-container');
         imgElement.onload = function() {
-            const originalWidth = this.naturalWidth;
-            const originalHeight = this.naturalHeight;
-            const ratio = originalWidth / originalHeight;
+            const ratio = this.naturalWidth / this.naturalHeight;
             if (ratio >= (3 / 4)) { 
                 mediaContainer.classList.add('auto-fit');
             } else {
@@ -257,7 +266,7 @@
         }
     }
     
-    // --- ডাউনলোড লজিক কনফিগারেশন (অপরিবর্তিত) ---
+    // --- ডাউনলোড লজিক কনফিগারেশন ---
     const LAST_CLICK_TIME_KEY = 'last_click_time_' + deviceId; 
     const LAST_CLICKED_AD_TYPE_KEY = 'last_clicked_ad_type_' + postId;
     const MIN_VISIT_TIME_MS = 5000; 
@@ -270,9 +279,8 @@
         return required; 
     }
     
-    // --- রেন্ডারিং ফাংশন (অপরিবর্তিত) ---
+    // --- রেন্ডারিং ফাংশন ---
     function renderMainPost(post) {
-        //... (অপরিবর্তিত কোড)
         let content = `<h1 class="article-title">${post.title}</h1>`;
         post.paragraphs.forEach((p, i) => { content += `<p class="article-para">${p}</p>`; });
         let downloadSectionHTML = '';
@@ -330,72 +338,79 @@
         if (mainTimeElement) {
             timeElementsToUpdate.push({ element: mainTimeElement, dateString: post.uploadTime });
         }
-        if (post.downloadLink3) {
-            setupDownloadClickLogic(post);
+    }
+
+    // --- ডাউনলোড লজিক ফাংশন ---
+    function setupDownloadClickLogic(post) {
+        // এই ফাংশনটি এখন শুধুমাত্র renderMainPost থেকে কল হবে।
+        try {
+            const totalRequiredVisits = countRequiredVisits(post);
+            
+            // ১. pageshow লজিক (ব্যাক/ফরোয়ার্ড নেভিগেশনের জন্য)
+            window.addEventListener('pageshow', function(event) {
+                if (event.persisted || performance.getEntriesByType("navigation")[0].type === 'back_forward') { 
+                    const lastClickTime = parseInt(localStorage.getItem(LAST_CLICK_TIME_KEY) || '0', 10);
+                    const timeSpent = Date.now() - lastClickTime;
+                    const lastClickedAd = localStorage.getItem(LAST_CLICKED_AD_TYPE_KEY);
+                    if (lastClickTime > 0 && lastClickedAd) {
+                        if (timeSpent >= MIN_VISIT_TIME_MS) {
+                            localStorage.setItem(getVisitedKey(lastClickedAd), 'true');
+                            showNotification("Ad Visit Verified! ✅");
+                        } else {
+                            showNotification(`Please stay on the ad page for at least 5 seconds. Spent ${Math.round(timeSpent/1000)}s.`);
+                        }
+                    }
+                    localStorage.removeItem(LAST_CLICK_TIME_KEY);
+                    localStorage.removeItem(LAST_CLICKED_AD_TYPE_KEY);
+                    updateButtonVisibilityAndStatus(post, totalRequiredVisits); 
+                }
+            }, { once: false }); 
+
+            // ২. প্রাথমিক লোডের সময় বাটন স্থিতি সেট করা
+            updateButtonVisibilityAndStatus(post, totalRequiredVisits); 
+            
+            // ৩. ক্লিক ইভেন্ট হ্যান্ডলার 
+            document.querySelectorAll('.download-btn-v2').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const buttonType = this.getAttribute('data-button-type'); 
+                    if (buttonType === 'final') {
+                        if (localStorage.getItem(FINAL_BUTTON_VISIBLE_KEY) === 'true') {
+                            const finalUrl = this.getAttribute('data-final-url');
+                            window.location.href = finalUrl;
+                            localStorage.removeItem(getVisitedKey('ad1080'));
+                            localStorage.removeItem(getVisitedKey('ad720'));
+                            localStorage.removeItem(FINAL_BUTTON_VISIBLE_KEY);
+                            localStorage.removeItem(LAST_CLICK_TIME_KEY);
+                            localStorage.removeItem(LAST_CLICKED_AD_TYPE_KEY);
+                        } else {
+                            alert(`Please visit ${totalRequiredVisits} ad link(s) for 5 seconds each to unlock the final download button.`);
+                            updateButtonVisibilityAndStatus(post, totalRequiredVisits); 
+                        }
+                        return;
+                    }
+                    if (buttonType === 'ad1080' || buttonType === 'ad720') {
+                        if (localStorage.getItem(getVisitedKey(buttonType)) === 'true') {
+                             showNotification("This ad link is already visited! ✅");
+                             return;
+                        }
+                        const adUrl = this.getAttribute('data-ad-link');
+                        localStorage.setItem(LAST_CLICK_TIME_KEY, Date.now());
+                        localStorage.setItem(LAST_CLICKED_AD_TYPE_KEY, buttonType); 
+                        showNotification("Redirecting to Ad page. Please stay there for 5 seconds.");
+                        window.open(adUrl, '_blank'); 
+                        this.style.opacity = '0.5';
+                        this.style.pointerEvents = 'none';
+                    }
+                });
+            });
+        } catch(e) {
+            console.error("Download Click Logic Failed:", e);
+            showNotification("Download logic experienced an error.");
         }
     }
 
-    // --- ডাউনলোড লজিক ফাংশন (অপরিবর্তিত) ---
-    function setupDownloadClickLogic(post) {
-        //... (অপরিবর্তিত কোড)
-        const totalRequiredVisits = countRequiredVisits(post);
-        window.addEventListener('pageshow', function(event) {
-            if (event.persisted || performance.getEntriesByType("navigation")[0].type === 'back_forward') { 
-                const lastClickTime = parseInt(localStorage.getItem(LAST_CLICK_TIME_KEY) || '0', 10);
-                const timeSpent = Date.now() - lastClickTime;
-                const lastClickedAd = localStorage.getItem(LAST_CLICKED_AD_TYPE_KEY);
-                if (lastClickTime > 0 && lastClickedAd) {
-                    if (timeSpent >= MIN_VISIT_TIME_MS) {
-                        localStorage.setItem(getVisitedKey(lastClickedAd), 'true');
-                        showNotification("Ad Visit Verified! ✅");
-                    } else {
-                        showNotification(`Please stay on the ad page for at least 5 seconds. Spent ${Math.round(timeSpent/1000)}s.`);
-                    }
-                }
-                localStorage.removeItem(LAST_CLICK_TIME_KEY);
-                localStorage.removeItem(LAST_CLICKED_AD_TYPE_KEY);
-                updateButtonVisibilityAndStatus(post, totalRequiredVisits); 
-            }
-        }, { once: false }); 
-        updateButtonVisibilityAndStatus(post, totalRequiredVisits); 
-        document.querySelectorAll('.download-btn-v2').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                const buttonType = this.getAttribute('data-button-type'); 
-                if (buttonType === 'final') {
-                    if (localStorage.getItem(FINAL_BUTTON_VISIBLE_KEY) === 'true') {
-                        const finalUrl = this.getAttribute('data-final-url');
-                        window.location.href = finalUrl;
-                        localStorage.removeItem(getVisitedKey('ad1080'));
-                        localStorage.removeItem(getVisitedKey('ad720'));
-                        localStorage.removeItem(FINAL_BUTTON_VISIBLE_KEY);
-                        localStorage.removeItem(LAST_CLICK_TIME_KEY);
-                        localStorage.removeItem(LAST_CLICKED_AD_TYPE_KEY);
-                    } else {
-                        alert(`Please visit ${totalRequiredVisits} ad link(s) for 5 seconds each to unlock the final download button.`);
-                        updateButtonVisibilityAndStatus(post, totalRequiredVisits); 
-                    }
-                    return;
-                }
-                if (buttonType === 'ad1080' || buttonType === 'ad720') {
-                    if (localStorage.getItem(getVisitedKey(buttonType)) === 'true') {
-                         showNotification("This ad link is already visited! ✅");
-                         return;
-                    }
-                    const adUrl = this.getAttribute('data-ad-link');
-                    localStorage.setItem(LAST_CLICK_TIME_KEY, Date.now());
-                    localStorage.setItem(LAST_CLICKED_AD_TYPE_KEY, buttonType); 
-                    showNotification("Redirecting to Ad page. Please stay there for 5 seconds.");
-                    window.open(adUrl, '_blank'); 
-                    this.style.opacity = '0.5';
-                    this.style.pointerEvents = 'none';
-                }
-            });
-        });
-    }
-
     function updateButtonVisibilityAndStatus(post, totalRequiredVisits) {
-        //... (অপরিবর্তিত কোড)
         const isAd1080Available = post.downloadLink2 && post.downloadLink2.startsWith('http');
         const isAd720Available = post.downloadLink1 && post.downloadLink1.startsWith('http');
         const ad1080Visited = localStorage.getItem(getVisitedKey('ad1080')) === 'true';
@@ -434,7 +449,7 @@
     }
     
     // ==================================================
-    //  🔥🔥🔥 ইনিশিয়ালাইজ ফাংশন: মডিউল ফিক্স সহ 🔥🔥🔥
+    //  🔥🔥🔥 ইনিশিয়ালাইজ ফাংশন (চূড়ান্ত ফিক্স) 🔥🔥🔥
     // ==================================================
 
     async function init() {
@@ -443,9 +458,8 @@
         const relatedSection = document.getElementById('related-section-id');
 
         try {
-            // ১. Firebase ফাংশনগুলি গ্লোবালি অ্যাক্সেসযোগ্য কিনা তা পরীক্ষা করুন
+            // ১. Firebase ফাংশনগুলির গ্লোবাল অ্যাক্সেস নিশ্চিত করুন
             if (typeof firebase !== 'undefined' && typeof firebase.firestore !== 'undefined') {
-                // গ্লোবাল ভেরিয়েবল সেট করুন
                 initializeApp = firebase.initializeApp;
                 getFirestore = firebase.firestore;
                 doc = firebase.firestore.doc;
@@ -483,11 +497,16 @@
             // ৩. মূল পোস্ট লোড করা 
             renderMainPost(mainPost);
             
-            if (db && increment) { // নিশ্চিত করুন যে Firebase ফাংশন লোড হয়েছে
+            // ৪. বাটন লজিক সেটআপ করা (Fatal Error এর ঝুঁকি কমাতে)
+            if (mainPost.downloadLink3) {
+                 setupDownloadClickLogic(mainPost);
+            }
+
+            // ৫. Firebase ও রিলেটেড পোস্ট সেটআপ
+            if (db && increment) {
                 setupFirebaseForMainPost(mainPost.id);
             }
             
-            // ৪. রিলেটেড পোস্ট সেটআপ
             const anchorPostTime = new Date(mainPost.uploadTime).getTime();
             const historicalPosts = posts
                 .filter(p => p.id !== mainPost.id && new Date(p.uploadTime).getTime() < anchorPostTime)
@@ -503,7 +522,7 @@
             setInterval(updateAllTimeElements, 60000); 
 
         } catch (e) { 
-            // 🛑 ফেইল হলে এরর মেসেজ দেখিয়ে পেজ রেন্ডার করা
+            // 🛑 ফেইল হলে এরর মেসেজ দেখিয়ে পেজ রেন্ডার করা (সাদা পেজ হবে না)
             console.error("Initialization Failed (Fatal):", e);
             postContainer.innerHTML = `
                 <div class="error-message-box">
@@ -520,10 +539,31 @@
         mainWrapper.classList.add('loaded'); 
     }
 
-    // --- বাকি ফাংশনগুলো (Firebase, Infinity Scroll, Share) পরিবর্তন সাপেক্ষে ---
+    // --- ফায়ারবেস ফাংশন ---
+
+    function setupFirebaseForMainPost(id) {
+        if (!db || !increment) return; 
+        setDoc(doc(db, "views", id), { count: increment(1) }, { merge: true });
+        onSnapshot(doc(db, "views", id), s => document.getElementById('view-cnt').innerText = formatCount(s.data()?.count || 0));
+        const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users`, deviceId), lBtn = document.querySelector('.love-btn');
+        onSnapshot(lRef, s => document.getElementById('like-cnt').innerText = formatCount(s.data()?.count || 0));
+        getDoc(uRef).then(s => { if(s.exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); } });
+        lBtn.addEventListener('click', async () => { if((await getDoc(uRef)).exists()) showNotification("Already Liked! ❤️"); else { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); showNotification("Liked! ❤️"); } });
+    }
+
+    function setupFirebaseForSingleCard(card, id) {
+        if (!db || !increment) return;
+        const vEl = card.querySelector('.view-count-rel'), lEl = card.querySelector('.like-count-rel'), lBtn = card.querySelector('.love-btn-rel');
+        onSnapshot(doc(db, "views", id), s => vEl.innerText = formatCount(s.data()?.count || 0));
+        const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users`, deviceId);
+        onSnapshot(lRef, s => lEl.innerText = formatCount(s.data()?.count || 0));
+        getDoc(uRef).then(s => { if(s.exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); } });
+        lBtn.addEventListener('click', async () => { if((await getDoc(uRef)).exists()) showNotification("Already Liked! ❤️"); else { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); showNotification("Liked! ❤️"); } });
+    }
+    
+    // --- Infinity Scroll/Related Posts ফাংশন ---
     
     function setupRelatedSectionObserver() {
-        // ... (অপরিবর্তিত কোড)
         const relatedSection = document.getElementById('related-section-id');
         observer = new IntersectionObserver((entries, obs) => {
             if (entries[0].isIntersecting) {
@@ -536,7 +576,6 @@
     }
 
     function setupSentinelObserver() {
-        // ... (অপরিবর্তিত কোড)
         const sentinel = document.getElementById('sentinel');
         if (availablePosts.length > CONFIG.BATCH_SIZE_SCROLL) {
             sentinelObserver = new IntersectionObserver((entries) => {
@@ -551,7 +590,6 @@
     }
     
     function loadNextBatch() { 
-        // ... (অপরিবর্তিত কোড)
         const sentinel = document.getElementById('sentinel');
         if (currentStartIndex >= availablePosts.length) {
             sentinel.style.display = 'none'; 
@@ -571,7 +609,6 @@
     }
 
     function renderBatch(postsToLoad) {
-        // ... (অপরিবর্তিত কোড)
         const container = document.getElementById('related-posts-container');
         postsToLoad.forEach(post => {
             let excerpt = post.paragraphs[0].substring(0, 200) + "...";
@@ -615,29 +652,7 @@
         });
     }
 
-    // --- ফায়ারবেস ফাংশন (পরিবর্তিত: মডিউল নির্ভরতা সরানো হয়েছে) ---
-
-    function setupFirebaseForMainPost(id) {
-        if (!db || !increment) return; 
-        setDoc(doc(db, "views", id), { count: increment(1) }, { merge: true });
-        onSnapshot(doc(db, "views", id), s => document.getElementById('view-cnt').innerText = formatCount(s.data()?.count || 0));
-        const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users`, deviceId), lBtn = document.querySelector('.love-btn');
-        onSnapshot(lRef, s => document.getElementById('like-cnt').innerText = formatCount(s.data()?.count || 0));
-        getDoc(uRef).then(s => { if(s.exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); } });
-        lBtn.addEventListener('click', async () => { if((await getDoc(uRef)).exists()) showNotification("Already Liked! ❤️"); else { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); showNotification("Liked! ❤️"); } });
-    }
-
-    function setupFirebaseForSingleCard(card, id) {
-        if (!db || !increment) return;
-        const vEl = card.querySelector('.view-count-rel'), lEl = card.querySelector('.like-count-rel'), lBtn = card.querySelector('.love-btn-rel');
-        onSnapshot(doc(db, "views", id), s => vEl.innerText = formatCount(s.data()?.count || 0));
-        const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users`, deviceId);
-        onSnapshot(lRef, s => lEl.innerText = formatCount(s.data()?.count || 0));
-        getDoc(uRef).then(s => { if(s.exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); } });
-        lBtn.addEventListener('click', async () => { if((await getDoc(uRef)).exists()) showNotification("Already Liked! ❤️"); else { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); showNotification("Liked! ❤️"); } });
-    }
-
-    // --- গ্লোবাল ফাংশন (অপরিবর্তিত) ---
+    // --- গ্লোবাল ফাংশন ---
     window.handleVideoClick = function() {
         const p = document.getElementById('main-play-btn'), s = document.getElementById('main-spinner');
         if(p) p.style.display = 'none'; if(s) s.style.display = 'block';
@@ -666,7 +681,7 @@
         }
     }
 
-    // সবকিছু লোড হওয়ার পরে ইনিট কল করুন
+    // সমস্ত HTML/CSS লোড হওয়ার পরে `init` ফাংশনটি কল করুন
     window.addEventListener('load', init); 
 
 </script>
