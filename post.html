@@ -259,7 +259,7 @@
     const deviceId = localStorage.getItem('deviceId') || 'device-'+Date.now(); 
 
     // ============================================
-    //  ✅ অ্যাড লিংক অ্যারে এবং কনফিগারেশন যুক্ত করা হলো
+    //  ✅ অ্যাড লিংক অ্যারে এবং কনফিগারেশন যুক্ত করা হলো (পরিবর্তিত লজিকের ভিত্তি)
     // ============================================
     const AD_LINKS = [
         'https://your-ad-link-1.com/direct', 
@@ -268,11 +268,12 @@
         // এখানে আপনার প্রয়োজনীয় অ্যাড লিংক যোগ করুন
     ];
     
-    // লোকালস্টোরেজ এবং সেশনস্টোরেজ কী
-    const AD_INDEX_KEY = 'filmixo_post_ad_index';
+    // লোকালস্টোরেজ কী (দীর্ঘমেয়াদী রোটেশন বজায় রাখার জন্য)
+    const AD_INDEX_KEY = 'filmixo_post_ad_index'; 
+    // সেশনস্টোরেজ কী (পেজ রিফ্রেশ না হলে অ্যাড ভিজিট হয়েছে কিনা, তা ট্র‍্যাক করার জন্য)
     const VISIT_COUNT_KEY = 'filmixo_post_visit_count';
     
-    // লোড করা
+    // লোড করা: index localStorage থেকে এবং count sessionStorage থেকে 
     let currentAdIndex = parseInt(localStorage.getItem(AD_INDEX_KEY)) || 0;
     let visitCount = parseInt(sessionStorage.getItem(VISIT_COUNT_KEY)) || 0;
 
@@ -357,7 +358,7 @@
     }
     
     // ==================================================
-    //  ✅ রেন্ডারিং ফাংশন ও ডাউনলোড বাটন লজিক
+    //  ✅ রেন্ডারিং ফাংশন ও ডাউনলোড বাটন লজিক (বাটন দৃশ্যমান)
     // ==================================================
 
     function renderMainPost(post) {
@@ -371,36 +372,28 @@
             content += `<p class="article-para">${p}</p>`;
         });
 
-        // ✅ ২. ডাউনলোড সেকশন: <a> ট্যাগ পরিবর্তন করে <button> এবং ইভেন্ট লিসেনার যুক্ত করা
-        let downloadSectionHTML = '';
+        // ✅ ২. ডাউনলোড সেকশন: তিনটি বাটনই দৃশ্যমান থাকবে (JSON এ লিংক থাকুক বা না থাকুক, কারণ তারা লজিকের মাধ্যমে কাজ করবে)
+        // Note: আপনার আগের কোড downloadLink1/2/3 চেক করছিল। এখন সে চেকটি তুলে শুধু বাটন দৃশ্যমান রাখা হলো।
+        
+        let downloadSectionHTML = `
+            <div class="download-title-text">
+                DOWNLOAD FULL MOVIE IN HD
+            </div>
+            <div class="download-buttons-container" id="download-buttons-container">
+                
+                <button class="download-btn-v2" data-quality="1080" style="background:${getRandomColor()};">
+                    <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 1080p Full HD
+                </button>
+                
+                <button class="download-btn-v2" data-quality="720" style="background:${getRandomColor()};">
+                    <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 720p HD
+                </button>
 
-        if (post.downloadLink1 || post.downloadLink2 || post.downloadLink3) {
-            downloadSectionHTML += `
-                <div class="download-title-text">
-                    DOWNLOAD FULL MOVIE IN HD
-                </div>
-                <div class="download-buttons-container" id="download-buttons-container">
-                    
-                    ${post.downloadLink2 ? `
-                        <button class="download-btn-v2" data-quality="1080" style="background:${getRandomColor()};">
-                            <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 1080p Full HD
-                        </button>
-                    ` : ''}
-                    
-                    ${post.downloadLink1 ? `
-                        <button class="download-btn-v2" data-quality="720" style="background:${getRandomColor()};">
-                            <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 720p HD
-                        </button>
-                    ` : ''}
-
-                    ${post.downloadLink3 ? `
-                        <button class="download-btn-v2" data-quality="480" style="background:${getRandomColor()};">
-                            <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 480p SD
-                        </button>
-                    ` : ''}
-                </div>
-            `;
-        }
+                <button class="download-btn-v2" data-quality="480" style="background:${getRandomColor()};">
+                    <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 480p SD
+                </button>
+            </div>
+        `;
         
         // সম্পূর্ণ পোস্ট বডি রেন্ডার করা
         document.getElementById('post-details-container').innerHTML = `
@@ -446,36 +439,55 @@
         const buttonsContainer = document.getElementById('download-buttons-container');
         if (buttonsContainer) {
             buttonsContainer.querySelectorAll('.download-btn-v2').forEach(button => {
+                // তিনটি বাটনই একই ফাংশন কল করবে
                 button.addEventListener('click', () => handleDownloadButtonClick(post.id));
             });
         }
+        // দ্বিতীয় ক্লিক স্ট্যাটাস থাকলে বাটন টেক্সট আপডেট করা
+        if (sessionStorage.getItem(VISIT_COUNT_KEY) == 1) {
+            updateDownloadButtonsUI('Click to Download');
+        }
     }
     
+    // নতুন ফাংশন: বাটন UI স্ট্যাটাস আপডেট করার জন্য
+    function updateDownloadButtonsUI(text) {
+        const buttonsContainer = document.getElementById('download-buttons-container');
+        if (buttonsContainer) {
+            buttonsContainer.querySelectorAll('.download-btn-v2').forEach(button => {
+                button.innerHTML = `<i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> ${text}`;
+                // এখানে ঐচ্ছিকভাবে বাটনের রঙ বা স্টাইল পরিবর্তন করা যেতে পারে
+                // button.style.backgroundColor = '#f7931e'; 
+            });
+        }
+    }
+
     // ==================================================
-    //  ✅ ডাইনামিক অ্যাড রোটেটিং ফাংশন
+    //  ✅ ডাইনামিক অ্যাড রোটেটিং ফাংশন (আপডেট করা লজিক)
     // ==================================================
     window.handleDownloadButtonClick = function(postId) {
         let targetLink;
         
-        // 1. যদি ভিজিট কাউন্ট 0 হয় (প্রথম ক্লিক / নতুন ভিজিটর / পেজ রিফ্রেশ)
+        // 1. যদি ভিজিট কাউন্ট 0 হয় (প্রথম ক্লিক: অ্যাড ভিজিট হবে)
         if (visitCount === 0) {
-            // অ্যাড লিংক অ্যারে থেকে বর্তমান ইনডেক্সের লিংকটি নেওয়া 
+            
+            // অ্যাড রোটেশন: বর্তমান ইনডেক্সের লিংকটি নেওয়া 
             targetLink = AD_LINKS[currentAdIndex];
             
             // ভিজিট কাউন্ট 1 করা হলো (পেজ রিফ্রেশ না হলে পরের ক্লিক ডাউনলোড ফাইলে যাবে)
             sessionStorage.setItem(VISIT_COUNT_KEY, 1);
+            visitCount = 1; // গ্লোবাল ভ্যারিয়েবল আপডেট
             
-            // অ্যাড ইনডেক্স বাড়ানো হলো (পরের রিফ্রেশে পরের অ্যাড লিঙ্কে যাবে)
+            // অ্যাড রোটেশন ইনডেক্স বাড়ানো হলো (পরের ভিজিটে পরের অ্যাড লিঙ্কে যাবে)
             let nextIndex = (currentAdIndex + 1) % AD_LINKS.length;
             localStorage.setItem(AD_INDEX_KEY, nextIndex);
             
-            // নতুন AD ইনডেক্স গ্লোবাল ভ্যারিয়েবলে আপডেট করা
-            currentAdIndex = nextIndex; 
+            // UI আপডেট
+            updateDownloadButtonsUI('Click to Download'); 
             
             // 2. নতুন ট্যাবে অ্যাড লিঙ্কে রিডাইরেক্ট করা
-            window.location.href = targetLink; 
+            window.open(targetLink, '_blank');
         } 
-        // 3. যদি ভিজিট কাউন্ট 1 হয় (অ্যাড ভিজিট করার পর ব্যাক করে এসেছে, পেজ রিফ্রেশ হয়নি)
+        // 3. যদি ভিজিট কাউন্ট 1 হয় (দ্বিতীয় ক্লিক, পেজ রিফ্রেশ হয়নি)
         else if (visitCount === 1) {
             // সরাসরি 'download.html' ফাইলে নিয়ে যাওয়া, সাথে পোস্ট আইডি প্যারামিটার হিসেবে পাস করা
             targetLink = `download.html?id=${postId}`;
@@ -500,6 +512,7 @@
             if(!res.ok) throw new Error("Failed to load posts data.");
             const posts = await res.json();
             
+            // JSON এ mainDownloadLink আছে কিনা সেটা এখানে চেক করার দরকার নেই, কারণ এটি download.html এ হ্যান্ডেল হবে।
             const mainPost = posts.find(p => p.id === postId) || posts[0];
             if (!mainPost) throw new Error("Post not found.");
 
@@ -664,7 +677,7 @@
         if(p) p.style.display = 'flex'; if(s) s.style.display = 'none';
     });
 
-    window.openPost = (id) => window.location.href = `/movie/post.html?id=${id}`;
+    window.openPost = (id) => window.location.href = `post.html?id=${id}`;
     window.sharePost = (id, title) => { const url = window.location.origin + `/movie/post.html?id=${id}`; if (navigator.share) { navigator.share({ title: title, text: title, url: url }).catch((e) => console.log('Share failed', e)); } else { navigator.clipboard.writeText(url); showNotification("Link copied! 📋"); } }
 
     window.share = (platform, title) => {
