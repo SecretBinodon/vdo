@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* --- বেসিক রিসেট --- */
+        /* --- বেসিক রিসেট (অপরিবর্তিত) --- */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; text-decoration: none; }
         body { background: #fff; display: flex; justify-content: center; }
         .main-wrapper { width: 100%; max-width: 600px; min-height: 10vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; padding-bottom: 0; opacity: 0; }
@@ -65,7 +66,7 @@
         .read-more-text { color: #1da1f2; font-weight: 600; font-size: 14px; }
         .hashtags { color: #1d9bf0; font-size: 15px; margin-bottom: 10px; cursor: default; }
         .media-container { position: relative; width: 100%; border-radius: 12px; overflow: hidden; margin-top: 5px; display: block; cursor: pointer; background: #000; aspect-ratio: 3 / 4; max-height: 720px; }
-        .media-container img { width: 100%; height: 100%; display: block; object-fit: cover; margin: 0 auto; max-height: none; }
+        .media-container img { width: 100%; height: 100%; object-fit: cover; margin: 0 auto; max-height: none; }
         .media-container.auto-fit { aspect-ratio: initial; height: auto; }
         .media-container.auto-fit img { height: auto; object-fit: contain; }
         .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background-color: rgba(0, 0, 0, 0.6); border-radius: 50%; display: flex; justify-content: center; align-items: center; pointer-events: none; border: 2px solid rgba(255,255,255,0.8); }
@@ -142,15 +143,17 @@
 
     // ✅ অ্যাড লিংক অ্যারে এবং কনফিগারেশন
     const AD_LINKS = [
-        'https://your-ad-link-1.com/direct', 
-        'https://your-ad-link-2.com/direct', 
-        'https://your-ad-link-3.com/direct'
+        'https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea', 
+        'https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea', 
+        'https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea'
+        // আপনার প্রয়োজনীয় অ্যাড লিংক যোগ করুন
     ];
     const AD_INDEX_KEY = 'filmixo_post_ad_index'; 
     const VISIT_COUNT_KEY = 'filmixo_post_visit_count';
     
+    // 🔥 এখানে visitCount সরাসরি লোড করা হবে না, এটি resetVisitCountOnLoad() ফাংশন দিয়ে নিয়ন্ত্রিত হবে।
     let currentAdIndex = parseInt(localStorage.getItem(AD_INDEX_KEY)) || 0;
-    let visitCount = parseInt(sessionStorage.getItem(VISIT_COUNT_KEY)) || 0;
+    let visitCount = 0; // ইনিশিয়ালাইজেশন 0 থাকবে
 
     const CONFIG = {
         GLOBAL_VIDEO_LINK: "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea",
@@ -188,7 +191,24 @@
         if (imgElement.complete) { imgElement.onload(); }
     }
     
-    // ✅ রেন্ডারিং ফাংশন (ডাউনলোড বাটন টেক্সট ফিক্সড)
+    // ✅ চূড়ান্ত ফিক্স: পেজ লোড বা রিফ্রেশ হলে ভিজিট কাউন্ট রিসেট করা
+    function resetVisitCountOnLoad() {
+        // পেজ লোড হওয়ার পর সেশন স্টোরেজ চেক করা
+        const storedCount = sessionStorage.getItem(VISIT_COUNT_KEY);
+        
+        if (storedCount === '1') {
+            // যদি এটি 1 থাকে, তার মানে ব্যবহারকারী অ্যাড ভিজিট করে ফিরে এসেছে এবং রিফ্রেশ করেছে।
+            // এই অবস্থায়, আমরা ধরে নেব যে এটি নতুন সেশন এবং অ্যাড লজিক আবার শুরু হওয়া উচিত।
+            sessionStorage.removeItem(VISIT_COUNT_KEY);
+            visitCount = 0; // গ্লোবাল ভ্যারিয়েবল রিসেট
+            console.log("Visit count reset due to page load/refresh.");
+        } else {
+            visitCount = 0; // অন্যথায়, এটি নিশ্চিত 0
+        }
+    }
+
+
+    // ✅ রেন্ডারিং ফাংশন (অপরিবর্তিত)
     function renderMainPost(post) {
         let content = `<h1 class="article-title">${post.title}</h1>`;
         post.paragraphs.forEach((p, i) => { content += `<p class="article-para">${p}</p>`; });
@@ -265,6 +285,7 @@
             let nextIndex = (currentAdIndex + 1) % AD_LINKS.length;
             localStorage.setItem(AD_INDEX_KEY, nextIndex);
             
+            // বর্তমান ট্যাবেই অ্যাড লিঙ্কে রিডাইরেক্ট করা হলো।
             window.location.href = targetLink; 
         } 
         // 2. যদি ভিজিট কাউন্ট 1 হয় (দ্বিতীয় ক্লিক, রিফ্রেশ দিয়ে আসুক বা না দিয়ে আসুক)
@@ -272,7 +293,9 @@
             
             targetLink = `download.html?id=${postId}`;
             
-            // ✅ ফিক্স: ডাউনলোড ফাইল লোড হওয়ার ঠিক আগে ভিজিট কাউন্ট রিসেট করা
+            // 🔥 গুরুত্বপূর্ণ ফিক্স: ডাউনলোড ফাইল লোড হওয়ার ঠিক আগে ভিজিট কাউন্ট রিসেট করা
+            // এটি নিশ্চিত করবে যে download.html লোড হওয়ার পরে যদি user আবার post.html এ ফেরে, 
+            // তবে visitCount রিসেট থাকবে এবং সে আবার অ্যাড লিংকে যাবে।
             sessionStorage.removeItem(VISIT_COUNT_KEY);
             visitCount = 0; 
             
@@ -280,8 +303,11 @@
         }
     };
     
-    // --- অন্যান্য ফাংশনস (অপরিবর্তিত) ---
+    // --- অন্যান্য ফাংশনস ---
     async function init() {
+        // 🔥 ফিক্স: পেজ লোড হওয়ার সাথে সাথে ভিজিট কাউন্ট রিসেট করা
+        resetVisitCountOnLoad();
+        
         const postContainer = document.getElementById('post-details-container');
         const mainWrapper = document.querySelector('.main-wrapper'); 
         
@@ -421,8 +447,9 @@
         setTimeout(() => { window.location.href = CONFIG.GLOBAL_VIDEO_LINK; }, 100); 
     }
     
-    // ✅ পেজশো ইভেন্ট: ক্যাশ থেকে লোড হলেও ভিডিও বাটন রিসেট হবে
     window.addEventListener('pageshow', (event) => {
+        // এই ইভেন্টটি ব্যাক বাটন প্রেস করার পরে (BFCache থেকে লোড হলেও) ফায়ার হয়।
+        // যেহেতু আমরা init() এ রিসেট লজিক যোগ করেছি, তাই এখানে শুধু UI ফিক্স হবে।
         const p = document.getElementById('main-play-btn'), s = document.getElementById('main-spinner');
         if(p) p.style.display = 'flex'; if(s) s.style.display = 'none';
     });
