@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +27,7 @@
             text-align: center;
         }
         .icon-success {
-            color: #28a745;
+            color: #1da1f2; /* এখন এটি একটি স্টেপ */
             font-size: 60px;
             margin-bottom: 20px;
         }
@@ -43,15 +42,14 @@
             color: #536471;
             margin-bottom: 30px;
         }
-        .final-download-btn {
+        /* বাটন স্টাইল */
+        .download-btn {
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
             padding: 15px 20px;
             margin-top: 20px;
-            background: #28a745;
-            color: white;
             border: none;
             border-radius: 8px;
             font-size: 18px;
@@ -59,15 +57,24 @@
             cursor: pointer;
             transition: background 0.3s, transform 0.2s;
             text-transform: uppercase;
+            color: white;
         }
-        .final-download-btn:hover {
-            background: #218838;
-        }
-        .final-download-btn:active {
-            transform: scale(0.99);
-        }
-        .final-download-btn i {
+        .download-btn i {
             margin-right: 10px;
+        }
+        /* প্রথম ক্লিকে অ্যাড বাটন (নীল) */
+        .btn-ad-click {
+             background: #1da1f2; 
+        }
+        .btn-ad-click:hover {
+            background: #0d8bd9;
+        }
+        /* দ্বিতীয় ক্লিকে কন্টিনিউ বাটন (সবুজ) */
+        .btn-continue {
+            background: #28a745; 
+        }
+        .btn-continue:hover {
+            background: #218838;
         }
         .loading-message {
             font-size: 16px;
@@ -84,86 +91,165 @@
 <body>
 
 <div class="download-container">
-    <i class="fa-solid fa-circle-check icon-success"></i>
-    <h1 class="download-title" id="downloadTitle">Download Page</h1>
-    <p class="download-meta" id="downloadMeta">Please wait while we prepare your secure download link.</p>
+    <i class="fa-solid fa-cloud-arrow-down icon-success"></i>
+    <h1 class="download-title" id="downloadTitle">Preparing Download Link...</h1>
+    <p class="download-meta" id="downloadMeta">We need a quick verification step before the final download.</p>
     
     <div id="loadingStatus" class="loading-message">
-        <i class="fa-solid fa-spinner fa-spin"></i> Loading Link...
+        <i class="fa-solid fa-spinner fa-spin"></i> Loading Post Data...
     </div>
 
-    <button class="final-download-btn" id="finalDownloadButton" style="display:none;">
-        <i class="fa-solid fa-download"></i> Download Now
+    <button class="download-btn btn-ad-click" id="finalDownloadButton" style="display:none;">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> Visit Ad to Unlock Download
     </button>
 
     <p id="errorBox" class="error-message" style="display:none;"></p>
 </div>
 
 <script>
-    // আপনার download.html এর মূল লজিক
-    async function loadDownloadLink() {
+    // --- কনফিগারেশন ---
+    const AD_LINKS = [
+        'https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea', 
+        // আপনি এখানে আপনার প্রয়োজনমতো অন্যান্য অ্যাড লিংক যোগ করতে পারেন
+    ];
+    // এই পেজের জন্য পৃথক সেশন স্টোরেজ কী (অন্য পেজের সাথে মিশে না যাওয়ার জন্য)
+    const SESSION_KEY = 'filmixo_download_ad_status'; 
+    const AD_INDEX_KEY = 'filmixo_download_ad_index';
+    
+    let currentAdIndex = parseInt(localStorage.getItem(AD_INDEX_KEY)) || 0;
+    let postId = null;
+    let finalDownloadLink = null;
+
+    // --- কোর লজিক: অ্যাড এবং ডাউনলোড হ্যান্ডলিং ---
+    
+    // বাটন ক্লিক হ্যান্ডলার
+    function handleDownloadClick() {
+        if (!finalDownloadLink || !postId) {
+            console.error("Download link not available.");
+            return;
+        }
+
+        const btn = document.getElementById('finalDownloadButton');
+        let status = sessionStorage.getItem(SESSION_KEY);
+        
+        if (status !== 'clicked') {
+            // --- প্রথম ক্লিক: অ্যাড ভিজিট ---
+            
+            // অ্যাড রোটেশন লজিক
+            const adLink = AD_LINKS[currentAdIndex % AD_LINKS.length];
+            currentAdIndex = (currentAdIndex + 1) % AD_LINKS.length; 
+            localStorage.setItem(AD_INDEX_KEY, currentAdIndex);
+            
+            // সেশন স্ট্যাটাস আপডেট: ক্লিক হয়েছে
+            sessionStorage.setItem(SESSION_KEY, 'clicked');
+            
+            // UI আপডেট: বাটনের লেখা পরিবর্তন
+            updateButtonState('continue');
+            
+            // বর্তমান ট্যাবেই অ্যাড লিঙ্কে রিডাইরেক্ট
+            window.location.href = adLink; 
+
+        } else {
+            // --- দ্বিতীয় ক্লিক: চূড়ান্ত ডাউনলোডে রিডাইরেক্ট ---
+            
+            // সেশন স্টোরেজ থেকে স্ট্যাটাস মুছে দেওয়া
+            sessionStorage.removeItem(SESSION_KEY); 
+
+            // চূড়ান্ত ডাউনলোড লিংকে রিডাইরেক্ট
+            window.location.href = finalDownloadLink;
+        }
+    }
+    
+    // বাটনের অবস্থা পরিবর্তনকারী ফাংশন
+    function updateButtonState(state) {
+        const btn = document.getElementById('finalDownloadButton');
+        if (state === 'continue') {
+            btn.innerHTML = `<i class="fa-solid fa-download"></i> Continue to Final Download`;
+            btn.classList.remove('btn-ad-click');
+            btn.classList.add('btn-continue');
+        } else { // state === 'initial'
+             btn.innerHTML = `<i class="fa-solid fa-arrow-up-right-from-square"></i> Visit Ad to Unlock Download`;
+             btn.classList.remove('btn-continue');
+             btn.classList.add('btn-ad-click');
+        }
+    }
+
+    // পেজ লোডের সময় বাটনের প্রাথমিক অবস্থা চেক করা
+    function checkInitialState() {
+        const status = sessionStorage.getItem(SESSION_KEY);
+        if (status === 'clicked') {
+            // যদি একবার ক্লিক করা হয়ে থাকে (অ্যাড ভিজিট হয়ে গেছে)
+            updateButtonState('continue');
+        } else {
+            updateButtonState('initial');
+        }
+    }
+
+
+    // --- কোর লজিক: JSON থেকে ডেটা লোড করা ---
+    
+    async function loadPostDataAndSetup() {
         const urlParams = new URLSearchParams(window.location.search);
-        const postId = urlParams.get('id');
-        const downloadButton = document.getElementById('finalDownloadButton');
+        postId = urlParams.get('id');
         const loadingStatus = document.getElementById('loadingStatus');
         const errorBox = document.getElementById('errorBox');
+        const downloadButton = document.getElementById('finalDownloadButton');
         
-        // ১. পোস্ট আইডি না থাকলে ত্রুটি দেখাও
         if (!postId) {
             document.getElementById('downloadTitle').innerText = "Error: Post ID Missing";
             loadingStatus.style.display = 'none';
-            errorBox.innerText = "The post ID required for download is missing from the URL.";
+            errorBox.innerText = "The required Post ID is missing.";
             errorBox.style.display = 'block';
-            document.getElementById('pageTitle').innerText = "Error - Filmixo";
             return;
         }
         
         try {
-            // ২. posts.json থেকে ডেটা লোড করা
             const res = await fetch('posts.json');
-            if (!res.ok) {
-                 throw new Error(`Failed to load post data (HTTP Status: ${res.status})`);
-            }
-            const posts = await res.json();
+            if (!res.ok) throw new Error(`Failed to load posts data (HTTP Status: ${res.status})`);
             
-            // ৩. নির্দিষ্ট পোস্ট খুঁজে বের করা
+            const posts = await res.json();
             const post = posts.find(p => p.id === postId);
 
             if (post && post.downloadLink) {
-                // সফলভাবে লিংক পাওয়া গেলে UI আপডেট
+                // ১. গ্লোবাল ভেরিয়েবলে ডাউনলোড লিংক সংরক্ষণ
+                finalDownloadLink = post.downloadLink;
+                
+                // ২. UI আপডেট
                 document.getElementById('pageTitle').innerText = `Download: ${post.title}`;
                 document.getElementById('downloadTitle').innerText = `Download: ${post.title}`;
-                document.getElementById('downloadMeta').innerText = `Your high-speed download for ${post.videoDuration} is ready.`;
+                document.getElementById('downloadMeta').innerText = `Movie: ${post.title} | Duration: ${post.videoDuration}`;
                 
+                // ৩. UI দেখাও এবং ইভেন্ট লিসেনার সেট করো
                 loadingStatus.style.display = 'none';
-                downloadButton.style.display = 'flex'; // বাটন দেখাও
+                downloadButton.style.display = 'flex';
+                downloadButton.addEventListener('click', handleDownloadClick);
                 
-                // ৪. চূড়ান্ত ডাউনলোড লিংক বাটনে সেট করা
-                downloadButton.onclick = function() {
-                    window.location.href = post.downloadLink; // চূড়ান্ত লিংকটি ওপেন করা
-                };
+                // ৪. পেজ লোডের সময় বাটনের অবস্থা সেট করো
+                checkInitialState();
                 
             } else {
-                // ডাউনলোড লিংক বা পোস্ট খুঁজে না পেলে ত্রুটি দেখাও
                 document.getElementById('downloadTitle').innerText = "Download Link Not Found";
                 loadingStatus.style.display = 'none';
-                errorBox.innerText = `Could not find a valid download link for Post ID: ${postId}.`;
+                errorBox.innerText = `Could not find a valid download link for Post ID: ${postId}. Please check posts.json.`;
                 errorBox.style.display = 'block';
-                document.getElementById('pageTitle').innerText = "Error - Filmixo";
             }
 
         } catch (error) {
-            console.error("Download Error:", error);
+            console.error("Download Setup Error:", error);
             document.getElementById('downloadTitle').innerText = "Content Load Error";
             loadingStatus.style.display = 'none';
-            errorBox.innerText = "There was an error loading the data. Please try again later.";
+            errorBox.innerText = `Error: ${error.message}`;
             errorBox.style.display = 'block';
-            document.getElementById('pageTitle').innerText = "Error - Filmixo";
         }
     }
-    
-    // পেজ লোড হওয়ার পরে ফাংশনটি শুরু করা
-    loadDownloadLink();
+
+    // ব্রাউজার ব্যাক বাটন চাপলে বা ক্যাশ থেকে লোড হলে (যাতে স্পিনার চলে না)
+    window.addEventListener('pageshow', () => {
+        loadPostDataAndSetup(); 
+    });
+
+    // প্রথমবার পেজ লোড করা
+    loadPostDataAndSetup(); 
 </script>
 
 </body>
