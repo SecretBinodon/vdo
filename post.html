@@ -1,537 +1,389 @@
-<!DOCTYPE html>  
-<html lang="en">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>Filmixo - Watch & Download</title>  
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">  
-    <style>  
-    /* --- বেসিক রিসেট --- */  
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; text-decoration: none; }  
-    body { background: #fff; display: flex; justify-content: center; }  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filmixo - Premium Access</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- CORE & RESET --- */
+        :root { --primary: #1da1f2; --dark: #0f1419; --light: #536471; --border: #e1e8ed; --bg: #fff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg); display: flex; justify-content: center; overflow-x: hidden; }
 
-    /* মেইন র্যাপার */  
-    .main-wrapper {   
-        width: 100%;   
-        max-width: 600px;   
-        min-height: 100vh;   
-        background: #fff;   
-        position: relative;   
-        border-left: 1px solid #eee;   
-        border-right: 1px solid #eee;   
-        padding-bottom: 0;   
-        opacity: 0;   
-        transition: opacity 0.3s ease;
-    }  
-    .main-wrapper.loaded { opacity: 1 !important; }  
+        /* --- WRAPPER & ANIMATIONS --- */
+        .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: var(--bg); border-left: 1px solid #eee; border-right: 1px solid #eee; opacity: 0; transition: opacity 0.3s ease; position: relative; }
+        .main-wrapper.loaded { opacity: 1 !important; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes shine { 0% { left: -100%; } 100% { left: 100%; } }
+        @keyframes pulse-gold { 0% { box-shadow: 0 0 0 0 rgba(218, 165, 32, 0.6); } 70% { box-shadow: 0 0 0 12px rgba(218, 165, 32, 0); } 100% { box-shadow: 0 0 0 0 rgba(218, 165, 32, 0); } }
 
-    /* হেডার */  
-    header {   
-        background: #1da1f2; padding: 12px 15px; display: flex; justify-content: space-between;   
-        align-items: center; color: white; position: sticky; top: 0; z-index: 100;   
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);  
-    }  
-    .logo-area { font-weight: 800; font-size: 20px; text-transform: uppercase; }  
-    .header-btn { background: white; color: #1da1f2; padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 14px; margin-left: 10px; cursor: pointer; }  
+        /* --- HEADER --- */
+        header { background: var(--primary); padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .logo-area { font-weight: 900; font-size: 20px; letter-spacing: 1px; text-transform: uppercase; }
+        .header-btn { background: white; color: var(--primary); padding: 6px 16px; border-radius: 20px; font-weight: 700; font-size: 13px; margin-left: 8px; cursor: pointer; transition: transform 0.2s; }
+        .header-btn:active { transform: scale(0.95); }
 
-    /* পোস্ট ডিটেইলস এরিয়া */  
-    .post-author-area { padding: 10px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e1e8ed; }  
-    .author-info { display: flex; align-items: center; gap: 10px; }  
-    .pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }  
-    .pfp img { width: 100%; height: 100%; object-fit: cover; }  
-    .author-text h3 { font-size: 16px; margin: 0; color: #0f1419; display: inline-flex; align-items: center; }  
-    .author-text span { font-size: 14px; color: #1da1f2; display: block; margin-top: -2px; }  
-    .post-time { font-size: 13px; color: #536471; font-weight: bold; }  
+        /* --- CONTENT STYLES --- */
+        .post-author-area { padding: 10px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+        .author-info { display: flex; align-items: center; gap: 10px; }
+        .pfp { width: 42px; height: 42px; border-radius: 50%; background: #ddd; overflow: hidden; }
+        .pfp img { width: 100%; height: 100%; object-fit: cover; }
+        .author-text h3 { font-size: 16px; color: var(--dark); display: inline-flex; align-items: center; margin: 0; }
+        .author-text span { font-size: 14px; color: var(--primary); display: block; margin-top: -2px; }
+        .verified-badge { color: var(--primary); font-size: 14px; margin-left: 4px; }
+        .post-time { font-size: 13px; color: var(--light); font-weight: 600; }
 
-    /* ভিডিও কন্টেইনার */  
-    .video-container { width: 100%; aspect-ratio: 16/9; background: #000; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: 5px; cursor: pointer; }  
-    .video-container img { width: 100%; height: 100%; object-fit: contain; }  
-    .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }  
-    .play-btn-center::after { content: ''; border-left: 20px solid white; border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 5px; }  
-    .main-video-spinner { display: none; position: absolute; width: 50px; height: 50px; border: 5px solid rgba(255, 255, 255, 0.3); border-top: 5px solid #fff; border-radius: 50%; animation: spin 1s linear infinite; z-index: 6; }  
-    .video-controls { position: absolute; bottom: 0; left: 0; width: 100%; padding: 10px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; display: flex; justify-content: space-between; font-size: 12px; z-index: 5; }  
+        .video-container { width: 100%; aspect-ratio: 16/9; background: #000; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: 5px; cursor: pointer; }
+        .video-container img { width: 100%; height: 100%; object-fit: contain; }
+        .play-btn-center { position: absolute; width: 55px; height: 55px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }
+        .play-btn-center::after { content: ''; border-left: 18px solid white; border-top: 10px solid transparent; border-bottom: 10px solid transparent; margin-left: 4px; }
+        .main-video-spinner { display: none; position: absolute; width: 45px; height: 45px; border: 4px solid rgba(255, 255, 255, 0.3); border-top: 4px solid #fff; border-radius: 50%; animation: spin 1s linear infinite; z-index: 6; }
+        .video-controls { position: absolute; bottom: 0; left: 0; width: 100%; padding: 8px 12px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; z-index: 5; }
 
-    .content-body { padding: 15px 15px 0 15px; }  
-    .article-title { font-size: 20px; font-weight: 800; margin-bottom: 15px; color: #0f1419; line-height: 1.3; }  
-    .article-para { font-size: 15px; line-height: 1.2; color: #1c1e21; margin-bottom: 12px; text-align: left; letter-spacing: -0.3px; }  
+        .content-body { padding: 15px; }
+        .article-title { font-size: 19px; font-weight: 800; margin-bottom: 12px; color: var(--dark); line-height: 1.3; }
+        .article-para { font-size: 15px; line-height: 1.4; color: #1c1e21; margin-bottom: 10px; text-align: left; }
 
-    /* --- ডাউনলোড সেকশন ডিজাইন --- */  
-    .download-title-text { font-size: 18px; font-weight: 800; color: #0f1419; text-align: center; margin: 20px 0 10px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }  
-    .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 12px; }  
-    
-    .download-btn-v2 { display: flex; align-items: center; justify-content: center; width: 100%; padding: 14px 10px; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: all 0.2s; position: relative; }  
-    .download-btn-v2:active { transform: scale(0.98); }  
+        /* --- DOWNLOAD & LOGIC UI --- */
+        .download-title-text { font-size: 17px; font-weight: 800; color: var(--dark); text-align: center; margin: 20px 0 12px 0; padding-top: 15px; border-top: 1px solid var(--border); letter-spacing: -0.5px; }
+        .download-buttons-container { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+        
+        .download-btn-v2 { display: flex; align-items: center; justify-content: center; width: 100%; padding: 14px 10px; border-radius: 10px; font-weight: 700; font-size: 15px; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: all 0.2s ease; position: relative; overflow: hidden; }
+        .download-btn-v2:active { transform: scale(0.98); }
+        .download-btn-v2 i.left-icon { margin-right: 8px; }
 
-    /* সফল ভিজিট বাটনের স্টাইল (রঙ একই থাকবে, শুধু ক্লিক বন্ধ হবে) */
-    .download-btn-v2.completed-step {
-        cursor: default;
-        pointer-events: none; /* আর ক্লিক করা যাবে না */
-        box-shadow: none;
-    }
+        /* Completed State */
+        .download-btn-v2.completed-step { cursor: default; pointer-events: none; }
+        .download-btn-v2 .check-icon { margin-left: 12px; color: #1da1f2; background: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); border: 2px solid white; }
 
-    /* 🔥 লাক্সারিয়াস ফাইনাল বাটন ডিজাইন 🔥 */
-    .final-download-btn {
-        display: none; /* প্রথমে লুকানো */
-        background: linear-gradient(135deg, #1e1e2f, #3a3a5e, #1e1e2f) !important; /* ডার্ক লাক্সারি বেস */
-        color: #FFD700 !important; /* গোল্ডেন টেক্সট */
-        border: 2px solid #FFD700;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-weight: 900;
-        font-size: 16px;
-        box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-        animation: luxuryGlow 2s infinite alternate;
-        margin-top: 10px;
-    }
-
-    @keyframes luxuryGlow {
-        0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); transform: scale(1); }
-        100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.7); transform: scale(1.02); }
-    }
-
-    /* স্ট্যাটস ও ফুটার */  
-    .stats-section { padding: 12px 0; margin-top: 15px; border-top: 1px solid #e1e8ed; border-bottom: 1px solid #e1e8ed; display: flex; align-items: center; background: #fff; }  
-    .stats-left { display: flex; align-items: center; gap: 20px; flex-grow: 1; overflow: hidden; }  
-    .view-stat { flex: 0 0 auto; display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; }  
-    .like-stat-container { flex: 1 1 auto; display: flex; justify-content: center; }  
-    .love-btn { display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: 0.2s; user-select: none; }  
-    .love-btn.liked { color: #e0245e; } .love-btn.liked i { font-weight: 900; }  
-    .share-icons { flex: 0 0 auto; display: flex; gap: 8px; }  
-    .share-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 13px; transition: 0.2s; }  
-
-    /* রিলেটেড পোস্ট কার্ড */  
-    .related-section { background: #fff; margin-top: 0; }  
-    .related-header { padding: 15px; font-weight: 800; color: #536471; border-bottom: 1px solid #e1e8ed; text-transform: uppercase; background: #fff; }  
-    .post-card { background: white; padding: 5px 15px 5px 15px; border-bottom: 1px solid #e1e8ed; display: flex; flex-direction: column; gap: 6px; }  
-    .post-header { display: flex; gap: 10px; align-items: center; }  
-    .post-pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }  
-    .post-pfp img { width: 100%; height: 100%; object-fit: cover; }  
-    .post-meta-text { display: flex; flex-direction: column; justify-content: center; }  
-    .name-row { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }   
-    .name-row h3 { font-size: 18px; font-weight: 800; color: #0f1419; margin: 0; display: inline-flex; align-items: center; }  
-    .post-username { font-size: 14px; color: #1da1f2; margin-top: 0; }  
-    .verified-badge { color: #1da1f2; font-size: 16px; margin-left: 5px; margin-right: 2px; display: inline-flex; align-items: center; }  
-    .time-ago { font-size: 15px; color: #536471; }  
-    .dot-separator { font-size: 15px; color: #536471; margin: 0 2px; }  
-    .post-title { font-size: 18px; font-weight: 700; color: #0f1419; margin-bottom: 8px; margin-top: -3px; line-height: 1.3; }  
-    .post-excerpt { font-size: 15px; color: #0f1419; line-height: 1.4; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }  
-    .read-more-text { color: #1da1f2; font-weight: 600; font-size: 14px; }  
-    .hashtags { color: #1d9bf0; font-size: 15px; margin-bottom: 10px; cursor: default; }  
-    .media-container { position: relative; width: 100%; border-radius: 12px; overflow: hidden; margin-top: 5px; display: block; cursor: pointer; background: #000; aspect-ratio: 3 / 4; max-height: 720px; }  
-    .media-container img { width: 100%; height: 100%; display: block; object-fit: cover; margin: 0 auto; max-height: none; }  
-    .media-container.auto-fit { aspect-ratio: initial; height: auto; }  
-    .media-container.auto-fit img { height: auto; object-fit: contain; }  
-    .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background-color: rgba(0, 0, 0, 0.6); border-radius: 50%; display: flex; justify-content: center; align-items: center; pointer-events: none; border: 2px solid rgba(255,255,255,0.8); }  
-    .play-icon::after { content: ''; display: block; width: 0; height: 0; border-left: 18px solid white; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 4px; }  
-    .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0, 0, 0, 0.8); color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; pointer-events: none; z-index: 5; }  
-    .post-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; color: #536471; font-size: 16px; font-weight: 500; }  
-    .footer-left { display: flex; align-items: center; gap: 6px; }  
-    .footer-right { display: flex; align-items: center; gap: 20px; }  
-    .love-btn-rel { cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all 0.2s; user-select: none; }  
-    .love-btn-rel:hover { color: #e0245e; background-color: rgba(224, 36, 94, 0.1); padding: 4px 8px; border-radius: 15px; margin: -4px -8px; }  
-    .love-btn-rel.liked { color: #e0245e !important; } .love-btn-rel.liked i { font-weight: 900; }  
-    .footer-share-btn { cursor: pointer; padding: 8px; border-radius: 50%; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; }  
-    .footer-share-btn:hover { background-color: rgba(0,0,0,0.05); }  
-
-    /* ফুটার এবং লোডার */  
-    .site-footer { background-color: #fff; padding: 30px 20px; text-align: center; border-top: none; margin-top: 0; }  
-    .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }  
-    .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; }  
-    .footer-copyright { color: #536471; font-size: 13px; }  
-    
-    .notification { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.9); color: white; padding: 12px 25px; border-radius: 30px; z-index: 1002; opacity: 0; transition: 0.3s; pointer-events: none; font-weight: 600; font-size: 14px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); text-align: center; width: 90%; max-width: 400px; }  
-    .notification.show { opacity: 1; }  
-
-    #sentinel { width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; }  
-    .load-more-spinner { width: 24px; height: 24px; border: 3px solid #ccc; border-top: 3px solid #1da1f2; border-radius: 50%; animation: spin 1s linear infinite; display: none; }  
-    #sentinel.loading .load-more-spinner { display: block; }  
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }  
-</style>
-
-</head>  
-<body>  
-<div class="main-wrapper">  
-    <header>  
-        <div class="logo-area">FILMIXO</div>  
-        <div>  
-            <span class="header-btn" onclick="window.location.href='https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea'">Sign Up</span>  
-            <span class="header-btn" onclick="window.location.href='index.html'">Home</span>  
-        </div>  
-    </header>  
-    
-    <div id="post-details-container"></div>  
-
-    <div class="related-section" id="related-section-id">  
-        <div class="related-header">RELATED POSTS</div>  
-        <div id="related-posts-container"></div>  
-        <div id="sentinel"><div class="load-more-spinner"></div></div>  
-    </div>  
-
-    <footer class="site-footer">  
-        <div class="footer-links">  
-            <a href="#" id="link-about">About</a>  
-            <a href="#" id="link-contact">Contact</a>  
-            <a href="#" id="link-privacy">Privacy Policy</a>  
-            <a href="#" id="link-terms">Terms of Service</a>  
-        </div>  
-        <div class="footer-copyright">  
-            Copyright © 2026 <a href="index.html">Filmixo.com</a>. All rights reserved.  
-        </div>  
-    </footer>  
-    <div id="notification" class="notification"></div>
-</div>  
-
-<script type="module">  
-    // Firebase SDK Imports  
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";  
-    import { getFirestore, doc, getDoc, setDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";  
-  
-    // ============================================  
-    //  TRACKING & LOGIC CONFIG  
-    // ============================================  
-    
-    const MIN_VISIT_TIME_MS = 5000; // ৫ সেকেন্ড (লজিক)
-    const PERMANENT_PROFILE_IMAGE_URL = "https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/FILMIXO.jpg";  
-    
-    const firebaseConfig = { apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q", authDomain: "my-ad-analytics-4560a.firebaseapp.com", databaseURL: "https://my-ad-analytics-4560a-default-rtdb.firebaseio.com", projectId: "my-ad-analytics-4560a", storageBucket: "my-ad-analytics-4560a.firebasestorage.app", messagingSenderId: "104213283950", appId: "1:104213283950:web:b5a25ecd54df809625127f", measurementId: "G-WS7QSQ9H0Y" };  
-    const app = initializeApp(firebaseConfig);  
-    const db = getFirestore(app);  
-    
-    let deviceId = localStorage.getItem('deviceId');
-    if (!deviceId) {
-        deviceId = 'deviceId-' + Date.now();
-        localStorage.setItem('deviceId', deviceId);
-    }
-    
-    const urlParams = new URLSearchParams(window.location.search);  
-    const postId = urlParams.get('id');  
-    
-    // Keys
-    const PENDING_CLICK_BTN_KEY = `pending_click_btn_${postId}`;
-    const CLICK_TIME_KEY = `click_time_${postId}`;
-    const getVisitedKey = (btnId) => `visited_${btnId}_${postId}`;
-    
-    // --- STEP 1: VISIT VERIFICATION (on Load/Pageshow) ---
-    function checkVisitStatus() {
-        const pendingBtn = localStorage.getItem(PENDING_CLICK_BTN_KEY);
-        const clickTime = localStorage.getItem(CLICK_TIME_KEY);
-
-        if (pendingBtn && clickTime) {
-            const timeSpent = Date.now() - parseInt(clickTime);
-
-            // শর্ত: ৫ সেকেন্ড থাকতে হবে
-            if (timeSpent >= MIN_VISIT_TIME_MS) {
-                // শর্ত পূরণ হয়েছে
-                localStorage.setItem(getVisitedKey(pendingBtn), 'true');
-            } else {
-                // শর্ত পূরণ হয়নি -> নোটিফিকেশন ১০ সেকেন্ডের কথা বলবে
-                showNotification("Please stay on the new page for at least 10 seconds! ⏳");
-            }
-            
-            // রিসেট টেম্পোরারি ডাটা
-            localStorage.removeItem(PENDING_CLICK_BTN_KEY);
-            localStorage.removeItem(CLICK_TIME_KEY);
+        /* 🔥 ULTRA-LUXURY GOLDEN BUTTON 🔥 */
+        .final-download-btn {
+            display: none; 
+            background: linear-gradient(135deg, #FFD700 0%, #FDB931 20%, #B8860B 50%, #FDB931 80%, #FFD700 100%);
+            color: #3e2723 !important;
+            border: 1px solid #fff;
+            font-size: 17px;
+            font-weight: 900;
+            letter-spacing: 1.2px;
+            text-shadow: 0px 1px 0px rgba(255,255,255,0.45);
+            box-shadow: 0 0 20px rgba(218, 165, 32, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: pulse-gold 2s infinite;
+            padding: 18px 10px;
         }
-        updateButtonState();
+        .final-download-btn::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg); animation: shine 3s infinite;
+        }
+        .final-btn-content { display: flex; align-items: center; gap: 10px; z-index: 2; position: relative; }
+
+        /* --- STATS & FOOTER --- */
+        .stats-section { padding: 12px 0; margin-top: 15px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); display: flex; align-items: center; }
+        .stats-left { display: flex; gap: 20px; flex-grow: 1; }
+        .view-stat, .love-btn { display: flex; align-items: center; gap: 6px; font-weight: 500; font-size: 14px; color: var(--light); cursor: pointer; }
+        .love-btn.liked { color: #e0245e; } 
+        .share-icons { display: flex; gap: 10px; }
+        .share-icon { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; cursor: pointer; transition: transform 0.2s; }
+        .share-icon:hover { transform: scale(1.1); }
+
+        /* --- RELATED POSTS --- */
+        .related-header { padding: 15px; font-weight: 800; color: var(--light); border-bottom: 1px solid var(--border); text-transform: uppercase; letter-spacing: 0.5px; font-size: 14px; }
+        .post-card { padding: 10px 15px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
+        .post-header { display: flex; gap: 10px; align-items: center; }
+        .name-row { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+        .name-row h3 { font-size: 16px; font-weight: 800; color: var(--dark); margin: 0; }
+        .post-username { font-size: 14px; color: var(--primary); }
+        .post-title { font-size: 16px; font-weight: 700; color: var(--dark); line-height: 1.3; margin: 4px 0; cursor: pointer; }
+        .post-excerpt { font-size: 14px; color: var(--dark); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; cursor: pointer; }
+        .read-more-text { color: var(--primary); font-weight: 600; font-size: 13px; }
+        .hashtags { color: #1d9bf0; font-size: 14px; cursor: default; }
+        .media-container { position: relative; width: 100%; border-radius: 12px; overflow: hidden; background: #000; aspect-ratio: 3/4; cursor: pointer; }
+        .media-container img { width: 100%; height: 100%; object-fit: cover; }
+        .media-container.auto-fit { aspect-ratio: initial; height: auto; }
+        .media-container.auto-fit img { height: auto; object-fit: contain; }
+        .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50px; height: 50px; background: rgba(0,0,0,0.6); border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid rgba(255,255,255,0.8); pointer-events: none; }
+        .play-icon::after { content: ''; border-left: 16px solid white; border-top: 9px solid transparent; border-bottom: 9px solid transparent; margin-left: 4px; }
+        .duration-badge { position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.75); color: white; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: 700; pointer-events: none; }
+        .post-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; color: var(--light); font-size: 13px; font-weight: 500; }
+        .footer-right { display: flex; align-items: center; gap: 15px; }
+
+        .site-footer { padding: 40px 20px; text-align: center; color: var(--light); }
+        .footer-links { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; }
+        .footer-links a { color: var(--light); font-size: 13px; font-weight: 500; }
+        #sentinel { height: 60px; display: flex; align-items: center; justify-content: center; }
+        .load-more-spinner { width: 24px; height: 24px; border: 3px solid #ccc; border-top: 3px solid var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; display: none; }
+        #sentinel.loading .load-more-spinner { display: block; }
+        
+        .notification { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.95); color: white; padding: 12px 24px; border-radius: 50px; z-index: 2000; opacity: 0; transition: opacity 0.3s; pointer-events: none; font-weight: 600; font-size: 14px; text-align: center; width: max-content; max-width: 90%; box-shadow: 0 5px 20px rgba(0,0,0,0.4); }
+        .notification.show { opacity: 1; }
+    </style>
+</head>
+<body>
+
+<div class="main-wrapper">
+    <header>
+        <div class="logo-area">FILMIXO</div>
+        <div>
+            <span class="header-btn" onclick="window.location.href='https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea'">Sign Up</span>
+            <span class="header-btn" onclick="window.location.href='index.html'">Home</span>
+        </div>
+    </header>
+
+    <div id="post-details-container"></div>
+
+    <div class="related-section" id="related-section-id">
+        <div class="related-header">Related Posts</div>
+        <div id="related-posts-container"></div>
+        <div id="sentinel"><div class="load-more-spinner"></div></div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-links">
+            <a href="#">About</a><a href="#">Contact</a><a href="#">Privacy</a><a href="#">Terms</a>
+        </div>
+        <div class="footer-copyright">Copyright © 2026 <a href="index.html" style="color:var(--primary)">Filmixo.com</a></div>
+    </footer>
+    <div id="notification" class="notification"></div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getFirestore, doc, getDoc, setDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+    // --- CONFIG ---
+    const CONFIG = {
+        VIDEO_REDIRECT: "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea",
+        VISIT_TIME_MS: 5000,
+        BATCH_SIZE: 6,
+        PFP_URL: "https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/FILMIXO.jpg"
+    };
+    
+    const db = getFirestore(initializeApp({ apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q", authDomain: "my-ad-analytics-4560a.firebaseapp.com", projectId: "my-ad-analytics-4560a", storageBucket: "my-ad-analytics-4560a.firebasestorage.app", messagingSenderId: "104213283950", appId: "1:104213283950:web:b5a25ecd54df809625127f" }));
+    
+    let availablePosts = [], currentIndex = 0, timeElements = [], deviceId = localStorage.getItem('did') || `d-${Date.now()}`;
+    if(!localStorage.getItem('did')) localStorage.setItem('did', deviceId);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const postId = urlParams.get('id');
+    
+    const KEYS = {
+        PENDING: `p_click_${postId}`,
+        TIME: `p_time_${postId}`,
+        VISITED: (id) => `v_${id}_${postId}`
+    };
+
+    // --- UTILITIES ---
+    const randColor = () => ['#1da1f2','#e0245e','#17bf63','#794bc4'][Math.floor(Math.random()*4)];
+    const fmtCount = n => n >= 1e6 ? (n/1e6).toFixed(1)+'M' : n >= 1e3 ? (n/1e3).toFixed(1)+'K' : (n||0);
+    const timeAgo = d => {
+        const s = Math.floor((new Date() - new Date(d))/1000);
+        return s>31536000?Math.floor(s/31536000)+"y ago":s>86400?Math.floor(s/86400)+"d ago":s>3600?Math.floor(s/3600)+"h ago":s>60?Math.floor(s/60)+"m ago":"Just now";
+    };
+    const showToast = m => { const n = document.getElementById('notification'); n.innerText = m; n.classList.add('show'); setTimeout(()=>n.classList.remove('show'), 4000); };
+
+    // --- CORE LOGIC: VISIT & RESET ---
+    function checkVisit() {
+        const pBtn = localStorage.getItem(KEYS.PENDING);
+        const pTime = localStorage.getItem(KEYS.TIME);
+        
+        if (pBtn && pTime) {
+            const passed = Date.now() - parseInt(pTime) >= CONFIG.VISIT_TIME_MS;
+            if (passed) {
+                localStorage.setItem(KEYS.VISITED(pBtn), '1');
+            } else {
+                showToast("Please stay on the new page for at least 10 seconds! ⏳");
+            }
+            // Clear pending click data
+            localStorage.removeItem(KEYS.PENDING);
+            localStorage.removeItem(KEYS.TIME);
+        }
+        updateUI();
     }
 
-    // --- STEP 2: HANDLE CLICK (Same Tab Navigation) ---
-    window.handleAdClick = function(btnId, url) {
-        if (localStorage.getItem(getVisitedKey(btnId)) === 'true') return; // ইতিমধ্যে ভিজিট করা থাকলে কাজ করবে না
+    // Handles DOM updates based on storage state
+    function updateUI() {
+        const b1 = document.getElementById('btn-b1');
+        const b2 = document.getElementById('btn-b2');
+        const final = document.getElementById('btn-final');
+        let done = 0, req = 0;
+        
+        // Define buttons array for cleaner loop
+        [{el: b1, key: 'b1', step: 1, txt: '1080p Full HD'}, 
+         {el: b2, key: 'b2', step: 2, txt: '720p HD'}]
+        .forEach(item => {
+            if(item.el) {
+                req++;
+                const isVisited = localStorage.getItem(KEYS.VISITED(item.key)) === '1';
+                if(isVisited) {
+                    done++;
+                    item.el.innerHTML = `Step ${item.step} Successful <div class="check-icon"><i class="fa-solid fa-check"></i></div>`;
+                    item.el.classList.add('completed-step');
+                } else {
+                    // RESET STATE (Critical fix for back navigation)
+                    item.el.innerHTML = `<i class="fa-solid fa-cloud-arrow-down left-icon"></i> ${item.txt}`;
+                    item.el.classList.remove('completed-step');
+                }
+            }
+        });
 
-        localStorage.setItem(PENDING_CLICK_BTN_KEY, btnId);
-        localStorage.setItem(CLICK_TIME_KEY, Date.now());
+        if(final) final.style.display = (req > 0 && done === req) ? 'flex' : 'none';
+    }
 
-        // একই ট্যাবে ওপেন হবে (নতুন ট্যাব নয়)
+    window.handleClick = (id, url) => {
+        if (localStorage.getItem(KEYS.VISITED(id)) === '1') return;
+        localStorage.setItem(KEYS.PENDING, id);
+        localStorage.setItem(KEYS.TIME, Date.now());
+        window.location.href = url; // Same Tab Navigation
+    };
+
+    window.finalDl = (url) => {
+        // Clear all criteria flags BEFORE navigation
+        ['b1','b2'].forEach(k => localStorage.removeItem(KEYS.VISITED(k)));
+        // Navigate to movie
         window.location.href = url;
     };
 
-    // --- STEP 3: HANDLE FINAL DOWNLOAD ---
-    window.handleFinalDownload = function(finalUrl) {
-        // সব লোকাল স্টোরেজ ক্লিয়ার
-        localStorage.removeItem(getVisitedKey('btn-1080'));
-        localStorage.removeItem(getVisitedKey('btn-720'));
-        
-        // মুভি লিঙ্কে যাওয়া
-        window.location.href = finalUrl;
+    // --- EVENTS ---
+    window.vidClick = () => { 
+        document.getElementById('p-btn').style.display='none'; 
+        document.getElementById('spin').style.display='block'; 
+        setTimeout(()=>window.location.href=CONFIG.VIDEO_REDIRECT, 200); 
     };
 
-    // --- STEP 4: UI UPDATE ---
-    function updateButtonState() {
-        const btn1080 = document.getElementById('btn-1080');
-        const btn720 = document.getElementById('btn-720');
-        const finalBtn = document.getElementById('btn-final');
+    // This ensures UI resets when returning from Final Link (via Back button)
+    window.addEventListener('pageshow', () => { 
+        if(document.getElementById('p-btn')) {
+            document.getElementById('p-btn').style.display='flex';
+            document.getElementById('spin').style.display='none';
+        }
+        checkVisit(); 
+    });
+    
+    // --- RENDERING FUNCTIONS ---
+    function renderPost(p) {
+        let dlHTML = '';
+        if (p.downloadLink1 || p.downloadLink2) {
+            const finalUrl = p.downloadLink1; 
+            dlHTML = `
+                <div class="download-title-text">DOWNLOAD FULL MOVIE IN HD</div>
+                <div class="download-buttons-container">
+                    ${p.downloadLink2 ? `<div id="btn-b1" class="download-btn-v2" style="background:${randColor()}" onclick="handleClick('b1','${p.downloadLink2}')"><i class="fa-solid fa-cloud-arrow-down left-icon"></i> 1080p Full HD</div>` : ''}
+                    ${p.downloadLink1 ? `<div id="btn-b2" class="download-btn-v2" style="background:${randColor()}" onclick="handleClick('b2','${p.downloadLink1}')"><i class="fa-solid fa-cloud-arrow-down left-icon"></i> 720p HD</div>` : ''}
+                    <div id="btn-final" class="final-download-btn" onclick="finalDl('${finalUrl}')">
+                        <div class="final-btn-content"><i class="fa-solid fa-crown"></i> DOWNLOAD FULL MOVIE <i class="fa-solid fa-crown"></i></div>
+                    </div>
+                </div>`;
+        }
+
+        const html = `
+            <div class="post-author-area">
+                <div class="author-info"><div class="pfp"><img src="${CONFIG.PFP_URL}"></div><div class="author-text"><h3>FILMIXO <i class="verified-badge fa-solid fa-circle-check"></i></h3><span>@filmixo</span></div></div>
+                <div class="post-time" id="m-time">${timeAgo(p.uploadTime)}</div>
+            </div>
+            <div class="video-container" onclick="vidClick()"><img src="${p.mediaImage}"><div class="play-btn-center" id="p-btn"></div><div class="main-video-spinner" id="spin"></div><div class="video-controls"><span>${p.videoDuration}</span><span>HD</span></div></div>
+            <div class="content-body">
+                <h1 class="article-title">${p.title}</h1>
+                ${(p.paragraphs||[]).map(t=>`<p class="article-para">${t}</p>`).join('')}
+                ${dlHTML}
+                <div class="stats-section">
+                    <div class="stats-left"><div class="view-stat"><i class="fa-solid fa-eye"></i> <span id="v-cnt">...</span></div><div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="l-cnt">...</span></div></div>
+                    <div class="share-icons">${['facebook-f','facebook-messenger','whatsapp','twitter','telegram'].map((ic,i)=>`<div class="share-icon" style="background:${['#1877f2','#0084ff','#25d366','#1da1f2','#0088cc'][i]}" onclick="share('${['fb','msg','wa','tw','tg'][i]}','${p.title}')"><i class="fa-brands fa-${ic}"></i></div>`).join('')}</div>
+                </div>
+            </div>`;
         
-        let totalRequired = 0;
-        let totalVisited = 0;
-
-        // চেক ১০৮০ বাটন
-        if (btn1080) {
-            totalRequired++;
-            if (localStorage.getItem(getVisitedKey('btn-1080')) === 'true') {
-                totalVisited++;
-                btn1080.innerHTML = '<i class="fa-solid fa-circle-check"></i> Step 1 Successful';
-                btn1080.classList.add('completed-step'); // ধূসর হবে না, কিন্তু ক্লিক করা যাবে না
-            }
-        }
-
-        // চেক ৭২০ বাটন
-        if (btn720) {
-            totalRequired++;
-            if (localStorage.getItem(getVisitedKey('btn-720')) === 'true') {
-                totalVisited++;
-                // যদি ১০৮০ থাকে তবে এটি স্টেপ ২, না থাকলে এটি স্টেপ ১
-                const stepNum = btn1080 ? "2" : "1";
-                btn720.innerHTML = `<i class="fa-solid fa-circle-check"></i> Step ${stepNum} Successful`;
-                btn720.classList.add('completed-step');
-            }
-        }
-
-        // ফাইনাল বাটন দেখানো
-        if (totalRequired > 0 && totalVisited === totalRequired) {
-            if(finalBtn) {
-                finalBtn.style.display = 'flex';
-                // টাইটেল আপডেট অপশনাল, ইউজার বলেনি তাই আগেরটাই থাকবে অথবা চাইলে আপডেট করা যায়
-            }
-        } else {
-            if(finalBtn) finalBtn.style.display = 'none';
-        }
+        document.getElementById('post-details-container').innerHTML = html;
+        if(document.getElementById('m-time')) timeElements.push({e:document.getElementById('m-time'), t:p.uploadTime});
+        // Run initial check
+        checkVisit();
     }
 
-    // ব্রাউজার ব্যাক বাটন বা পেজ লোডের সময় চেক করবে
-    window.addEventListener('pageshow', (event) => {
-        checkVisitStatus();
-    });
-
-    // ============================================  
-    //  EXISTING RENDERING & FUNCTIONALITY  
-    // ============================================  
-    const CONFIG = {  
-        GLOBAL_VIDEO_LINK: "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea",  
-        TOTAL_RELATED_POSTS: 6,   
-        BATCH_SIZE_SCROLL: 6,    
-        footer: { about: "#", contact: "#", privacy: "#", terms: "#" }  
-    };  
-  
-    let availablePosts = [];   
-    let currentStartIndex = 0;   
-    let observer;   
-    let sentinelObserver;   
-    let timeElementsToUpdate = [];  
-  
-    function getRandomColor() { const c=['#1da1f2','#e0245e','#17bf63']; return c[Math.floor(Math.random()*c.length)]; }   
-    function formatCount(n) { if(!n) return 0; return n >= 1000000 ? (n/1000000).toFixed(1)+'M' : n >= 1000 ? (n/1000).toFixed(1)+'K' : n; }  
-    function timeAgo(dateString) { const d = new Date(dateString); const seconds = Math.floor((new Date() - d) / 1000); let interval = seconds / 31536000; if (interval > 1) return Math.floor(interval) + "y ago"; interval = seconds / 86400; if (interval > 1) return Math.floor(interval) + "d ago"; interval = seconds / 3600; if (interval > 1) return Math.floor(interval) + "h ago"; interval = seconds / 60; if (interval > 1) return Math.floor(interval) + "m ago"; return "Just now"; }  
-    function updateAllTimeElements() { timeElementsToUpdate.forEach(item => { if (item.element && item.element.parentNode) { item.element.innerText = timeAgo(item.dateString); } else { timeElementsToUpdate = timeElementsToUpdate.filter(i => i !== item); } }); }  
-    function formatDate(d) { return new Date(d).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }); }  
-    function showNotification(msg) { const n=document.getElementById('notification'); n.innerText=msg; n.classList.add('show'); setTimeout(()=>n.classList.remove('show'),4000); }  
-  
-    function adjustImageAspectRatio(imgElement) {  
-        const mediaContainer = imgElement.closest('.media-container');  
-        imgElement.onload = function() {  
-            const ratio = this.naturalWidth / this.naturalHeight;  
-            if (ratio >= (3 / 4)) { mediaContainer.classList.add('auto-fit'); } else { mediaContainer.classList.remove('auto-fit'); }  
-        };  
-        if (imgElement.complete) { imgElement.onload(); }  
-    }  
-      
-    // --- মেইন পোস্ট রেন্ডার ---  
-    function renderMainPost(post) {  
-        let content = `<h1 class="article-title">${post.title}</h1>`;  
-        if(post.paragraphs) {
-            post.paragraphs.forEach((p) => { content += `<p class="article-para">${p}</p>`; });  
-        }
-  
-        // ডাউনলোড সেকশন সব সময় দেখাবে, প্যারাগ্রাফ থাকুক বা না থাকুক
-        let downloadSectionHTML = '';  
-        if (post.downloadLink1 || post.downloadLink2) {  
-            // ফাইনাল লিঙ্ক হিসেবে Link1 কে ধরা হলো (অথবা আপনার ডাটাবেস অনুযায়ী)
-            const finalMovieUrl = post.downloadLink1; 
-
-            downloadSectionHTML += `  
-                <div class="download-title-text">DOWNLOAD FULL MOVIE IN HD</div>  
-                <div class="download-buttons-container">  
-                    
-                    <!-- 1080p Button (Step 1) -->
-                    ${post.downloadLink2 ? `  
-                        <div id="btn-1080" class="download-btn-v2" 
-                             style="background:${getRandomColor()};" 
-                             onclick="handleAdClick('btn-1080', '${post.downloadLink2}')">  
-                            <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 1080p Full HD  
-                        </div>  
-                    ` : ''}  
-                    
-                    <!-- 720p Button (Step 2 or 1) -->
-                    ${post.downloadLink1 ? `  
-                        <div id="btn-720" class="download-btn-v2" 
-                             style="background:${getRandomColor()};" 
-                             onclick="handleAdClick('btn-720', '${post.downloadLink1}')">  
-                            <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 720p HD  
-                        </div>  
-                    ` : ''}  
-
-                    <!-- FINAL BUTTON (Hidden Initially, Luxury Design) -->
-                    <div id="btn-final" class="download-btn-v2 final-download-btn" 
-                         onclick="handleFinalDownload('${finalMovieUrl}')">  
-                        <i class="fa-solid fa-film" style="margin-right: 8px;"></i> DOWNLOAD FULL MOVIE  
+    function renderCards(list) {
+        const c = document.getElementById('related-posts-container');
+        list.forEach(p => {
+            const div = document.createElement('div');
+            div.innerHTML = `
+                <div class="post-card">
+                    <div class="post-header"><div class="pfp" style="width:35px;height:35px"><img src="${CONFIG.PFP_URL}"></div><div class="name-row"><h3>FILMIXO <i class="verified-badge fa-solid fa-circle-check"></i></h3><span class="post-username">@filmixo</span> &middot; <span class="post-time rel-time" data-t="${p.uploadTime}">${timeAgo(p.uploadTime)}</span></div></div>
+                    <div onclick="window.location.href='/movie/post.html?id=${p.id}'">
+                        <div class="post-title">${p.title}</div>
+                        <div class="post-excerpt">${(p.paragraphs?.[0]||"").substring(0,150)}... <span class="read-more-text">See more</span></div>
                     </div>
-                </div>  
-            `;  
-        }  
-          
-        document.getElementById('post-details-container').innerHTML = `  
-            <div class="post-author-area">  
-                <div class="author-info">  
-                    <div class="pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div>  
-                    <div class="author-text"><h3>FILMIXO <i class="verified-badge fa-solid fa-circle-check"></i></h3><span>@filmixo</span></div>  
-                </div>  
-                <div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div>  
-            </div>  
-            <div class="video-container" onclick="handleVideoClick()"><img src="${post.mediaImage}" loading="lazy"><div class="play-btn-center" id="main-play-btn"></div><div class="main-video-spinner" id="main-spinner"></div><div class="video-controls"><span>${post.videoDuration}</span><span><i class="fa-solid fa-volume-high"></i> HD</span></div></div>  
-            <div class="content-body">  
-                ${content}  
-                ${downloadSectionHTML}   
-                <div class="stats-section">  
-                    <div class="stats-left">  
-                        <div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="view-cnt">...</span> Views</div>  
-                        <div class="like-stat-container"><div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="like-cnt">...</span> Likes</div></div>  
-                    </div>  
-                    <div class="share-icons">  
-                        <div class="share-icon" style="background:#1877f2" onclick="share('fb', '${post.title}')"><i class="fa-brands fa-facebook-f"></i></div>  
-                        <div class="share-icon" style="background:#0084ff" onclick="share('msg', '${post.title}')"><i class="fa-brands fa-facebook-messenger"></i></div>  
-                        <div class="share-icon" style="background:#25d366" onclick="share('wa', '${post.title}')"><i class="fa-brands fa-whatsapp"></i></div>  
-                        <div class="share-icon" style="background:#1da1f2" onclick="share('tw', '${post.title}')"><i class="fa-brands fa-twitter"></i></div>  
-                        <div class="share-icon" style="background:#0088cc" onclick="share('tg', '${post.title}')"><i class="fa-brands fa-telegram"></i></div>  
-                    </div>  
-                </div>  
-            </div>`;  
-          
-        const mainTimeElement = document.getElementById('main-post-time');  
-        if (mainTimeElement) { timeElementsToUpdate.push({ element: mainTimeElement, dateString: post.uploadTime }); }  
+                    <div class="hashtags">${p.hashtags}</div>
+                    <div class="media-container" onclick="window.location.href='/movie/post.html?id=${p.id}'"><img src="${p.mediaImage}"><div class="play-icon"></div><div class="duration-badge">${p.videoDuration}</div></div>
+                    <div class="post-footer"><div class="view-stat"><i class="fa-solid fa-eye"></i> <span class="vc">...</span></div> <div class="footer-right"><div class="love-btn rel-love"><i class="fa-regular fa-heart"></i> <span class="lc">...</span></div><div class="share-icon" style="background:transparent;color:#536471" onclick="sharePost('${p.id}')"><i class="fa-solid fa-share"></i></div></div></div>
+                </div>`;
+            c.appendChild(div);
+            
+            const img = div.querySelector('.media-container img');
+            img.onload = () => { if(img.naturalWidth/img.naturalHeight >= 0.75) img.parentElement.classList.add('auto-fit'); };
+            timeElements.push({e:div.querySelector('.rel-time'), t:p.uploadTime});
+            setupFB(p.id, div);
+        });
+    }
+
+    // --- SHARES & FIREBASE ---
+    window.share = (p, t) => {
+        const u = encodeURIComponent(window.location.href), txt = encodeURIComponent(t);
+        const ls = {fb:`https://www.facebook.com/sharer/sharer.php?u=${u}`, wa:`https://wa.me/?text=${txt}%20${u}`, tw:`https://twitter.com/intent/tweet?text=${txt}&url=${u}`, tg:`https://t.me/share/url?url=${u}&text=${txt}`};
+        if(p==='msg') window.location.href = /Mobi/i.test(navigator.userAgent) ? `fb-messenger://share/?link=${u}` : `https://www.facebook.com/dialog/send?link=${u}&app_id=123&redirect_uri=${u}`;
+        else window.open(ls[p], '_blank');
+    };
+    window.sharePost = (id) => navigator.clipboard.writeText(location.origin+`/movie/post.html?id=${id}`).then(()=>showToast("Link Copied! 📋"));
+
+    function setupFB(id, el) {
+        const vEl = el ? el.querySelector('.vc') : document.getElementById('view-cnt');
+        const lEl = el ? el.querySelector('.lc') : document.getElementById('like-cnt');
+        const lBtn = el ? el.querySelector('.rel-love') : document.querySelector('.love-btn');
         
-        // বাটন স্ট্যাটাস চেক
-        checkVisitStatus();
-    }  
-  
-    // --- ইনিট এবং অন্যান্য ---  
-    async function init() {  
-        const postContainer = document.getElementById('post-details-container');  
-        const mainWrapper = document.querySelector('.main-wrapper');   
-        try {  
-            const res = await fetch('posts.json');  
-            if(!res.ok) throw new Error("Failed to load posts data.");  
-            const posts = await res.json();  
-            const mainPost = posts.find(p => p.id === postId) || posts[0];  
-            if (!mainPost) throw new Error("Post not found.");  
-  
-            renderMainPost(mainPost);  
-            setupFirebaseForMainPost(mainPost.id);  
-            mainWrapper.classList.add('loaded');   
-            setInterval(updateAllTimeElements, 60000);   
-              
-            const anchorPostTime = new Date(mainPost.uploadTime).getTime();  
-            const historicalPosts = posts.filter(p => p.id !== mainPost.id && new Date(p.uploadTime).getTime() < anchorPostTime).sort((a, b) => new Date(b.uploadTime).getTime() - new Date(a.uploadTime).getTime());  
-            availablePosts = historicalPosts.slice(0, CONFIG.TOTAL_RELATED_POSTS);  
-            setupRelatedSectionObserver();   
-        } catch (e) {   
-            postContainer.innerHTML = `<div style="padding:20px;text-align:center;color:red;">Error loading post: ${e.message}</div>`;   
-            mainWrapper.classList.add('loaded');   
-        }  
-    }  
-  
-    function setupRelatedSectionObserver() {  
-        const relatedSection = document.getElementById('related-section-id');  
-        observer = new IntersectionObserver((entries, obs) => {  
-            if (entries[0].isIntersecting) { obs.unobserve(relatedSection); loadNextBatch(); setupSentinelObserver(); }  
-        }, { rootMargin: '100px 0px' });  
-        observer.observe(relatedSection);  
-    }  
-  
-    function setupSentinelObserver() {  
-        const sentinel = document.getElementById('sentinel');  
-        if (availablePosts.length > CONFIG.BATCH_SIZE_SCROLL) {  
-            sentinelObserver = new IntersectionObserver((entries) => {  
-                if (entries[0].isIntersecting && !sentinel.classList.contains('loading')) { setTimeout(() => loadNextBatch(), 500); }  
-            }, { rootMargin: '100px' });  
-            sentinelObserver.observe(sentinel);  
-        } else { sentinel.style.display = 'none'; }  
-    }  
-      
-    function loadNextBatch() {   
-        const sentinel = document.getElementById('sentinel');  
-        if (currentStartIndex >= availablePosts.length) { sentinel.style.display = 'none'; return; }  
-        sentinel.classList.add('loading');  
-        const batchSize = CONFIG.BATCH_SIZE_SCROLL;   
-        const endIndex = Math.min(currentStartIndex + batchSize, availablePosts.length);  
-        const postsToLoad = availablePosts.slice(currentStartIndex, endIndex);  
-        renderBatch(postsToLoad);   
-        currentStartIndex = endIndex;  
-        sentinel.classList.remove('loading');  
-        if (currentStartIndex >= availablePosts.length) { sentinel.style.display = 'none'; if(sentinelObserver) sentinelObserver.unobserve(sentinel); }  
-    }  
-  
-    function renderBatch(postsToLoad) {  
-        const container = document.getElementById('related-posts-container');  
-        postsToLoad.forEach(post => {  
-            let excerpt = post.paragraphs && post.paragraphs.length > 0 ? post.paragraphs[0].substring(0, 200) + "..." : "";  
-            const safeTitle = post.title.replace(/'/g, "\\'");  
-            const cardWrapper = document.createElement('div');  
-            cardWrapper.innerHTML = `  
-                <div class="post-card" data-id="${post.id}">  
-                    <div class="post-header">  
-                        <div class="post-pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div>  
-                        <div class="post-meta-text"><div class="name-row"><h3>FILMIXO <i class="verified-badge fa-solid fa-circle-check"></i></h3><span class="post-username">@filmixo</span> <span class="dot-separator">·</span><span class="time-ago" data-upload-time="${post.uploadTime}">${timeAgo(post.uploadTime)}</span></div></div>  
-                    </div>  
-                    <div class="clickable-area" onclick="openPost('${post.id}')"><div class="post-title">${post.title}</div><div class="post-excerpt">${excerpt} <span class="read-more-text">See more</span></div></div>  
-                    <div class="hashtags">${post.hashtags}</div>  
-                    <div class="clickable-area" onclick="openPost('${post.id}')"><div class="media-container"><img src="${post.mediaImage}" loading="lazy"><div class="play-icon"></div><div class="duration-badge">${post.videoDuration}</div></div></div>  
-                    <div class="post-footer"><div class="footer-left"><i class="fa-solid fa-chart-simple"></i> <span class="count-text view-count-rel">...</span> <span class="label-text">Views</span></div><div class="footer-right"><div class="love-btn-rel"><i class="fa-regular fa-heart"></i> <span class="count-text like-count-rel">...</span> <span class="label-text">Likes</span></div><div class="post-date-display">${formatDate(post.uploadTime)}</div><div class="footer-share-btn" onclick="sharePost('${post.id}', '${safeTitle}')"><i class="fa-solid fa-share-from-square"></i></div></div></div>  
-                </div>`;  
-            const newCard = cardWrapper.firstElementChild;  
-            container.appendChild(newCard);  
-            adjustImageAspectRatio(newCard.querySelector('.media-container img'));  
-            const timeElement = newCard.querySelector('.time-ago');  
-            if (timeElement) { timeElementsToUpdate.push({ element: timeElement, dateString: post.uploadTime }); }  
-            setupFirebaseForSingleCard(newCard, post.id);  
-        });  
-    }  
-  
-    function setupFirebaseForMainPost(id) {  
-        setDoc(doc(db, "views", id), { count: increment(1) }, { merge: true });  
-        onSnapshot(doc(db, "views", id), s => document.getElementById('view-cnt').innerText = formatCount(s.data()?.count || 0));  
-        const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users`, deviceId), lBtn = document.querySelector('.love-btn');  
-        onSnapshot(lRef, s => document.getElementById('like-cnt').innerText = formatCount(s.data()?.count || 0));  
-        getDoc(uRef).then(s => { if(s.exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); } });  
-        lBtn.addEventListener('click', async () => { if((await getDoc(uRef)).exists()) showNotification("Already Liked! ❤️"); else { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); showNotification("Liked! ❤️"); } });  
-    }  
-  
-    function setupFirebaseForSingleCard(card, id) {  
-        const vEl = card.querySelector('.view-count-rel'), lEl = card.querySelector('.like-count-rel'), lBtn = card.querySelector('.love-btn-rel');  
-        onSnapshot(doc(db, "views", id), s => vEl.innerText = formatCount(s.data()?.count || 0));  
-        const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users`, deviceId);  
-        onSnapshot(lRef, s => lEl.innerText = formatCount(s.data()?.count || 0));  
-        getDoc(uRef).then(s => { if(s.exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); } });  
-        lBtn.addEventListener('click', async () => { if((await getDoc(uRef)).exists()) showNotification("Already Liked! ❤️"); else { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); showNotification("Liked! ❤️"); } });  
-    }  
-  
-    window.handleVideoClick = function() {  
-        const p = document.getElementById('main-play-btn'), s = document.getElementById('main-spinner');  
-        if(p) p.style.display = 'none'; if(s) s.style.display = 'block';  
-        setTimeout(() => { window.location.href = CONFIG.GLOBAL_VIDEO_LINK; }, 100);   
-    }  
-    window.addEventListener('pageshow', () => {  
-        const p = document.getElementById('main-play-btn'), s = document.getElementById('main-spinner');  
-        if(p) p.style.display = 'flex'; if(s) s.style.display = 'none';  
-    });  
-  
-    window.openPost = (id) => window.location.href = `/movie/post.html?id=${id}`;  
-    window.sharePost = (id, title) => { const url = window.location.origin + `/movie/post.html?id=${id}`; if (navigator.share) { navigator.share({ title: title, text: title, url: url }).catch((e) => console.log('Share failed', e)); } else { navigator.clipboard.writeText(url); showNotification("Link copied! 📋"); } }  
-    window.share = (platform, title) => {  
-        const url = encodeURIComponent(window.location.href); const text = encodeURIComponent(title);  
-        if (platform === 'msg') { const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent); if (isMobile) window.location.href = `fb-messenger://share/?link=${url}`; else window.open(`https://www.facebook.com/dialog/send?link=${url}&app_id=123456789&redirect_uri=${url}`, '_blank'); } else { let link = ''; if(platform === 'fb') link = `https://www.facebook.com/sharer/sharer.php?u=${url}`; else if(platform === 'wa') link = `https://wa.me/?text=${text}%20${url}`; else if(platform === 'tw') link = `https://twitter.com/intent/tweet?text=${text}&url=${url}`; else if(platform === 'tg') link = `https://t.me/share/url?url=${url}&text=${text}`; window.open(link, '_blank'); }  
-    }  
-  
-    init();  
-</script>  
-</body>  
+        if(!el) setDoc(doc(db,"views",id),{count:increment(1)},{merge:true});
+        onSnapshot(doc(db,"views",id), s=>vEl.innerText=fmtCount(s.data()?.count));
+        onSnapshot(doc(db,"loves",id), s=>lEl.innerText=fmtCount(s.data()?.count));
+        
+        const uRef = doc(db,`loves/${id}/users`,deviceId);
+        getDoc(uRef).then(s=>{if(s.exists()){lBtn.classList.add('liked');lBtn.querySelector('i').classList.replace('fa-regular','fa-solid')}});
+        
+        lBtn.onclick = async () => {
+            if((await getDoc(uRef)).exists()) return showToast("Already Liked! ❤️");
+            lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid');
+            await setDoc(doc(db,"loves",id),{count:increment(1)},{merge:true});
+            await setDoc(uRef,{t:new Date()}); showToast("Liked! ❤️");
+        };
+    }
+
+    // --- BOOTSTRAP ---
+    (async () => {
+        try {
+            const res = await fetch('posts.json');
+            if(!res.ok) throw 0;
+            const posts = await res.json();
+            const main = posts.find(p=>p.id===postId) || posts[0];
+            renderPost(main); setupFB(main.id);
+            document.querySelector('.main-wrapper').classList.add('loaded');
+            
+            setInterval(()=>timeElements.forEach(x=>x.e&&(x.e.innerText=timeAgo(x.t))), 60000);
+            
+            const rest = posts.filter(p=>p.id!==main.id && new Date(p.uploadTime)<new Date(main.uploadTime)).sort((a,b)=>new Date(b.uploadTime)-new Date(a.uploadTime));
+            availablePosts = rest;
+            
+            const obs = new IntersectionObserver(e=>{if(e[0].isIntersecting){obs.disconnect(); loadMore();}},{rootMargin:'100px'});
+            obs.observe(document.getElementById('related-section-id'));
+        } catch(e) { document.getElementById('post-details-container').innerHTML = `<h3 style="text-align:center;padding:20px">Content Unavailable</h3>`; document.querySelector('.main-wrapper').classList.add('loaded'); }
+    })();
+
+    function loadMore() {
+        const s = document.getElementById('sentinel');
+        if(currentIndex >= availablePosts.length) return s.style.display='none';
+        s.classList.add('loading');
+        setTimeout(() => {
+            renderCards(availablePosts.slice(currentIndex, currentIndex + CONFIG.BATCH_SIZE));
+            currentIndex += CONFIG.BATCH_SIZE;
+            s.classList.remove('loading');
+            if(currentIndex < availablePosts.length) {
+                new IntersectionObserver(e=>{if(e[0].isIntersecting && !s.classList.contains('loading')) loadMore();},{rootMargin:'100px'}).observe(s);
+            } else s.style.display='none';
+        }, 500);
+    }
+</script>
+</body>
 </html>
