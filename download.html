@@ -1,255 +1,248 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">Download - Filmixo</title>
+    <title id="pageTitle">Post Title - Secret Binodon</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: #f0f2f5;
-            color: #1c1e21;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-        }
-        .download-container {
-            max-width: 600px;
-            width: 100%;
-            margin-top: 50px;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        .icon-success {
-            color: #1da1f2; /* এখন এটি একটি স্টেপ */
-            font-size: 60px;
-            margin-bottom: 20px;
-        }
-        .download-title {
-            font-size: 24px;
-            font-weight: 800;
-            color: #0f1419;
-            margin-bottom: 10px;
-        }
-        .download-meta {
-            font-size: 15px;
-            color: #536471;
-            margin-bottom: 30px;
-        }
-        /* বাটন স্টাইল */
+        /* আপনার দেওয়া CSS স্টাইল */
+        body { font-family: Arial, sans-serif; background: #f4f4f4; color: #333; padding: 20px; }
+        .post-container { max-width: 700px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .post-title { color: #1da1f2; margin-bottom: 15px; }
+        .post-meta { font-size: 12px; color: #777; margin-bottom: 20px; }
+        .media-box { width: 100%; height: auto; margin-bottom: 20px; border-radius: 6px; overflow: hidden; }
+        .media-box img { width: 100%; height: auto; display: block; }
+        .post-content p { line-height: 1.6; margin-bottom: 15px; text-align: justify; }
+        .download-btn-section { margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; }
         .download-btn {
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
-            padding: 15px 20px;
-            margin-top: 20px;
+            padding: 15px;
+            margin-bottom: 10px;
+            color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 18px;
+            border-radius: 6px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.3s, transform 0.2s;
-            text-transform: uppercase;
-            color: white;
+            transition: background 0.3s;
         }
-        .download-btn i {
+        .download-btn:hover { opacity: 0.9; }
+        .download-btn i { margin-right: 10px; }
+        
+        /* বাটনের অবস্থার জন্য রঙ */
+        .btn-ad-click { background: #1da1f2; } /* অ্যাড ভিজিটের জন্য */
+        .btn-continue { background: #28a745; } /* কন্টিনিউ/ডাউনলোডের জন্য */
+        .btn-loading { background: #ffc107; } /* লোডিং/অন্যান্য */
+        .btn-continue:hover { background: #218838; }
+        .btn-ad-click:hover { background: #0d8bd9; }
+
+        /* স্পিনার স্টাইল */
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s linear infinite;
             margin-right: 10px;
         }
-        /* প্রথম ক্লিকে অ্যাড বাটন (নীল) */
-        .btn-ad-click {
-             background: #1da1f2; 
-        }
-        .btn-ad-click:hover {
-            background: #0d8bd9;
-        }
-        /* দ্বিতীয় ক্লিকে কন্টিনিউ বাটন (সবুজ) */
-        .btn-continue {
-            background: #28a745; 
-        }
-        .btn-continue:hover {
-            background: #218838;
-        }
-        .loading-message {
-            font-size: 16px;
-            color: #1da1f2;
-            margin-top: 20px;
-        }
-        .error-message {
-            font-size: 16px;
-            color: #dc3545;
-            margin-top: 20px;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
 
-<div class="download-container">
-    <i class="fa-solid fa-cloud-arrow-down icon-success"></i>
-    <h1 class="download-title" id="downloadTitle">Preparing Download Link...</h1>
-    <p class="download-meta" id="downloadMeta">We need a quick verification step before the final download.</p>
+<div class="post-container" id="postContainer">
+    <h1 class="post-title" id="postTitle">Loading Post...</h1>
+    <div class="post-meta" id="postMeta"></div>
     
-    <div id="loadingStatus" class="loading-message">
-        <i class="fa-solid fa-spinner fa-spin"></i> Loading Post Data...
+    <div class="media-box" id="mediaBox">
+        <img id="mediaImage" src="" alt="Post Thumbnail">
     </div>
 
-    <button class="download-btn btn-ad-click" id="finalDownloadButton" style="display:none;">
-        <i class="fa-solid fa-arrow-up-right-from-square"></i> Visit Ad to Unlock Download
-    </button>
+    <div class="post-content" id="postContent">
+        <p>Loading content...</p>
+    </div>
 
-    <p id="errorBox" class="error-message" style="display:none;"></p>
+    <div class="download-btn-section">
+        <button class="download-btn btn-ad-click" id="btn1080p" data-quality="1080p">
+            <i class="fa-solid fa-cloud-arrow-down"></i> Download 1080p Full HD
+        </button>
+        <button class="download-btn btn-ad-click" id="btn720p" data-quality="720p">
+            <i class="fa-solid fa-cloud-arrow-down"></i> Download 720p HD
+        </button>
+        <button class="download-btn btn-ad-click" id="btn480p" data-quality="480p">
+            <i class="fa-solid fa-cloud-arrow-down"></i> Download 480p SD
+        </button>
+    </div>
 </div>
 
 <script>
-    // --- কনফিগারেশন ---
+    // --- কনফিগারেশন এবং গ্লোবাল স্টেট ---
     const AD_LINKS = [
-        'https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea', 
-        // আপনি এখানে আপনার প্রয়োজনমতো অন্যান্য অ্যাড লিংক যোগ করতে পারেন
+        "https://adlink1.com/click",
+        "https://adlink2.com/click",
+        "https://adlink3.com/click",
+        // এখানে আপনার সব অ্যাড লিংক যুক্ত করুন
     ];
-    // এই পেজের জন্য পৃথক সেশন স্টোরেজ কী (অন্য পেজের সাথে মিশে না যাওয়ার জন্য)
-    const SESSION_KEY = 'filmixo_download_ad_status'; 
-    const AD_INDEX_KEY = 'filmixo_download_ad_index';
-    
-    let currentAdIndex = parseInt(localStorage.getItem(AD_INDEX_KEY)) || 0;
+    // localStorage ব্যবহার করে অ্যাড রোটেশন ইনডেক্স সেভ করা
+    const AD_INDEX_KEY = 'sb_ad_rotation_index';
+    // sessionStorage ব্যবহার করে এই পোস্টের জন্য অ্যাড ক্লিক হয়েছে কিনা, তা সেভ করা
+    const POST_STATUS_KEY = 'sb_post_ad_status'; 
+
     let postId = null;
-    let finalDownloadLink = null;
+    let currentAdIndex = parseInt(localStorage.getItem(AD_INDEX_KEY)) || 0;
+    
+    // --- ইউটিলিটি ফাংশন ---
+    
+    // সমস্ত বাটনের অবস্থা আপডেট করা
+    function updateAllButtons(isClicked) {
+        const buttons = document.querySelectorAll('.download-btn-section .download-btn');
+        buttons.forEach(btn => {
+            if (isClicked) {
+                // ২য় ক্লিক স্ট্যাটাস: কন্টিনিউ মোড
+                btn.innerHTML = `<i class="fa-solid fa-arrow-right"></i> Continue to Download`;
+                btn.classList.remove('btn-ad-click');
+                btn.classList.add('btn-continue');
+            } else {
+                // ১ম ক্লিক স্ট্যাটাস: অ্যাড ভিজিট মোড
+                const quality = btn.getAttribute('data-quality');
+                btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-down"></i> Download ${quality}`;
+                btn.classList.remove('btn-continue');
+                btn.classList.add('btn-ad-click');
+            }
+        });
+    }
 
     // --- কোর লজিক: অ্যাড এবং ডাউনলোড হ্যান্ডলিং ---
     
-    // বাটন ক্লিক হ্যান্ডলার
-    function handleDownloadClick() {
-        if (!finalDownloadLink || !postId) {
-            console.error("Download link not available.");
-            return;
-        }
+    window.handleDownloadClick = function() {
+        if (!postId) return;
 
-        const btn = document.getElementById('finalDownloadButton');
-        let status = sessionStorage.getItem(SESSION_KEY);
+        // এই পোস্টের জন্য স্ট্যাটাস লোড করা
+        let status = JSON.parse(sessionStorage.getItem(POST_STATUS_KEY)) || {};
+        let isAdClicked = status[postId] === true;
         
-        if (status !== 'clicked') {
+        if (!isAdClicked) {
             // --- প্রথম ক্লিক: অ্যাড ভিজিট ---
             
-            // অ্যাড রোটেশন লজিক
+            // ১. অ্যাড লিংক নির্বাচন ও ভিজিট
             const adLink = AD_LINKS[currentAdIndex % AD_LINKS.length];
+            window.open(adLink, '_blank');
+            
+            // ২. অ্যাড রোটেশন ইনডেক্স আপডেট
             currentAdIndex = (currentAdIndex + 1) % AD_LINKS.length; 
             localStorage.setItem(AD_INDEX_KEY, currentAdIndex);
             
-            // সেশন স্ট্যাটাস আপডেট: ক্লিক হয়েছে
-            sessionStorage.setItem(SESSION_KEY, 'clicked');
+            // ৩. সেশন স্ট্যাটাস আপডেট: ক্লিক হয়েছে
+            status[postId] = true;
+            sessionStorage.setItem(POST_STATUS_KEY, JSON.stringify(status));
             
-            // UI আপডেট: বাটনের লেখা পরিবর্তন
-            updateButtonState('continue');
+            // ৪. UI আপডেট: কন্টিনিউ মোডে সেট করা
+            updateAllButtons(true);
             
-            // বর্তমান ট্যাবেই অ্যাড লিঙ্কে রিডাইরেক্ট
-            window.location.href = adLink; 
-
         } else {
-            // --- দ্বিতীয় ক্লিক: চূড়ান্ত ডাউনলোডে রিডাইরেক্ট ---
+            // --- দ্বিতীয় ক্লিক: ডাউনলোড পেজে রিডাইরেক্ট ---
             
-            // সেশন স্টোরেজ থেকে স্ট্যাটাস মুছে দেওয়া
-            sessionStorage.removeItem(SESSION_KEY); 
+            // ১. সেশন স্ট্যাটাস রিসেট (পরেরবার আবার অ্যাড ভিজিট করতে হবে)
+            delete status[postId];
+            sessionStorage.setItem(POST_STATUS_KEY, JSON.stringify(status));
 
-            // চূড়ান্ত ডাউনলোড লিংকে রিডাইরেক্ট
-            window.location.href = finalDownloadLink;
+            // ২. download.html এ রিডাইরেক্ট (এখানেই সংযোগ)
+            // এটি user কে download.html?id=[Post ID] ঠিকানায় নিয়ে যাবে
+            window.location.href = `download.html?id=${postId}`;
         }
     }
     
-    // বাটনের অবস্থা পরিবর্তনকারী ফাংশন
-    function updateButtonState(state) {
-        const btn = document.getElementById('finalDownloadButton');
-        if (state === 'continue') {
-            btn.innerHTML = `<i class="fa-solid fa-download"></i> Continue to Final Download`;
-            btn.classList.remove('btn-ad-click');
-            btn.classList.add('btn-continue');
-        } else { // state === 'initial'
-             btn.innerHTML = `<i class="fa-solid fa-arrow-up-right-from-square"></i> Visit Ad to Unlock Download`;
-             btn.classList.remove('btn-continue');
-             btn.classList.add('btn-ad-click');
-        }
-    }
-
-    // পেজ লোডের সময় বাটনের প্রাথমিক অবস্থা চেক করা
-    function checkInitialState() {
-        const status = sessionStorage.getItem(SESSION_KEY);
-        if (status === 'clicked') {
-            // যদি একবার ক্লিক করা হয়ে থাকে (অ্যাড ভিজিট হয়ে গেছে)
-            updateButtonState('continue');
-        } else {
-            updateButtonState('initial');
-        }
-    }
-
-
-    // --- কোর লজিক: JSON থেকে ডেটা লোড করা ---
+    // --- পেজ লোড এবং ডেটা লোড ---
     
-    async function loadPostDataAndSetup() {
-        const urlParams = new URLSearchParams(window.location.search);
-        postId = urlParams.get('id');
-        const loadingStatus = document.getElementById('loadingStatus');
-        const errorBox = document.getElementById('errorBox');
-        const downloadButton = document.getElementById('finalDownloadButton');
-        
-        if (!postId) {
-            document.getElementById('downloadTitle').innerText = "Error: Post ID Missing";
-            loadingStatus.style.display = 'none';
-            errorBox.innerText = "The required Post ID is missing.";
-            errorBox.style.display = 'block';
-            return;
-        }
+    async function loadPostData() {
+        // লোডিং স্পিনার ও টাইটেল সেট করা
+        document.getElementById('postTitle').innerHTML = '<span class="spinner"></span> Loading Post...';
         
         try {
+            const urlParams = new URLSearchParams(window.location.search);
+            postId = urlParams.get('id');
+
+            if (!postId) {
+                document.getElementById('postTitle').innerText = "Error: Post ID Missing";
+                return;
+            }
+
             const res = await fetch('posts.json');
-            if (!res.ok) throw new Error(`Failed to load posts data (HTTP Status: ${res.status})`);
-            
+            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
             const posts = await res.json();
             const post = posts.find(p => p.id === postId);
 
-            if (post && post.downloadLink) {
-                // ১. গ্লোবাল ভেরিয়েবলে ডাউনলোড লিংক সংরক্ষণ
-                finalDownloadLink = post.downloadLink;
-                
-                // ২. UI আপডেট
-                document.getElementById('pageTitle').innerText = `Download: ${post.title}`;
-                document.getElementById('downloadTitle').innerText = `Download: ${post.title}`;
-                document.getElementById('downloadMeta').innerText = `Movie: ${post.title} | Duration: ${post.videoDuration}`;
-                
-                // ৩. UI দেখাও এবং ইভেন্ট লিসেনার সেট করো
-                loadingStatus.style.display = 'none';
-                downloadButton.style.display = 'flex';
-                downloadButton.addEventListener('click', handleDownloadClick);
-                
-                // ৪. পেজ লোডের সময় বাটনের অবস্থা সেট করো
-                checkInitialState();
-                
-            } else {
-                document.getElementById('downloadTitle').innerText = "Download Link Not Found";
-                loadingStatus.style.display = 'none';
-                errorBox.innerText = `Could not find a valid download link for Post ID: ${postId}. Please check posts.json.`;
-                errorBox.style.display = 'block';
+            if (!post) {
+                document.getElementById('postTitle').innerText = "Error: Post Not Found";
+                return;
             }
 
+            // --- UI আপডেট ---
+            document.getElementById('pageTitle').innerText = post.title + " - Secret Binodon";
+            document.getElementById('postTitle').innerText = post.title;
+            
+            const uploadDate = post.uploadTime ? new Date(post.uploadTime).toLocaleDateString() : 'N/A';
+            const duration = post.videoDuration || 'N/A';
+            document.getElementById('postMeta').innerText = `Uploaded: ${uploadDate} | Duration: ${duration}`;
+
+            if (post.mediaImage) document.getElementById('mediaImage').src = post.mediaImage;
+            
+            const contentDiv = document.getElementById('postContent');
+            if (post.paragraphs && post.paragraphs.length > 0) {
+                 contentDiv.innerHTML = post.paragraphs.map(p => `<p>${p}</p>`).join('');
+            } else {
+                contentDiv.innerHTML = '<p>No content available for this post.</p>';
+            }
+            
+            // সকল বাটনে ইভেন্ট লিসেনার যোগ করা
+            const buttons = document.querySelectorAll('.download-btn-section .download-btn');
+            buttons.forEach(btn => {
+                // তিনটি বাটনই একই ফাংশন কল করবে
+                btn.addEventListener('click', handleDownloadClick); 
+            });
+            
+            // প্রাথমিক অবস্থা সেট করা
+            checkInitialState();
+
+
         } catch (error) {
-            console.error("Download Setup Error:", error);
-            document.getElementById('downloadTitle').innerText = "Content Load Error";
-            loadingStatus.style.display = 'none';
-            errorBox.innerText = `Error: ${error.message}`;
-            errorBox.style.display = 'block';
+            console.error("Error loading post data:", error);
+            document.getElementById('postTitle').innerText = "Content Load Error";
+            document.getElementById('postContent').innerHTML = `<p style="color:red;">Failed to load data. Check console for details.</p>`;
         }
     }
 
-    // ব্রাউজার ব্যাক বাটন চাপলে বা ক্যাশ থেকে লোড হলে (যাতে স্পিনার চলে না)
-    window.addEventListener('pageshow', () => {
-        loadPostDataAndSetup(); 
+    // পেজ লোড বা রিফ্রেশ হলে বাটনের অবস্থা চেক করা
+    function checkInitialState() {
+        if (!postId) return;
+        let status = JSON.parse(sessionStorage.getItem(POST_STATUS_KEY)) || {};
+        let isAdClicked = status[postId] === true;
+        
+        // অ্যাড ক্লিক হয়ে থাকলে কন্টিনিউ মোডে সেট করা
+        updateAllButtons(isAdClicked);
+    }
+    
+    // DOM লোড হওয়ার পর শুরু করা
+    document.addEventListener('DOMContentLoaded', () => {
+        loadPostData();
     });
 
-    // প্রথমবার পেজ লোড করা
-    loadPostDataAndSetup(); 
+    // ব্রাউজার ব্যাক বাটন প্রেস করার পর BFCache থেকে লোড হলে (যাতে অবস্থা ঠিক থাকে)
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+             checkInitialState();
+        }
+    });
+    
 </script>
 
 </body>
