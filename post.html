@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,34 +7,80 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* --- বেসিক রিসেট (অপরিবর্তিত) --- */
+        /* --- বেসিক রিসেট --- */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; text-decoration: none; }
         body { background: #fff; display: flex; justify-content: center; }
-        .main-wrapper { width: 100%; max-width: 600px; min-height: 10vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; padding-bottom: 0; opacity: 0; }
+
+        /* ✅ মূল লেআউট নিয়ন্ত্রণ: ডেটা লোড না হওয়া পর্যন্ত সম্পূর্ণ অদৃশ্য */
+        .main-wrapper { 
+            width: 100%; 
+            max-width: 600px; 
+            min-height: 10vh; 
+            background: #fff; 
+            position: relative; 
+            border-left: 1px solid #eee; 
+            border-right: 1px solid #eee; 
+            padding-bottom: 0; 
+            opacity: 0; 
+        }
+        
+        /* ডেটা লোড হওয়ার পর তাৎক্ষণিক দৃশ্যমানতা */
         .main-wrapper.loaded { opacity: 1 !important; }
-        header { background: #1da1f2; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); opacity: 1 !important; }
+
+        /* হেডার */
+        header { 
+            background: #1da1f2; padding: 12px 15px; display: flex; justify-content: space-between; 
+            align-items: center; color: white; position: sticky; top: 0; z-index: 100; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); opacity: 1 !important; 
+        }
         .logo-area { font-weight: 800; font-size: 20px; text-transform: uppercase; }
         .header-btn { background: white; color: #1da1f2; padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 14px; margin-left: 10px; cursor: pointer; }
+
+        /* পোস্ট ডিটেইলস এরিয়া (প্রধান পোস্ট) */
         .post-author-area { padding: 10px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e1e8ed; }
         .author-info { display: flex; align-items: center; gap: 10px; }
         .pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }
         .pfp img { width: 100%; height: 100%; object-fit: cover; }
-        .author-text h3 { font-size: 16px; margin: 0; color: #0f1419; display: inline-flex; align-items: center;}
-        .author-text span { font-size: 14px; color: #1da1f2; display: block; margin-top: -2px; }
+        
+        /* 🔥 প্রধান পোস্টের CSS: নাম এক লাইনে, ইউজারনেম নিচে (নীল) - এটি ঠিক আছে */
+        .author-text { 
+            /* এটি ফ্লেক্স মুক্ত থাকবে */
+        } 
+        
+        .author-text h3 { 
+            font-size: 16px; 
+            margin: 0; 
+            color: #0f1419; 
+            display: inline-flex;
+            align-items: center;
+        }
+        .author-text span { 
+            font-size: 14px; 
+            color: #1da1f2; /* ইউজারনেম নীল রঙ */
+            display: block; /* যাতে এটি h3-এর নিচে চলে যায় */
+            margin-top: -2px; 
+        }
         .post-time { font-size: 13px; color: #536471; font-weight: bold; }
+
+        /* মূল পোস্ট ভিডিও কন্টেইনার (অপরিবর্তিত) */
         .video-container { width: 100%; aspect-ratio: 16/9; background: #000; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: 5px; cursor: pointer; }
         .video-container img { width: 100%; height: 100%; object-fit: contain; }
         .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }
         .play-btn-center::after { content: ''; border-left: 20px solid white; border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 5px; }
         .main-video-spinner { display: none; position: absolute; width: 50px; height: 50px; border: 5px solid rgba(255, 255, 255, 0.3); border-top: 5px solid #fff; border-radius: 50%; animation: spin 1s linear infinite; z-index: 6; }
         .video-controls { position: absolute; bottom: 0; left: 0; width: 100%; padding: 10px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; display: flex; justify-content: space-between; font-size: 12px; z-index: 5; }
+
         .content-body { padding: 15px 15px 0 15px; }
         .article-title { font-size: 20px; font-weight: 800; margin-bottom: 15px; color: #0f1419; line-height: 1.3; }
         .article-para { font-size: 15px; line-height: 1.2; color: #1c1e21; margin-bottom: 12px; text-align: left; letter-spacing: -0.3px; }
+
+        /* ডাউনলোড সেকশন (অপরিবর্তিত) */
         .download-title-text { font-size: 18px; font-weight: 800; color: #0f1419; text-align: center; margin: 20px 0 10px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }
         .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px; }
-        .download-btn-v2 { display: flex; align-items: center; justify-content: center; width: 100%; padding: 12px 10px; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: transform 0.2s, background-color 0.2s; border: none; }
+        .download-btn-v2 { display: flex; align-items: center; justify-content: center; width: 100%; padding: 12px 10px; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: transform 0.2s, background-color 0.2s; }
         .download-btn-v2:active { transform: scale(0.98); box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+        
+        /* স্ট্যাটস বার (অপরিবর্তিত) */
         .stats-section { padding: 12px 0; margin-top: 15px; border-top: 1px solid #e1e8ed; border-bottom: 1px solid #e1e8ed; display: flex; align-items: center; background: #fff; }
         .stats-left { display: flex; align-items: center; gap: 20px; flex-grow: 1; overflow: hidden; }
         .view-stat { flex: 0 0 auto; display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; }
@@ -47,49 +92,115 @@
         .share-icons { flex: 0 0 auto; display: flex; gap: 8px; }
         .share-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 13px; transition: 0.2s; }
         .share-icon:hover { opacity: 0.8; transform: scale(1.1); }
+
+        /* রিলেটেড পোস্ট (কার্ড) */
         .related-section { background: #fff; margin-top: 0; }
         .related-header { padding: 15px; font-weight: 800; color: #536471; border-bottom: 1px solid #e1e8ed; text-transform: uppercase; background: #fff; }
-        .post-card { background: white; padding: 5px 15px 5px 15px; border-bottom: 1px solid #e1e8ed; display: flex; flex-direction: column; gap: 6px; }
+        
+        .post-card { 
+            background: white; padding: 5px 15px 5px 15px; border-bottom: 1px solid #e1e8ed; 
+            display: flex; flex-direction: column; 
+            gap: 6px; 
+        }
+
         .post-header { display: flex; gap: 10px; align-items: center; }
         .post-pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }
         .post-pfp img { width: 100%; height: 100%; object-fit: cover; }
-        .post-meta-text { display: flex; flex-direction: column; justify-content: center; }
-        .name-row { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; } 
-        .name-row h3 { font-size: 18px; font-weight: 800; color: #0f1419; margin: 0; display: inline-flex; align-items: center;}
-        .post-username { font-size: 14px; color: #1da1f2; margin-top: 0; }
-        .verified-badge { color: #1da1f2; font-size: 16px; margin-left: 5px; margin-right: 2px; display: inline-flex; align-items: center;}
+        
+        /* 🔥 পরিবর্তন: post-meta-text এখন একটি লাইন কন্টেন্ট রাখবে */
+        .post-meta-text { 
+            display: flex; 
+            flex-direction: column; /* যাতে .name-row এর ভেতরের কন্টেন্ট ফ্লেক্স-মুক্ত থাকে */
+            justify-content: center; 
+        }
+        
+        /* ✅ রিলেটেড পোস্টের নাম-ইউজারনেম-টাইম এক লাইনে আনতে এটি অপরিহার্য */
+        .name-row { 
+            display: flex; /* 🔥 এটি সব উপাদান এক লাইনে আনবে */
+            align-items: center; 
+            gap: 5px; 
+            flex-wrap: wrap; 
+        } 
+        
+        .name-row h3 { 
+            font-size: 18px; 
+            font-weight: 800; 
+            color: #0f1419; 
+            margin: 0; 
+            /* ✅ নিশ্চিত করা হলো: মেইন নাম ও ব্লু টিক এক লাইনে থাকবে */
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        /* ✅ পরিবর্তন: পোস্টের ইউজারনেম নীল হবে এবং এখন .name-row এর ভেতরে থাকবে */
+        .post-username { 
+            font-size: 14px; 
+            color: #1da1f2; 
+            margin-top: 0; /* এক লাইনে আনার জন্য মার্জিন সরানো হলো */
+        }
+
+        /* 🔥 ব্লু টিক স্টাইল (অপরিবর্তিত) */
+        .verified-badge {
+            color: #1da1f2; 
+            font-size: 16px; 
+            margin-left: 5px; 
+            margin-right: 2px;
+            display: inline-flex;
+            align-items: center;
+        }
+        
         .time-ago { font-size: 15px; color: #536471; }
         .dot-separator { font-size: 15px; color: #536471; margin: 0 2px; }
+
         .clickable-area { cursor: pointer; }
-        .post-title { font-size: 18px; font-weight: 700; color: #0f1419; margin-bottom: 8px; margin-top: -3px; line-height: 1.3; }
+        
+        .post-title { 
+            font-size: 18px; 
+            font-weight: 700; 
+            color: #0f1419; 
+            margin-bottom: 8px; 
+            margin-top: -3px; 
+            line-height: 1.3; 
+        }
+        
         .post-excerpt { font-size: 15px; color: #0f1419; line-height: 1.4; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
         .read-more-text { color: #1da1f2; font-weight: 600; font-size: 14px; }
         .hashtags { color: #1d9bf0; font-size: 15px; margin-bottom: 10px; cursor: default; }
+
+        /* রিলেটেড পোস্টের ইমেজ কন্টেইনার (অপরিবর্তিত) */
         .media-container { position: relative; width: 100%; border-radius: 12px; overflow: hidden; margin-top: 5px; display: block; cursor: pointer; background: #000; aspect-ratio: 3 / 4; max-height: 720px; }
-        .media-container img { width: 100%; height: 100%; object-fit: cover; margin: 0 auto; max-height: none; }
+        .media-container img { width: 100%; height: 100%; display: block; object-fit: cover; margin: 0 auto; max-height: none; }
         .media-container.auto-fit { aspect-ratio: initial; height: auto; }
         .media-container.auto-fit img { height: auto; object-fit: contain; }
+
         .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background-color: rgba(0, 0, 0, 0.6); border-radius: 50%; display: flex; justify-content: center; align-items: center; pointer-events: none; border: 2px solid rgba(255,255,255,0.8); }
         .play-icon::after { content: ''; display: block; width: 0; height: 0; border-left: 18px solid white; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 4px; }
         .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0, 0, 0, 0.8); color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; pointer-events: none; z-index: 5; }
+
         .post-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; color: #536471; font-size: 16px; font-weight: 500; }
         .footer-left { display: flex; align-items: center; gap: 6px; }
         .footer-right { display: flex; align-items: center; gap: 20px; }
+        
         .love-btn-rel { cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all 0.2s; user-select: none; }
         .love-btn-rel:hover { color: #e0245e; background-color: rgba(224, 36, 94, 0.1); padding: 4px 8px; border-radius: 15px; margin: -4px -8px; }
         .love-btn-rel.liked { color: #e0245e !important; } .love-btn-rel.liked i { font-weight: 900; }
         .footer-share-btn { cursor: pointer; padding: 8px; border-radius: 50%; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; }
         .footer-share-btn:hover { background-color: rgba(0,0,0,0.05); }
+
+        /* ফুটার এবং লোডার (অপরিবর্তিত) */
         .site-footer { background-color: #fff; padding: 30px 20px; text-align: center; border-top: none; margin-top: 0; }
         .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }
         .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; }
         .footer-links a:hover { color: #1da1f2; text-decoration: underline; }
         .footer-copyright { color: #536471; font-size: 13px; }
         .footer-copyright a { color: #1da1f2; font-weight: bold; }
+        
         .spinner { width: 14px; height: 14px; border: 2px solid #ccc; border-top: 2px solid #000; border-radius: 50%; animation: spin 1s linear infinite; display: inline-block; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .notification { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); color: white; padding: 10px 20px; border-radius: 30px; z-index: 1002; opacity: 0; transition: 0.3s; pointer-events: none; }
         .notification.show { opacity: 1; }
+
+        /* Infinite Scroll Sentinel */
         #sentinel { width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; }
         .load-more-spinner { width: 24px; height: 24px; border: 3px solid #ccc; border-top: 3px solid #1da1f2; border-radius: 50%; animation: spin 1s linear infinite; display: none; }
         #sentinel.loading .load-more-spinner { display: block; }
@@ -134,6 +245,9 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
     import { getFirestore, doc, getDoc, setDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
+    // ============================================
+    //  ১. স্থায়ী প্রোফাইল ইমেজ URL এবং Firebase Configuration (অপরিবর্তিত)
+    // ============================================
     const PERMANENT_PROFILE_IMAGE_URL = "https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/FILMIXO.jpg";
 
     const firebaseConfig = { apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q", authDomain: "my-ad-analytics-4560a.firebaseapp.com", databaseURL: "https://my-ad-analytics-4560a-default-rtdb.firebaseio.com", projectId: "my-ad-analytics-4560a", storageBucket: "my-ad-analytics-4560a.firebasestorage.app", messagingSenderId: "104213283950", appId: "1:104213283950:web:b5a25ecd54df809625127f", measurementId: "G-WS7QSQ9H0Y" };
@@ -141,20 +255,9 @@
     const db = getFirestore(app);
     const deviceId = localStorage.getItem('deviceId') || 'device-'+Date.now(); 
 
-    // ✅ অ্যাড লিংক অ্যারে এবং কনফিগারেশন
-    const AD_LINKS = [
-        'https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea', 
-        'https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea', 
-        'https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea'
-        // আপনার প্রয়োজনীয় অ্যাড লিংক যোগ করুন
-    ];
-    const AD_INDEX_KEY = 'filmixo_post_ad_index'; 
-    const VISIT_COUNT_KEY = 'filmixo_post_visit_count';
-    
-    // 🔥 এখানে visitCount সরাসরি লোড করা হবে না, এটি resetVisitCountOnLoad() ফাংশন দিয়ে নিয়ন্ত্রিত হবে।
-    let currentAdIndex = parseInt(localStorage.getItem(AD_INDEX_KEY)) || 0;
-    let visitCount = 0; // ইনিশিয়ালাইজেশন 0 থাকবে
-
+    // ============================================
+    //  CONFIGURATION (রিলেটেড পোস্ট এবং লোডিং কন্ট্রোল)
+    // ============================================
     const CONFIG = {
         GLOBAL_VIDEO_LINK: "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea",
         TOTAL_RELATED_POSTS: 6, 
@@ -167,66 +270,121 @@
     document.getElementById('link-privacy').href = CONFIG.footer.privacy;
     document.getElementById('link-terms').href = CONFIG.footer.terms;
 
+    // গ্লোবাল ভ্যারিয়েবল
     let availablePosts = []; 
     let currentStartIndex = 0; 
     let observer; 
     let sentinelObserver; 
     let timeElementsToUpdate = [];
 
+    
     // --- ইউটিলিটি ফাংশনস (অপরিবর্তিত) ---
     function getRandomColor() { const c=['#1da1f2','#e0245e','#17bf63']; return c[Math.floor(Math.random()*c.length)]; } 
     function formatCount(n) { if(!n) return 0; return n >= 1000000 ? (n/1000000).toFixed(1)+'M' : n >= 1000 ? (n/1000).toFixed(1)+'K' : n; }
-    function timeAgo(dateString) { const d = new Date(dateString); const seconds = Math.floor((new Date() - d) / 1000); let interval = seconds / 31536000; if (interval > 1) return Math.floor(interval) + "y ago"; interval = seconds / 86400; if (interval > 1) return Math.floor(interval) + "d ago"; interval = seconds / 3600; if (interval > 1) return Math.floor(interval) + "h ago"; interval = seconds / 60; if (interval > 1) return Math.floor(interval) + "m ago"; return "Just now"; }
-    function updateAllTimeElements() { timeElementsToUpdate.forEach(item => { if (item.element && item.element.parentNode) { item.element.innerText = timeAgo(item.dateString); } else { timeElementsToUpdate = timeElementsToUpdate.filter(i => i !== item); } }); }
+    
+    function timeAgo(dateString) { 
+        const d = new Date(dateString);
+        const seconds = Math.floor((new Date() - d) / 1000);
+        
+        let interval = seconds / 31536000;
+        if (interval > 1) return Math.floor(interval) + "y ago";
+        
+        interval = seconds / 86400;
+        if (interval > 1) return Math.floor(interval) + "d ago";
+        
+        interval = seconds / 3600;
+        if (interval > 1) return Math.floor(interval) + "h ago";
+        
+        interval = seconds / 60;
+        if (interval > 1) return Math.floor(interval) + "m ago";
+        
+        return "Just now";
+    }
+
+    function updateAllTimeElements() {
+        timeElementsToUpdate.forEach(item => {
+            if (item.element && item.element.parentNode) {
+                item.element.innerText = timeAgo(item.dateString);
+            } else {
+                timeElementsToUpdate = timeElementsToUpdate.filter(i => i !== item);
+            }
+        });
+    }
+
     function formatDate(d) { return new Date(d).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }); }
     function showNotification(msg) { const n=document.getElementById('notification'); n.innerText=msg; n.classList.add('show'); setTimeout(()=>n.classList.remove('show'),3000); }
+
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get('id');
+
     function adjustImageAspectRatio(imgElement) {
         const mediaContainer = imgElement.closest('.media-container');
-        imgElement.onload = function() {
-            const ratio = this.naturalWidth / this.naturalHeight;
-            if (ratio >= (3 / 4)) { mediaContainer.classList.add('auto-fit'); } else { mediaContainer.classList.remove('auto-fit'); }
-        };
-        if (imgElement.complete) { imgElement.onload(); }
-    }
-    
-    // ✅ চূড়ান্ত ফিক্স: পেজ লোড বা রিফ্রেশ হলে ভিজিট কাউন্ট রিসেট করা
-    function resetVisitCountOnLoad() {
-        // পেজ লোড হওয়ার পর সেশন স্টোরেজ চেক করা
-        const storedCount = sessionStorage.getItem(VISIT_COUNT_KEY);
         
-        if (storedCount === '1') {
-            // যদি এটি 1 থাকে, তার মানে ব্যবহারকারী অ্যাড ভিজিট করে ফিরে এসেছে এবং রিফ্রেশ করেছে।
-            // এই অবস্থায়, আমরা ধরে নেব যে এটি নতুন সেশন এবং অ্যাড লজিক আবার শুরু হওয়া উচিত।
-            sessionStorage.removeItem(VISIT_COUNT_KEY);
-            visitCount = 0; // গ্লোবাল ভ্যারিয়েবল রিসেট
-            console.log("Visit count reset due to page load/refresh.");
-        } else {
-            visitCount = 0; // অন্যথায়, এটি নিশ্চিত 0
+        imgElement.onload = function() {
+            const originalWidth = this.naturalWidth;
+            const originalHeight = this.naturalHeight;
+            
+            const ratio = originalWidth / originalHeight;
+            
+            if (ratio >= (3 / 4)) { 
+                mediaContainer.classList.add('auto-fit');
+            } else {
+                mediaContainer.classList.remove('auto-fit');
+            }
+        };
+
+        if (imgElement.complete) {
+            imgElement.onload();
         }
     }
+    
+    // ==================================================
+    //  ✅ রেন্ডারিং ফাংশন এবং অন্যান্য
+    // ==================================================
 
-
-    // ✅ রেন্ডারিং ফাংশন (অপরিবর্তিত)
     function renderMainPost(post) {
-        let content = `<h1 class="article-title">${post.title}</h1>`;
-        post.paragraphs.forEach((p, i) => { content += `<p class="article-para">${p}</p>`; });
-
-        let downloadSectionHTML = `
-            <div class="download-title-text">DOWNLOAD FULL MOVIE IN HD</div>
-            <div class="download-buttons-container" id="download-buttons-container">
-                <button class="download-btn-v2" data-quality="1080" style="background:${getRandomColor()};">
-                    <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 1080p Full HD
-                </button>
-                <button class="download-btn-v2" data-quality="720" style="background:${getRandomColor()};">
-                    <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 720p HD
-                </button>
-                <button class="download-btn-v2" data-quality="480" style="background:${getRandomColor()};">
-                    <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 480p SD
-                </button>
-            </div>`;
         
+        // ১. টাইটেল যুক্ত করা
+        let content = `
+            <h1 class="article-title">${post.title}</h1>
+        `;
+        
+        post.paragraphs.forEach((p, i) => {
+            content += `<p class="article-para">${p}</p>`;
+        });
+
+        // ✅ ২. ডাউনলোড সেকশন
+        let downloadSectionHTML = '';
+
+        if (post.downloadLink1 || post.downloadLink2 || post.downloadLink3) {
+            downloadSectionHTML += `
+                <div class="download-title-text">
+                    DOWNLOAD FULL MOVIE IN HD
+                </div>
+                <div class="download-buttons-container">
+                    
+                    ${post.downloadLink2 ? `
+                        <a href="${post.downloadLink2}" class="download-btn-v2" style="background:${getRandomColor()};">
+                            <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 1080p Full HD
+                        </a>
+                    ` : ''}
+                    
+                    ${post.downloadLink1 ? `
+                        <a href="${post.downloadLink1}" class="download-btn-v2" style="background:${getRandomColor()};">
+                            <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 720p HD
+                        </a>
+                    ` : ''}
+
+                    ${post.downloadLink3 ? `
+                        <a href="${post.downloadLink3}" class="download-btn-v2" style="background:${getRandomColor()};">
+                            <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 480p SD
+                        </a>
+                    ` : ''}
+                </div>
+            `;
+        }
+        
+        // সম্পূর্ণ পোস্ট বডি রেন্ডার করা
         document.getElementById('post-details-container').innerHTML = `
             <div class="post-author-area">
                 <div class="author-info">
@@ -257,57 +415,19 @@
                 </div>
             </div>`;
         
+        // মূল পোস্টের টাইম এলিমেন্ট রিয়েল-টাইম আপডেটের জন্য যুক্ত করা
         const mainTimeElement = document.getElementById('main-post-time');
-        if (mainTimeElement) { timeElementsToUpdate.push({ element: mainTimeElement, dateString: post.uploadTime }); }
-        
-        const buttonsContainer = document.getElementById('download-buttons-container');
-        if (buttonsContainer) {
-            buttonsContainer.querySelectorAll('.download-btn-v2').forEach(button => {
-                button.addEventListener('click', () => handleDownloadButtonClick(post.id));
+        if (mainTimeElement) {
+            timeElementsToUpdate.push({
+                element: mainTimeElement,
+                dateString: post.uploadTime
             });
         }
     }
-    
-    // ✅ ডাইনামিক অ্যাড রোটেটিং ফাংশন (চূড়ান্ত ফিক্সড লজিক)
-    window.handleDownloadButtonClick = function(postId) {
-        let targetLink;
-        
-        // 1. যদি ভিজিট কাউন্ট 0 হয় (প্রথম ক্লিক: অ্যাড ভিজিট হবে)
-        if (visitCount === 0) {
-            
-            targetLink = AD_LINKS[currentAdIndex];
-            
-            // ভিজিট কাউন্ট 1 করা হলো (পরেরবার ডাউনলোড ফাইলে যাওয়ার জন্য)
-            sessionStorage.setItem(VISIT_COUNT_KEY, 1);
-            visitCount = 1; 
-            
-            // অ্যাড রোটেশন ইনডেক্স বাড়ানো হলো
-            let nextIndex = (currentAdIndex + 1) % AD_LINKS.length;
-            localStorage.setItem(AD_INDEX_KEY, nextIndex);
-            
-            // বর্তমান ট্যাবেই অ্যাড লিঙ্কে রিডাইরেক্ট করা হলো।
-            window.location.href = targetLink; 
-        } 
-        // 2. যদি ভিজিট কাউন্ট 1 হয় (দ্বিতীয় ক্লিক, রিফ্রেশ দিয়ে আসুক বা না দিয়ে আসুক)
-        else if (visitCount === 1) {
-            
-            targetLink = `download.html?id=${postId}`;
-            
-            // 🔥 গুরুত্বপূর্ণ ফিক্স: ডাউনলোড ফাইল লোড হওয়ার ঠিক আগে ভিজিট কাউন্ট রিসেট করা
-            // এটি নিশ্চিত করবে যে download.html লোড হওয়ার পরে যদি user আবার post.html এ ফেরে, 
-            // তবে visitCount রিসেট থাকবে এবং সে আবার অ্যাড লিংকে যাবে।
-            sessionStorage.removeItem(VISIT_COUNT_KEY);
-            visitCount = 0; 
-            
-            window.location.href = targetLink;
-        }
-    };
-    
-    // --- অন্যান্য ফাংশনস ---
+
+    // --- অন্যান্য ফাংশনস (অপরিবর্তিত) ---
+
     async function init() {
-        // 🔥 ফিক্স: পেজ লোড হওয়ার সাথে সাথে ভিজিট কাউন্ট রিসেট করা
-        resetVisitCountOnLoad();
-        
         const postContainer = document.getElementById('post-details-container');
         const mainWrapper = document.querySelector('.main-wrapper'); 
         
@@ -319,20 +439,25 @@
             const mainPost = posts.find(p => p.id === postId) || posts[0];
             if (!mainPost) throw new Error("Post not found.");
 
+            // 1. মূল পোস্ট লোড করা 
             renderMainPost(mainPost);
             setupFirebaseForMainPost(mainPost.id);
             mainWrapper.classList.add('loaded'); 
 
+            // রিয়েল-টাইম আপডেটের জন্য ইনটার্ভাল শুরু করা 
             setInterval(updateAllTimeElements, 60000); 
             
             const anchorPostTime = new Date(mainPost.uploadTime).getTime();
             
+            // 2. মোট রিলেটেড পোস্টের ডেটা শুধুমাত্র প্রসেস করে রাখা
             const historicalPosts = posts
                 .filter(p => p.id !== mainPost.id && new Date(p.uploadTime).getTime() < anchorPostTime)
                 .sort((a, b) => new Date(b.uploadTime).getTime() - new Date(a.uploadTime).getTime());
 
+            // 3. 🛑 মোট দেখানোর সংখ্যা সেট করা
             availablePosts = historicalPosts.slice(0, CONFIG.TOTAL_RELATED_POSTS);
 
+            // 4. রিলেটেড সেকশনটি লোড করার জন্য অবজারভার সেটআপ করা
             setupRelatedSectionObserver(); 
 
         } catch (e) { 
@@ -350,6 +475,7 @@
                 setupSentinelObserver();
             }
         }, { rootMargin: '100px 0px' });
+        
         observer.observe(relatedSection);
     }
 
@@ -369,14 +495,25 @@
     
     function loadNextBatch() { 
         const sentinel = document.getElementById('sentinel');
-        if (currentStartIndex >= availablePosts.length) { sentinel.style.display = 'none'; return; }
+        
+        if (currentStartIndex >= availablePosts.length) {
+            sentinel.style.display = 'none'; 
+            return;
+        }
+
         sentinel.classList.add('loading');
+        
         const batchSize = CONFIG.BATCH_SIZE_SCROLL; 
+        
         const endIndex = Math.min(currentStartIndex + batchSize, availablePosts.length);
         const postsToLoad = availablePosts.slice(currentStartIndex, endIndex);
+
         renderBatch(postsToLoad); 
+        
         currentStartIndex = endIndex;
+
         sentinel.classList.remove('loading');
+        
         if (currentStartIndex >= availablePosts.length) {
             sentinel.style.display = 'none';
             if(sentinelObserver) sentinelObserver.unobserve(sentinel);
@@ -385,9 +522,11 @@
 
     function renderBatch(postsToLoad) {
         const container = document.getElementById('related-posts-container');
+        
         postsToLoad.forEach(post => {
             let excerpt = post.paragraphs[0].substring(0, 200) + "...";
             const safeTitle = post.title.replace(/'/g, "\\'");
+            
             const cardWrapper = document.createElement('div');
             cardWrapper.innerHTML = `
                 <div class="post-card" data-id="${post.id}">
@@ -415,10 +554,20 @@
             
             const newCard = cardWrapper.firstElementChild;
             container.appendChild(newCard);
+
+            // ইমেজের আচরণ আপডেট করা
             const imgElement = newCard.querySelector('.media-container img');
             adjustImageAspectRatio(imgElement);
+
+            // রিয়েল-টাইম আপডেটের জন্য টাইম এলিমেন্ট যুক্ত করা 
             const timeElement = newCard.querySelector('.time-ago');
-            if (timeElement) { timeElementsToUpdate.push({ element: timeElement, dateString: post.uploadTime }); }
+            if (timeElement) {
+                timeElementsToUpdate.push({
+                    element: timeElement,
+                    dateString: post.uploadTime
+                });
+            }
+
             setupFirebaseForSingleCard(newCard, post.id);
         });
     }
@@ -446,15 +595,12 @@
         if(p) p.style.display = 'none'; if(s) s.style.display = 'block';
         setTimeout(() => { window.location.href = CONFIG.GLOBAL_VIDEO_LINK; }, 100); 
     }
-    
-    window.addEventListener('pageshow', (event) => {
-        // এই ইভেন্টটি ব্যাক বাটন প্রেস করার পরে (BFCache থেকে লোড হলেও) ফায়ার হয়।
-        // যেহেতু আমরা init() এ রিসেট লজিক যোগ করেছি, তাই এখানে শুধু UI ফিক্স হবে।
+    window.addEventListener('pageshow', () => {
         const p = document.getElementById('main-play-btn'), s = document.getElementById('main-spinner');
         if(p) p.style.display = 'flex'; if(s) s.style.display = 'none';
     });
 
-    window.openPost = (id) => window.location.href = `post.html?id=${id}`;
+    window.openPost = (id) => window.location.href = `/movie/post.html?id=${id}`;
     window.sharePost = (id, title) => { const url = window.location.origin + `/movie/post.html?id=${id}`; if (navigator.share) { navigator.share({ title: title, text: title, url: url }).catch((e) => console.log('Share failed', e)); } else { navigator.clipboard.writeText(url); showNotification("Link copied! 📋"); } }
 
     window.share = (platform, title) => {
