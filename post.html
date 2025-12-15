@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -126,16 +127,16 @@
         .post-pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }
         .post-pfp img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* 🔥 পরিবর্তন: post-meta-text এখন একটি লাইন কন্টেন্ট রাখবে */
+        /* 🔥 প্রধান পোস্টের CSS: নাম এক লাইনে, ইউজারনেম নিচে (নীল) - এটি ঠিক আছে */
         .post-meta-text { 
             display: flex; 
-            flex-direction: column; /* যাতে .name-row এর ভেতরের কন্টেন্ট ফ্লেক্স-মুক্ত থাকে */
+            flex-direction: column; 
             justify-content: center; 
         }
         
         /* ✅ রিলেটেড পোস্টের নাম-ইউজারনেম-টাইম এক লাইনে আনতে এটি অপরিহার্য */
         .name-row { 
-            display: flex; /* 🔥 এটি সব উপাদান এক লাইনে আনবে */
+            display: flex; 
             align-items: center; 
             gap: 5px; 
             flex-wrap: wrap; 
@@ -146,7 +147,6 @@
             font-weight: 800; 
             color: #0f1419; 
             margin: 0; 
-            /* ✅ নিশ্চিত করা হলো: মেইন নাম ও ব্লু টিক এক লাইনে থাকবে */
             display: inline-flex;
             align-items: center;
         }
@@ -155,7 +155,7 @@
         .post-username { 
             font-size: 14px; 
             color: #1da1f2; 
-            margin-top: 0; /* এক লাইনে আনার জন্য মার্জিন সরানো হলো */
+            margin-top: 0; 
         }
 
         /* 🔥 ব্লু টিক স্টাইল (অপরিবর্তিত) */
@@ -361,8 +361,6 @@
     //  🔥🔥🔥 অ্যাড ট্র্যাকিং ও ডাউনলোড লজিক পরিবর্তন 🔥🔥🔥
     // ==================================================
     
-    // 🔥 নতুন কনস্ট্যান্ট: আপনার দুটি নির্দিষ্ট অ্যাড লিংক (এখানে পোস্টের JSON ফাইল থেকে link1/link2 এলেই ব্যবহার হবে)
-    // এগুলো এখন পোস্টের downloadLink1/downloadLink2 হিসেবেই কাজ করবে।
     const LAST_CLICK_TIME_KEY = 'last_click_time_' + deviceId; // ডিভাইস ভিত্তিক ট্র্যাকিং
     const LAST_CLICKED_AD_TYPE_KEY = 'last_clicked_ad_type_' + postId;
     const MIN_VISIT_TIME_MS = 5000; // 5 সেকেন্ড থাকার শর্ত
@@ -372,11 +370,16 @@
     
     const FINAL_BUTTON_VISIBLE_KEY = 'final_btn_visible_' + postId;
 
-    // ভিজিট করা অ্যাডের সংখ্যা গণনা করে
+    /**
+     * জোসন ফাইলে কতগুলি অ্যাড লিংক সেট করা আছে তা গণনা করে।
+     * @param {object} post - বর্তমান পোস্টের ডেটা।
+     * @returns {number} মোট প্রয়োজনীয় ভিজিট সংখ্যা।
+     */
     function countRequiredVisits(post) {
         let required = 0;
-        if (post.downloadLink2 && post.downloadLink2.startsWith('http')) required++; // 1080p
-        if (post.downloadLink1 && post.downloadLink1.startsWith('http')) required++; // 720p
+        // downloadLink2 (1080p) এবং downloadLink1 (720p) এ লিংক থাকলেই তা প্রয়োজনীয় ভিজিট হিসেবে গণ্য হবে।
+        if (post.downloadLink2 && post.downloadLink2.startsWith('http')) required++; 
+        if (post.downloadLink1 && post.downloadLink1.startsWith('http')) required++; 
         return required;
     }
     
@@ -398,17 +401,18 @@
         // ✅ ২. ডাউনলোড সেকশন (শর্তহীনভাবে প্যারাগ্রাফের পরে দেখাবে)
         let downloadSectionHTML = '';
         
-        const isAd1Available = post.downloadLink2 && post.downloadLink2.startsWith('http');
-        const isAd2Available = post.downloadLink1 && post.downloadLink1.startsWith('http');
+        // 🚨 বাটন ক্রম ঠিক করা হয়েছে: 1080p আগে, 720p পরে
+        const isAd1080Available = post.downloadLink2 && post.downloadLink2.startsWith('http');
+        const isAd720Available = post.downloadLink1 && post.downloadLink1.startsWith('http');
 
-        if (isAd1Available || isAd2Available || post.downloadLink3) {
+        if (isAd1080Available || isAd720Available || post.downloadLink3) {
             downloadSectionHTML += `
                 <div class="download-title-text">
                     DOWNLOAD FULL MOVIE IN HD
                 </div>
                 <div class="download-buttons-container">
                     
-                    ${isAd1Available ? `
+                    ${isAd1080Available ? `
                         <a href="#" 
                            data-ad-link="${post.downloadLink2}" 
                            id="btn-1080" 
@@ -419,7 +423,7 @@
                         </a>
                     ` : ''}
                     
-                    ${isAd2Available ? `
+                    ${isAd720Available ? `
                         <a href="#" 
                            data-ad-link="${post.downloadLink1}" 
                            id="btn-720" 
@@ -444,7 +448,7 @@
             `;
         }
         
-        // সম্পূর্ণ পোস্ট বডি রেন্ডার করা
+        // সম্পূর্ণ পোস্ট বডি রেন্ডার করা (বাকি অংশ অপরিবর্তিত)
         document.getElementById('post-details-container').innerHTML = `
             <div class="post-author-area">
                 <div class="author-info">
@@ -475,7 +479,7 @@
                 </div>
             </div>`;
         
-        // রিয়েল-টাইম আপডেটের জন্য টাইম এলিমেন্ট রিয়েল-টাইম আপডেটের জন্য যুক্ত করা
+        // টাইম এলিমেন্ট এবং লজিক সেটআপ
         const mainTimeElement = document.getElementById('main-post-time');
         if (mainTimeElement) {
             timeElementsToUpdate.push({
@@ -484,14 +488,13 @@
             });
         }
         
-        // ✅ নতুন লজিক সেটআপ
         if (post.downloadLink3) {
             setupDownloadClickLogic(post);
         }
     }
 
     // ==================================================
-    //  🔥🔥🔥 নতুন ডাউনলোড ক্লিক লজিক 🔥🔥🔥
+    //  🔥🔥🔥 অ্যাড ট্র্যাকিং ও ডাউনলোড লজিক ফাংশন (আপডেট করা) 🔥🔥🔥
     // ==================================================
     
     function setupDownloadClickLogic(post) {
@@ -501,29 +504,21 @@
         // 🔥 ১. pageshow লজিক: অ্যাড পেজ থেকে ফিরে আসার পর 5 সেকেন্ডের শর্ত যাচাই
         window.addEventListener('pageshow', function(event) {
             
-            // 🔥 গুরুত্বপূর্ণ: যদি ব্যাক বাটন চেপে ফেরা হয় (bfcache থেকে লোড হয়)
             if (event.persisted) { 
                 const lastClickTime = parseInt(localStorage.getItem(LAST_CLICK_TIME_KEY) || '0', 10);
                 const timeSpent = Date.now() - lastClickTime;
                 const lastClickedAd = localStorage.getItem(LAST_CLICKED_AD_TYPE_KEY);
 
                 if (lastClickTime > 0 && lastClickedAd && timeSpent >= MIN_VISIT_TIME_MS) {
-                    // সফল ভিজিট! 5 সেকেন্ডের শর্ত পূরণ হয়েছে।
                     console.log(`Back detected: SUCCESS. Spent ${timeSpent / 1000}s on ${lastClickedAd}.`);
-                    
-                    // নির্দিষ্ট অ্যাডের ফ্ল্যাগ সেট করা
                     localStorage.setItem(getVisitedKey(lastClickedAd), 'true');
-                    
                 } else if (lastClickTime > 0) {
-                    // ব্যর্থ ভিজিট: 5 সেকেন্ডের কম সময় ছিল।
                     console.warn(`Back detected: FAIL. Spent ${timeSpent / 1000}s. Need ${MIN_VISIT_TIME_MS / 1000}s.`);
                 }
                 
-                // সময় এবং শেষ ক্লিকের ডেটা মুছে দাও, যাতে পরবর্তী ক্লিকটি নতুন করে ট্র্যাক হয়।
                 localStorage.removeItem(LAST_CLICK_TIME_KEY);
                 localStorage.removeItem(LAST_CLICKED_AD_TYPE_KEY);
                 
-                // বাটনগুলির স্থিতি আপডেট করো
                 updateButtonVisibilityAndStatus(post, totalRequiredVisits); 
             }
         }, { once: false }); 
@@ -556,7 +551,7 @@
                         localStorage.removeItem(LAST_CLICKED_AD_TYPE_KEY);
                         
                     } else {
-                        // যদি কোনো কারণে বাটন দৃশ্যমান হয় কিন্তু ফ্ল্যাগ না থাকে
+                        // একক বা দ্বৈত অ্যাড লজিক অনুযায়ী সতর্কতা
                         alert(`Please visit ${totalRequiredVisits} ad link(s) for 5 seconds each to unlock the download.`);
                         updateButtonVisibilityAndStatus(post, totalRequiredVisits); 
                     }
@@ -566,21 +561,17 @@
                 // --- অ্যাড ভিজিট বাটন লজিক (ad1080 বা ad720) ---
                 if (buttonType === 'ad1080' || buttonType === 'ad720') {
                     
-                    // Already Visited হলে ক্লিক কাজ করবে না
                     if (localStorage.getItem(getVisitedKey(buttonType)) === 'true') return;
 
                     const adUrl = this.getAttribute('data-ad-link');
                     
-                    // ট্র্যাকিং শুরু করো
                     localStorage.setItem(LAST_CLICK_TIME_KEY, Date.now());
                     localStorage.setItem(LAST_CLICKED_AD_TYPE_KEY, buttonType); 
                     
                     console.log(`[AD CLICK] Starting timer for ${buttonType}. Opening new tab.`);
                     
-                    // নতুন ট্যাবে অ্যাড লিংক ওপেন করো 
                     window.open(adUrl, '_blank'); 
 
-                    // UI আপডেট
                     this.style.opacity = '0.5';
                     this.style.pointerEvents = 'none';
                 }
@@ -590,13 +581,19 @@
 
     /**
      * localStorage চেক করে সমস্ত বাটনের স্ট্যাটাস এবং দৃশ্যমানতা আপডেট করে
+     * 🚨 একক অ্যাড ভিজিট লজিক এখানে সঠিকভাবে হ্যান্ডেল করা হয়েছে।
      */
     function updateButtonVisibilityAndStatus(post, totalRequiredVisits) {
+        
+        const isAd1080Available = post.downloadLink2 && post.downloadLink2.startsWith('http');
+        const isAd720Available = post.downloadLink1 && post.downloadLink1.startsWith('http');
         
         const ad1080Visited = localStorage.getItem(getVisitedKey('ad1080')) === 'true';
         const ad720Visited = localStorage.getItem(getVisitedKey('ad720')) === 'true';
         
-        const currentVisitedCount = (ad1080Visited ? 1 : 0) + (ad720Visited ? 1 : 0);
+        let currentVisitedCount = 0;
+        if(isAd1080Available && ad1080Visited) currentVisitedCount++;
+        if(isAd720Available && ad720Visited) currentVisitedCount++;
         
         const btn1080 = document.querySelector('[data-button-type="ad1080"]');
         const btn720 = document.querySelector('[data-button-type="ad720"]');
@@ -632,7 +629,8 @@
         
         // 🔥 ফাইনাল বাটন স্ট্যাটাস: যখন ক্রাইটেরিয়া পূরণ হবে
         if (btnFinal) {
-            if (currentVisitedCount >= totalRequiredVisits && totalRequiredVisits > 0) {
+            // যদি প্রয়োজনীয় ভিজিট সংখ্যা ০ এর বেশি হয় এবং বর্তমান ভিজিট সংখ্যা প্রয়োজনীয় সংখ্যায় পৌঁছে যায়
+            if (totalRequiredVisits > 0 && currentVisitedCount >= totalRequiredVisits) {
                 btnFinal.style.display = 'flex'; // দৃশ্যমান করো
                 localStorage.setItem(FINAL_BUTTON_VISIBLE_KEY, 'true');
             } else {
@@ -642,16 +640,173 @@
         }
     }
     
-    // ... (অন্যান্য ফাংশন অপরিবর্তিত)
+    // ... (বাকি ফাংশনগুলি অপরিবর্তিত)
     
-    // ... (Firebase এবং Utility ফাংশনগুলি অপরিবর্তিত)
+    async function init() {
+        const postContainer = document.getElementById('post-details-container');
+        const mainWrapper = document.querySelector('.main-wrapper'); 
+        
+        try {
+            const res = await fetch('posts.json');
+            if(!res.ok) throw new Error("Failed to load posts data.");
+            const posts = await res.json();
+            
+            const mainPost = posts.find(p => p.id === postId) || posts[0];
+            if (!mainPost) throw new Error("Post not found.");
 
-    //... (init ফাংশন)
-    
-    // ... (renderBatch এবং অন্যান্য রেন্ডারিং ফাংশন অপরিবর্তিত)
+            // 1. মূল পোস্ট লোড করা 
+            renderMainPost(mainPost);
+            setupFirebaseForMainPost(mainPost.id);
+            mainWrapper.classList.add('loaded'); 
 
-    // ... (Firebase সেটআপ ফাংশন অপরিবর্তিত)
+            // রিয়েল-টাইম আপডেটের জন্য ইনটার্ভাল শুরু করা 
+            setInterval(updateAllTimeElements, 60000); 
+            
+            const anchorPostTime = new Date(mainPost.uploadTime).getTime();
+            
+            // 2. মোট রিলেটেড পোস্টের ডেটা শুধুমাত্র প্রসেস করে রাখা
+            const historicalPosts = posts
+                .filter(p => p.id !== mainPost.id && new Date(p.uploadTime).getTime() < anchorPostTime)
+                .sort((a, b) => new Date(b.uploadTime).getTime() - new Date(a.uploadTime).getTime());
+
+            // 3. 🛑 মোট দেখানোর সংখ্যা সেট করা
+            availablePosts = historicalPosts.slice(0, CONFIG.TOTAL_RELATED_POSTS);
+
+            // 4. রিলেটেড সেকশনটি লোড করার জন্য অবজারভার সেটআপ করা
+            setupRelatedSectionObserver(); 
+
+        } catch (e) { 
+            postContainer.innerHTML = `<div style="padding:20px;text-align:center;color:red;">Error loading post: ${e.message}</div>`; 
+            mainWrapper.classList.add('loaded'); 
+        }
+    }
+
+    // ... (বাকি সব ফাংশন অপরিবর্তিত)
+
+    function setupRelatedSectionObserver() {
+        const relatedSection = document.getElementById('related-section-id');
+        observer = new IntersectionObserver((entries, obs) => {
+            if (entries[0].isIntersecting) {
+                obs.unobserve(relatedSection); 
+                loadNextBatch();
+                setupSentinelObserver();
+            }
+        }, { rootMargin: '100px 0px' });
+        
+        observer.observe(relatedSection);
+    }
+
+    function setupSentinelObserver() {
+        const sentinel = document.getElementById('sentinel');
+        if (availablePosts.length > CONFIG.BATCH_SIZE_SCROLL) {
+            sentinelObserver = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && !sentinel.classList.contains('loading')) {
+                    setTimeout(() => loadNextBatch(), 500); 
+                }
+            }, { rootMargin: '100px' });
+            sentinelObserver.observe(sentinel);
+        } else {
+            sentinel.style.display = 'none';
+        }
+    }
     
+    function loadNextBatch() { 
+        const sentinel = document.getElementById('sentinel');
+        
+        if (currentStartIndex >= availablePosts.length) {
+            sentinel.style.display = 'none'; 
+            return;
+        }
+
+        sentinel.classList.add('loading');
+        
+        const batchSize = CONFIG.BATCH_SIZE_SCROLL; 
+        
+        const endIndex = Math.min(currentStartIndex + batchSize, availablePosts.length);
+        const postsToLoad = availablePosts.slice(currentStartIndex, endIndex);
+
+        renderBatch(postsToLoad); 
+        
+        currentStartIndex = endIndex;
+
+        sentinel.classList.remove('loading');
+        
+        if (currentStartIndex >= availablePosts.length) {
+            sentinel.style.display = 'none';
+            if(sentinelObserver) sentinelObserver.unobserve(sentinel);
+        }
+    }
+
+    function renderBatch(postsToLoad) {
+        const container = document.getElementById('related-posts-container');
+        
+        postsToLoad.forEach(post => {
+            let excerpt = post.paragraphs[0].substring(0, 200) + "...";
+            const safeTitle = post.title.replace(/'/g, "\\'");
+            
+            const cardWrapper = document.createElement('div');
+            cardWrapper.innerHTML = `
+                <div class="post-card" data-id="${post.id}">
+                    <div class="post-header">
+                        <div class="post-pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div>
+                        <div class="post-meta-text">
+                            <div class="name-row">
+                                <h3>FILMIXO <i class="verified-badge fa-solid fa-circle-check"></i></h3> 
+                                <span class="post-username">@filmixo</span> <span class="dot-separator">·</span>
+                                <span class="time-ago" data-upload-time="${post.uploadTime}">${timeAgo(post.uploadTime)}</span>
+                            </div>
+                            </div>
+                    </div>
+                    <div class="clickable-area" onclick="openPost('${post.id}')"><div class="post-title">${post.title}</div><div class="post-excerpt">${excerpt} <span class="read-more-text">See more</span></div></div>
+                    <div class="hashtags">${post.hashtags}</div>
+                    <div class="clickable-area" onclick="openPost('${post.id}')">
+                        <div class="media-container">
+                            <img src="${post.mediaImage}" loading="lazy">
+                            <div class="play-icon"></div>
+                            <div class="duration-badge">${post.videoDuration}</div>
+                        </div>
+                    </div>
+                    <div class="post-footer"><div class="footer-left"><i class="fa-solid fa-chart-simple"></i> <span class="count-text view-count-rel">...</span> <span class="label-text">Views</span></div><div class="footer-right"><div class="love-btn-rel"><i class="fa-regular fa-heart"></i> <span class="count-text like-count-rel">...</span> <span class="label-text">Likes</span></div><div class="post-date-display">${formatDate(post.uploadTime)}</div><div class="footer-share-btn" onclick="sharePost('${post.id}', '${safeTitle}')"><i class="fa-solid fa-share-from-square"></i></div></div></div>
+                </div>`;
+            
+            const newCard = cardWrapper.firstElementChild;
+            container.appendChild(newCard);
+
+            // ইমেজের আচরণ আপডেট করা
+            const imgElement = newCard.querySelector('.media-container img');
+            adjustImageAspectRatio(imgElement);
+
+            // রিয়েল-টাইম আপডেটের জন্য টাইম এলিমেন্ট যুক্ত করা 
+            const timeElement = newCard.querySelector('.time-ago');
+            if (timeElement) {
+                timeElementsToUpdate.push({
+                    element: timeElement,
+                    dateString: post.uploadTime
+                });
+            }
+
+            setupFirebaseForSingleCard(newCard, post.id);
+        });
+    }
+
+    function setupFirebaseForMainPost(id) {
+        setDoc(doc(db, "views", id), { count: increment(1) }, { merge: true });
+        onSnapshot(doc(db, "views", id), s => document.getElementById('view-cnt').innerText = formatCount(s.data()?.count || 0));
+        const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users`, deviceId), lBtn = document.querySelector('.love-btn');
+        onSnapshot(lRef, s => document.getElementById('like-cnt').innerText = formatCount(s.data()?.count || 0));
+        getDoc(uRef).then(s => { if(s.exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); } });
+        lBtn.addEventListener('click', async () => { if((await getDoc(uRef)).exists()) showNotification("Already Liked! ❤️"); else { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); showNotification("Liked! ❤️"); } });
+    }
+
+    function setupFirebaseForSingleCard(card, id) {
+        const vEl = card.querySelector('.view-count-rel'), lEl = card.querySelector('.like-count-rel'), lBtn = card.querySelector('.love-btn-rel');
+        onSnapshot(doc(db, "views", id), s => vEl.innerText = formatCount(s.data()?.count || 0));
+        const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users`, deviceId);
+        onSnapshot(lRef, s => lEl.innerText = formatCount(s.data()?.count || 0));
+        getDoc(uRef).then(s => { if(s.exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); } });
+        lBtn.addEventListener('click', async () => { if((await getDoc(uRef)).exists()) showNotification("Already Liked! ❤️"); else { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); showNotification("Liked! ❤️"); } });
+    }
+
     window.handleVideoClick = function() {
         const p = document.getElementById('main-play-btn'), s = document.getElementById('main-spinner');
         if(p) p.style.display = 'none'; if(s) s.style.display = 'block';
