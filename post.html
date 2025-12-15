@@ -78,7 +78,9 @@
         /* ডাউনলোড সেকশন (অপরিবর্তিত) */
         .download-title-text { font-size: 18px; font-weight: 800; color: #0f1419; text-align: center; margin: 20px 0 10px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }
         .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px; }
-        .download-btn-v2 { display: flex; align-items: center; justify-content: center; width: 100%; padding: 12px 10px; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: transform 0.2s, background-color 0.2s; }
+        
+        /* 🔥 ডাউনলোড বাটন পরিবর্তন: এখন <a> এর পরিবর্তে <button> ব্যবহার করা হবে JS নিয়ন্ত্রণের জন্য */
+        .download-btn-v2 { display: flex; align-items: center; justify-content: center; width: 100%; padding: 12px 10px; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: transform 0.2s, background-color 0.2s; border: none; }
         .download-btn-v2:active { transform: scale(0.98); box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
         
         /* স্ট্যাটস বার (অপরিবর্তিত) */
@@ -257,8 +259,23 @@
     const deviceId = localStorage.getItem('deviceId') || 'device-'+Date.now(); 
 
     // ============================================
-    //  CONFIGURATION (রিলেটেড পোস্ট এবং লোডিং কন্ট্রোল)
+    //  ✅ অ্যাড লিংক অ্যারে এবং কনফিগারেশন যুক্ত করা হলো
     // ============================================
+    const AD_LINKS = [
+        'https://your-ad-link-1.com/direct', 
+        'https://your-ad-link-2.com/direct', 
+        'https://your-ad-link-3.com/direct'
+        // এখানে আপনার প্রয়োজনীয় অ্যাড লিংক যোগ করুন
+    ];
+    
+    // লোকালস্টোরেজ এবং সেশনস্টোরেজ কী
+    const AD_INDEX_KEY = 'filmixo_post_ad_index';
+    const VISIT_COUNT_KEY = 'filmixo_post_visit_count';
+    
+    // লোড করা
+    let currentAdIndex = parseInt(localStorage.getItem(AD_INDEX_KEY)) || 0;
+    let visitCount = parseInt(sessionStorage.getItem(VISIT_COUNT_KEY)) || 0;
+
     const CONFIG = {
         GLOBAL_VIDEO_LINK: "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea",
         TOTAL_RELATED_POSTS: 6, 
@@ -340,7 +357,7 @@
     }
     
     // ==================================================
-    //  ✅ রেন্ডারিং ফাংশন এবং অন্যান্য
+    //  ✅ রেন্ডারিং ফাংশন ও ডাউনলোড বাটন লজিক
     // ==================================================
 
     function renderMainPost(post) {
@@ -354,7 +371,7 @@
             content += `<p class="article-para">${p}</p>`;
         });
 
-        // ✅ ২. ডাউনলোড সেকশন
+        // ✅ ২. ডাউনলোড সেকশন: <a> ট্যাগ পরিবর্তন করে <button> এবং ইভেন্ট লিসেনার যুক্ত করা
         let downloadSectionHTML = '';
 
         if (post.downloadLink1 || post.downloadLink2 || post.downloadLink3) {
@@ -362,24 +379,24 @@
                 <div class="download-title-text">
                     DOWNLOAD FULL MOVIE IN HD
                 </div>
-                <div class="download-buttons-container">
+                <div class="download-buttons-container" id="download-buttons-container">
                     
                     ${post.downloadLink2 ? `
-                        <a href="${post.downloadLink2}" class="download-btn-v2" style="background:${getRandomColor()};">
+                        <button class="download-btn-v2" data-quality="1080" style="background:${getRandomColor()};">
                             <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 1080p Full HD
-                        </a>
+                        </button>
                     ` : ''}
                     
                     ${post.downloadLink1 ? `
-                        <a href="${post.downloadLink1}" class="download-btn-v2" style="background:${getRandomColor()};">
+                        <button class="download-btn-v2" data-quality="720" style="background:${getRandomColor()};">
                             <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 720p HD
-                        </a>
+                        </button>
                     ` : ''}
 
                     ${post.downloadLink3 ? `
-                        <a href="${post.downloadLink3}" class="download-btn-v2" style="background:${getRandomColor()};">
+                        <button class="download-btn-v2" data-quality="480" style="background:${getRandomColor()};">
                             <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 480p SD
-                        </a>
+                        </button>
                     ` : ''}
                 </div>
             `;
@@ -424,8 +441,54 @@
                 dateString: post.uploadTime
             });
         }
+        
+        // 🔥🔥🔥 মূল ইন্টিগ্রেশন লজিক: বাটন হ্যান্ডলার যোগ করা 🔥🔥🔥
+        const buttonsContainer = document.getElementById('download-buttons-container');
+        if (buttonsContainer) {
+            buttonsContainer.querySelectorAll('.download-btn-v2').forEach(button => {
+                button.addEventListener('click', () => handleDownloadButtonClick(post.id));
+            });
+        }
     }
-
+    
+    // ==================================================
+    //  ✅ ডাইনামিক অ্যাড রোটেটিং ফাংশন
+    // ==================================================
+    window.handleDownloadButtonClick = function(postId) {
+        let targetLink;
+        
+        // 1. যদি ভিজিট কাউন্ট 0 হয় (প্রথম ক্লিক / নতুন ভিজিটর / পেজ রিফ্রেশ)
+        if (visitCount === 0) {
+            // অ্যাড লিংক অ্যারে থেকে বর্তমান ইনডেক্সের লিংকটি নেওয়া 
+            targetLink = AD_LINKS[currentAdIndex];
+            
+            // ভিজিট কাউন্ট 1 করা হলো (পেজ রিফ্রেশ না হলে পরের ক্লিক ডাউনলোড ফাইলে যাবে)
+            sessionStorage.setItem(VISIT_COUNT_KEY, 1);
+            
+            // অ্যাড ইনডেক্স বাড়ানো হলো (পরের রিফ্রেশে পরের অ্যাড লিঙ্কে যাবে)
+            let nextIndex = (currentAdIndex + 1) % AD_LINKS.length;
+            localStorage.setItem(AD_INDEX_KEY, nextIndex);
+            
+            // নতুন AD ইনডেক্স গ্লোবাল ভ্যারিয়েবলে আপডেট করা
+            currentAdIndex = nextIndex; 
+            
+            // 2. নতুন ট্যাবে অ্যাড লিঙ্কে রিডাইরেক্ট করা
+            window.location.href = targetLink; 
+        } 
+        // 3. যদি ভিজিট কাউন্ট 1 হয় (অ্যাড ভিজিট করার পর ব্যাক করে এসেছে, পেজ রিফ্রেশ হয়নি)
+        else if (visitCount === 1) {
+            // সরাসরি 'download.html' ফাইলে নিয়ে যাওয়া, সাথে পোস্ট আইডি প্যারামিটার হিসেবে পাস করা
+            targetLink = `download.html?id=${postId}`;
+            
+            // ভিজিট কাউন্ট রিসেট করা
+            sessionStorage.removeItem(VISIT_COUNT_KEY);
+            visitCount = 0; 
+            
+            // 4. একই ট্যাবে 'download.html'-এ রিডাইরেক্ট করা
+            window.location.href = targetLink;
+        }
+    };
+    
     // --- অন্যান্য ফাংশনস (অপরিবর্তিত) ---
 
     async function init() {
