@@ -339,50 +339,101 @@
     }
     
     // ==================================================
-    //  ✅ রেন্ডারিং ফাংশন এবং অন্যান্য
+    //  🔥🔥🔥 উন্নত ডাউনলোড লজিক এবং ট্র্যাকিং 🔥🔥🔥
+    // ==================================================
+    
+    const AD_CLICK_COUNT_KEY = 'adClickCount_' + postId; // এই ব্যক্তির এই পোস্টের জন্য কাউন্টার
+    const AD_VISITED_SUCCESS_KEY = 'adVisitedSuccess_' + postId;
+
+    // 🔥 অ্যাড লিংক অ্যারে (কোডের মধ্যে হার্ডকোড করা)
+    const GLOBAL_AD_LINKS = [
+        "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea",
+        "https://prototypesorting.com/p99vwjq2?key=d4529edb158097d74d89a77045df636e",
+        "https://prototypesorting.com/p99vwjq2?key=e0c1f51390310243447997576f7f2b1d",
+        "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea",
+        "https://prototypesorting.com/p99vwjq2?key=d4529edb158097d74d89a77045df636e"
+    ];
+    const MAX_AD_LINKS = GLOBAL_AD_LINKS.length; 
+    let isHighTrafficMode = false;
+    let clickTimestamps = []; // ট্র্যাফিক চাপ পরিমাপের জন্য
+
+    /**
+     * এই ব্যবহারকারীর জন্য পরবর্তী সিরিয়াল অ্যাড ইনডেক্স নির্ধারণ করে এবং localStorage আপডেট করে।
+     * @returns {number} সিরিয়াল নম্বর (0-based index)
+     */
+    function getNextPersonalAdIndex() {
+        let count = parseInt(localStorage.getItem(AD_CLICK_COUNT_KEY) || '0', 10);
+        // যদি সব লিংক ভিজিট করে ফেলে, আবার প্রথম থেকে শুরু হবে
+        if (count >= MAX_AD_LINKS) { 
+            count = 0;
+        }
+        
+        // ব্যবহারের পর কাউন্টার বাড়ানো হলো
+        let nextCount = (count + 1) % MAX_AD_LINKS;
+        localStorage.setItem(AD_CLICK_COUNT_KEY, nextCount);
+        
+        return count; // বর্তমান (যেটি এখন ব্যবহার হবে) কাউন্ট রিটার্ন করা হলো
+    }
+
+    // ==================================================
+    //  ✅ রেন্ডারিং ফাংশন
     // ==================================================
 
     function renderMainPost(post) {
         
-        // ১. টাইটেল যুক্ত করা
-        let content = `
-            <h1 class="article-title">${post.title}</h1>
-        `;
+        // ১. কন্টেন্ট অংশ তৈরি (প্যারাগ্রাফ থাকুক বা না থাকুক)
+        let content = `<h1 class="article-title">${post.title}</h1>`;
+        if(post.paragraphs && post.paragraphs.length > 0) {
+            post.paragraphs.forEach((p) => {
+                content += `<p class="article-para">${p}</p>`;
+            });
+        }
         
-        post.paragraphs.forEach((p, i) => {
-            content += `<p class="article-para">${p}</p>`;
+        // 🔥 ১. দৃশ্যমানতার শর্ত: শুধুমাত্র যে লিংকগুলি JSON এ আছে, সেগুলির বাটন দেখাও
+        const availableButtons = [];
+        const buttonMap = {
+            'downloadLink2': { text: '1080p Full HD', id: 'btn-1080' },
+            'downloadLink1': { text: '720p HD', id: 'btn-720' },
+            'downloadLink3': { text: '480p SD', id: 'btn-480' }
+        };
+        
+        // JSON এর লিংক অনুযায়ী বাটন তৈরি
+        Object.keys(buttonMap).forEach(key => {
+            if (post[key] && typeof post[key] === 'string' && post[key].startsWith('http')) {
+                availableButtons.push({ 
+                    finalUrl: post[key], 
+                    ...buttonMap[key]
+                });
+            }
         });
 
-        // ✅ ২. ডাউনলোড সেকশন
         let downloadSectionHTML = '';
 
-        if (post.downloadLink1 || post.downloadLink2 || post.downloadLink3) {
-            downloadSectionHTML += `
+        if (availableButtons.length > 0) {
+            
+            let buttonsHtml = availableButtons.map((btnData, index) => {
+                return `
+                    <a href="#" 
+                       data-final-url="${btnData.finalUrl}" 
+                       id="${btnData.id}" 
+                       class="download-btn-v2" 
+                       style="background:${getRandomColor()};"
+                       data-button-index="${index}">
+                        <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> ${btnData.text}
+                    </a>
+                `;
+            }).join('');
+            
+            // ✅ ডাউনলোড সেকশন সবসময় দেখাবে যদি কোনো লিংক থাকে
+            downloadSectionHTML = `
                 <div class="download-title-text">
                     DOWNLOAD FULL MOVIE IN HD
                 </div>
                 <div class="download-buttons-container">
-                    
-                    ${post.downloadLink2 ? `
-                        <a href="${post.downloadLink2}" class="download-btn-v2" style="background:${getRandomColor()};">
-                            <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 1080p Full HD
-                        </a>
-                    ` : ''}
-                    
-                    ${post.downloadLink1 ? `
-                        <a href="${post.downloadLink1}" class="download-btn-v2" style="background:${getRandomColor()};">
-                            <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 720p HD
-                        </a>
-                    ` : ''}
-
-                    ${post.downloadLink3 ? `
-                        <a href="${post.downloadLink3}" class="download-btn-v2" style="background:${getRandomColor()};">
-                            <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 480p SD
-                        </a>
-                    ` : ''}
+                    ${buttonsHtml}
                 </div>
             `;
-        }
+        } // End of downloadSectionHTML creation
         
         // সম্পূর্ণ পোস্ট বডি রেন্ডার করা
         document.getElementById('post-details-container').innerHTML = `
@@ -415,7 +466,7 @@
                 </div>
             </div>`;
         
-        // মূল পোস্টের টাইম এলিমেন্ট রিয়েল-টাইম আপডেটের জন্য যুক্ত করা
+        // অন্যান্য লজিক (অপরিবর্তিত)
         const mainTimeElement = document.getElementById('main-post-time');
         if (mainTimeElement) {
             timeElementsToUpdate.push({
@@ -423,7 +474,88 @@
                 dateString: post.uploadTime
             });
         }
+        
+        // 🔥 ক্লিক হ্যান্ডলিং লজিক সেট করা
+        if (availableButtons.length > 0) {
+            setupDownloadClickLogic(post);
+        }
     }
+
+
+    /**
+     * ডাউনলোড বাটনে ক্লিক হ্যান্ডলিং লজিক সেট করা
+     * @param {object} post - বর্তমান পোস্টের ডেটা
+     */
+    function setupDownloadClickLogic(post) {
+        
+        const HIGH_TRAFFIC_THRESHOLD_MS = 1000; // 1 সেকেন্ড
+        const HIGH_TRAFFIC_CLICK_COUNT = 3; // 1 সেকেন্ডে 3 ক্লিক
+
+        // 🔥 অ্যাড ভিজিট সফল হয়েছে কিনা, তা পেজ রিফ্রেশ না হওয়া পর্যন্ত ট্র্যাক করা
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted) { // ব্রাউজার ক্যাশ থেকে ফিরে এলে (সাধারণত ব্যাক বাটন)
+                localStorage.setItem(AD_VISITED_SUCCESS_KEY, 'true'); 
+                showNotification("Ad visit detected. Click again for Movie Link! 🎬");
+                console.log("Back button detected. Ad visit successful flag set.");
+            } 
+        }, { once: true });
+
+
+        document.querySelectorAll('.download-btn-v2').forEach(button => {
+            
+            button.addEventListener('click', async function(e) {
+                e.preventDefault();
+                const finalUrl = this.getAttribute('data-final-url');
+                
+                // --- ১. ট্র্যাফিক চাপ পরিমাপ লজিক ---
+                const now = Date.now();
+                clickTimestamps.push(now);
+                // শেষ 1 সেকেন্ডের মধ্যে হওয়া ক্লিকগুলি ফিল্টার করা
+                clickTimestamps = clickTimestamps.filter(timestamp => now - timestamp < HIGH_TRAFFIC_THRESHOLD_MS); 
+
+                // যদি 1 সেকেন্ডের মধ্যে 3 বা তার বেশি ক্লিক হয়, হাই ট্র্যাফিক মোড সক্রিয় করা
+                if (clickTimestamps.length >= HIGH_TRAFFIC_CLICK_COUNT) {
+                    isHighTrafficMode = true;
+                }
+                // ------------------------------------
+
+                // 🔥 ২. সফলতার অবস্থা চেক (পেজ রিফ্রেশ না হলে)
+                if (localStorage.getItem(AD_VISITED_SUCCESS_KEY) === 'true') {
+                    // ✅ সফল: সরাসরি ফাইনাল মুভি লিংকে নিয়ে যাও (যে কোনো বাটনে ক্লিক করুক না কেন)
+                    console.log(`Success State: Redirecting to final URL: ${finalUrl}`);
+                    window.location.href = finalUrl;
+                    return;
+                }
+
+                // 🔥 ৩. অ্যাড লিংকের নির্বাচন (মোড অনুযায়ী)
+                let adUrl;
+                let adIndex;
+
+                if (isHighTrafficMode) {
+                    // 🛑 হাই ট্র্যাফিক মোড: র্যান্ডম নির্বাচন
+                    adIndex = Math.floor(Math.random() * MAX_AD_LINKS);
+                    console.log(`High Traffic: Ad #${adIndex + 1} (RANDOM)`);
+                } else {
+                    // ➡️ স্বাভাবিক মোড: এই ব্যক্তির জন্য সিরিয়াল অনুযায়ী নির্বাচন
+                    adIndex = getNextPersonalAdIndex(); 
+                    console.log(`Normal Traffic: Ad #${adIndex + 1} (SERIAL)`);
+                }
+                
+                adUrl = GLOBAL_AD_LINKS[adIndex];
+                
+                if (adUrl) {
+                    // 🔥 অ্যাড লিংকে পাঠানো
+                    
+                    localStorage.removeItem(AD_VISITED_SUCCESS_KEY); // অ্যাড ভিজিট শুরু
+                    window.location.href = adUrl;
+                    
+                } else {
+                     window.location.href = finalUrl; // ফলব্যাক
+                }
+            });
+        });
+    }
+
 
     // --- অন্যান্য ফাংশনস (অপরিবর্তিত) ---
 
