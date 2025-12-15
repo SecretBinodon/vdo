@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmixo Admin - Unrestricted Generator</title>
+    <title>Filmixo Admin - Fixed Link Generator</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { --primary: #1da1f2; --dark: #34495e; --bg: #f4f6f8; }
@@ -83,12 +83,12 @@
 <body>
 
 <div class="container">
-    <h2><i class="fa-solid fa-code"></i> JSON Post Generator</h2>
+    <h2><i class="fa-solid fa-code"></i> Post JSON Generator</h2>
     
     <!-- বেসিক ইনফরমেশন -->
     <div class="form-group">
         <label>Post Title</label>
-        <input type="text" id="title" placeholder="মুভির নাম বা টাইটেল (ফাঁকা রাখা যাবে)">
+        <input type="text" id="title" placeholder="মুভির নাম বা টাইটেল">
     </div>
 
     <div class="grid-2">
@@ -107,28 +107,23 @@
         <textarea id="paragraphs" placeholder="আর্টিকেলের লেখা এখানে দিন..."></textarea>
     </div>
 
-    <!-- লিংক সেকশন (আপডেটেড লজিক অনুযায়ী) -->
+    <!-- লিংক সেকশন (৩টি আলাদা ইনপুট) -->
     <div class="link-section">
         <div class="section-title"><i class="fa-solid fa-link"></i> ডাউনলোড বাটন কনফিগারেশন</div>
         
-        <!-- লজিক: Frontend এ downloadLink2 হলো প্রথম বাটন (1080p) -->
         <div class="form-group">
-            <label>১. ভিজিট লিংক - 1080p (প্রথম বাটন)</label>
-            <input type="text" id="link2" placeholder="ভিজিট লিংক ১ দিন (Step 1)">
+            <label>১. ভিজিট লিংক ১ - 1080p (প্রথম বাটন)</label>
+            <input type="text" id="visitLink1" placeholder="Visit Link 1">
         </div>
 
-        <!-- লজিক: Frontend এ downloadLink1 হলো দ্বিতীয় বাটন (720p) -->
         <div class="form-group">
-            <label>২. ভিজিট লিংক - 720p (দ্বিতীয় বাটন)</label>
-            <input type="text" id="link1" placeholder="ভিজিট লিংক ২ দিন (Step 2)">
+            <label>২. ভিজিট লিংক ২ - 720p (দ্বিতীয় বাটন)</label>
+            <input type="text" id="visitLink2" placeholder="Visit Link 2">
         </div>
 
-        <!-- লজিক: Frontend এ downloadLink1 ই মূলত ফাইনাল লিংক হিসেবে কাজ করে (Current Logic)। 
-             কিন্তু ইউজার ইন্টারফেসে এটি আলাদা দেখাচ্ছি যাতে আপনি বুঝেন এটাই মেইন মুভি লিংক -->
         <div class="form-group">
             <label style="color:#e0245e;">৩. মুভি ডাউনলোড লিংক (ফাইনাল বাটন)</label>
-            <input type="text" id="finalMovieLink" placeholder="অরজিনাল মুভি/ফাইল লিংক এখানে দিন">
-            <small style="color:#666; display:block; margin-top:5px;">* নোট: এই লিংকটিই ক্রাইটেরিয়া পূরণের পর ফাইনাল বাটনে কাজ করবে।</small>
+            <input type="text" id="finalMovieLink" placeholder="Original Movie Link">
         </div>
     </div>
     
@@ -142,7 +137,6 @@
 </div>
 
 <script>
-    // অটোমেটিক আইডি এবং ডিউরেশন জেনারেটর (পেজ লোড হলেই)
     document.addEventListener('DOMContentLoaded', () => {
         setupDefaults();
     });
@@ -152,7 +146,7 @@
         const id = 'post-' + Math.random().toString(36).substr(2, 6);
         document.getElementById('generatedId').value = id;
         
-        // Random Duration (যদি ইউজার না দেয়, তবে প্লেসহোল্ডার হিসেবে থাকবে না, ভ্যালু হিসেবে জেনারেট হবে না, জাস্ট রেডি থাকবে)
+        // Random Duration
         const h = Math.floor(Math.random() * 2);
         const m = Math.floor(Math.random() * 59);
         const s = Math.floor(Math.random() * 59);
@@ -160,27 +154,23 @@
     }
 
     function generateJSON() {
-        // ১. ভ্যালু নেওয়া (ফাঁকা থাকলেও সমস্যা নেই)
+        // ভ্যালু নেওয়া
         const id = document.getElementById('generatedId').value;
         const title = document.getElementById('title').value.trim();
         const media = document.getElementById('media').value.trim();
         const duration = document.getElementById('duration').value.trim();
         const paraRaw = document.getElementById('paragraphs').value.trim();
         
-        // লিংক ভ্যালু নেওয়া
-        const visitLink1080 = document.getElementById('link2').value.trim(); // JSON key: downloadLink2
-        const visitLink720 = document.getElementById('link1').value.trim();  // JSON key: downloadLink1 (partially used)
-        const movieLink = document.getElementById('finalMovieLink').value.trim(); // This will govern the final logic
+        // ৩টি আলাদা লিংক ভ্যালু নেওয়া
+        const link1 = document.getElementById('visitLink1').value.trim(); // 1080p
+        const link2 = document.getElementById('visitLink2').value.trim(); // 720p
+        const movieLink = document.getElementById('finalMovieLink').value.trim(); // Final Movie
 
-        // প্যারাগ্রাফ প্রসেসিং (ফাঁকা থাকলে খালি অ্যারে)
         const paragraphs = paraRaw ? paraRaw.split('\n').filter(line => line.trim() !== '') : [];
-
-        // টাইমস্ট্যাম্প
         const date = new Date();
-        // Bangladesh Time Offset fix (Simple ISO string)
         const uploadTime = date.toISOString();
 
-        // ২. অবজেক্ট তৈরি করা (কোনো ভ্যালিডেশন চেক নেই)
+        // JSON অবজেক্ট তৈরি (৩টি আলাদা কী সহ)
         const postData = {
             id: id,
             uploadTime: uploadTime,
@@ -190,29 +180,18 @@
             paragraphs: paragraphs,
             hashtags: "#Filmixo #Movies #Viral",
             
-            // ৩. লিংকিং লজিক (Frontend কোড অনুযায়ী ম্যাপিং)
-            // Frontend logic: 
-            // - Button 1 (1080p) -> downloadLink2
-            // - Button 2 (720p) -> downloadLink1
-            // - Final Button -> downloadLink1 (Previous logic) OR we can pass the movie link here.
-            
-            // এখানে ট্রিক হলো: আমরা "Movie Link" ইনপুটটিকে `downloadLink1` এ সেট করবো কারণ ফ্রন্টএন্ডে `finalDl(p.downloadLink1)` কল হয়।
-            // আবার `btn-720` ও `downloadLink1` ব্যবহার করে। 
-            
-            // সুতরাং: 
-            downloadLink2: visitLink1080, // 1080p বাটন লিংক
-            downloadLink1: movieLink || visitLink720 // যদি মুভি লিংক দেওয়া থাকে, সেটাই downloadLink1 হবে (কারণ ফাইনাল বাটন এটা ইউজ করে)।
+            // ৩টি আলাদা বাটন লিংক ম্যাপিং:
+            downloadLink2: link1,      // ভিজিট বাটন ১ (1080p)
+            downloadLink3: link2,      // ভিজিট বাটন ২ (720p) - [নতুন কী]
+            downloadLink1: movieLink   // ফাইনাল মুভি লিংক
         };
 
-        // ৪. JSON আউটপুট দেখানো
-        // আমরা একটি কমা (,) যুক্ত করে ফরম্যাট করবো যাতে সরাসরি lists এ পেস্ট করা যায়
         const jsonString = JSON.stringify(postData, null, 4);
-        const finalString = jsonString.trim() + ","; // কমা যুক্ত করা হলো
+        const finalString = jsonString.trim() + ",";
 
         document.getElementById('json-output').innerText = finalString;
         document.getElementById('output-area').style.display = 'block';
         
-        // নতুন আইডি রেডি করা পরের পোস্টের জন্য
         setupDefaults();
     }
 
