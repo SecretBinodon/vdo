@@ -8,11 +8,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* --- বেসিক রিসেট --- */
+        /* (CSS অংশ অপরিবর্তিত রয়েছে) */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; text-decoration: none; }
         body { background: #fff; display: flex; justify-content: center; }
 
-        /* ✅ মূল লেআউট নিয়ন্ত্রণ: ডেটা লোড না হওয়া পর্যন্ত সম্পূর্ণ অদৃশ্য */
         .main-wrapper { 
             width: 100%; 
             max-width: 600px; 
@@ -25,10 +24,8 @@
             opacity: 0; 
         }
         
-        /* ডেটা লোড হওয়ার পর তাৎক্ষণিক দৃশ্যমানতা */
         .main-wrapper.loaded { opacity: 1 !important; }
 
-        /* হেডার */
         header { 
             background: #1da1f2; padding: 12px 15px; display: flex; justify-content: space-between; 
             align-items: center; color: white; position: sticky; top: 0; z-index: 100; 
@@ -37,81 +34,10 @@
         .logo-area { font-weight: 800; font-size: 20px; text-transform: uppercase; }
         .header-btn { background: white; color: #1da1f2; padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 14px; margin-left: 10px; cursor: pointer; }
 
-        /* পোস্ট ডিটেইলস এরিয়া (প্রধান পোস্ট) */
         .post-author-area { padding: 10px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e1e8ed; }
         .author-info { display: flex; align-items: center; gap: 10px; }
         .pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }
         .pfp img { width: 100%; height: 100%; object-fit: cover; }
-        
-        /* 🔥 প্রধান পোস্টের CSS: নাম এক লাইনে, ইউজারনেম নিচে (নীল) - এটি ঠিক আছে */
-        .author-text { 
-            /* এটি ফ্লেক্স মুক্ত থাকবে */
-        } 
-        
-        .author-text h3 { 
-            font-size: 16px; 
-            margin: 0; 
-            color: #0f1419; 
-            display: inline-flex;
-            align-items: center;
-        }
-        .author-text span { 
-            font-size: 14px; 
-            color: #1da1f2; /* ইউজারনেম নীল রঙ */
-            display: block; /* যাতে এটি h3-এর নিচে চলে যায় */
-            margin-top: -2px; 
-        }
-        .post-time { font-size: 13px; color: #536471; font-weight: bold; }
-
-        /* মূল পোস্ট ভিডিও কন্টেইনার (অপরিবর্তিত) */
-        .video-container { width: 100%; aspect-ratio: 16/9; background: #000; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: 5px; cursor: pointer; }
-        .video-container img { width: 100%; height: 100%; object-fit: contain; }
-        .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }
-        .play-btn-center::after { content: ''; border-left: 20px solid white; border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 5px; }
-        .main-video-spinner { display: none; position: absolute; width: 50px; height: 50px; border: 5px solid rgba(255, 255, 255, 0.3); border-top: 5px solid #fff; border-radius: 50%; animation: spin 1s linear infinite; z-index: 6; }
-        .video-controls { position: absolute; bottom: 0; left: 0; width: 100%; padding: 10px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; display: flex; justify-content: space-between; font-size: 12px; z-index: 5; }
-
-        .content-body { padding: 15px 15px 0 15px; }
-        .article-title { font-size: 20px; font-weight: 800; margin-bottom: 15px; color: #0f1419; line-height: 1.3; }
-        .article-para { font-size: 15px; line-height: 1.2; color: #1c1e21; margin-bottom: 12px; text-align: left; letter-spacing: -0.3px; }
-
-        /* ডাউনলোড সেকশন (অপরিবর্তিত) */
-        .download-title-text { font-size: 18px; font-weight: 800; color: #0f1419; text-align: center; margin: 20px 0 10px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }
-        .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px; }
-        .download-btn-v2 { display: flex; align-items: center; justify-content: center; width: 100%; padding: 12px 10px; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: transform 0.2s, background-color 0.2s; }
-        .download-btn-v2:active { transform: scale(0.98); box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
-        
-        /* স্ট্যাটস বার (অপরিবর্তিত) */
-        .stats-section { padding: 12px 0; margin-top: 15px; border-top: 1px solid #e1e8ed; border-bottom: 1px solid #e1e8ed; display: flex; align-items: center; background: #fff; }
-        .stats-left { display: flex; align-items: center; gap: 20px; flex-grow: 1; overflow: hidden; }
-        .view-stat { flex: 0 0 auto; display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; }
-        .view-stat i { font-size: 16px; }
-        .like-stat-container { flex: 1 1 auto; display: flex; justify-content: center; }
-        .love-btn { display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: 0.2s; user-select: none; }
-        .love-btn:active { background-color: rgba(224, 36, 94, 0.1); transform: scale(0.95); }
-        .love-btn.liked { color: #e0245e; } .love-btn.liked i { font-weight: 900; } .love-btn i { font-size: 18px; }
-        .share-icons { flex: 0 0 auto; display: flex; gap: 8px; }
-        .share-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 13px; transition: 0.2s; }
-        .share-icon:hover { opacity: 0.8; transform: scale(1.1); }
-
-        /* রিলেটেড পোস্ট (কার্ড) */
-        .related-section { background: #fff; margin-top: 0; }
-        .related-header { padding: 15px; font-weight: 800; color: #536471; border-bottom: 1px solid #e1e8ed; text-transform: uppercase; background: #fff; }
-        
-        .post-card { 
-            background: white; padding: 5px 15px 5px 15px; border-bottom: 1px solid #e1e8ed; 
-            display: flex; flex-direction: column; 
-            gap: 6px; 
-        }
-
-        .post-header { display: flex; gap: 10px; align-items: center; }
-        .post-pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }
-        .post-pfp img { width: 100%; height: 100%; object-fit: cover; }
-        
-        /* 🔥 প্রধান পোস্টের CSS: নাম এক লাইনে, ইউজারনেম নিচে (নীল) - এটি ঠিক আছে */
-        .author-text { 
-            /* এটি ফ্লেক্স মুক্ত থাকবে */
-        } 
         
         .author-text h3 { 
             font-size: 16px; 
@@ -128,7 +54,62 @@
         }
         .post-time { font-size: 13px; color: #536471; font-weight: bold; }
 
-        /* রিলটেড পোস্ট লজিক (অপরিবর্তিত) */
+        .video-container { width: 100%; aspect-ratio: 16/9; background: #000; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: 5px; cursor: pointer; }
+        .video-container img { width: 100%; height: 100%; object-fit: contain; }
+        .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }
+        .play-btn-center::after { content: ''; border-left: 20px solid white; border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 5px; }
+        .main-video-spinner { display: none; position: absolute; width: 50px; height: 50px; border: 5px solid rgba(255, 255, 255, 0.3); border-top: 5px solid #fff; border-radius: 50%; animation: spin 1s linear infinite; z-index: 6; }
+        .video-controls { position: absolute; bottom: 0; left: 0; width: 100%; padding: 10px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; display: flex; justify-content: space-between; font-size: 12px; z-index: 5; }
+
+        .content-body { padding: 15px 15px 0 15px; }
+        .article-title { font-size: 20px; font-weight: 800; margin-bottom: 15px; color: #0f1419; line-height: 1.3; }
+        .article-para { font-size: 15px; line-height: 1.2; color: #1c1e21; margin-bottom: 12px; text-align: left; letter-spacing: -0.3px; }
+
+        .download-title-text { font-size: 18px; font-weight: 800; color: #0f1419; text-align: center; margin: 20px 0 10px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }
+        .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .download-btn-v2 { display: flex; align-items: center; justify-content: center; width: 100%; padding: 12px 10px; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: transform 0.2s, background-color 0.2s; }
+        .download-btn-v2:active { transform: scale(0.98); box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+        
+        .stats-section { padding: 12px 0; margin-top: 15px; border-top: 1px solid #e1e8ed; border-bottom: 1px solid #e1e8ed; display: flex; align-items: center; background: #fff; }
+        .stats-left { display: flex; align-items: center; gap: 20px; flex-grow: 1; overflow: hidden; }
+        .view-stat { flex: 0 0 auto; display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; }
+        .view-stat i { font-size: 16px; }
+        .like-stat-container { flex: 1 1 auto; display: flex; justify-content: center; }
+        .love-btn { display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: 0.2s; user-select: none; }
+        .love-btn:active { background-color: rgba(224, 36, 94, 0.1); transform: scale(0.95); }
+        .love-btn.liked { color: #e0245e; } .love-btn.liked i { font-weight: 900; } .love-btn i { font-size: 18px; }
+        .share-icons { flex: 0 0 auto; display: flex; gap: 8px; }
+        .share-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 13px; transition: 0.2s; }
+        .share-icon:hover { opacity: 0.8; transform: scale(1.1); }
+
+        .related-section { background: #fff; margin-top: 0; }
+        .related-header { padding: 15px; font-weight: 800; color: #536471; border-bottom: 1px solid #e1e8ed; text-transform: uppercase; background: #fff; }
+        
+        .post-card { 
+            background: white; padding: 5px 15px 5px 15px; border-bottom: 1px solid #e1e8ed; 
+            display: flex; flex-direction: column; 
+            gap: 6px; 
+        }
+
+        .post-header { display: flex; gap: 10px; align-items: center; }
+        .post-pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }
+        .post-pfp img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .author-text h3 { 
+            font-size: 16px; 
+            margin: 0; 
+            color: #0f1419; 
+            display: inline-flex;
+            align-items: center;
+        }
+        .author-text span { 
+            font-size: 14px; 
+            color: #1da1f2; 
+            display: block; 
+            margin-top: -2px; 
+        }
+        .post-time { font-size: 13px; color: #536471; font-weight: bold; }
+
         .name-row { 
             display: flex; 
             align-items: center; 
@@ -178,7 +159,6 @@
         .read-more-text { color: #1da1f2; font-weight: 600; font-size: 14px; }
         .hashtags { color: #1d9bf0; font-size: 15px; margin-bottom: 10px; cursor: default; }
 
-        /* রিলেটেড পোস্টের ইমেজ কন্টেইনার (অপরিবর্তিত) */
         .media-container { position: relative; width: 100%; border-radius: 12px; overflow: hidden; margin-top: 5px; display: block; cursor: pointer; background: #000; aspect-ratio: 3 / 4; max-height: 720px; }
         .media-container img { width: 100%; height: 100%; object-fit: cover; margin: 0 auto; max-height: none; }
         .media-container.auto-fit { aspect-ratio: initial; height: auto; }
@@ -198,7 +178,6 @@
         .footer-share-btn { cursor: pointer; padding: 8px; border-radius: 50%; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; }
         .footer-share-btn:hover { background-color: rgba(0,0,0,0.05); }
 
-        /* ফুটার এবং লোডার (অপরিবর্তিত) */
         .site-footer { background-color: #fff; padding: 30px 20px; text-align: center; border-top: none; margin-top: 0; }
         .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }
         .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; }
@@ -209,7 +188,6 @@
         .spinner { width: 14px; height: 14px; border: 2px solid #ccc; border-top: 2px solid #000; border-radius: 50%; animation: spin 1s linear infinite; display: inline-block; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        /* Infinite Scroll Sentinel */
         #sentinel { width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; }
         .load-more-spinner { width: 24px; height: 24px; border: 3px solid #ccc; border-top: 3px solid #1da1f2; border-radius: 50%; animation: spin 1s linear infinite; display: none; }
         #sentinel.loading .load-more-spinner { display: block; }
@@ -264,7 +242,7 @@
     const deviceId = localStorage.getItem('deviceId') || 'device-'+Date.now(); 
 
     // ============================================
-    //  CONFIGURATION (রিলেটেড পোস্ট এবং লোডিং কন্ট্রোল)
+    //  CONFIGURATION (অপরিবর্তিত)
     // ============================================
     const CONFIG = {
         GLOBAL_VIDEO_LINK: "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea",
@@ -278,7 +256,7 @@
     document.getElementById('link-privacy').href = CONFIG.footer.privacy;
     document.getElementById('link-terms').href = CONFIG.footer.terms;
 
-    // গ্লোবাল ভ্যারিয়েবল
+    // গ্লোবাল ভ্যারিয়েবল (অপরিবর্তিত)
     let availablePosts = []; 
     let currentStartIndex = 0; 
     let observer; 
@@ -321,8 +299,6 @@
 
     function formatDate(d) { return new Date(d).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }); }
     
-    // 🔥 নোটিফিকেশন ফাংশন অপসারিত
-
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get('id');
 
@@ -354,7 +330,7 @@
     const AD_CLICK_COUNT_KEY = 'adClickCount_' + postId; 
     const AD_VISITED_SUCCESS_KEY = 'adVisitedSuccess_' + postId;
 
-    // 🔥 অ্যাড লিংক অ্যারে (Google, YouTube, Facebook এর লিংক দিয়ে প্রতিস্থাপিত)
+    // 🔥 অ্যাড লিংক অ্যারে (অপরিবর্তিত)
     const GLOBAL_AD_LINKS = [
         "https://www.google.com",
         "https://www.youtube.com",
@@ -373,7 +349,6 @@
     function getNextPersonalAdIndex() {
         let count = parseInt(localStorage.getItem(AD_CLICK_COUNT_KEY) || '0', 10);
         
-        // যদি সব লিংক ভিজিট করে ফেলে, আবার প্রথম থেকে শুরু হবে
         if (count >= MAX_AD_LINKS) { 
             count = 0;
         }
@@ -382,16 +357,15 @@
         let nextCount = (count + 1) % MAX_AD_LINKS;
         localStorage.setItem(AD_CLICK_COUNT_KEY, nextCount);
         
-        return count; // বর্তমান (যেটি এখন ব্যবহার হবে) কাউন্ট রিটার্ন করা হলো
+        return count; 
     }
 
     // ==================================================
-    //  ✅ রেন্ডারিং ফাংশন
+    //  ✅ রেন্ডারিং ফাংশন (অপরিবর্তিত)
     // ==================================================
 
     function renderMainPost(post) {
         
-        // ১. কন্টেন্ট অংশ তৈরি (প্যারাগ্রাফ থাকুক বা না থাকুক)
         let content = `<h1 class="article-title">${post.title}</h1>`;
         if(post.paragraphs && post.paragraphs.length > 0) {
             post.paragraphs.forEach((p) => {
@@ -399,7 +373,6 @@
             });
         }
         
-        // 🔥 ১. দৃশ্যমানতার শর্ত: শুধুমাত্র যে লিংকগুলি JSON এ আছে, সেগুলির বাটন দেখাও
         const availableButtons = [];
         const buttonMap = {
             'downloadLink2': { text: '1080p Full HD', id: 'btn-1080' },
@@ -407,7 +380,6 @@
             'downloadLink3': { text: '480p SD', id: 'btn-480' }
         };
         
-        // JSON এর লিংক অনুযায়ী বাটন তৈরি
         Object.keys(buttonMap).forEach(key => {
             if (post[key] && typeof post[key] === 'string' && post[key].startsWith('http')) {
                 availableButtons.push({ 
@@ -434,7 +406,6 @@
                 `;
             }).join('');
             
-            // ✅ ডাউনলোড সেকশন সবসময় দেখাবে যদি কোনো লিংক থাকে
             downloadSectionHTML = `
                 <div class="download-title-text">
                     DOWNLOAD FULL MOVIE IN HD
@@ -443,9 +414,8 @@
                     ${buttonsHtml}
                 </div>
             `;
-        } // End of downloadSectionHTML creation
+        } 
         
-        // সম্পূর্ণ পোস্ট বডি রেন্ডার করা (অপরিবর্তিত)
         document.getElementById('post-details-container').innerHTML = `
             <div class="post-author-area">
                 <div class="author-info">
@@ -476,7 +446,6 @@
                 </div>
             </div>`;
         
-        // অন্যান্য লজিক (অপরিবর্তিত)
         const mainTimeElement = document.getElementById('main-post-time');
         if (mainTimeElement) {
             timeElementsToUpdate.push({
@@ -485,7 +454,6 @@
             });
         }
         
-        // 🔥 ক্লিক হ্যান্ডলিং লজিক সেট করা
         if (availableButtons.length > 0) {
             setupDownloadClickLogic(post);
         }
@@ -498,8 +466,8 @@
      */
     function setupDownloadClickLogic(post) {
         
-        const HIGH_TRAFFIC_THRESHOLD_MS = 1000; // 1 সেকেন্ড
-        const HIGH_TRAFFIC_CLICK_COUNT = 3; // 1 সেকেন্ডে 3 ক্লিক
+        const HIGH_TRAFFIC_THRESHOLD_MS = 1000; 
+        const HIGH_TRAFFIC_CLICK_COUNT = 3; 
 
         // 🔥 ১. SUCCESS STATE ফ্ল্যাগটি রিসেট করার লজিক (কঠোর রিসেট)
         
@@ -512,8 +480,15 @@
         // (B) pageshow চেক: শুধুমাত্র যদি bfcache থেকে লোড হয় (ব্যাক বাটন), তবেই Success State সেট হবে।
         window.addEventListener('pageshow', function(event) {
             if (event.persisted) { 
+                // 🔥 অ্যাড ভিজিট সফল হলে, চূড়ান্ত লিংকে যাওয়ার ফ্ল্যাগ সেট করো।
                 localStorage.setItem(AD_VISITED_SUCCESS_KEY, 'true'); 
                 console.log("Back button detected. Ad visit successful flag set to TRUE.");
+
+                // 🔥 নতুন সংযোজন: যদি সফলভাবে ব্যাক করা হয়, আমরা AD_CLICK_COUNT_KEY রিসেট করে দেব
+                // যাতে ভবিষ্যতে রিফ্রেশ হলেও সে প্রথম অ্যাড লিংকটি পায়।
+                localStorage.setItem(AD_CLICK_COUNT_KEY, '0');
+                console.log("AD_CLICK_COUNT_KEY reset to 0 for next fresh start.");
+
             } else {
                  // Non-persisted (রিফ্রেশ, নতুন নেভিগেট): নিশ্চিত রিসেট।
                  localStorage.removeItem(AD_VISITED_SUCCESS_KEY);
