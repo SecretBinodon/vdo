@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FILMIXO</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="preload" as="image" href="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/FILMIXO-HUB.jpg">
     
     <style>
         /* --- বেসিক রিসেট --- */
@@ -54,11 +57,6 @@
             cursor: default; /* ক্লিক ইফেক্ট বন্ধ */
             -webkit-tap-highlight-color: transparent; /* মোবাইল ব্রাউজার ইফেক্ট বন্ধের চেষ্টা */
         }
-        
-        .stats { font-size: 14px; color: #050505; margin-bottom: 8px; }
-        .stats b { font-weight: 800; }
-        .meta-info { display: flex; gap: 15px; color: #65676b; font-size: 13px; margin-bottom: 12px; align-items: center; }
-        .meta-info i { margin-right: 4px; }
         
         /* ✅ পরিবর্তন ২: বায়ো প্যারাগ্রাফের নিচের গ্যাপ কমানো */
         .bio { 
@@ -332,18 +330,13 @@
         }
         .notification.show { opacity: 1; }
 
-        /* --- সার্চ ওভারলে পেজ স্টাইল (অপরিবর্তিত) --- */
+        /* --- সার্চ ওভারলে পেজ স্টাইল (অ্যানিমেশন বন্ধ) --- */
         #search-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: white; z-index: 1001;
             display: none; 
             flex-direction: column;
             padding-top: 10px;
-            transform: translateY(100%);
-            transition: transform 0.3s ease-out;
-        }
-        #search-overlay.show {
-            transform: translateY(0);
         }
         .search-header {
             display: flex; align-items: center; padding: 0 10px; margin-bottom: 15px;
@@ -688,7 +681,7 @@
             observer.observe(sentinel);
         }
         
-        // --- ফায়ারবেস লজিক (অপরিবর্তিত) ---
+        // --- ফায়ারবেস লজিক (লাইক নোটিফিকেশন বন্ধ করা হয়েছে) ---
         function initializeFirebaseForCard(card, id) {
             const viewEl = card.querySelector('.view-count');
             const likeEl = card.querySelector('.like-count');
@@ -704,12 +697,16 @@
 
             loveBtn.addEventListener('click', async () => {
                 const s = await getDoc(userRef);
-                if(s.exists()) { showNotification("Already liked! ❤️"); } 
+                if(s.exists()) { 
+                    // লাইক নোটিফিকেশন বন্ধ 
+                    // showNotification("Already liked! ❤️"); 
+                } 
                 else {
                     loveBtn.classList.add('liked'); loveBtn.querySelector('i').classList.replace('fa-regular', 'fa-solid');
                     await setDoc(loveRef, { count: increment(1) }, { merge: true });
                     await setDoc(userRef, { time: new Date() });
-                    showNotification("Liked! ❤️");
+                    // লাইক নোটিফিকেশন বন্ধ
+                    // showNotification("Liked! ❤️");
                 }
             });
         }
@@ -757,25 +754,22 @@
             document.getElementById('nav-login').classList.remove('inactive');
         };
 
-        // --- সার্চ ফাংশনালিটি (স্মুথনেস বৃদ্ধি) ---
+        // --- সার্চ ফাংশনালিটি (অ্যানিমেশন বন্ধ করা হয়েছে) ---
         const searchOverlay = document.getElementById('search-overlay');
         const searchInput = document.getElementById('search-input');
         const searchResults = document.getElementById('search-results');
         const notFound = document.getElementById('not-found');
 
         window.showSearch = () => {
-            // শুধুমাত্র ডিসপ্লে পরিবর্তন না করে, ট্রানজিশনের জন্য ক্লাস ব্যবহার করা
             searchOverlay.style.display = 'flex';
+            
             deactivateNavButtons();
             document.getElementById('nav-search').classList.add('active');
             document.getElementById('nav-search').classList.remove('inactive');
 
-            setTimeout(() => { 
-                searchOverlay.classList.add('show'); 
-                searchInput.focus(); 
-                // সার্চ এন্ট্রি পয়েন্টে প্রাথমিক পরামর্শ দেখানো (যেমন, টাইপ করার অনুরোধ)
-                renderSearchResults(''); 
-            }, 10);
+            searchInput.focus(); 
+            renderSearchResults(''); 
+
             document.body.style.overflow = 'hidden'; 
         };
 
