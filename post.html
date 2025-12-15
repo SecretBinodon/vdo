@@ -11,7 +11,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; text-decoration: none; }  
     body { background: #fff; display: flex; justify-content: center; }  
 
-    /* মেইন র্যাপার (Fading Effect Removed) */  
+    /* --- মেইন র্যাপার (ঝাঁকুনি এবং ফেডিং ফিক্স) --- */  
     .main-wrapper {   
         width: 100%;   
         max-width: 600px;   
@@ -21,10 +21,17 @@
         border-left: 1px solid #eee;   
         border-right: 1px solid #eee;   
         padding-bottom: 0;   
-        /* opacity: 0;  <-- REMOVED */
-        /* transition: opacity 0.3s ease; <-- REMOVED */
+        
+        /* প্রথমে সবকিছু অদৃশ্য থাকবে যাতে ভাঙা লেআউট না দেখা যায় */
+        opacity: 0;   
+        
+        /* লক্ষ্য করুন: এখানে কোনো transition নেই, তাই লোড হলে ধপ করে আসবে না, আবার আস্তেও আসবে না, ইনস্ট্যান্ট আসবে */
     }  
-    /* .main-wrapper.loaded { opacity: 1 !important; } <-- REMOVED NEEDLESS CLASS */
+    
+    /* যখন ডেটা রেডি হবে, তখন এই ক্লাসটি যুক্ত হবে */
+    .main-wrapper.loaded { 
+        opacity: 1 !important; 
+    }  
 
     /* হেডার */  
     header {   
@@ -44,7 +51,7 @@
     .author-text span { font-size: 14px; color: #1da1f2; display: block; margin-top: -2px; }  
     .post-time { font-size: 13px; color: #536471; font-weight: bold; }  
 
-    /* --- ভিডিও কন্টেইনার (ফিক্সড - No Jumping) --- */  
+    /* --- ভিডিও কন্টেইনার (ফিক্সড সাইজ) --- */  
     .video-container { 
         width: 100%; 
         aspect-ratio: 16 / 9; 
@@ -75,21 +82,21 @@
     .article-title { font-size: 20px; font-weight: 800; margin-bottom: 15px; color: #0f1419; line-height: 1.3; }  
     .article-para { font-size: 15px; line-height: 1.2; color: #1c1e21; margin-bottom: 12px; text-align: left; letter-spacing: -0.3px; }  
 
-    /* --- ডাউনলোড সেকশন ডিজাইন --- */  
+    /* --- ডাউনলোড সেকশন --- */  
     .download-title-text { font-size: 18px; font-weight: 800; color: #0f1419; text-align: center; margin: 20px 0 10px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }  
     .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 12px; }  
     
     .download-btn-v2 { display: flex; align-items: center; justify-content: center; width: 100%; padding: 14px 10px; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: all 0.2s; position: relative; }  
     .download-btn-v2:active { transform: scale(0.98); }  
 
-    /* সফল ভিজিট বাটনের স্টাইল */
+    /* ভিজিটেড বাটন */
     .download-btn-v2.completed-step {
         cursor: default;
         pointer-events: none; 
         box-shadow: none;
     }
 
-    /* 🔥 লাক্সারিয়াস ফাইনাল বাটন ডিজাইন 🔥 */
+    /* 🔥 লাক্সারিয়াস ফাইনাল বাটন 🔥 */
     .final-download-btn {
         display: none; 
         background: linear-gradient(135deg, #1e1e2f, #3a3a5e, #1e1e2f) !important; 
@@ -244,7 +251,7 @@
                 // শর্ত পূরণ হয়েছে
                 localStorage.setItem(getVisitedKey(pendingBtn), 'true');
             } else {
-                // শর্ত পূরণ হয়নি -> নোটিফিকেশন ১০ সেকেন্ডের কথা বলবে
+                // শর্ত পূরণ হয়নি
                 showNotification("Please stay on the new page for at least 10 seconds! ⏳");
             }
             
@@ -262,7 +269,7 @@
         localStorage.setItem(PENDING_CLICK_BTN_KEY, btnId);
         localStorage.setItem(CLICK_TIME_KEY, Date.now());
 
-        // একই ট্যাবে ওপেন হবে (নতুন ট্যাব নয়)
+        // একই ট্যাবে ওপেন হবে
         window.location.href = url;
     };
 
@@ -291,7 +298,7 @@
             if (localStorage.getItem(getVisitedKey('btn-1080')) === 'true') {
                 totalVisited++;
                 btn1080.innerHTML = '<i class="fa-solid fa-circle-check"></i> Step 1 Successful';
-                btn1080.classList.add('completed-step'); // ধূসর হবে না, কিন্তু ক্লিক করা যাবে না
+                btn1080.classList.add('completed-step');
             }
         }
 
@@ -311,7 +318,6 @@
         if (totalRequired > 0 && totalVisited === totalRequired) {
             if(finalBtn) {
                 finalBtn.style.display = 'flex';
-                // টাইটেল আপডেট অপশনাল, ইউজার বলেনি তাই আগেরটাই থাকবে অথবা চাইলে আপডেট করা যায়
             }
         } else {
             if(finalBtn) finalBtn.style.display = 'none';
@@ -362,22 +368,17 @@
             post.paragraphs.forEach((p) => { content += `<p class="article-para">${p}</p>`; });  
         }
   
-        // ডাউনলোড সেকশন সব সময় দেখাবে, প্যারাগ্রাফ থাকুক বা না থাকুক
-        // Correct Mapping:
-        // 1080p -> downloadLink2
-        // 720p -> downloadLink3
-        // Final -> downloadLink1
-        
+        // CORRECTED LINK MAPPING
         let downloadSectionHTML = '';  
         if (post.downloadLink2 || post.downloadLink3) {  
             
-            const finalMovieUrl = post.downloadLink1; 
+            const finalMovieUrl = post.downloadLink1; // Final Movie Link
 
             downloadSectionHTML += `  
                 <div class="download-title-text">DOWNLOAD FULL MOVIE IN HD</div>  
                 <div class="download-buttons-container">  
                     
-                    <!-- 1080p Button (Step 1) -> Mapping: downloadLink2 -->
+                    <!-- 1080p Button (Step 1) -> Mapped to downloadLink2 -->
                     ${post.downloadLink2 ? `  
                         <div id="btn-1080" class="download-btn-v2" 
                              style="background:${getRandomColor()};" 
@@ -386,7 +387,7 @@
                         </div>  
                     ` : ''}  
                     
-                    <!-- 720p Button (Step 2) -> Mapping: downloadLink3 -->
+                    <!-- 720p Button (Step 2) -> Mapped to downloadLink3 -->
                     ${post.downloadLink3 ? `  
                         <div id="btn-720" class="download-btn-v2" 
                              style="background:${getRandomColor()};" 
@@ -395,7 +396,7 @@
                         </div>  
                     ` : ''}  
 
-                    <!-- FINAL BUTTON -> Mapping: downloadLink1 -->
+                    <!-- FINAL BUTTON -> Mapped to downloadLink1 -->
                     <div id="btn-final" class="download-btn-v2 final-download-btn" 
                          onclick="handleFinalDownload('${finalMovieUrl}')">  
                         <i class="fa-solid fa-film" style="margin-right: 8px;"></i> DOWNLOAD FULL MOVIE  
@@ -413,7 +414,7 @@
                 <div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div>  
             </div>  
             
-            <!-- FIXED MAIN IMAGE CONTAINER (EAGER LOADING) -->
+            <!-- FIXED MAIN IMAGE (EAGER LOAD) -->
             <div class="video-container" onclick="handleVideoClick()">
                 <img src="${post.mediaImage}" loading="eager" decoding="async">
                 <div class="play-btn-center" id="main-play-btn"></div>
@@ -459,7 +460,7 @@
   
             renderMainPost(mainPost);  
             setupFirebaseForMainPost(mainPost.id);  
-            mainWrapper.classList.add('loaded');   
+            mainWrapper.classList.add('loaded'); // INSTANT VISIBILITY (Opacity 1)
             setInterval(updateAllTimeElements, 60000);   
               
             const anchorPostTime = new Date(mainPost.uploadTime).getTime();  
@@ -517,16 +518,7 @@
                     </div>  
                     <div class="clickable-area" onclick="openPost('${post.id}')"><div class="post-title">${post.title}</div><div class="post-excerpt">${excerpt} <span class="read-more-text">See more</span></div></div>  
                     <div class="hashtags">${post.hashtags}</div>  
-                    
-                    <!-- RELATED POSTS: KEEPING LAZY LOADING FOR PERFORMANCE -->
-                    <div class="clickable-area" onclick="openPost('${post.id}')">
-                        <div class="media-container">
-                            <img src="${post.mediaImage}" loading="lazy">
-                            <div class="play-icon"></div>
-                            <div class="duration-badge">${post.videoDuration}</div>
-                        </div>
-                    </div>
-                    
+                    <div class="clickable-area" onclick="openPost('${post.id}')"><div class="media-container"><img src="${post.mediaImage}" loading="lazy"><div class="play-icon"></div><div class="duration-badge">${post.videoDuration}</div></div></div>  
                     <div class="post-footer"><div class="footer-left"><i class="fa-solid fa-chart-simple"></i> <span class="count-text view-count-rel">...</span> <span class="label-text">Views</span></div><div class="footer-right"><div class="love-btn-rel"><i class="fa-regular fa-heart"></i> <span class="count-text like-count-rel">...</span> <span class="label-text">Likes</span></div><div class="post-date-display">${formatDate(post.uploadTime)}</div><div class="footer-share-btn" onclick="sharePost('${post.id}', '${safeTitle}')"><i class="fa-solid fa-share-from-square"></i></div></div></div>  
                 </div>`;  
             const newCard = cardWrapper.firstElementChild;  
