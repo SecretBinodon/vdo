@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>  
 <html lang="en">  
 <head>  
@@ -11,7 +10,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; text-decoration: none; -webkit-tap-highlight-color: transparent; }  
     body { background: #fff; display: flex; justify-content: center; overflow-x: hidden; }  
 
-    /* --- MAIN WRAPPER (INSTANT LOAD) --- */  
+    /* --- MAIN WRAPPER (OPACITY FIX RESTORED) --- */  
     .main-wrapper {   
         width: 100%;   
         max-width: 600px;   
@@ -21,6 +20,15 @@
         border-left: 1px solid #eee;   
         border-right: 1px solid #eee;   
         padding-bottom: 0;   
+        
+        /* পেজ লোডিং স্মুথ রাখার জন্য অপাসিটি ০ রাখা হয়েছে */
+        opacity: 0;   
+        transition: opacity 0.2s ease; /* খুব দ্রুত কিন্তু স্মুথ ট্রানজিশন */
+    }  
+    
+    /* ডেটা লোড হলে এই ক্লাসটি যোগ হবে এবং পেজ স্থিরভাবে ভেসে উঠবে */
+    .main-wrapper.loaded { 
+        opacity: 1 !important; 
     }  
 
     /* --- HEADER --- */  
@@ -78,11 +86,24 @@
     .download-btn-v2 { display: flex; align-items: center; justify-content: center; width: 100%; padding: 14px 10px; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: all 0.2s; position: relative; }  
     .download-btn-v2:active { transform: scale(0.98); }  
 
-    /* Completed State: Right Side Checkmark */
+    /* Completed State: Right Side Checkmark (SMALLER SIZE FIX) */
     .download-btn-v2.completed-step { cursor: default; pointer-events: none; box-shadow: none; }
-    .download-btn-v2 .check-icon { margin-left: 12px; color: #1da1f2; background: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); border: 2px solid white; }
+    .download-btn-v2 .check-icon { 
+        margin-left: 10px; 
+        color: #1da1f2; 
+        background: white; 
+        border-radius: 50%; 
+        width: 18px; /* ছোট করা হয়েছে */
+        height: 18px; /* ছোট করা হয়েছে */
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        font-size: 10px; /* ফন্ট সাইজ কমানো হয়েছে */
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2); 
+        border: 2px solid white; 
+    }
 
-    /* 🔥 FINAL BUTTON (Clean Luxury: No Shadow) 🔥 */
+    /* 🔥 FINAL BUTTON (Yellow Shadow Removed) 🔥 */
     .final-download-btn {
         display: none; 
         background: linear-gradient(135deg, #1e1e2f, #3a3a5e, #1e1e2f) !important; 
@@ -151,17 +172,17 @@
     .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; }  
     .footer-copyright { color: #536471; font-size: 13px; }  
     
-    /* --- UPDATED COMPACT NOTIFICATION --- */  
+    /* --- UPDATED COMPACT NOTIFICATION (SINGLE LINE & SMALLER) --- */  
     .notification { 
         position: fixed; top: 70px; left: 50%; transform: translateX(-50%); 
         background: rgba(0,0,0,0.9); color: white; 
-        padding: 8px 18px; /* Compact padding */
+        padding: 8px 16px; /* Compact padding */
         border-radius: 30px; z-index: 1002; 
         opacity: 0; transition: 0.3s; pointer-events: none; 
-        font-weight: 600; font-size: 13px; /* Smaller font */
+        font-weight: 600; font-size: 11px; /* Smaller font as requested */
         box-shadow: 0 3px 10px rgba(0,0,0,0.2); 
-        text-align: center; width: auto; max-width: 90%; 
-        white-space: nowrap; /* Single line forced */
+        text-align: center; width: auto; max-width: 95%; 
+        white-space: nowrap; /* Forces text to stay in one line */
     }  
     .notification.show { opacity: 1; }  
 
@@ -244,7 +265,8 @@
             if (timeSpent >= MIN_VISIT_TIME_MS) {
                 localStorage.setItem(getVisitedKey(pendingBtn), 'true');
             } else {
-                showNotification("Stay for 10s to verify! ⏳");
+                // RESTORED ORIGINAL TEXT, ONE LINE
+                showNotification("Please stay on the new page for at least 10 seconds! ⏳");
             }
             localStorage.removeItem(PENDING_CLICK_BTN_KEY);
             localStorage.removeItem(CLICK_TIME_KEY);
@@ -280,7 +302,7 @@
             totalRequired++;
             if (localStorage.getItem(getVisitedKey('btn-1080')) === 'true') {
                 totalVisited++;
-                // Tick mark on Right
+                // Tick mark on Right & Smaller
                 btn1080.innerHTML = 'Step 1 Successful <div class="check-icon"><i class="fa-solid fa-check"></i></div>';
                 btn1080.classList.add('completed-step');
             }
@@ -290,7 +312,7 @@
             totalRequired++;
             if (localStorage.getItem(getVisitedKey('btn-720')) === 'true') {
                 totalVisited++;
-                // Tick mark on Right
+                // Tick mark on Right & Smaller
                 btn720.innerHTML = 'Step 2 Successful <div class="check-icon"><i class="fa-solid fa-check"></i></div>';
                 btn720.classList.add('completed-step');
             }
@@ -408,7 +430,7 @@
   
             renderMainPost(mainPost);  
             setupFirebaseForMainPost(mainPost.id);  
-            mainWrapper.classList.add('loaded'); // NO FADE EFFECT
+            mainWrapper.classList.add('loaded'); // RESTORED OPACITY LOGIC
             setInterval(updateAllTimeElements, 60000);   
               
             const anchorPostTime = new Date(mainPost.uploadTime).getTime();  
