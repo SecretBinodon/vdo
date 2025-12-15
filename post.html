@@ -106,15 +106,18 @@
         letter-spacing: 1px;
         font-weight: 900;
         font-size: 16px;
-        box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+        /* মূল অনুরোধ অনুযায়ী হলুদ শ্যাডো বাদ দেওয়া হলো */
+        box-shadow: none; /* 0 0 15px rgba(255, 215, 0, 0.4); বাদ */
         animation: luxuryGlow 2s infinite alternate;
         margin-top: 10px;
     }
 
+    /* শুধুমাত্র এনিমেশনের জন্য শ্যাডো দরকার, তাই এটা এনিমেশনের ভেতরে রাখা হলো, তবে শ্যাডোটা কালো-ধূসর রঙের করে দেওয়া হলো যাতে হলুদ না দেখায় */
     @keyframes luxuryGlow {
-        0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); transform: scale(1); }
-        100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.7); transform: scale(1.02); }
+        0% { box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); transform: scale(1); }
+        100% { box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); transform: scale(1.02); }
     }
+
 
     /* স্ট্যাটস ও ফুটার */  
     .stats-section { padding: 12px 0; margin-top: 15px; border-top: 1px solid #e1e8ed; border-bottom: 1px solid #e1e8ed; display: flex; align-items: center; background: #fff; }  
@@ -166,7 +169,22 @@
     .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; }  
     .footer-copyright { color: #536471; font-size: 13px; }  
     
-    .notification { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.9); color: white; padding: 12px 25px; border-radius: 30px; z-index: 1002; opacity: 0; transition: 0.3s; pointer-events: none; font-weight: 600; font-size: 14px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); text-align: center; width: 90%; max-width: 400px; }  
+    /* --- নোটিফিকেশন পরিবর্তন --- */
+    .notification { 
+        position: fixed; top: 70px; left: 50%; transform: translateX(-50%); 
+        background: rgba(0,0,0,0.9); color: white; 
+        padding: 8px 15px; /* ছোট করা */
+        border-radius: 20px; /* ছোট করা */
+        z-index: 1002; opacity: 0; transition: 0.3s; 
+        pointer-events: none; 
+        font-weight: 500; 
+        font-size: 13px; /* ফন্ট সাইজ ছোট করা */
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
+        text-align: center; 
+        width: auto; /* কন্টেন্ট অনুযায়ী সাইজ */
+        max-width: 90%; /* ম্যাক্স সাইজ ঠিক রাখা */
+        white-space: nowrap; /* লেখা এক লাইনে রাখা */
+    }  
     .notification.show { opacity: 1; }  
 
     #sentinel { width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; }  
@@ -378,7 +396,6 @@
                 <div class="download-title-text">DOWNLOAD FULL MOVIE IN HD</div>  
                 <div class="download-buttons-container">  
                     
-                    <!-- 1080p Button (Step 1) -> Mapped to downloadLink2 -->
                     ${post.downloadLink2 ? `  
                         <div id="btn-1080" class="download-btn-v2" 
                              style="background:${getRandomColor()};" 
@@ -387,7 +404,6 @@
                         </div>  
                     ` : ''}  
                     
-                    <!-- 720p Button (Step 2) -> Mapped to downloadLink3 -->
                     ${post.downloadLink3 ? `  
                         <div id="btn-720" class="download-btn-v2" 
                              style="background:${getRandomColor()};" 
@@ -396,7 +412,6 @@
                         </div>  
                     ` : ''}  
 
-                    <!-- FINAL BUTTON -> Mapped to downloadLink1 -->
                     <div id="btn-final" class="download-btn-v2 final-download-btn" 
                          onclick="handleFinalDownload('${finalMovieUrl}')">  
                         <i class="fa-solid fa-film" style="margin-right: 8px;"></i> DOWNLOAD FULL MOVIE  
@@ -414,7 +429,6 @@
                 <div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div>  
             </div>  
             
-            <!-- FIXED MAIN IMAGE (EAGER LOAD) -->
             <div class="video-container" onclick="handleVideoClick()">
                 <img src="${post.mediaImage}" loading="eager" decoding="async">
                 <div class="play-btn-center" id="main-play-btn"></div>
@@ -536,7 +550,17 @@
         const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users`, deviceId), lBtn = document.querySelector('.love-btn');  
         onSnapshot(lRef, s => document.getElementById('like-cnt').innerText = formatCount(s.data()?.count || 0));  
         getDoc(uRef).then(s => { if(s.exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); } });  
-        lBtn.addEventListener('click', async () => { if((await getDoc(uRef)).exists()) showNotification("Already Liked! ❤️"); else { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); showNotification("Liked! ❤️"); } });  
+        lBtn.addEventListener('click', async () => { 
+            if((await getDoc(uRef)).exists()) {
+                // showNotification("Already Liked! ❤️"); // *কমেন্ট আউট করা হয়েছে*
+            } else { 
+                lBtn.classList.add('liked'); 
+                lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); 
+                await setDoc(lRef, { count: increment(1) }, { merge: true }); 
+                await setDoc(uRef, { t: new Date() }); 
+                // showNotification("Liked! ❤️"); // *কমেন্ট আউট করা হয়েছে*
+            } 
+        });  
     }  
   
     function setupFirebaseForSingleCard(card, id) {  
@@ -545,7 +569,17 @@
         const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users`, deviceId);  
         onSnapshot(lRef, s => lEl.innerText = formatCount(s.data()?.count || 0));  
         getDoc(uRef).then(s => { if(s.exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); } });  
-        lBtn.addEventListener('click', async () => { if((await getDoc(uRef)).exists()) showNotification("Already Liked! ❤️"); else { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); showNotification("Liked! ❤️"); } });  
+        lBtn.addEventListener('click', async () => { 
+            if((await getDoc(uRef)).exists()) {
+                // showNotification("Already Liked! ❤️"); // *কমেন্ট আউট করা হয়েছে*
+            } else { 
+                lBtn.classList.add('liked'); 
+                lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); 
+                await setDoc(lRef, { count: increment(1) }, { merge: true }); 
+                await setDoc(uRef, { t: new Date() }); 
+                // showNotification("Liked! ❤️"); // *কমেন্ট আউট করা হয়েছে*
+            } 
+        });  
     }  
   
     window.handleVideoClick = function() {  
