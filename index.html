@@ -36,10 +36,10 @@
         .btn-email { background-color: #1da1f2; }
         .btn-share { background-color: #000; }
 
-        /* 🔥🔥🔥 এই অংশটি আপনার চাহিদা মতো পরিবর্তন করা হয়েছে 🔥🔥🔥 */
+        /* 🔥 ইনফো সেকশন (আগের স্টাইলে পুনরুদ্ধার) 🔥 */
         .info-section { 
             padding: 5px 15px 15px 15px; 
-            display: flex; /* ফ্লেক্স ব্যবহার করে সমস্ত এলিমেন্টকে কলামে সাজানো হয়েছে */
+            display: flex;
             flex-direction: column;
         }
         
@@ -51,41 +51,38 @@
             display: inline-flex; 
             align-items: center; 
             gap: 8px; 
-            /* 🔥 নতুন: নাম এবং ইউজারনেমের মধ্যে দূরত্ব কমানো */
             margin-bottom: 3px; 
         }
         
         .username { 
             font-size: 15px; 
-            color: #536471; /* 🔥 পরিবর্তন: নীল থেকে ধূসর (আগের মতো) */
-            margin-bottom: 12px; /* 🔥 পরিবর্তন: নিচে পর্যাপ্ত গ্যাপ যোগ */
+            color: #536471; /* ধূসর */
+            margin-bottom: 12px; 
             cursor: default; 
             -webkit-tap-highlight-color: transparent; 
         }
 
-        /* 🔥 নতুন: stats (টোটাল ভিউ, টোটাল ভিডিও) এর স্টাইল */
         .stats {
             display: flex;
             gap: 15px;
             font-size: 15px;
-            color: #536471; /* ধূসর রং */
-            margin-bottom: 8px; /* মেটা ইনফো থেকে দূরত্ব */
-            font-weight: 500; /* হালকা ফন্ট ওয়েট */
+            color: #536471;
+            margin-bottom: 8px; 
+            font-weight: 500;
         }
         .stats b {
-            color: #0f1419; /* গাঢ় কালো */
-            font-weight: 900; /* বোল্ড সংখ্যা */
+            color: #0f1419;
+            font-weight: 900;
             margin-right: 2px;
         }
 
-        /* 🔥 নতুন: meta-info (লোকেশন, জয়েন ডেট) এর স্টাইল */
         .meta-info {
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
             font-size: 15px;
-            color: #536471; /* ধূসর রং */
-            margin-bottom: 15px; /* বায়ো থেকে দূরত্ব */
+            color: #536471;
+            margin-bottom: 15px; 
         }
         .meta-info span {
             display: flex;
@@ -94,17 +91,17 @@
         }
         .meta-info i {
             font-size: 15px;
-            color: #536471; /* আইকনও ধূসর */
+            color: #536471;
         }
         
         .bio { 
-            font-size: 15px; /* 🔥 পরিবর্তন: ফন্ট সাইজ ১৫ করা হয়েছে */
-            color: #0f1419; /* 🔥 পরিবর্তন: গাঢ় কালো করা হয়েছে */
+            font-size: 15px; 
+            color: #0f1419; 
             line-height: 1.4; 
             text-align: justify; 
             margin-bottom: 0; 
         }
-        /* 🔥🔥🔥 পরিবর্তন শেষ 🔥🔥🔥 */
+        /* 🔥 ইনফো সেকশন শেষ 🔥 */
 
         /* --- নেভিগেশন বার --- */
         .nav-bar {
@@ -146,7 +143,7 @@
         .nav-btn.inactive { background-color: #f0f2f5; color: #000; }
         .nav-btn:hover { background-color: #e4e6eb; }
 
-        /* --- পোস্ট কার্ড ডিজাইন (আগের মতোই আছে) --- */
+        /* --- পোস্ট কার্ড ডিজাইন --- */
         #feed-container { min-height: 200px; }
         
         .post-card { 
@@ -538,8 +535,10 @@
         localStorage.setItem('deviceId', deviceId);
 
         const CONFIG = {
-            INITIAL_LOAD: 10,   
-            BATCH_SIZE: 5,     
+            // 🔥 পরিবর্তন: প্রথম লোডে ৫টি কার্ড
+            INITIAL_LOAD: 5,   
+            // 🔥 পরিবর্তন: স্ক্রলে ১০টি কার্ড
+            BATCH_SIZE: 10,     
             CONTACT_EMAIL: "contact@secretbinodon.com", 
             footer: { about: "#", contact: "#", privacy: "#", terms: "#" }
         };
@@ -611,7 +610,7 @@
             }
         }
 
-        // --- ইনফিনিটি স্ক্রল লজিক (অপরিবর্তিত) ---
+        // --- ইনফিনিটি স্ক্রল লজিক (CONFIG সংশোধিত) ---
         async function loadNextBatch(size = CONFIG.BATCH_SIZE) {
             const container = document.getElementById('feed-container');
             const sentinel = document.getElementById('sentinel');
@@ -712,7 +711,7 @@
             observer.observe(sentinel);
         }
         
-        // --- ফায়ারবেস লজিক (লাইক নোটিফিকেশন বন্ধ করা হয়েছে) ---
+        // --- ফায়ারবেস লজিক (অপরিবর্তিত) ---
         function initializeFirebaseForCard(card, id) {
             const viewEl = card.querySelector('.view-count');
             const likeEl = card.querySelector('.like-count');
@@ -729,15 +728,12 @@
             loveBtn.addEventListener('click', async () => {
                 const s = await getDoc(userRef);
                 if(s.exists()) { 
-                    // লাইক নোটিফিকেশন বন্ধ 
-                    // showNotification("Already liked! ❤️"); 
+                    // Already liked logic 
                 } 
                 else {
                     loveBtn.classList.add('liked'); loveBtn.querySelector('i').classList.replace('fa-regular', 'fa-solid');
                     await setDoc(loveRef, { count: increment(1) }, { merge: true });
                     await setDoc(userRef, { time: new Date() });
-                    // লাইক নোটিফিকেশন বন্ধ
-                    // showNotification("Liked! ❤️");
                 }
             });
         }
@@ -752,7 +748,7 @@
             totalViewsEl.innerText = formatCount(total);
         }
         
-        // --- পেজ নেভিগেশন ---
+        // --- পেজ নেভিগেশন (অপরিবর্তিত) ---
         window.openPost = (id) => {
             sessionStorage.setItem('scrollPos', window.scrollY); 
             window.location.href = `/movie/post.html?id=${id}`;
@@ -785,7 +781,7 @@
             document.getElementById('nav-login').classList.remove('inactive');
         };
 
-        // --- সার্চ ফাংশনালিটি (অ্যানিমেশন বন্ধ করা হয়েছে) ---
+        // --- সার্চ ফাংশনালিটি (অপরিবর্তিত) ---
         const searchOverlay = document.getElementById('search-overlay');
         const searchInput = document.getElementById('search-input');
         const searchResults = document.getElementById('search-results');
@@ -853,7 +849,6 @@
             });
         }
         
-        // লাইভ সার্চের জন্য ইনপুট ইভেন্ট লিসেনার
         searchInput.addEventListener('input', () => {
             renderSearchResults(searchInput.value.trim());
         });
