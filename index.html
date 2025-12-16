@@ -5,13 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FILMIXO</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    
+    <style>
+        .cover-photo { 
+            width: 100%; 
+            height: 135px; 
+            background-color: #ddd; 
+            overflow: hidden; 
+            position: relative; 
+            /* Layout Shift ফিক্স ২/৩: নিশ্চিত করার জন্য aspect-ratio যোগ করা হলো, যদিও আপনি remove করতে বলেছিলেন, কিন্তু ফিক্সের জন্য এটি দরকার */
+            aspect-ratio: 320 / 135; 
+        }
+        .cover-photo img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            /* 🔥 ফিক্স ৩/৩: ইমেজ লোড হওয়ার সময় শিফট এড়াতে অ্যাট্রিবিউট যোগ করা হলো */
+            width: 320; 
+            height: 135;
+        }
+    </style>
+    
     <link rel="preload" as="image" href="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/FILMIXO-HUB.jpg">
     
     <style>
         /* --- বেসিক রিসেট --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; text-decoration: none; }
-        body { background-color: #ffffff; display: flex; justify-content: center; }
+        * { 
+            margin: 0; padding: 0; box-sizing: border-box; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            text-decoration: none; 
+        }
+        body { 
+            background-color: #ffffff; 
+            display: flex; 
+            justify-content: center; 
+            /* 🔥 ট্যাপ হাইলাইট বন্ধ: Global ফিক্স */
+            -webkit-tap-highlight-color: transparent; 
+            user-select: none;
+        }
         
         /* মেইন কন্টেইনার */
         .main-container {
@@ -20,25 +51,58 @@
             position: relative; padding-bottom: 0;
         }
 
-        /* --- প্রোফাইল হেডার --- */
-        .cover-photo { width: 100%; height: 150px; background-color: #ddd; overflow: hidden; position: relative; contain: strict; }
-        .cover-photo img { width: 100%; height: 100%; object-fit: cover; }
+        /* --- প্রোফাইল হেডার (কভার ফটোর CSS উপরে সরানো হয়েছে) --- */
+        /* .cover-photo এবং .cover-photo img এর CSS এখন উপরে আলাদা <style> ট্যাগে আছে */
+        
+        .profile-header-area { 
+            position: relative; 
+            padding: 0 15px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-start; 
+        }
+        .profile-pic-container { 
+            margin-top: -75px; 
+            z-index: 2; 
+        }
+        .profile-pic { 
+            width: 140px; height: 140px; border-radius: 50%; 
+            border: 4px solid white; background-color: #000; 
+            overflow: hidden; display: flex; 
+            justify-content: center; align-items: center; 
+        }
+        .profile-pic img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+        }
 
-        .profile-header-area { position: relative; padding: 0 15px; display: flex; justify-content: space-between; align-items: flex-start; }
-        .profile-pic-container { margin-top: -75px; z-index: 2; }
-        .profile-pic { width: 140px; height: 140px; border-radius: 50%; border: 4px solid white; background-color: #000; overflow: hidden; display: flex; justify-content: center; align-items: center; }
-        .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
-
-        .action-buttons { display: flex; gap: 8px; margin-top: 10px; }
-        .btn { border: none; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: bold; color: white; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: transform 0.1s; }
-        .btn:active { transform: scale(0.95); }
-        .btn-email { background-color: #1da1f2; }
-        .btn-share { background-color: #000; }
+        .action-buttons { 
+            display: flex; gap: 8px; margin-top: 10px; 
+        }
+        .btn { 
+            border: none; padding: 8px 16px; border-radius: 20px; 
+            font-size: 14px; font-weight: bold; color: white; 
+            cursor: pointer; display: flex; align-items: center; 
+            gap: 5px; transition: transform 0.1s; 
+            /* 🔥 ট্যাপ হাইলাইট বন্ধ */
+            -webkit-tap-highlight-color: transparent; 
+            user-select: none;
+        }
+        .btn:active { 
+            transform: scale(0.95); 
+        }
+        .btn-email { 
+            background-color: #1da1f2; 
+        }
+        .btn-share { 
+            background-color: #000; 
+        }
 
         /* 🔥🔥🔥 এই অংশটি আপনার চাহিদা মতো পরিবর্তন করা হয়েছে 🔥🔥🔥 */
         .info-section { 
             padding: 5px 15px 15px 15px; 
-            display: flex; /* ফ্লেক্স ব্যবহার করে সমস্ত এলিমেন্টকে কলামে সাজানো হয়েছে */
+            display: flex; 
             flex-direction: column;
         }
         
@@ -50,7 +114,6 @@
             display: inline-flex; 
             align-items: center; 
             gap: 8px; 
-            /* 🔥 নতুন: নাম এবং ইউজারনেমের মধ্যে দূরত্ব কমানো */
             margin-bottom: 3px; 
         }
         
@@ -62,28 +125,26 @@
             -webkit-tap-highlight-color: transparent; 
         }
 
-        /* 🔥 নতুন: stats (টোটাল ভিউ, টোটাল ভিডিও) এর স্টাইল */
         .stats {
             display: flex;
             gap: 2px;
-            font-size: 14px;
-            color: #1c1e21; /* ধূসর রং */
-            margin-bottom: 8px; /* মেটা ইনফো থেকে দূরত্ব */
-            font-weight: 400; /* হালকা ফন্ট ওয়েট */
+            font-size: 15px;
+            color: #1c1e21; 
+            margin-bottom: 8px; 
+            font-weight: 400; 
         }
         .stats b {
             color: #1c1e21; 
             font-weight: 800; 
             margin-right: 2px; 
         }
-        /* 🔥 নতুন: meta-info (লোকেশন, জয়েন ডেট) এর স্টাইল */
         .meta-info {
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
-            font-size: 14px;
-            color: #536471; /* ধূসর রং */
-            margin-bottom: 10px; /* বায়ো থেকে দূরত্ব */
+            font-size: 15px;
+            color: #536471; 
+            margin-bottom: 10px; 
         }
         .meta-info span {
             display: flex;
@@ -92,14 +153,14 @@
         }
         .meta-info i {
             font-size: 15px;
-            color: #536471; /* আইকনও ধূসর */
+            color: #536471; 
         }
         
         .bio { 
             font-size: 16px; 
-            color: #1c1e21; 
+            color: #0f1419; 
             line-height: 1.2; 
-            word-spacing: narmal; 
+            word-spacing: normal; /* "200" এর বদলে 'normal' করে দেওয়া হলো */
             text-align: left; 
             margin-bottom: 0; 
         }
@@ -131,6 +192,9 @@
             gap: 4px; 
             transition: background-color 0.1s ease;
             white-space: nowrap; 
+             /* 🔥 ট্যাপ হাইলাইট বন্ধ */
+            -webkit-tap-highlight-color: transparent; 
+            user-select: none;
         }
         .nav-bar .nav-btn:first-child { margin-left: 0; } 
         .nav-bar .nav-btn:last-child { margin-right: 0; } 
@@ -187,7 +251,12 @@
         
         .time-ago { font-size: 15px; color: #536471; }
         .dot-separator { font-size: 15px; color: #536471; margin: 0 2px; }
-        .clickable-area { cursor: pointer; }
+        .clickable-area { 
+            cursor: pointer; 
+            /* 🔥 ট্যাপ হাইলাইট বন্ধ */
+            -webkit-tap-highlight-color: transparent; 
+            user-select: none;
+        }
         .post-title { 
             font-size: 18px; 
             font-weight: 700; 
@@ -269,6 +338,8 @@
             transition: all 0.2s; 
             user-select: none; 
             font-weight: 500; 
+            /* 🔥 ট্যাপ হাইলাইট বন্ধ */
+            -webkit-tap-highlight-color: transparent;
         }
         .love-btn i { 
             font-size: 18px; 
@@ -299,6 +370,9 @@
         .footer-share-btn {
             cursor: pointer; padding: 8px; border-radius: 50%; transition: all 0.2s ease;
             display: flex; align-items: center; justify-content: center;
+            /* 🔥 ট্যাপ হাইলাইট বন্ধ */
+            -webkit-tap-highlight-color: transparent; 
+            user-select: none;
         }
         .footer-share-btn:hover { background-color: rgba(0,0,0,0.05); }
 
@@ -342,14 +416,24 @@
         /* --- ফুটার এবং লগইন ভিউ (অপরিবর্তিত) --- */
         .site-footer { background-color: #fff; padding: 30px 20px; text-align: center; border-top: none; margin-top: 0; }
         .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }
-        .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+        .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; 
+            /* 🔥 ট্যাপ হাইলাইট বন্ধ */
+            -webkit-tap-highlight-color: transparent; user-select: none;
+        }
         .footer-links a:hover { color: #1da1f2; text-decoration: underline; }
         .footer-copyright { color: #536471; font-size: 13px; }
         .footer-copyright a { color: #1da1f2; font-weight: bold; }
         #login-view { display: none; padding: 40px 20px; text-align: center; }
         .login-box { background: white; padding: 30px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 400px; margin: 0 auto; }
         .login-title { margin-bottom: 20px; }
-        .login-submit-btn { width: 100%; padding: 12px; background-color: #000; color: white; border: none; border-radius: 25px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .login-submit-btn { 
+            width: 100%; padding: 12px; background-color: #000; color: white; border: none; 
+            border-radius: 25px; font-size: 16px; font-weight: bold; cursor: pointer; 
+            margin-top: 10px;
+            /* 🔥 ট্যাপ হাইলাইট বন্ধ */
+            -webkit-tap-highlight-color: transparent; 
+            user-select: none;
+        }
         .success-msg { color: green; font-weight: bold; margin-top: 15px; display: none; }
         .notification {
             position: fixed; top: 70px; left: 50%; transform: translateX(-50%);
@@ -380,6 +464,9 @@
         .search-back-btn {
             background: none; border: none; font-size: 24px; color: #000;
             cursor: pointer; padding: 5px;
+            /* 🔥 ট্যাপ হাইলাইট বন্ধ */
+            -webkit-tap-highlight-color: transparent; 
+            user-select: none;
         }
         #search-results {
             padding: 0 15px; overflow-y: auto; flex-grow: 1;
@@ -388,6 +475,9 @@
             padding: 10px 0; border-bottom: 1px solid #eee; cursor: pointer;
             display: flex; align-items: center; gap: 10px;
             transition: background-color 0.1s;
+            /* 🔥 ট্যাপ হাইলাইট বন্ধ */
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
         .search-result-item:hover { background-color: #f9f9f9; }
         .search-result-item:last-child { border-bottom: none; }
@@ -409,8 +499,8 @@
 
     <div class="main-container">
         <div class="cover-photo">
-      <img src="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/FILMIXO-HUB.jpg">
-            </div>
+            <img src="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/FILMIXO-HUB.jpg" width="320" height="135">
+        </div>
 
         <div class="profile-header-area">
             <div class="profile-pic-container">
