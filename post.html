@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>  
 <html lang="en">  
 <head>  
@@ -8,7 +7,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">  
     <style>  
     /* --- বেসিক রিসেট --- */  
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; text-decoration: none; }  
+    * { 
+        margin: 0; 
+        padding: 0; 
+        box-sizing: border-box; 
+        /* 🔥 ফন্ট ফিক্স: index.html এর সাথে সামঞ্জস্য বজায় রাখতে Arial ব্যবহার করা হলো 🔥 */
+        font-family: Arial, Helvetica, sans-serif; 
+        text-decoration: none; 
+    }  
     body { background: #fff; display: flex; justify-content: center; }  
 
     /* --- মেইন র্যাপার (ঝাঁকুনি এবং ফেডিং ফিক্স) --- */  
@@ -21,17 +27,10 @@
         border-left: 1px solid #eee;   
         border-right: 1px solid #eee;   
         padding-bottom: 0;   
-        
-        /* প্রথমে সবকিছু অদৃশ্য থাকবে যাতে ভাঙা লেআউট না দেখা যায় */
         opacity: 0;   
-        
-        /* লক্ষ্য করুন: এখানে কোনো transition নেই, তাই লোড হলে ধপ করে আসবে না, আবার আস্তেও আসবে না, ইনস্ট্যান্ট আসবে */
     }  
     
-    /* যখন ডেটা রেডি হবে, তখন এই ক্লাসটি যুক্ত হবে */
-    .main-wrapper.loaded { 
-        opacity: 1 !important; 
-    }  
+    .main-wrapper.loaded { opacity: 1 !important; }  
 
     /* হেডার */  
     header {   
@@ -106,21 +105,31 @@
         letter-spacing: 1px;
         font-weight: 900;
         font-size: 16px;
-        /* মূল অনুরোধ অনুযায়ী হলুদ শ্যাডো বাদ দেওয়া হলো */
-        box-shadow: none; /* 0 0 15px rgba(255, 215, 0, 0.4); বাদ */
+        box-shadow: none; 
         animation: luxuryGlow 2s infinite alternate;
         margin-top: 10px;
     }
 
-    /* শুধুমাত্র এনিমেশনের জন্য শ্যাডো দরকার, তাই এটা এনিমেশনের ভেতরে রাখা হলো, তবে শ্যাডোটা কালো-ধূসর রঙের করে দেওয়া হলো যাতে হলুদ না দেখায় */
     @keyframes luxuryGlow {
         0% { box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); transform: scale(1); }
         100% { box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); transform: scale(1.02); }
     }
 
 
-    /* স্ট্যাটস ও ফুটার */  
-    .stats-section { padding: 12px 0; margin-top: 15px; border-top: 1px solid #e1e8ed; border-bottom: 1px solid #e1e8ed; display: flex; align-items: center; background: #fff; }  
+    /* --- প্রধান পোস্টের স্ট্যাটস সেকশন (সাইজ ও স্টাইল) --- */  
+    .stats-section { 
+        padding: 12px 0; 
+        margin-top: 15px; 
+        border-top: 1px solid #e1e8ed; 
+        border-bottom: 1px solid #e1e8ed; 
+        display: flex; 
+        align-items: center; 
+        background: #fff; 
+        /* index.html-এ থাকা পোস্ট-ফুটারের ফন্ট সাইজ এবং কালার এখানেও প্রয়োগ করা হলো */
+        font-size: 15px; 
+        color: #536471; 
+        font-weight: 500;
+    }  
     .stats-left { display: flex; align-items: center; gap: 20px; flex-grow: 1; overflow: hidden; }  
     .view-stat { flex: 0 0 auto; display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; }  
     .like-stat-container { flex: 1 1 auto; display: flex; justify-content: center; }  
@@ -129,7 +138,7 @@
     .share-icons { flex: 0 0 auto; display: flex; gap: 8px; }  
     .share-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 13px; transition: 0.2s; }  
 
-    /* রিলেটেড পোস্ট কার্ড */  
+    /* --- রিলেটেড পোস্ট কার্ডের স্টাইল ফিক্স (index.html থেকে) --- */
     .related-section { background: #fff; margin-top: 0; }  
     .related-header { padding: 15px; font-weight: 800; color: #536471; border-bottom: 1px solid #e1e8ed; text-transform: uppercase; background: #fff; }  
     .post-card { background: white; padding: 5px 15px 5px 15px; border-bottom: 1px solid #e1e8ed; display: flex; flex-direction: column; gap: 6px; }  
@@ -138,9 +147,9 @@
     .post-pfp img { width: 100%; height: 100%; object-fit: cover; }  
     .post-meta-text { display: flex; flex-direction: column; justify-content: center; }  
     .name-row { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }   
-    .name-row h3 { font-size: 18px; font-weight: 800; color: #0f1419; margin: 0; display: inline-flex; align-items: center; }  
+    .name-row h3 { font-size: 18px; font-weight: 800; color: #0f1419; margin: 0; display: inline-flex; align-items: center; gap: 5px; /* index.html-এর সাথে সামঞ্জস্য */ }  
     .post-username { font-size: 14px; color: #1da1f2; margin-top: 0; }  
-    .verified-badge { color: #1da1f2; font-size: 16px; margin-left: 5px; margin-right: 2px; display: inline-flex; align-items: center; }  
+    .verified-badge { color: #1da1f2; font-size: 16px; margin-left: -2px; margin-right: 0; /* index.html-এর সাথে সামঞ্জস্য */ display: inline-flex; align-items: center; }  
     .time-ago { font-size: 15px; color: #536471; }  
     .dot-separator { font-size: 15px; color: #536471; margin: 0 2px; }  
     .post-title { font-size: 18px; font-weight: 700; color: #0f1419; margin-bottom: 8px; margin-top: -3px; line-height: 1.3; }  
@@ -154,36 +163,78 @@
     .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background-color: rgba(0, 0, 0, 0.6); border-radius: 50%; display: flex; justify-content: center; align-items: center; pointer-events: none; border: 2px solid rgba(255,255,255,0.8); }  
     .play-icon::after { content: ''; display: block; width: 0; height: 0; border-left: 18px solid white; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 4px; }  
     .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0, 0, 0, 0.8); color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; pointer-events: none; z-index: 5; }  
-    .post-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; color: #536471; font-size: 16px; font-weight: 500; }  
+    
+    /* 🔥 রিলেটেড পোস্টের ফুটার স্টাইল ফিক্স (index.html থেকে) 🔥 */
+    .post-footer { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        margin-top: 12px; 
+        color: #536471; 
+        font-size: 16px; 
+        font-weight: 500; 
+    }  
     .footer-left { display: flex; align-items: center; gap: 6px; }  
     .footer-right { display: flex; align-items: center; gap: 20px; }  
-    .love-btn-rel { cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all 0.2s; user-select: none; }  
+    
+    /* ভিউ ও লাইকের সংখ্যা এবং লেবেল */
+    .count-text { font-weight: 500; font-size: 15px; } 
+    .label-text { font-weight: 500; font-size: 15px; }
+
+    /* লাইক বাটন ফিক্স */
+    .love-btn-rel { 
+        cursor: pointer; 
+        display: flex; 
+        align-items: center; 
+        gap: 5px; 
+        transition: all 0.2s; 
+        user-select: none; 
+        font-weight: 500; /* index.html-এর সাথে সামঞ্জস্য */
+        font-size: 15px; /* ফন্ট সাইজ index.html-এর সাথে সামঞ্জস্য */
+    }  
+    .love-btn-rel i { font-size: 18px; /* index.html-এর সাথে সামঞ্জস্য */ } 
     .love-btn-rel:hover { color: #e0245e; background-color: rgba(224, 36, 94, 0.1); padding: 4px 8px; border-radius: 15px; margin: -4px -8px; }  
     .love-btn-rel.liked { color: #e0245e !important; } .love-btn-rel.liked i { font-weight: 900; }  
+    
+    /* ডেট ডিসপ্লে */
+    .post-date-display { 
+        font-size: 14px; /* index.html-এর সাথে সামঞ্জস্য */
+        color: #65676b; 
+        font-weight: 500; 
+    }
+
+    /* শেয়ার বাটন */
+    .footer-share-btn i {
+        font-size: 16px; /* index.html-এর সাথে সামঞ্জস্য */
+        color: #536471;
+    }
     .footer-share-btn { cursor: pointer; padding: 8px; border-radius: 50%; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; }  
     .footer-share-btn:hover { background-color: rgba(0,0,0,0.05); }  
 
-    /* ফুটার এবং লোডার */  
+    /* --- ফুটার সেকশন ফিক্স (index.html থেকে) --- */  
     .site-footer { background-color: #fff; padding: 30px 20px; text-align: center; border-top: none; margin-top: 0; }  
     .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }  
     .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; }  
+    .footer-links a:hover { color: #1da1f2; text-decoration: underline; }
     .footer-copyright { color: #536471; font-size: 13px; }  
+    /* 🔥 কপিরাইটের লিংক ফিক্স (index.html থেকে) 🔥 */
+    .footer-copyright a { color: #1da1f2; font-weight: bold; }
     
     /* --- নোটিফিকেশন পরিবর্তন --- */
     .notification { 
         position: fixed; top: 70px; left: 50%; transform: translateX(-50%); 
         background: rgba(0,0,0,0.9); color: white; 
-        padding: 8px 15px; /* ছোট করা */
-        border-radius: 20px; /* ছোট করা */
+        padding: 8px 15px; 
+        border-radius: 20px; 
         z-index: 1002; opacity: 0; transition: 0.3s; 
         pointer-events: none; 
         font-weight: 500; 
-        font-size: 13px; /* ফন্ট সাইজ ছোট করা */
+        font-size: 13px; 
         box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
         text-align: center; 
-        width: auto; /* কন্টেন্ট অনুযায়ী সাইজ */
-        max-width: 90%; /* ম্যাক্স সাইজ ঠিক রাখা */
-        white-space: nowrap; /* লেখা এক লাইনে রাখা */
+        width: auto; 
+        max-width: 90%; 
+        white-space: nowrap; 
     }  
     .notification.show { opacity: 1; }  
 
@@ -235,7 +286,7 @@
     //  TRACKING & LOGIC CONFIG  
     // ============================================  
     
-    const MIN_VISIT_TIME_MS = 5000; // ৫ সেকেন্ড (লজিক)
+    const MIN_VISIT_TIME_MS = 5000; 
     const PERMANENT_PROFILE_IMAGE_URL = "https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/FILMIXO.jpg";  
     
     const firebaseConfig = { apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q", authDomain: "my-ad-analytics-4560a.firebaseapp.com", databaseURL: "https://my-ad-analytics-4560a-default-rtdb.firebaseio.com", projectId: "my-ad-analytics-4560a", storageBucket: "my-ad-analytics-4560a.firebasestorage.app", messagingSenderId: "104213283950", appId: "1:104213283950:web:b5a25ecd54df809625127f", measurementId: "G-WS7QSQ9H0Y" };  
@@ -441,8 +492,8 @@
                 ${downloadSectionHTML}   
                 <div class="stats-section">  
                     <div class="stats-left">  
-                        <div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="view-cnt">...</span> Views</div>  
-                        <div class="like-stat-container"><div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="like-cnt">...</span> Likes</div></div>  
+                        <div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="view-cnt">0</span> Views</div>  
+                        <div class="like-stat-container"><div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="like-cnt">0</span> Likes</div></div>  
                     </div>  
                     <div class="share-icons">  
                         <div class="share-icon" style="background:#1877f2" onclick="share('fb', '${post.title}')"><i class="fa-brands fa-facebook-f"></i></div>  
@@ -524,6 +575,8 @@
             let excerpt = post.paragraphs && post.paragraphs.length > 0 ? post.paragraphs[0].substring(0, 200) + "..." : "";  
             const safeTitle = post.title.replace(/'/g, "\\'");  
             const cardWrapper = document.createElement('div');  
+            
+            // 🔥 HTML ফিক্স: ভিউ ও লাইক কাউন্টার শূন্য (0) দিয়ে শুরু হচ্ছে 🔥
             cardWrapper.innerHTML = `  
                 <div class="post-card" data-id="${post.id}">  
                     <div class="post-header">  
@@ -533,7 +586,24 @@
                     <div class="clickable-area" onclick="openPost('${post.id}')"><div class="post-title">${post.title}</div><div class="post-excerpt">${excerpt} <span class="read-more-text">See more</span></div></div>  
                     <div class="hashtags">${post.hashtags}</div>  
                     <div class="clickable-area" onclick="openPost('${post.id}')"><div class="media-container"><img src="${post.mediaImage}" loading="lazy"><div class="play-icon"></div><div class="duration-badge">${post.videoDuration}</div></div></div>  
-                    <div class="post-footer"><div class="footer-left"><i class="fa-solid fa-chart-simple"></i> <span class="count-text view-count-rel">...</span> <span class="label-text">Views</span></div><div class="footer-right"><div class="love-btn-rel"><i class="fa-regular fa-heart"></i> <span class="count-text like-count-rel">...</span> <span class="label-text">Likes</span></div><div class="post-date-display">${formatDate(post.uploadTime)}</div><div class="footer-share-btn" onclick="sharePost('${post.id}', '${safeTitle}')"><i class="fa-solid fa-share-from-square"></i></div></div></div>  
+                    <div class="post-footer">
+                        <div class="footer-left">
+                            <i class="fa-solid fa-chart-simple"></i> 
+                            <span class="count-text view-count-rel">0</span> 
+                            <span class="label-text">Views</span>
+                        </div>
+                        <div class="footer-right">
+                            <div class="love-btn-rel">
+                                <i class="fa-regular fa-heart"></i> 
+                                <span class="count-text like-count-rel">0</span> 
+                                <span class="label-text">Likes</span>
+                            </div>
+                            <div class="post-date-display">${formatDate(post.uploadTime)}</div>
+                            <div class="footer-share-btn" onclick="sharePost('${post.id}', '${safeTitle}')">
+                                <i class="fa-solid fa-share-from-square"></i>
+                            </div>
+                        </div>
+                    </div>  
                 </div>`;  
             const newCard = cardWrapper.firstElementChild;  
             container.appendChild(newCard);  
@@ -545,39 +615,48 @@
     }  
   
     function setupFirebaseForMainPost(id) {  
+        // ভিউ কাউন্টার ডেটাবেসে ১ যোগ করবে
         setDoc(doc(db, "views", id), { count: increment(1) }, { merge: true });  
+        // লাইভ ভিউ কাউন্ট আপডেট করবে
         onSnapshot(doc(db, "views", id), s => document.getElementById('view-cnt').innerText = formatCount(s.data()?.count || 0));  
+        
+        // লাইক লজিক
         const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users`, deviceId), lBtn = document.querySelector('.love-btn');  
+        // লাইভ লাইক কাউন্ট আপডেট করবে
         onSnapshot(lRef, s => document.getElementById('like-cnt').innerText = formatCount(s.data()?.count || 0));  
+        
         getDoc(uRef).then(s => { if(s.exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); } });  
         lBtn.addEventListener('click', async () => { 
             if((await getDoc(uRef)).exists()) {
-                // showNotification("Already Liked! ❤️"); // *কমেন্ট আউট করা হয়েছে*
+                // Already Liked!
             } else { 
                 lBtn.classList.add('liked'); 
                 lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); 
                 await setDoc(lRef, { count: increment(1) }, { merge: true }); 
                 await setDoc(uRef, { t: new Date() }); 
-                // showNotification("Liked! ❤️"); // *কমেন্ট আউট করা হয়েছে*
             } 
         });  
     }  
   
     function setupFirebaseForSingleCard(card, id) {  
         const vEl = card.querySelector('.view-count-rel'), lEl = card.querySelector('.like-count-rel'), lBtn = card.querySelector('.love-btn-rel');  
+        // লাইভ ভিউ কাউন্ট আপডেট করবে
         onSnapshot(doc(db, "views", id), s => vEl.innerText = formatCount(s.data()?.count || 0));  
+        
+        // লাইক লজিক
         const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users`, deviceId);  
+        // লাইভ লাইক কাউন্ট আপডেট করবে
         onSnapshot(lRef, s => lEl.innerText = formatCount(s.data()?.count || 0));  
+        
         getDoc(uRef).then(s => { if(s.exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); } });  
         lBtn.addEventListener('click', async () => { 
             if((await getDoc(uRef)).exists()) {
-                // showNotification("Already Liked! ❤️"); // *কমেন্ট আউট করা হয়েছে*
+                // Already Liked!
             } else { 
                 lBtn.classList.add('liked'); 
                 lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); 
                 await setDoc(lRef, { count: increment(1) }, { merge: true }); 
                 await setDoc(uRef, { t: new Date() }); 
-                // showNotification("Liked! ❤️"); // *কমেন্ট আউট করা হয়েছে*
             } 
         });  
     }  
