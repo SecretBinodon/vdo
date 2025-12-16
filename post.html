@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>  
 <html lang="en">  
 <head>  
@@ -38,14 +39,25 @@
     
     .main-wrapper.loaded { opacity: 1 !important; }  
 
-    /* হেডার - হেডার সেকশনে কোনো পরিবর্তন করা হয়নি */  
+    /* হেডার */  
     header {   
         background: #1da1f2; padding: 12px 15px; display: flex; justify-content: space-between;   
         align-items: center; color: white; position: sticky; top: 0; z-index: 100;   
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);  
     }  
     .logo-area { font-weight: 800; font-size: 20px; text-transform: uppercase; }  
-    .header-btn { background: white; color: #1da1f2; padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 14px; margin-left: 10px; cursor: pointer; }  
+    
+    /* 🔥 পরিবর্তন ২: হেডার বাটনগুলোর ট্যাপ এফেক্ট পরিবর্তন */
+    .header-btn { 
+        background: white; color: #1da1f2; padding: 6px 15px; border-radius: 20px; 
+        font-weight: bold; font-size: 14px; margin-left: 10px; cursor: pointer; 
+        transition: transform 0.1s ease; /* ডেবে যাওয়ার জন্য ট্রানজিশন */
+        /* নীল হাইলাইট বন্ধ করা হলো */
+        -webkit-tap-highlight-color: transparent; 
+    }  
+    .header-btn:active {
+        transform: scale(0.95); /* ক্লিক করলে ডেবে যাবে */
+    }
 
     /* পোস্ট ডিটেইলস এরিয়া */  
     .post-author-area { padding: 10px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e1e8ed; }  
@@ -76,19 +88,18 @@
         margin-top: 5px; 
         cursor: pointer; 
         contain: content; 
-        -webkit-tap-highlight-color: transparent; /* ভিডিও কনটেইনারের হাইলাইট বন্ধ */
+        -webkit-tap-highlight-color: transparent; 
     }  
-    /* ভিডিও কনটেইনারে ক্লিক করলে জুম এফেক্ট (index.html এর মত) */
-    .video-container:active img {
-        transform: scale(1.02);
-    }
+    /* 🔥 পরিবর্তন ১: প্রধান থাম্বনেইলের জুম এফেক্ট অপসারণ */
+    /* .video-container:active img { transform: scale(1.02); } এটি অপসারণ করা হলো */
     .video-container img { 
         width: 100%; 
         height: 100%; 
         object-fit: contain; 
         display: block; 
         will-change: transform; 
-        transition: transform 0.1s ease; /* ট্রানজিশন যোগ করা হলো */
+        transition: none; /* ট্রানজিশন অপসারণ করা হলো */
+        transform: scale(1.0); /* স্কেল ডিফল্ট রাখা হলো */
     }  
     
     .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }  
@@ -109,11 +120,9 @@
         border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center; color: white; 
         cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); 
         transition: all 0.2s; position: relative; 
-        /* 🔥 ফিক্স: নীল হাইলাইট বন্ধ রাখা হলো */
         -webkit-tap-highlight-color: transparent; 
         user-select: none;
     }  
-    /* 🔥 ফিক্স: ক্লিক করলে ডেবে যাবে */
     .download-btn-v2:active { transform: scale(0.98); }  
 
     /* ভিজিটেড বাটন */
@@ -164,24 +173,22 @@
         display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; 
         color: #536471; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: 0.2s; 
         user-select: none; 
-        -webkit-tap-highlight-color: transparent; /* লাভ বাটনের হাইলাইট বন্ধ */
+        -webkit-tap-highlight-color: transparent; 
     }  
     .love-btn.liked { color: #e0245e; } .love-btn.liked i { font-weight: 900; }  
     .share-icons { flex: 0 0 auto; display: flex; gap: 8px; }  
     .share-icon { 
         width: 28px; height: 28px; border-radius: 50%; display: flex; 
         align-items: center; justify-content: center; color: white; cursor: pointer; 
-        font-size: 13px; transition: transform 0.2s; /* ট্রানজিশন ফিক্স */
-        /* 🔥 ফিক্স: নীল হাইলাইট বন্ধ রাখা হলো */
+        font-size: 13px; transition: transform 0.2s; 
         -webkit-tap-highlight-color: transparent; 
         user-select: none;
     }  
-    /* 🔥 ফিক্স: ক্লিক করলে ডেবে যাবে */
     .share-icon:active { 
         transform: scale(0.9); 
     }
 
-    /* --- রিলেটেড পোস্ট কার্ডের স্টাইল ফিক্স (index.html থেকে লজিক) --- */
+    /* --- রিলেটেড পোস্ট কার্ডের স্টাইল ফিক্স (Index.html লজিক) --- */
     .related-section { background: #fff; margin-top: 0; }  
     .related-header { padding: 15px; font-weight: 800; color: #000000; border-bottom: 1px solid #e1e8ed; text-transform: uppercase; background: #fff; }  
     .post-card { 
@@ -189,7 +196,7 @@
         display: flex; flex-direction: column; gap: 6px; 
     }  
     
-    /* 🔥 রিলেটেড পোস্টের নতুন ট্যাব লজিক (Index.html এর মতো) */
+    /* রিলেটেড পোস্টের নতুন ট্যাব লজিক (Index.html এর মতো) */
     .post-title, .post-excerpt { 
         cursor: pointer; 
         -webkit-tap-highlight-color: transparent; 
@@ -197,8 +204,8 @@
         transition: color 0.1s ease;
     }
     
-    .post-title:active { color: #1da1f2; } /* টাইটেল নীল হবে */
-    .post-excerpt:active { color: #1da1f2; } /* প্যারাগ্রাফ নীল হবে */
+    .post-title:active { color: #1da1f2; } 
+    .post-excerpt:active { color: #1da1f2; } 
     
     .media-container img { 
         width: 100%; 
@@ -641,7 +648,7 @@
             const safeTitle = post.title.replace(/'/g, "\\'");  
             const cardWrapper = document.createElement('div');  
             
-            // HTML কাঠামো সংশোধন: টাইটেল, প্যারাগ্রাফ, এবং ইমেজ কনটেইনারকে আলাদাভাবে ক্লিকযোগ্য করা হয়েছে। 
+            // HTML কাঠামো: টাইটেল, প্যারাগ্রাফ, এবং ইমেজ কনটেইনারকে আলাদাভাবে ক্লিকযোগ্য করা হয়েছে। 
             cardWrapper.innerHTML = `  
                 <div class="post-card" data-id="${post.id}">  
                     <div class="post-header">  
