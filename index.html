@@ -6,515 +6,148 @@
     <title>FILMIXO</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <style>
-        .cover-photo { 
-            width: 100%; 
-            height: 150px; /* হাইট 150px নিশ্চিত করা হলো */
-            background-color: #ddd; 
-            overflow: hidden; 
-            position: relative; 
-            aspect-ratio: 320 / 150; 
-        }
-        .cover-photo img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            /* Layout Shift ফিক্স: সঠিক dimension দেওয়া হলো */
-            width: 320; 
-            height: 150;
-        }
-    </style>
-    
-    <link rel="preload" as="image" href="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/FILMIXO-HUB.jpg">
+    <!-- 🔥 ফিক্স: ইমেজ প্রি-লোড এবং প্রায়োরিটি হাই করা হলো -->
+    <link rel="preload" as="image" href="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/FILMIXO-HUB.jpg" fetchpriority="high">
     
     <style>
-        /* --- বেসিক রিসেট --- */
-        * { 
-            margin: 0; padding: 0; box-sizing: border-box; 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-            text-decoration: none; 
-        }
-        body { 
-            background-color: #ffffff; 
-            display: flex; 
-            justify-content: center; 
-            /* 🔥 ট্যাপ হাইলাইট বন্ধ: Global ফিক্স */
-            -webkit-tap-highlight-color: transparent; 
-            user-select: none;
-        }
-        
-        /* মেইন কন্টেইনার */
-        .main-container {
-            background-color: white; width: 100%; max-width: 600px;
-            min-height: 10vh; border-left: 1px solid #ddd; border-right: 1px solid #ddd;
-            position: relative; padding-bottom: 0;
-        }
+        /* --- বেসিক রিসেট ও স্ট্রাকচার --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; text-decoration: none; }
+        body { background-color: #ffffff; display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; }
+        .main-container { background-color: white; width: 100%; max-width: 600px; min-height: 10vh; border-left: 1px solid #ddd; border-right: 1px solid #ddd; position: relative; padding-bottom: 0; }
+
+        /* --- কভার ফটো (ফিক্সড: কোনো গ্লিচ হবে না) --- */
+        .cover-photo { width: 100%; height: 150px; min-height: 150px; background-color: #ddd; overflow: hidden; position: relative; aspect-ratio: 320 / 150; display: block; }
+        .cover-photo img { width: 100%; height: 100%; object-fit: cover; display: block; will-change: transform; transition: none; }
 
         /* --- প্রোফাইল হেডার --- */
-        .profile-header-area { 
-            position: relative; 
-            padding: 0 15px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: flex-start; 
-        }
-        .profile-pic-container { 
-            /* কভার ফটোর হাইট (150px) অনুযায়ী প্রোফাইল পিকচার উপরে আনা হলো */
-            margin-top: -75px; 
-            z-index: 2; 
-        }
-        .profile-pic { 
-            width: 140px; height: 140px; border-radius: 50%; 
-            border: 4px solid white; background-color: #000; 
-            overflow: hidden; display: flex; 
-            justify-content: center; align-items: center; 
-        }
-        .profile-pic img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-        }
+        .profile-header-area { position: relative; padding: 0 15px; display: flex; justify-content: space-between; align-items: flex-start; }
+        .profile-pic-container { margin-top: -75px; z-index: 2; }
+        .profile-pic { width: 140px; height: 140px; border-radius: 50%; border: 4px solid white; background-color: #000; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+        .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
+        .action-buttons { display: flex; gap: 8px; margin-top: 10px; }
+        .btn { border: none; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: bold; color: white; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: transform 0.1s; -webkit-tap-highlight-color: transparent; user-select: none; }
+        .btn:active { transform: scale(0.95); }
+        .btn-email { background-color: #1da1f2; }
+        .btn-share { background-color: #000; }
 
-        .action-buttons { 
-            display: flex; gap: 8px; margin-top: 10px; 
-        }
-        .btn { 
-            border: none; padding: 8px 16px; border-radius: 20px; 
-            font-size: 14px; font-weight: bold; color: white; 
-            cursor: pointer; display: flex; align-items: center; 
-            gap: 5px; transition: transform 0.1s; 
-            -webkit-tap-highlight-color: transparent; 
-            user-select: none;
-        }
-        .btn:active { 
-            transform: scale(0.95); 
-        }
-        .btn-email { 
-            background-color: #1da1f2; 
-        }
-        .btn-share { 
-            background-color: #000; 
-        }
-
-        .info-section { 
-            padding: 5px 15px 15px 15px; 
-            display: flex; 
-            flex-direction: column;
-        }
-        
-        .website-name { 
-            font-size: 22px; 
-            font-weight: 800; 
-            color: #1c1e21; 
-            text-transform: uppercase; 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 8px; 
-            margin-bottom: 3px; 
-        }
-        
-        .username { 
-            font-size: 15px; 
-            color: #1da1f2; 
-            margin-bottom: 12px; 
-            cursor: default; 
-            -webkit-tap-highlight-color: transparent; 
-        }
-
-        .stats {
-            display: flex;
-            gap: 2px;
-            font-size: 15px;
-            color: #1c1e21; 
-            margin-bottom: 8px; 
-            font-weight: 400; 
-        }
-        .stats b {
-            color: #1c1e21; 
-            font-weight: 800; 
-            margin-right: 2px; 
-        }
-        .meta-info {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            font-size: 15px;
-            color: #536471; 
-            margin-bottom: 10px; 
-        }
-        .meta-info span {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .meta-info i {
-            font-size: 15px;
-            color: #536471; 
-        }
-        
-        .bio { 
-            font-size: 16px; 
-            color: #0f1419; 
-            line-height: 1.2; 
-            word-spacing: normal; 
-            text-align: left; 
-            margin-bottom: 0; 
-        }
+        /* --- ইনফো সেকশন --- */
+        .info-section { padding: 5px 15px 15px 15px; display: flex; flex-direction: column; }
+        .website-name { font-size: 22px; font-weight: 800; color: #1c1e21; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 3px; }
+        .username { font-size: 15px; color: #1da1f2; margin-bottom: 12px; cursor: default; -webkit-tap-highlight-color: transparent; }
+        .stats { display: flex; gap: 2px; font-size: 15px; color: #1c1e21; margin-bottom: 8px; font-weight: 400; }
+        .stats b { color: #1c1e21; font-weight: 800; margin-right: 2px; }
+        .meta-info { display: flex; flex-wrap: wrap; gap: 15px; font-size: 15px; color: #536471; margin-bottom: 10px; }
+        .meta-info span { display: flex; align-items: center; gap: 5px; }
+        .meta-info i { font-size: 15px; color: #536471; }
+        .bio { font-size: 16px; color: #0f1419; line-height: 1.2; word-spacing: normal; text-align: left; margin-bottom: 0; }
 
         /* --- নেভিগেশন বার --- */
-        .nav-bar {
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
-            padding: 10px 15px;
-            border-top: 1px solid #e1e8ed; border-bottom: 1px solid #e1e8ed;
-            margin-bottom: 0px; 
-            background: #fff; position: sticky; top: 0; z-index: 100;
-        }
-        .nav-btn {
-            flex: 1; 
-            min-width: 0; 
-            text-align: center; 
-            justify-content: center; 
-            padding: 8px 5px; 
-            margin: 0 4px; 
-            border-radius: 20px; 
-            font-size: 14px; 
-            font-weight: bold;
-            cursor: pointer; 
-            border: 1px solid #e1e8ed; 
-            display: flex; 
-            align-items: center;
-            gap: 4px; 
-            transition: background-color 0.1s ease;
-            white-space: nowrap; 
-            -webkit-tap-highlight-color: transparent; 
-            user-select: none;
-        }
+        .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; border-top: 1px solid #e1e8ed; border-bottom: 1px solid #e1e8ed; margin-bottom: 0px; background: #fff; position: sticky; top: 0; z-index: 100; }
+        .nav-btn { flex: 1; min-width: 0; text-align: center; justify-content: center; padding: 8px 5px; margin: 0 4px; border-radius: 20px; font-size: 14px; font-weight: bold; cursor: pointer; border: 1px solid #e1e8ed; display: flex; align-items: center; gap: 4px; transition: background-color 0.1s ease; white-space: nowrap; -webkit-tap-highlight-color: transparent; user-select: none; }
         .nav-bar .nav-btn:first-child { margin-left: 0; } 
         .nav-bar .nav-btn:last-child { margin-right: 0; } 
-
-        #nav-search {
-            background-color: #f0f2f5; 
-            color: #000;
-            border: 1px solid #e1e8ed;
-        }
+        #nav-search { background-color: #f0f2f5; color: #000; border: 1px solid #e1e8ed; }
         .nav-btn.active { background-color: #000 !important; color: white !important; border: 1px solid #000 !important; }
         .nav-btn.inactive { background-color: #f0f2f5; color: #000; }
         .nav-btn:hover { background-color: #e4e6eb; }
 
         /* --- পোস্ট কার্ড ডিজাইন --- */
         #feed-container { min-height: 200px; }
-        
-        .post-card { 
-            padding: 5px 15px 5px 15px; border-bottom: 1px solid #e1e8ed; 
-            display: flex; flex-direction: column; 
-            gap: 6px; 
-            background: white; opacity: 0; animation: fadeIn 0.5s forwards;
-        }
+        .post-card { padding: 5px 15px 5px 15px; border-bottom: 1px solid #e1e8ed; display: flex; flex-direction: column; gap: 6px; background: white; opacity: 0; animation: fadeIn 0.5s forwards; }
         @keyframes fadeIn { to { opacity: 1; } }
-
         .post-header { display: flex; gap: 10px; align-items: center; }
         .post-pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background-color: #ddd; }
         .post-pfp img { width: 100%; height: 100%; object-fit: cover; }
         .post-meta-text { display: flex; flex-direction: column; justify-content: center; }
-        
         .name-row { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
-        
-        .name-row h3 { 
-            font-size: 18px; 
-            font-weight: 800; 
-            color: #0f1419; 
-            margin: 0; 
-            display: inline-flex; 
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .post-username { 
-            font-size: 14px; 
-            color: #1da1f2; 
-            cursor: default; 
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        .verified-badge {
-            color: #1da1f2; 
-            font-size: 16px; 
-            margin-left: -2px; 
-        }
-        
+        .name-row h3 { font-size: 18px; font-weight: 800; color: #0f1419; margin: 0; display: inline-flex; align-items: center; gap: 5px; }
+        .post-username { font-size: 14px; color: #1da1f2; cursor: default; -webkit-tap-highlight-color: transparent; }
+        .verified-badge { color: #1da1f2; font-size: 16px; margin-left: -2px; }
         .time-ago { font-size: 15px; color: #536471; }
         .dot-separator { font-size: 15px; color: #536471; margin: 0 2px; }
-        
-        /* 🔥 ট্যাপ এফেক্ট ১ ও ২: টাইটেল ও প্যারাগ্রাফ কালার পরিবর্তন */
-        .post-title, .post-excerpt { 
-            cursor: pointer; 
-            -webkit-tap-highlight-color: transparent; 
-            user-select: none;
-            transition: color 0.1s ease; /* কালার ট্রানজিশন যোগ করা হলো */
-        }
-        
-        /* টাইটেল ক্লিক করলে নীল হবে */
-        .post-title { 
-            font-size: 18px; 
-            font-weight: 700; 
-            color: #0f1419; 
-            margin-bottom: 8px; 
-            margin-top: -3px; 
-            line-height: 1.3; 
-        }
-        .post-title:active {
-            color: #1da1f2; /* নীল রঙ */
-        }
-        
-        /* প্যারাগ্রাফ ক্লিক করলে নীল হবে */
-        .post-excerpt { 
-            font-size: 15px; color: #0f1419; line-height: 1.4; margin-bottom: 8px;
-            display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
-        }
-        .post-excerpt:active {
-            color: #1da1f2; /* নীল রঙ */
-        }
+        .post-title, .post-excerpt { cursor: pointer; -webkit-tap-highlight-color: transparent; user-select: none; transition: color 0.1s ease; }
+        .post-title { font-size: 18px; font-weight: 700; color: #0f1419; margin-bottom: 8px; margin-top: -3px; line-height: 1.3; }
+        .post-title:active { color: #1da1f2; }
+        .post-excerpt { font-size: 15px; color: #0f1419; line-height: 1.4; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+        .post-excerpt:active { color: #1da1f2; }
         .read-more-text { color: #1da1f2; font-weight: 600; font-size: 14px; }
         .hashtags { color: #1d9bf0; font-size: 15px; margin-bottom: 10px; cursor: default; }
         
-        /* 🔥 ট্যাপ এফেক্ট ৩: ইমেজ কন্টেইনার জুম */
-        .media-container {
-            position: relative; 
-            width: 100%; 
-            border-radius: 12px; /* ইমেজের গোল কোণা */
-            overflow: hidden; /* জুম কন্টেইনারের বাইরে যাবে না */
-            margin-top: 5px; 
-            display: block; 
-            cursor: pointer; 
-            background: #000;
-            aspect-ratio: 3 / 4; 
-            max-height: 720px; 
-            -webkit-tap-highlight-color: transparent; 
-        }
+        /* --- মিডিয়া কন্টেইনার --- */
+        .media-container { position: relative; width: 100%; border-radius: 12px; overflow: hidden; margin-top: 5px; display: block; cursor: pointer; background: #000; aspect-ratio: 3 / 4; max-height: 720px; -webkit-tap-highlight-color: transparent; }
+        .media-container img { width: 100%; height: 100%; display: block; object-fit: cover; margin: 0 auto; max-height: none; transition: transform 0.1s ease; transform: scale(1.0); }
+        .media-container:active img { transform: scale(1.02); }
+        .media-container.auto-fit { aspect-ratio: initial; height: auto; }
+        .media-container.auto-fit img { height: auto; object-fit: contain; }
+        .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background-color: rgba(0, 0, 0, 0.6); border-radius: 50%; display: flex; justify-content: center; align-items: center; pointer-events: none; border: 2px solid rgba(255,255,255,0.8); z-index: 5; }
+        .play-icon::after { content: ''; display: block; width: 0; height: 0; border-left: 18px solid white; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 4px; }
+        .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0, 0, 0, 0.8); color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; pointer-events: none; z-index: 5; }
         
-        .media-container img { 
-            width: 100%; 
-            height: 100%; 
-            display: block; 
-            object-fit: cover; 
-            margin: 0 auto; 
-            max-height: none; 
-            transition: transform 0.1s ease; /* জুম ট্রানজিশন */
-            transform: scale(1.0); /* ডিফল্ট স্কেল */
-        }
-        
-        .media-container:active img {
-            transform: scale(1.02); /* হালকা জুম */
-        }
-        
-        .media-container.auto-fit {
-            aspect-ratio: initial; 
-            height: auto; 
-        }
-        .media-container.auto-fit img { 
-            height: auto; 
-            object-fit: contain; 
-        }
-        
-        .play-icon {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 60px; height: 60px; background-color: rgba(0, 0, 0, 0.6);
-            border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            pointer-events: none; border: 2px solid rgba(255,255,255,0.8);
-            z-index: 5; /* জুম হওয়া ইমেজের উপরে থাকবে */
-        }
-        .play-icon::after {
-            content: ''; display: block; width: 0; height: 0;
-            border-left: 18px solid white; border-top: 11px solid transparent;
-            border-bottom: 11px solid transparent; margin-left: 4px;
-        }
-        .duration-badge {
-            position: absolute; bottom: 8px; right: 8px;
-            background-color: rgba(0, 0, 0, 0.8); color: white;
-            padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: bold;
-            pointer-events: none; z-index: 5;
-        }
-        .post-footer {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-top: 12px; 
-            color: #536471; 
-            font-size: 16px; 
-            font-weight: 500; 
-        }
+        /* --- ফুটার অ্যাকশন --- */
+        .post-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; color: #536471; font-size: 16px; font-weight: 500; }
         .footer-left { display: flex; align-items: center; gap: 6px; }
         .footer-right { display: flex; align-items: center; gap: 20px; }
-        
-        .love-btn { 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            gap: 5px; 
-            transition: all 0.2s; 
-            user-select: none; 
-            font-weight: 500; 
-            -webkit-tap-highlight-color: transparent;
-        }
-        .love-btn i { 
-            font-size: 18px; 
-        }
+        .love-btn { cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all 0.2s; user-select: none; font-weight: 500; -webkit-tap-highlight-color: transparent; }
+        .love-btn i { font-size: 18px; }
         .love-btn:hover { color: #e0245e; background-color: rgba(224, 36, 94, 0.1); padding: 4px 8px; border-radius: 15px; margin: -4px -8px; }
         .love-btn.liked { color: #e0245e; } .love-btn.liked i { font-weight: 900; }
-        
-        .count-text, .label-text { 
-            font-weight: 500; 
-            font-size: 15px; 
-        }
-        
-        .footer-left i { 
-            font-size: 16px; 
-        }
-
-        .post-date-display { 
-            font-size: 14px; 
-            color: #65676b; 
-            font-weight: 500; 
-        }
-
-        .footer-share-btn i {
-            font-size: 16px; 
-            color: #536471;
-            transition: color 0.1s ease; 
-        }
-        /* শেয়ার আইকন ট্যাপ করলে নীল হবে */
-        .footer-share-btn:active i {
-            color: #1da1f2; 
-        }
-        
-        .footer-share-btn {
-            cursor: pointer; padding: 8px; border-radius: 50%; transition: all 0.2s ease;
-            display: flex; align-items: center; justify-content: center;
-            -webkit-tap-highlight-color: transparent; 
-            user-select: none;
-        }
+        .count-text, .label-text { font-weight: 500; font-size: 15px; }
+        .footer-left i { font-size: 16px; }
+        .post-date-display { font-size: 14px; color: #65676b; font-weight: 500; }
+        .footer-share-btn i { font-size: 16px; color: #536471; transition: color 0.1s ease; }
+        .footer-share-btn:active i { color: #1da1f2; }
+        .footer-share-btn { cursor: pointer; padding: 8px; border-radius: 50%; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; }
         .footer-share-btn:hover { background-color: rgba(0,0,0,0.05); }
 
-
-        /* --- শুধুমাত্র ইনফিনিটি স্ক্রল লোডার (Wave Loader) --- */
-        .wave-loader {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            gap: 5px; 
-        }
-        .wave-loader div {
-            width: 10px;
-            height: 10px;
-            background-color: #1da1f2; 
-            border-radius: 50%;
-            animation: bounce 1.2s infinite ease-in-out both;
-            transform: scale(0);
-        }
-        .wave-loader div:nth-child(1) {
-            animation-delay: -0.32s;
-        }
-        .wave-loader div:nth-child(2) {
-            animation-delay: -0.16s;
-        }
-        .wave-loader div:nth-child(3) {
-            animation-delay: 0s;
-        }
-        
-        @keyframes bounce {
-            0%, 80%, 100% { transform: scale(0); } 
-            40% { transform: scale(1.0); } 
-        }
-
-        /* Infinite Scroll Loader (Sentinel) */
+        /* --- লোডার এবং অন্যান্য --- */
+        .wave-loader { display: flex; justify-content: center; align-items: center; height: 100%; gap: 5px; }
+        .wave-loader div { width: 10px; height: 10px; background-color: #1da1f2; border-radius: 50%; animation: bounce 1.2s infinite ease-in-out both; transform: scale(0); }
+        .wave-loader div:nth-child(1) { animation-delay: -0.32s; }
+        .wave-loader div:nth-child(2) { animation-delay: -0.16s; }
+        .wave-loader div:nth-child(3) { animation-delay: 0s; }
+        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
         #sentinel { width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; }
         #sentinel .wave-loader { display: none; } 
         #sentinel.loading .wave-loader { display: flex; } 
 
-        /* --- ফুটার এবং লগইন ভিউ (অপরিবর্তিত) --- */
+        /* --- ফুটার, লগইন, নোটিফিকেশন --- */
         .site-footer { background-color: #fff; padding: 30px 20px; text-align: center; border-top: none; margin-top: 0; }
         .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }
-        .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; 
-            -webkit-tap-highlight-color: transparent; user-select: none;
-        }
+        .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; -webkit-tap-highlight-color: transparent; user-select: none; }
         .footer-links a:hover { color: #1da1f2; text-decoration: underline; }
         .footer-copyright { color: #536471; font-size: 13px; }
         .footer-copyright a { color: #1da1f2; font-weight: bold; }
         #login-view { display: none; padding: 40px 20px; text-align: center; }
         .login-box { background: white; padding: 30px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 400px; margin: 0 auto; }
         .login-title { margin-bottom: 20px; }
-        .login-submit-btn { 
-            width: 100%; padding: 12px; background-color: #000; color: white; border: none; 
-            border-radius: 25px; font-size: 16px; font-weight: bold; cursor: pointer; 
-            margin-top: 10px;
-            -webkit-tap-highlight-color: transparent; 
-            user-select: none;
-        }
+        .login-submit-btn { width: 100%; padding: 12px; background-color: #000; color: white; border: none; border-radius: 25px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; -webkit-tap-highlight-color: transparent; user-select: none; }
         .success-msg { color: green; font-weight: bold; margin-top: 15px; display: none; }
-        .notification {
-            position: fixed; top: 70px; left: 50%; transform: translateX(-50%);
-            background-color: rgba(0, 0, 0, 0.85); color: white; padding: 10px 20px;
-            border-radius: 30px; z-index: 1002; opacity: 0; transition: opacity 0.3s;
-            font-size: 14px; pointer-events: none;
-        }
+        .notification { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background-color: rgba(0, 0, 0, 0.85); color: white; padding: 10px 20px; border-radius: 30px; z-index: 1002; opacity: 0; transition: opacity 0.3s; font-size: 14px; pointer-events: none; }
         .notification.show { opacity: 1; }
 
-        /* --- সার্চ ওভারলে পেজ স্টাইল (অ্যানিমেশন বন্ধ) --- */
-        #search-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: white; z-index: 1001;
-            display: none; 
-            flex-direction: column;
-            padding-top: 10px;
-        }
-        .search-header {
-            display: flex; align-items: center; padding: 0 10px; margin-bottom: 15px;
-        }
-        .search-input-container {
-            flex-grow: 1; margin: 0 10px;
-        }
-        #search-input {
-            width: 100%; padding: 10px 15px; border: 1px solid #ddd; border-radius: 25px;
-            font-size: 16px; outline: none;
-        }
-        .search-back-btn {
-            background: none; border: none; font-size: 24px; color: #000;
-            cursor: pointer; padding: 5px;
-            -webkit-tap-highlight-color: transparent; 
-            user-select: none;
-        }
-        #search-results {
-            padding: 0 15px; overflow-y: auto; flex-grow: 1;
-        }
-        .search-result-item {
-            padding: 10px 0; border-bottom: 1px solid #eee; cursor: pointer;
-            display: flex; align-items: center; gap: 10px;
-            transition: background-color 0.1s;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-        }
+        /* --- সার্চ ওভারলে --- */
+        #search-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: white; z-index: 1001; display: none; flex-direction: column; padding-top: 10px; }
+        .search-header { display: flex; align-items: center; padding: 0 10px; margin-bottom: 15px; }
+        .search-input-container { flex-grow: 1; margin: 0 10px; }
+        #search-input { width: 100%; padding: 10px 15px; border: 1px solid #ddd; border-radius: 25px; font-size: 16px; outline: none; }
+        .search-back-btn { background: none; border: none; font-size: 24px; color: #000; cursor: pointer; padding: 5px; -webkit-tap-highlight-color: transparent; user-select: none; }
+        #search-results { padding: 0 15px; overflow-y: auto; flex-grow: 1; }
+        .search-result-item { padding: 10px 0; border-bottom: 1px solid #eee; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: background-color 0.1s; -webkit-tap-highlight-color: transparent; user-select: none; }
         .search-result-item:hover { background-color: #f9f9f9; }
         .search-result-item:last-child { border-bottom: none; }
         .result-title { font-size: 16px; font-weight: 600; color: #0f1419; }
         .result-excerpt { font-size: 13px; color: #536471; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .result-img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; }
-        
-        /* নতুন: পোস্ট নট ফাউন্ড স্টাইল */
-        #not-found {
-            text-align: center; color: #65676b; margin-top: 50px; font-size: 18px;
-            font-weight: 500; display: none;
-            padding: 20px;
-            border-radius: 8px;
-            background-color: #f0f2f5;
-        }
+        #not-found { text-align: center; color: #65676b; margin-top: 50px; font-size: 18px; font-weight: 500; display: none; padding: 20px; border-radius: 8px; background-color: #f0f2f5; }
     </style>
 </head>
 <body>
 
     <div class="main-container">
+        <!-- 🔥 কভার ফটো ফিক্স: height ও width অ্যাট্রিবিউট যোগ এবং decoding sync -->
         <div class="cover-photo">
-            <img src="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/FILMIXO-HUB.jpg" width="320" height="150">
+            <img src="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/FILMIXO-HUB.jpg" 
+                 width="320" height="150" alt="Cover" decoding="sync" fetchpriority="high">
         </div>
 
         <div class="profile-header-area">
@@ -536,20 +169,15 @@
         <div class="info-section">
             <h1 class="website-name">FILMIXO-HUB <i class="verified-badge fa-solid fa-circle-check"></i></h1>
             <p class="username">@filmixo</p>
-
             <div class="stats">
                 <span>Total Videos <b id="total-videos-count">0</b></span> • 
                 <span>Total Views <b id="total-views-count">0</b></span>
             </div>
-
             <div class="meta-info">
                 <span><i class="fa-solid fa-location-dot"></i>🇺🇲 United States</span>
                 <span><i class="fa-regular fa-calendar"></i>Joined 13/12/2025</span>
             </div>
-
-            <p class="bio">
-                FILMIXO:🍿Your ultimate HD movie hub. Download exclusive releases and trending blockbusters instantly. Stop scrolling, seize the cinema.
-            </p>
+            <p class="bio">FILMIXO:🍿Your ultimate HD movie hub. Download exclusive releases and trending blockbusters instantly. Stop scrolling, seize the cinema.</p>
         </div>
 
         <div class="nav-bar">
@@ -559,14 +187,11 @@
             <div class="nav-btn inactive" id="nav-search" onclick="showSearch()"><i class="fa-solid fa-magnifying-glass"></i> Search</div>
         </div>
         
-        <div id="feed-container">
-            </div>
+        <div id="feed-container"></div>
         
         <div id="sentinel">
             <div class="wave-loader">
-                <div></div>
-                <div></div>
-                <div></div>
+                <div></div><div></div><div></div>
             </div>
         </div>
 
@@ -599,17 +224,12 @@
     
     <div id="search-overlay">
         <div class="search-header">
-            <button class="search-back-btn" onclick="hideSearch()">
-                <i class="fa-solid fa-arrow-left"></i>
-            </button>
-            <div class="search-input-container">
-                <input type="text" id="search-input" placeholder="Search posts, titles, hashtags..." autofocus>
-            </div>
+            <button class="search-back-btn" onclick="hideSearch()"><i class="fa-solid fa-arrow-left"></i></button>
+            <div class="search-input-container"><input type="text" id="search-input" placeholder="Search posts, titles, hashtags..." autofocus></div>
         </div>
-        <div id="search-results">
-            <div id="not-found">Post Not Found</div>
-        </div>
+        <div id="search-results"><div id="not-found">Post Not Found</div></div>
     </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
         import { getFirestore, doc, getDoc, setDoc, increment, onSnapshot, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
@@ -617,257 +237,111 @@
         // ============================================
         //  ১. ব্রাউজারের ডিফল্ট স্ক্রল পুনরুদ্ধার বন্ধ করা
         // ============================================
-        if ('scrollRestoration' in history) {
-            history.scrollRestoration = 'manual';
-        }
+        if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
         
         // ============================================
-        //  ২. স্ক্রলিং করার সময় পজিশন সংরক্ষণ 
+        //  ২. স্ক্রলিং পজিশন সংরক্ষণ 
         // ============================================
         let scrollTimeout;
         window.addEventListener('scroll', () => {
             clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                sessionStorage.setItem('scrollPos', window.scrollY);
-            }, 100); 
+            scrollTimeout = setTimeout(() => { sessionStorage.setItem('scrollPos', window.scrollY); }, 100); 
         });
 
         const PERMANENT_PROFILE_IMAGE_URL = "https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/FILMIXO.jpg";
-
         const firebaseConfig = { apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q", authDomain: "my-ad-analytics-4560a.firebaseapp.com", databaseURL: "https://my-ad-analytics-4560a-default-rtdb.firebaseio.com", projectId: "my-ad-analytics-4560a", storageBucket: "my-ad-analytics-4560a.firebasestorage.app", messagingSenderId: "104213283950", appId: "1:104213283950:web:b5a25ecd54df809625127f", measurementId: "G-WS7QSQ9H0Y" };
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const deviceId = localStorage.getItem('deviceId') || 'device-' + Date.now();
         localStorage.setItem('deviceId', deviceId);
 
-        const CONFIG = {
-            INITIAL_LOAD: 5,   
-            BATCH_SIZE: 5,     
-            CONTACT_EMAIL: "contact@secretbinodon.com", 
-            footer: { about: "#", contact: "#", privacy: "#", terms: "#" }
-        };
+        const CONFIG = { INITIAL_LOAD: 5, BATCH_SIZE: 5, CONTACT_EMAIL: "contact@secretbinodon.com", footer: { about: "#", contact: "#", privacy: "#", terms: "#" } };
 
         document.getElementById('link-about').href = CONFIG.footer.about;
         document.getElementById('link-contact').href = CONFIG.footer.contact;
         document.getElementById('link-privacy').href = CONFIG.footer.privacy;
         document.getElementById('link-terms').href = CONFIG.footer.terms;
 
-        let allPosts = [];
-        let currentIndex = 0;
-        let observer;
-        let timeElementsToUpdate = [];
+        let allPosts = []; let currentIndex = 0; let observer; let timeElementsToUpdate = [];
 
         function formatCount(num) { if (!num) return 0; return num >= 1000000 ? (num/1000000).toFixed(1)+'M' : num >= 1000 ? (num/1000).toFixed(1)+'K' : num; }
-        
-        function timeAgo(dateString) {
-            const s = Math.floor((new Date() - new Date(dateString)) / 1000);
-            let i = s / 31536000; if (i > 1) return Math.floor(i) + "y ago";
-            i = s / 86400; if (i > 1) return Math.floor(i) + "d ago";
-            i = s / 3600; if (i > 1) return Math.floor(i) + "h ago";
-            i = s / 60; if (i > 1) return Math.floor(i) + "m ago";
-            return "Just now";
-        }
-        
-        function updateAllTimeElements() {
-            timeElementsToUpdate.forEach(item => {
-                if (item.element && item.element.parentNode) {
-                    item.element.innerText = timeAgo(item.dateString);
-                } else {
-                    timeElementsToUpdate = timeElementsToUpdate.filter(i => i !== item);
-                }
-            });
-        }
-
+        function timeAgo(dateString) { const s = Math.floor((new Date() - new Date(dateString)) / 1000); let i = s / 31536000; if (i > 1) return Math.floor(i) + "y ago"; i = s / 86400; if (i > 1) return Math.floor(i) + "d ago"; i = s / 3600; if (i > 1) return Math.floor(i) + "h ago"; i = s / 60; if (i > 1) return Math.floor(i) + "m ago"; return "Just now"; }
+        function updateAllTimeElements() { timeElementsToUpdate.forEach(item => { if (item.element && item.element.parentNode) { item.element.innerText = timeAgo(item.dateString); } else { timeElementsToUpdate = timeElementsToUpdate.filter(i => i !== item); } }); }
         function formatDate(d) { return new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }); }
         function showNotification(msg) { const n = document.getElementById('notification'); n.textContent = msg; n.classList.add('show'); setTimeout(() => n.classList.remove('show'), 3000); }
         window.sendEmail = function() { window.location.href = `mailto:${CONFIG.CONTACT_EMAIL}`; }
-        window.shareProfile = function() {
-            const url = window.location.href.split('?')[0]; 
-            const title = "Secret Binodon";
-            const text = "Secret Binodon - The #1 Platform for Viral Videos! 🎥 Watch the latest trending videos all in one place. Visit now!";
-            if (navigator.share) { navigator.share({ title: title, text: text, url: url }).catch((error) => console.log('Share failed', error)); } 
-            else { navigator.clipboard.writeText(`${text} ${url}`); showNotification("Website link copied! 📋"); }
-        }
-        window.sharePost = function(id, title) {
-            const url = window.location.origin + `/movie/post.html?id=${id}`;
-            if (navigator.share) { navigator.share({ title: title, text: title, url: url }).catch((e) => console.log('Share failed', e)); }
-            else { navigator.clipboard.writeText(url); showNotification("Link copied! 📋"); }
-        }
+        window.shareProfile = function() { const url = window.location.href.split('?')[0]; const title = "Secret Binodon"; const text = "Secret Binodon - The #1 Platform for Viral Videos! 🎥 Watch the latest trending videos all in one place. Visit now!"; if (navigator.share) { navigator.share({ title: title, text: text, url: url }).catch((error) => console.log('Share failed', error)); } else { navigator.clipboard.writeText(`${text} ${url}`); showNotification("Website link copied! 📋"); } }
+        window.sharePost = function(id, title) { const url = window.location.origin + `/movie/post.html?id=${id}`; if (navigator.share) { navigator.share({ title: title, text: title, url: url }).catch((e) => console.log('Share failed', e)); } else { navigator.clipboard.writeText(url); showNotification("Link copied! 📋"); } }
 
         function adjustImageAspectRatio(imgElement) {
             const mediaContainer = imgElement.closest('.media-container');
-            
             imgElement.onload = function() {
-                const originalWidth = this.naturalWidth;
-                const originalHeight = this.naturalHeight;
-                const ratio = originalWidth / originalHeight;
-                
-                if (ratio >= (3 / 4)) { 
-                    mediaContainer.classList.add('auto-fit');
-                } else {
-                    mediaContainer.classList.remove('auto-fit');
-                }
+                const ratio = this.naturalWidth / this.naturalHeight;
+                if (ratio >= (3 / 4)) { mediaContainer.classList.add('auto-fit'); } else { mediaContainer.classList.remove('auto-fit'); }
             };
-
-            if (imgElement.complete) {
-                imgElement.onload();
-            }
+            if (imgElement.complete) { imgElement.onload(); }
         }
 
-        // --- ইনফিনিটি স্ক্রল লজিক (অপরিবর্তিত) ---
         async function loadNextBatch(size = CONFIG.BATCH_SIZE) {
             const container = document.getElementById('feed-container');
             const sentinel = document.getElementById('sentinel');
-
-            if (currentIndex >= allPosts.length) {
-                sentinel.style.display = 'none';
-                return;
-            }
-
-            if (size === CONFIG.BATCH_SIZE) {
-                 sentinel.classList.add('loading');
-            }
+            if (currentIndex >= allPosts.length) { sentinel.style.display = 'none'; return; }
+            if (size === CONFIG.BATCH_SIZE) { sentinel.classList.add('loading'); }
 
             const batch = allPosts.slice(currentIndex, currentIndex + size);
-            
             batch.forEach(post => {
                 let excerpt = post.paragraphs && post.paragraphs.length > 0 ? post.paragraphs[0].substring(0, 200) + "..." : "No description available.";
                 const safeTitle = post.title.replace(/'/g, "\\'");
-
                 const cardWrapper = document.createElement('div');
-                cardWrapper.innerHTML = `
-                    <div class="post-card" data-id="${post.id}">
-                        <div class="post-header">
-                            <div class="post-pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div>
-                            <div class="post-meta-text">
-                                <div class="name-row">
-                                    <h3>FILMIXO <i class="verified-badge fa-solid fa-circle-check"></i></h3>
-                                    <span class="post-username">@filmixo</span>
-                                    <span class="dot-separator">·</span>
-                                    <span class="time-ago" data-upload-time="${post.uploadTime}">${timeAgo(post.uploadTime)}</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="post-title" onclick="openPost('${post.id}')">${post.title}</div>
-                        
-                        <div class="post-excerpt" onclick="openPost('${post.id}')">${excerpt} <span class="read-more-text">See more</span></div>
-                        
-                        <div class="hashtags">${post.hashtags}</div>
-                        
-                        <div class="media-container" onclick="openPost('${post.id}')">
-                            <img src="${post.mediaImage}" loading="lazy" data-post-id="${post.id}">
-                            <div class="play-icon"></div>
-                            <div class="duration-badge">${post.videoDuration}</div>
-                        </div>
-                        
-                        <div class="post-footer">
-                            <div class="footer-left">
-                                <i class="fa-solid fa-chart-simple"></i> 
-                                <span class="count-text view-count">0</span> 
-                                <span class="label-text">Views</span>
-                            </div>
-                            <div class="footer-right">
-                                <div class="love-btn">
-                                    <i class="fa-regular fa-heart"></i> 
-                                    <span class="count-text like-count">0</span> 
-                                    <span class="label-text">Likes</span>
-                                </div>
-                                <div class="post-date-display">${formatDate(post.uploadTime)}</div>
-                                <div class="footer-share-btn" onclick="sharePost('${post.id}', '${safeTitle}')">
-                                    <i class="fa-solid fa-share-from-square"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`;
+                cardWrapper.innerHTML = `<div class="post-card" data-id="${post.id}"><div class="post-header"><div class="post-pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div><div class="post-meta-text"><div class="name-row"><h3>FILMIXO <i class="verified-badge fa-solid fa-circle-check"></i></h3><span class="post-username">@filmixo</span> <span class="dot-separator">·</span><span class="time-ago" data-upload-time="${post.uploadTime}">${timeAgo(post.uploadTime)}</span></div></div></div><div class="post-title" onclick="openPost('${post.id}')">${post.title}</div><div class="post-excerpt" onclick="openPost('${post.id}')">${excerpt} <span class="read-more-text">See more</span></div><div class="hashtags">${post.hashtags}</div><div class="media-container" onclick="openPost('${post.id}')"><img src="${post.mediaImage}" loading="lazy" data-post-id="${post.id}"><div class="play-icon"></div><div class="duration-badge">${post.videoDuration}</div></div><div class="post-footer"><div class="footer-left"><i class="fa-solid fa-chart-simple"></i> <span class="count-text view-count">0</span> <span class="label-text">Views</span></div><div class="footer-right"><div class="love-btn"><i class="fa-regular fa-heart"></i> <span class="count-text like-count">0</span> <span class="label-text">Likes</span></div><div class="post-date-display">${formatDate(post.uploadTime)}</div><div class="footer-share-btn" onclick="sharePost('${post.id}', '${safeTitle}')"><i class="fa-solid fa-share-from-square"></i></div></div></div></div>`;
                 
                 const newCard = cardWrapper.firstElementChild;
                 container.appendChild(newCard);
-
                 const imgElement = newCard.querySelector('.media-container img');
                 adjustImageAspectRatio(imgElement);
-
                 const timeElement = newCard.querySelector('.time-ago');
-                if (timeElement) {
-                    timeElementsToUpdate.push({
-                        element: timeElement,
-                        dateString: post.uploadTime
-                    });
-                }
-
-
+                if (timeElement) { timeElementsToUpdate.push({ element: timeElement, dateString: post.uploadTime }); }
                 initializeFirebaseForCard(newCard, post.id);
             });
-
             currentIndex += size;
-            
-            if (size === CONFIG.BATCH_SIZE) {
-                sentinel.classList.remove('loading');
-            }
+            if (size === CONFIG.BATCH_SIZE) { sentinel.classList.remove('loading'); }
         }
 
         function setupObserver() {
             const sentinel = document.getElementById('sentinel');
             observer = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting) {
-                    loadNextBatch(CONFIG.BATCH_SIZE);
-                }
+                if (entries[0].isIntersecting) { loadNextBatch(CONFIG.BATCH_SIZE); }
             }, { rootMargin: '200px' });
             observer.observe(sentinel);
         }
         
-        // --- ফায়ারবেস লজিক (লাইক নোটিফিকেশন বন্ধ করা হয়েছে) ---
         function initializeFirebaseForCard(card, id) {
             const viewEl = card.querySelector('.view-count');
             const likeEl = card.querySelector('.like-count');
             const loveBtn = card.querySelector('.love-btn');
-
             onSnapshot(doc(db, "views", id), (s) => viewEl.innerText = formatCount(s.data()?.count || 0));
-
             const loveRef = doc(db, "loves", id);
             const userRef = doc(db, `loves/${id}/users`, deviceId);
-
             getDoc(userRef).then(s => { if(s.exists()) { loveBtn.classList.add('liked'); loveBtn.querySelector('i').classList.replace('fa-regular', 'fa-solid'); } });
             onSnapshot(loveRef, (s) => likeEl.innerText = formatCount(s.data()?.count || 0));
-
             loveBtn.addEventListener('click', async () => {
                 const s = await getDoc(userRef);
-                if(s.exists()) { 
-                    // লাইক নোটিফিকেশন বন্ধ 
-                    // showNotification("Already liked! ❤️"); 
-                } 
-                else {
-                    loveBtn.classList.add('liked'); loveBtn.querySelector('i').classList.replace('fa-regular', 'fa-solid');
-                    await setDoc(loveRef, { count: increment(1) }, { merge: true });
-                    await setDoc(userRef, { time: new Date() });
-                    // লাইক নোটিফিকেশন বন্ধ
-                    // showNotification("Liked! ❤️");
-                }
+                if(s.exists()) { } else { loveBtn.classList.add('liked'); loveBtn.querySelector('i').classList.replace('fa-regular', 'fa-solid'); await setDoc(loveRef, { count: increment(1) }, { merge: true }); await setDoc(userRef, { time: new Date() }); }
             });
         }
 
         async function calculateTotalViews() {
             const totalViewsEl = document.getElementById('total-views-count');
             totalViewsEl.innerText = '0'; 
-
             const snap = await getDocs(collection(db, "views"));
             let total = 0;
             snap.forEach((doc) => { total += doc.data().count || 0; });
             totalViewsEl.innerText = formatCount(total);
         }
         
-        // --- পেজ নেভিগেশন ---
-        window.openPost = (id) => {
-            sessionStorage.setItem('scrollPos', window.scrollY); 
-            window.location.href = `/movie/post.html?id=${id}`;
-        };
+        window.openPost = (id) => { sessionStorage.setItem('scrollPos', window.scrollY); window.location.href = `/movie/post.html?id=${id}`; };
         
-        function deactivateNavButtons() {
-            document.querySelectorAll('.nav-btn').forEach(b => { 
-                b.classList.remove('active'); 
-                b.classList.add('inactive'); 
-            });
-        }
+        function deactivateNavButtons() { document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.classList.add('inactive'); }); }
 
         window.showFeed = () => {
             document.getElementById('feed-container').style.display='block';
@@ -889,7 +363,6 @@
             document.getElementById('nav-login').classList.remove('inactive');
         };
 
-        // --- সার্চ ফাংশনালিটি (অ্যানিমেশন বন্ধ করা হয়েছে) ---
         const searchOverlay = document.getElementById('search-overlay');
         const searchInput = document.getElementById('search-input');
         const searchResults = document.getElementById('search-results');
@@ -897,103 +370,59 @@
 
         window.showSearch = () => {
             searchOverlay.style.display = 'flex';
-            
             deactivateNavButtons();
             document.getElementById('nav-search').classList.add('active');
             document.getElementById('nav-search').classList.remove('inactive');
-
-            searchInput.focus(); 
-            renderSearchResults(''); 
-
+            searchInput.focus(); renderSearchResults(''); 
             document.body.style.overflow = 'hidden'; 
         };
 
         window.hideSearch = () => {
             searchOverlay.classList.remove('show');
             setTimeout(() => { searchOverlay.style.display = 'none'; }, 300);
-            document.body.style.overflow = ''; 
-            searchInput.value = '';
-            searchResults.innerHTML = notFound.outerHTML; 
-            notFound.style.display = 'none';
+            document.body.style.overflow = ''; searchInput.value = '';
+            searchResults.innerHTML = notFound.outerHTML; notFound.style.display = 'none';
             showFeed(); 
         };
         
         function renderSearchResults(query) {
             searchResults.innerHTML = '';
-
-            if (query.length === 0) {
-                 searchResults.innerHTML = `<div style="text-align:center; color:#536471; margin-top:50px;">Start typing to search posts...</div>`;
-                 notFound.style.display = 'none';
-                 return;
-            }
-
+            if (query.length === 0) { searchResults.innerHTML = `<div style="text-align:center; color:#536471; margin-top:50px;">Start typing to search posts...</div>`; notFound.style.display = 'none'; return; }
             const lowerCaseQuery = query.toLowerCase();
-            const filteredPosts = allPosts.filter(post => 
-                post.title.toLowerCase().includes(lowerCaseQuery) ||
-                (post.hashtags && post.hashtags.toLowerCase().includes(lowerCaseQuery))
-            );
-
-            if (filteredPosts.length === 0) {
-                notFound.style.display = 'block';
-                return;
-            }
+            const filteredPosts = allPosts.filter(post => post.title.toLowerCase().includes(lowerCaseQuery) || (post.hashtags && post.hashtags.toLowerCase().includes(lowerCaseQuery)));
+            if (filteredPosts.length === 0) { notFound.style.display = 'block'; return; }
             notFound.style.display = 'none';
-
             filteredPosts.forEach(post => {
                 const item = document.createElement('div');
                 item.className = 'search-result-item';
                 item.setAttribute('onclick', `openPost('${post.id}'); hideSearch();`);
-                
                 let excerpt = post.paragraphs && post.paragraphs.length > 0 ? post.paragraphs[0].substring(0, 100) + "..." : "No description available.";
-
-                item.innerHTML = `
-                    <img src="${post.mediaImage}" class="result-img" loading="lazy">
-                    <div>
-                        <div class="result-title">${post.title}</div>
-                        <div class="result-excerpt">${excerpt}</div>
-                    </div>
-                `;
+                item.innerHTML = `<img src="${post.mediaImage}" class="result-img" loading="lazy"><div><div class="result-title">${post.title}</div><div class="result-excerpt">${excerpt}</div></div>`;
                 searchResults.appendChild(item);
             });
         }
         
-        // লাইভ সার্চের জন্য ইনপুট ইভেন্ট লিসেনার
-        searchInput.addEventListener('input', () => {
-            renderSearchResults(searchInput.value.trim());
-        });
+        searchInput.addEventListener('input', () => { renderSearchResults(searchInput.value.trim()); });
 
-
-        // --- ইনিশিয়ালাইজেশন ---
         async function loadFeed() {
             try {
                 const res = await fetch('posts.json');
                 const posts = await res.json();
-                
                 allPosts = posts.sort((a, b) => new Date(b.uploadTime).getTime() - new Date(a.uploadTime).getTime());
-                
                 document.getElementById('total-videos-count').innerText = formatCount(allPosts.length);
                 calculateTotalViews(); 
-
                 const savedScrollPos = sessionStorage.getItem('scrollPos');
                 let batchSize = CONFIG.INITIAL_LOAD;
-
                 if (savedScrollPos) {
                     const estimatedCardHeight = 400; 
                     const requiredCards = Math.ceil(parseInt(savedScrollPos) / estimatedCardHeight);
-                    
                     batchSize = Math.max(CONFIG.INITIAL_LOAD, requiredCards + CONFIG.BATCH_SIZE);
                 }
-                
                 await loadNextBatch(batchSize); 
                 setupObserver();
                 document.getElementById('main-footer').style.display = 'block';
-
-                if (savedScrollPos) {
-                    window.scrollTo(0, parseInt(savedScrollPos));
-                }
-
+                if (savedScrollPos) { window.scrollTo(0, parseInt(savedScrollPos)); }
                 setInterval(updateAllTimeElements, 60000); 
-
             } catch (error) {
                 console.error(error);
                 document.getElementById('feed-container').innerHTML = `<div style="text-align:center; color:red; padding:20px; font-size:16px;">Error loading feed: ${error.message}. Please check 'posts.json'.</div>`;
@@ -1007,7 +436,6 @@
         
         searchResults.innerHTML = notFound.outerHTML;
         notFound.style.display = 'none';
-
         loadFeed();
     </script>
 </body>
