@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,18 +10,19 @@
     <style>
         .cover-photo { 
             width: 100%; 
-            height: 135px; 
+            height: 150px; /* হাইট পরিবর্তন: 135px -> 150px */
             background-color: #ddd; 
             overflow: hidden; 
             position: relative; 
-            aspect-ratio: 320 / 135; 
+            aspect-ratio: 320 / 150; 
         }
         .cover-photo img { 
             width: 100%; 
             height: 100%; 
             object-fit: cover; 
+            /* Layout Shift ফিক্স: সঠিক dimension দেওয়া হলো */
             width: 320; 
-            height: 135;
+            height: 150;
         }
     </style>
     
@@ -37,7 +39,7 @@
             background-color: #ffffff; 
             display: flex; 
             justify-content: center; 
-            /* 🔥 ট্যাপ হাইলাইট বন্ধ: Global ফিক্স */
+            /* 🔥 ট্যাপ হাইলাইট বন্ধ: Global ফিক্স (বাটনগুলির জন্য দরকার) */
             -webkit-tap-highlight-color: transparent; 
             user-select: none;
         }
@@ -58,6 +60,7 @@
             align-items: flex-start; 
         }
         .profile-pic-container { 
+            /* Layout Shift ফিক্স: কভার ফটোর হাইট (150px) অনুযায়ী প্রোফাইল পিকচার উপরে আনা হলো */
             margin-top: -75px; 
             z-index: 2; 
         }
@@ -81,7 +84,7 @@
             font-size: 14px; font-weight: bold; color: white; 
             cursor: pointer; display: flex; align-items: center; 
             gap: 5px; transition: transform 0.1s; 
-            /* 🔥 ট্যাপ হাইলাইট বন্ধ */
+            /* ট্যাপ হাইলাইট বন্ধ (বাটন) */
             -webkit-tap-highlight-color: transparent; 
             user-select: none;
         }
@@ -187,7 +190,7 @@
             gap: 4px; 
             transition: background-color 0.1s ease;
             white-space: nowrap; 
-             /* 🔥 ট্যাপ হাইলাইট বন্ধ */
+             /* ট্যাপ হাইলাইট বন্ধ (নেভ বাটন) */
             -webkit-tap-highlight-color: transparent; 
             user-select: none;
         }
@@ -246,16 +249,16 @@
         
         .time-ago { font-size: 15px; color: #536471; }
         .dot-separator { font-size: 15px; color: #536471; margin: 0 2px; }
+        
+        /* 🔥 ট্যাপ এফেক্ট ১: টাইটেল/প্যারাগ্রাফ */
         .clickable-area { 
             cursor: pointer; 
-            /* 🔥 ট্যাপ হাইলাইট বন্ধ */
             -webkit-tap-highlight-color: transparent; 
             user-select: none;
-            transition: background-color 0.1s ease; /* এফেক্টের জন্য ট্রানজিশন যোগ করা হলো */
+            transition: background-color 0.1s ease; 
         }
-        /* 🔥 ট্যাপ এফেক্ট ১: টাইটেল/প্যারাগ্রাফ */
         .clickable-area:active {
-            background-color: rgba(0, 0, 0, 0.03); /* ট্যাপ করলে হালকা ধূসর ব্যাকগ্রাউন্ড */
+            background-color: rgba(29, 161, 242, 0.1); /* হালকা নীল ব্যাকগ্রাউন্ড */
         }
 
         .post-title { 
@@ -284,11 +287,15 @@
             background: #000;
             aspect-ratio: 3 / 4; 
             max-height: 720px; 
-            transition: opacity 0.1s ease; /* এফেক্টের জন্য ট্রানজিশন যোগ করা হলো */
+            transition: box-shadow 0.1s ease; /* শ্যাডোর জন্য ট্রানজিশন */
+            -webkit-tap-highlight-color: transparent; /* এটি দরকার কারণ আমরা কাস্টম ট্যাপ এফেক্ট ব্যবহার করছি */
         }
-        /* 🔥 ট্যাপ এফেক্ট ২: ইমেজ কন্টেইনার (গোল কোণা বজায় রেখে) */
+        /* 🔥 ট্যাপ এফেক্ট ২: ইমেজ কন্টেইনার (নীল ও রাউন্ডেড) */
         .media-container:active {
-            opacity: 0.9; /* ট্যাপ করলে সামান্য ডিমিং এফেক্ট */
+            /* বক্স শ্যাডো ব্যবহার করে নীল রঙের রাউন্ডেড হাইলাইট তৈরি করা হলো। 
+               এটি কন্টেইনারের border-radius অনুসরণ করবে। 
+            */
+            box-shadow: inset 0 0 0 1000px rgba(29, 161, 242, 0.2); 
         }
         
         .media-container img { 
@@ -344,7 +351,7 @@
             transition: all 0.2s; 
             user-select: none; 
             font-weight: 500; 
-            /* 🔥 ট্যাপ হাইলাইট বন্ধ */
+            /* ট্যাপ হাইলাইট বন্ধ (লাইক বাটন) */
             -webkit-tap-highlight-color: transparent;
         }
         .love-btn i { 
@@ -371,18 +378,17 @@
         .footer-share-btn i {
             font-size: 16px; 
             color: #536471;
-            transition: color 0.1s ease; /* কালার পরিবর্তনের জন্য ট্রানজিশন */
+            transition: color 0.1s ease; 
         }
-        /* 🔥 ট্যাপ এফেক্ট ৩: শেয়ার আইকন কালার পরিবর্তন */
+        /* 🔥 ট্যাপ এফেক্ট ৩: শেয়ার আইকন কালার পরিবর্তন (নীল) */
         .footer-share-btn:active i {
-            color: #1da1f2; /* নীল কালার */
-            /* অথবা সবুজ কালার চাইলে: color: #17bf63; */
+            color: #1da1f2; 
         }
         
         .footer-share-btn {
             cursor: pointer; padding: 8px; border-radius: 50%; transition: all 0.2s ease;
             display: flex; align-items: center; justify-content: center;
-            /* 🔥 ট্যাপ হাইলাইট বন্ধ */
+            /* ট্যাপ হাইলাইট বন্ধ (শেয়ার বাটন) */
             -webkit-tap-highlight-color: transparent; 
             user-select: none;
         }
@@ -429,7 +435,7 @@
         .site-footer { background-color: #fff; padding: 30px 20px; text-align: center; border-top: none; margin-top: 0; }
         .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }
         .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; 
-            /* 🔥 ট্যাপ হাইলাইট বন্ধ */
+            /* ট্যাপ হাইলাইট বন্ধ */
             -webkit-tap-highlight-color: transparent; user-select: none;
         }
         .footer-links a:hover { color: #1da1f2; text-decoration: underline; }
@@ -442,7 +448,7 @@
             width: 100%; padding: 12px; background-color: #000; color: white; border: none; 
             border-radius: 25px; font-size: 16px; font-weight: bold; cursor: pointer; 
             margin-top: 10px;
-            /* 🔥 ট্যাপ হাইলাইট বন্ধ */
+            /* ট্যাপ হাইলাইট বন্ধ */
             -webkit-tap-highlight-color: transparent; 
             user-select: none;
         }
@@ -476,7 +482,7 @@
         .search-back-btn {
             background: none; border: none; font-size: 24px; color: #000;
             cursor: pointer; padding: 5px;
-            /* 🔥 ট্যাপ হাইলাইট বন্ধ */
+            /* ট্যাপ হাইলাইট বন্ধ */
             -webkit-tap-highlight-color: transparent; 
             user-select: none;
         }
@@ -487,7 +493,7 @@
             padding: 10px 0; border-bottom: 1px solid #eee; cursor: pointer;
             display: flex; align-items: center; gap: 10px;
             transition: background-color 0.1s;
-            /* 🔥 ট্যাপ হাইলাইট বন্ধ */
+            /* ট্যাপ হাইলাইট বন্ধ */
             -webkit-tap-highlight-color: transparent;
             user-select: none;
         }
@@ -511,7 +517,7 @@
 
     <div class="main-container">
         <div class="cover-photo">
-            <img src="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/FILMIXO-HUB.jpg" width="320" height="135">
+            <img src="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/FILMIXO-HUB.jpg" width="320" height="150">
         </div>
 
         <div class="profile-header-area">
