@@ -3,38 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmixo Admin - Fixed Link Generator</title>
+    <title>Filmixo Admin - Smart Ad Link Generator</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #1da1f2; --primary-hover: #0c85d0; --dark: #1f2937; --light-bg: #f3f4f6; --border: #e5e7eb; }
-        body { font-family: 'Inter', sans-serif; background: var(--light-bg); padding: 30px 15px; color: var(--dark); min-height: 100vh; }
-        .container { max-width: 900px; margin: 0 auto; background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid white; }
-        h2 { text-align: center; color: var(--dark); margin-bottom: 25px; font-size: 22px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        h2 i { color: var(--primary); }
-        .form-row { display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 15px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 13px; color: #4b5563; text-transform: uppercase; letter-spacing: 0.5px; }
-        input, textarea { width: 100%; padding: 12px 15px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; background: #fff; color: #111; transition: all 0.2s ease; box-sizing: border-box; }
-        input:focus, textarea:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(29, 161, 242, 0.15); }
-        textarea { height: 100px; resize: vertical; line-height: 1.5; }
-        .link-section { background: #f8fafc; border: 1px solid var(--border); padding: 20px; border-radius: 8px; margin-top: 20px; }
-        .section-header { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
-        .links-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
-        .generate-btn { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 25px; transition: all 0.2s ease; display: flex; justify-content: center; align-items: center; gap: 8px; }
-        .generate-btn:hover { background: var(--primary-hover); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(29, 161, 242, 0.25); }
-        .generate-btn:active { transform: scale(0.99); }
-        .output-box { margin-top: 25px; display: none; position: relative; background: #1e1e1e; border-radius: 8px; overflow: hidden; border: 1px solid #333; }
-        pre { color: #a5d6ff; padding: 20px; font-family: 'Consolas', monospace; font-size: 13px; white-space: pre-wrap; margin: 0; max-height: 300px; overflow-y: auto; line-height: 1.4; }
-        .copy-btn { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.15); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; transition: 0.2s; display: flex; align-items: center; gap: 5px; }
-        .copy-btn:hover { background: rgba(255,255,255,0.3); }
-        @media (max-width: 768px) { .form-row, .links-grid { grid-template-columns: 1fr; gap: 10px; } .container { padding: 20px; } }
+        :root{--primary:#1da1f2;--primary-hover:#0c85d0;--dark:#1f2937;--light-bg:#f3f4f6;--border:#e5e7eb}body{font-family:'Inter',sans-serif;background:var(--light-bg);padding:30px 15px;color:var(--dark);min-height:100vh}.container{max-width:900px;margin:0 auto;background:white;padding:35px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.05);border:1px solid white}h2{text-align:center;color:var(--dark);margin-bottom:25px;font-size:22px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px}h2 i{color:var(--primary)}.form-row{display:grid;grid-template-columns:2fr 1fr;gap:15px;margin-bottom:15px}.form-group{margin-bottom:15px}label{display:block;margin-bottom:6px;font-weight:600;font-size:13px;color:#4b5563;text-transform:uppercase;letter-spacing:0.5px}input,textarea{width:100%;padding:12px 15px;border:1px solid var(--border);border-radius:6px;font-size:14px;background:#fff;color:#111;transition:all .2s ease;box-sizing:border-box}input:focus,textarea:focus{border-color:var(--primary);outline:none;box-shadow:0 0 0 3px rgba(29,161,242,.15)}textarea{height:100px;resize:vertical;line-height:1.5}.link-section{background:#f8fafc;border:1px solid var(--border);padding:20px;border-radius:8px;margin-top:20px}.section-header{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:15px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);padding-bottom:8px}.links-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px}.generate-btn{width:100%;padding:14px;background:var(--primary);color:white;border:none;border-radius:6px;font-size:16px;font-weight:600;cursor:pointer;margin-top:25px;transition:all .2s ease;display:flex;justify-content:center;align-items:center;gap:8px}.generate-btn:hover{background:var(--primary-hover);transform:translateY(-1px);box-shadow:0 4px 12px rgba(29,161,242,.25)}.generate-btn:active{transform:scale(.99)}.output-box{margin-top:25px;display:none;position:relative;background:#1e1e1e;border-radius:8px;overflow:hidden;border:1px solid #333}pre{color:#a5d6ff;padding:20px;font-family:'Consolas',monospace;font-size:13px;white-space:pre-wrap;margin:0;max-height:300px;overflow-y:auto;line-height:1.4}.copy-btn{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.15);color:white;border:none;padding:6px 12px;border-radius:4px;cursor:pointer;font-size:12px;transition:.2s;display:flex;align-items:center;gap:5px}.copy-btn:hover{background:rgba(255,255,255,.3)}@media (max-width:768px){.form-row,.links-grid{grid-template-columns:1fr;gap:10px}.container{padding:20px}}
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2><i class="fa-solid fa-file-code"></i> JSON Generator</h2>
+    <h2><i class="fa-solid fa-file-code"></i> Smart JSON Generator</h2>
     
     <div class="form-group">
         <label>Post Title</label>
@@ -58,16 +37,25 @@
     </div>
 
     <div class="link-section">
-        <div class="section-header"><i class="fa-solid fa-link"></i> Download Buttons Configuration</div>
+        <div class="section-header">
+            <i class="fa-solid fa-link"></i> Download Buttons (Manual Override or Auto-Rotate)
+        </div>
         <div class="links-grid">
+            <!-- 1080p: Adsterra -->
             <div>
-                <label style="color: #2ecc71;">Link 1 (1080p)</label>
-                <input type="text" id="visitLink1" placeholder="Visit Link 1 URL">
+                <label style="color: #2ecc71;">1080p Link (Adsterra)</label>
+                <input type="text" id="visitLink1" placeholder="Leave empty for Auto-Link">
+                <div style="font-size:11px; color:#666; margin-top:3px;">Next Auto: <span id="next-adsterra">Loading...</span></div>
             </div>
+            
+            <!-- 720p: Monetag -->
             <div>
-                <label style="color: #f39c12;">Link 2 (720p)</label>
-                <input type="text" id="visitLink2" placeholder="Visit Link 2 URL">
+                <label style="color: #f39c12;">720p Link (Monetag)</label>
+                <input type="text" id="visitLink2" placeholder="Leave empty for Auto-Link">
+                <div style="font-size:11px; color:#666; margin-top:3px;">Next Auto: <span id="next-monetag">Loading...</span></div>
             </div>
+            
+            <!-- Final Movie -->
             <div>
                 <label style="color: #e0245e;">Final Movie Link</label>
                 <input type="text" id="finalMovieLink" placeholder="Original Download URL">
@@ -88,31 +76,53 @@
 </div>
 
 <script>
+    // --- LINK DATABASE (আপনি এখানে আরও লিংক অ্যাড করতে পারেন) ---
+    
+    // 1080p বাটনের জন্য (Adsterra Links)
+    const ADSTERRA_LINKS = [
+        "https://prototypesorting.com/dkhpkccgup?key=f93978b429dfbcf244b3718ef67223ef",
+        "https://prototypesorting.com/x0tq9pfa?key=5eaa0857eb30fd0efb62daca7ba27aec"
+    ];
+
+    // 720p বাটনের জন্য (Monetag Links)
+    const MONETAG_LINKS = [
+        "https://otieu.com/4/10282820",
+        "https://otieu.com/4/10291975"
+    ];
+
     document.addEventListener('DOMContentLoaded', () => {
         setupDefaults();
+        updateNextLinkIndicators();
     });
 
+    // --- Helper Function: Get Current Index from LocalStorage ---
+    function getStoredIndex(key) {
+        let index = localStorage.getItem(key);
+        return index ? parseInt(index) : 0;
+    }
+
+    // --- UI Update: Show which link will be used next ---
+    function updateNextLinkIndicators() {
+        const aIndex = getStoredIndex('adsterra_idx') % ADSTERRA_LINKS.length;
+        const mIndex = getStoredIndex('monetag_idx') % MONETAG_LINKS.length;
+        
+        document.getElementById('next-adsterra').innerText = `Link #${aIndex + 1}`;
+        document.getElementById('next-monetag').innerText = `Link #${mIndex + 1}`;
+    }
+
     function setupDefaults() {
-        // Random ID Generation
         const id = 'post-' + Math.random().toString(36).substr(2, 6);
         document.getElementById('generatedId').value = id;
         
-        // --- Random Duration Logic (1h 50m to 2h 30m) ---
-        // Minimum: 1h 50m = (1*3600) + (50*60) = 6600 seconds
-        // Maximum: 2h 30m = (2*3600) + (30*60) = 9000 seconds
-        
+        // Random Duration: 1h 50m (6600s) to 2h 30m (9000s)
         const minSeconds = 6600;
         const maxSeconds = 9000;
-        
-        // র‍্যান্ডম সেকেন্ড জেনারেট
         const totalSec = Math.floor(Math.random() * (maxSeconds - minSeconds + 1)) + minSeconds;
         
-        // ঘন্টা, মিনিট, সেকেন্ড কনভার্শন
         const h = Math.floor(totalSec / 3600);
         const m = Math.floor((totalSec % 3600) / 60);
         const s = totalSec % 60;
         
-        // ফরম্যাটিং (0 যোগ করা, যেমন: 02:05:09)
         const formatTime = (unit) => unit.toString().padStart(2, '0');
         document.getElementById('duration').value = `${formatTime(h)}:${formatTime(m)}:${formatTime(s)}`;
     }
@@ -123,9 +133,45 @@
         const media = document.getElementById('media').value.trim();
         const duration = document.getElementById('duration').value.trim();
         const paraRaw = document.getElementById('paragraphs').value.trim();
-        const link1 = document.getElementById('visitLink1').value.trim(); 
-        const link2 = document.getElementById('visitLink2').value.trim(); 
-        const movieLink = document.getElementById('finalMovieLink').value.trim(); 
+        const movieLink = document.getElementById('finalMovieLink').value.trim();
+        
+        // --- SMART LINK LOGIC START ---
+        
+        // 1. Inputs Check
+        let manualLink1080 = document.getElementById('visitLink1').value.trim();
+        let manualLink720 = document.getElementById('visitLink2').value.trim();
+        
+        let finalLink1080 = "";
+        let finalLink720 = "";
+        
+        // 2. Logic for 1080p (Adsterra)
+        if (manualLink1080 !== "") {
+            // ম্যানুয়ালি দিলে ওটাই ব্যবহার হবে, কাউন্টার বাড়বে না
+            finalLink1080 = manualLink1080;
+        } else {
+            // ম্যানুয়াল না থাকলে অটোমেটিক লিংক নেবে এবং কাউন্টার বাড়াবে
+            let currentIdx = getStoredIndex('adsterra_idx');
+            finalLink1080 = ADSTERRA_LINKS[currentIdx % ADSTERRA_LINKS.length];
+            
+            // Update Counter for next time
+            localStorage.setItem('adsterra_idx', currentIdx + 1);
+        }
+
+        // 3. Logic for 720p (Monetag)
+        if (manualLink720 !== "") {
+            // ম্যানুয়ালি দিলে ওটাই ব্যবহার হবে, কাউন্টার বাড়বে না
+            finalLink720 = manualLink720;
+        } else {
+            // ম্যানুয়াল না থাকলে অটোমেটিক লিংক নেবে এবং কাউন্টার বাড়াবে
+            let currentIdx = getStoredIndex('monetag_idx');
+            finalLink720 = MONETAG_LINKS[currentIdx % MONETAG_LINKS.length];
+            
+            // Update Counter for next time
+            localStorage.setItem('monetag_idx', currentIdx + 1);
+        }
+        
+        // --- SMART LINK LOGIC END ---
+
         const paragraphs = paraRaw ? paraRaw.split('\n').filter(line => line.trim() !== '') : [];
         const date = new Date();
         const uploadTime = date.toISOString();
@@ -138,16 +184,22 @@
             videoDuration: duration,
             paragraphs: paragraphs,
             hashtags: "#filmixo #viralfilm #trendingmovie #blockbuster #popular",
-            downloadLink2: link1,      
-            downloadLink3: link2,      
-            downloadLink1: movieLink   
+            
+            // Mapped Links
+            downloadLink2: finalLink1080, // Adsterra
+            downloadLink3: finalLink720,  // Monetag
+            downloadLink1: movieLink      // Final Movie
         };
 
         const jsonString = JSON.stringify(postData, null, 4);
         document.getElementById('json-output').innerText = jsonString.trim() + ",";
         document.getElementById('output-area').style.display = 'block';
         
-        setupDefaults(); // Generate new defaults for next input
+        // UI আপডেট করুন যাতে দেখা যায় পরের বার কোন লিংক আসবে
+        updateNextLinkIndicators();
+        
+        // নতুন পোস্টের জন্য ডিফল্ট ভ্যালু রিসেট (কিন্তু ইনপুট ফিল্ড খালি হবে না ইউজারের সুবিধার জন্য, শুধু আইডি আর টাইম আপডেট হবে)
+        setupDefaults();
     }
 
     function copyCode() {
