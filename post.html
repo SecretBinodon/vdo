@@ -345,4 +345,56 @@
             const safeTitle = post.title.replace(/'/g, "\\'");  
             const cardWrapper = document.createElement('div');  
             
-            cardWrapper.innerHTML = `<div class="post-card" data-id="${post.id}"><div class="post-header"><div class="post-pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div><div class="post-meta-text"><div class="name-row"><h3>FILMIXO <i class="verified-badge fa-solid fa-circle-check"></i></h3><span class="post-username">@filmixo</span> <span class="dot-separator">·</span><span class="time-ago" data-upload-time="${post.uploadTime}">${timeAgo(post.uploadTime)}</span></div></div></div><div class="post-title" onclick="openPost('${post.id}')">${post.title}</div><div class="post-excerpt" onclick="openPost('${post.id}')">${excerpt} <span class="read-more-text">See more</span></div><div class="hashtags">${post.hashtags}</div><div class="media-container" onclick="openPost('${post.id}')"><img src="${post.mediaImage}" loading="lazy"><div class="play-icon"></div><div class="duration-badge">${post.videoDuration}</div></div><div class="post-footer"><div class="footer-left"><i class="fa-solid fa-chart-simple"></i> <span class="count-text view-count-rel">0</span> <span class="label-text">Views</span></div><div class="footer-right"><div class="love-btn-rel"><i class="fa-regular fa-heart"></i> <span class="count-text like-count-rel">0</span> <span class="label-text">Likes</span></div><div class="post-date-display">${formatDate(post.uploadTime)}</div><div class="footer-share-btn" onclick="sharePost('${post.id}', '${safeTitle}')"><i class="fa-solid fa-share-from-square"></i></div></div><
+            cardWrapper.innerHTML = `<div class="post-card" data-id="${post.id}"><div class="post-header"><div class="post-pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div><div class="post-meta-text"><div class="name-row"><h3>FILMIXO <i class="verified-badge fa-solid fa-circle-check"></i></h3><span class="post-username">@filmixo</span> <span class="dot-separator">·</span><span class="time-ago" data-upload-time="${post.uploadTime}">${timeAgo(post.uploadTime)}</span></div></div></div><div class="post-title" onclick="openPost('${post.id}')">${post.title}</div><div class="post-excerpt" onclick="openPost('${post.id}')">${excerpt} <span class="read-more-text">See more</span></div><div class="hashtags">${post.hashtags}</div><div class="media-container" onclick="openPost('${post.id}')"><img src="${post.mediaImage}" loading="lazy"><div class="play-icon"></div><div class="duration-badge">${post.videoDuration}</div></div><div class="post-footer"><div class="footer-left"><i class="fa-solid fa-chart-simple"></i> <span class="count-text view-count-rel">0</span> <span class="label-text">Views</span></div><div class="footer-right"><div class="love-btn-rel"><i class="fa-regular fa-heart"></i> <span class="count-text like-count-rel">0</span> <span class="label-text">Likes</span></div><div class="post-date-display">${formatDate(post.uploadTime)}</div><div class="footer-share-btn" onclick="sharePost('${post.id}', '${safeTitle}')"><i class="fa-solid fa-share-from-square"></i></div></div></div></div>`;  
+            const newCard = cardWrapper.firstElementChild;  
+            container.appendChild(newCard);  
+            adjustImageAspectRatio(newCard.querySelector('.media-container img'));  
+            const timeElement = newCard.querySelector('.time-ago');  
+            if (timeElement) { timeElementsToUpdate.push({ element: timeElement, dateString: post.uploadTime }); }  
+            setupFirebaseForSingleCard(newCard, post.id);  
+        });  
+    }  
+  
+    function setupFirebaseForMainPost(id) {  
+        setDoc(doc(db, "views", id), { count: increment(1) }, { merge: true });  
+        onSnapshot(doc(db, "views", id), s => document.getElementById('view-cnt').innerText = formatCount(s.data()?.count || 0));  
+        const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users`, deviceId), lBtn = document.querySelector('.love-btn');  
+        onSnapshot(lRef, s => document.getElementById('like-cnt').innerText = formatCount(s.data()?.count || 0));  
+        getDoc(uRef).then(s => { if(s.exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); } });  
+        lBtn.addEventListener('click', async () => { 
+            if((await getDoc(uRef)).exists()) { } else { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); } 
+        });  
+    }  
+  
+    function setupFirebaseForSingleCard(card, id) {  
+        const vEl = card.querySelector('.view-count-rel'), lEl = card.querySelector('.like-count-rel'), lBtn = card.querySelector('.love-btn-rel');  
+        onSnapshot(doc(db, "views", id), s => vEl.innerText = formatCount(s.data()?.count || 0));  
+        const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users`, deviceId);  
+        onSnapshot(lRef, s => lEl.innerText = formatCount(s.data()?.count || 0));  
+        getDoc(uRef).then(s => { if(s.exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); } });  
+        lBtn.addEventListener('click', async () => { 
+            if((await getDoc(uRef)).exists()) { } else { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); } 
+        });  
+    }  
+  
+    window.handleVideoClick = function() {  
+        const p = document.getElementById('main-play-btn'), s = document.getElementById('main-spinner');  
+        if(p) p.style.display = 'none'; if(s) s.style.display = 'block';  
+        setTimeout(() => { window.location.href = CONFIG.GLOBAL_VIDEO_LINK; }, 100);   
+    }  
+    window.addEventListener('pageshow', () => {  
+        const p = document.getElementById('main-play-btn'), s = document.getElementById('main-spinner');  
+        if(p) p.style.display = 'flex'; if(s) s.style.display = 'none';  
+    });  
+  
+    window.openPost = (id) => window.location.href = `/movie/post.html?id=${id}`;  
+    window.sharePost = (id, title) => { const url = window.location.origin + `/movie/post.html?id=${id}`; if (navigator.share) { navigator.share({ title: title, text: title, url: url }).catch((e) => console.log('Share failed', e)); } else { navigator.clipboard.writeText(url); showNotification("Link copied! 📋"); } }  
+    window.share = (platform, title) => {  
+        const url = encodeURIComponent(window.location.href); const text = encodeURIComponent(title);  
+        if (platform === 'msg') { const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent); if (isMobile) window.location.href = `fb-messenger://share/?link=${url}`; else window.open(`https://www.facebook.com/dialog/send?link=${url}&app_id=123456789&redirect_uri=${url}`, '_blank'); } else { let link = ''; if(platform === 'fb') link = `https://www.facebook.com/sharer/sharer.php?u=${url}`; else if(platform === 'wa') link = `https://wa.me/?text=${text}%20${url}`; else if(platform === 'tw') link = `https://twitter.com/intent/tweet?text=${text}&url=${url}`; else if(platform === 'tg') link = `https://t.me/share/url?url=${url}&text=${text}`; window.open(link, '_blank'); }  
+    }  
+  
+    init();  
+</script>  
+</body>  
+</html>
