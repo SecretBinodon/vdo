@@ -6,7 +6,7 @@
     <title>FILMIXO</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- 🔥 ফিক্স: ইমেজ প্রি-লোড এবং প্রায়োরিটি হাই করা হলো -->
+    <!-- ইমেজ প্রি-লোড এবং প্রায়োরিটি হাই -->
     <link rel="preload" as="image" href="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/FILMIXO-HUB.jpg" fetchpriority="high">
     
     <style>
@@ -15,7 +15,7 @@
         body { background-color: #ffffff; display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; }
         .main-container { background-color: white; width: 100%; max-width: 600px; min-height: 10vh; border-left: 1px solid #ddd; border-right: 1px solid #ddd; position: relative; padding-bottom: 0; }
 
-        /* --- কভার ফটো (ফিক্সড: কোনো গ্লিচ হবে না) --- */
+        /* --- কভার ফটো (ফিক্সড হাইট) --- */
         .cover-photo { width: 100%; height: 150px; min-height: 150px; background-color: #ddd; overflow: hidden; position: relative; aspect-ratio: 320 / 150; display: block; }
         .cover-photo img { width: 100%; height: 100%; object-fit: cover; display: block; will-change: transform; transition: none; }
 
@@ -30,16 +30,22 @@
         .btn-email { background-color: #1da1f2; }
         .btn-share { background-color: #000; }
 
-        /* --- ইনফো সেকশন --- */
+        /* --- ইনফো সেকশন (আপগ্রেডেড: ফন্ট সাইজ এবং লেআউট শিফট ফিক্স) --- */
         .info-section { padding: 5px 15px 15px 15px; display: flex; flex-direction: column; }
         .website-name { font-size: 22px; font-weight: 800; color: #1c1e21; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 3px; }
         .username { font-size: 15px; color: #1da1f2; margin-bottom: 12px; cursor: default; -webkit-tap-highlight-color: transparent; }
-        .stats { display: flex; gap: 2px; font-size: 15px; color: #1c1e21; margin-bottom: 8px; font-weight: 400; }
-        .stats b { color: #1c1e21; font-weight: 800; margin-right: 2px; }
-        .meta-info { display: flex; flex-wrap: wrap; gap: 15px; font-size: 15px; color: #536471; margin-bottom: 10px; }
+        
+        /* 🔥 ফিক্স: ফন্ট সাইজ ছোট করা হয়েছে (13.5px) এবং min-width দেওয়া হয়েছে যাতে ঝাঁকুনি না হয় */
+        .stats { display: flex; gap: 2px; font-size: 13.5px; color: #1c1e21; margin-bottom: 8px; font-weight: 500; align-items: center; }
+        .stats b { color: #1c1e21; font-weight: 800; margin-right: 2px; display: inline-block; min-width: 15px; text-align: center; } 
+        
+        /* 🔥 ফিক্স: মেটা ইনফো ফন্ট সাইজ ছোট করা হয়েছে */
+        .meta-info { display: flex; flex-wrap: wrap; gap: 15px; font-size: 13.5px; color: #536471; margin-bottom: 10px; }
         .meta-info span { display: flex; align-items: center; gap: 5px; }
-        .meta-info i { font-size: 15px; color: #536471; }
-        .bio { font-size: 16px; color: #0f1419; line-height: 1.2; word-spacing: normal; text-align: left; margin-bottom: 0; }
+        .meta-info i { font-size: 14px; color: #536471; }
+        
+        /* বায়ু ফন্ট অ্যাডজাস্টমেন্ট */
+        .bio { font-size: 15px; color: #0f1419; line-height: 1.3; word-spacing: normal; text-align: left; margin-bottom: 0; font-weight: 400; }
 
         /* --- নেভিগেশন বার --- */
         .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; border-top: 1px solid #e1e8ed; border-bottom: 1px solid #e1e8ed; margin-bottom: 0px; background: #fff; position: sticky; top: 0; z-index: 100; }
@@ -144,7 +150,6 @@
 <body>
 
     <div class="main-container">
-        <!-- 🔥 কভার ফটো ফিক্স: height ও width অ্যাট্রিবিউট যোগ এবং decoding sync -->
         <div class="cover-photo">
             <img src="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/FILMIXO-HUB.jpg" 
                  width="320" height="150" alt="Cover" decoding="sync" fetchpriority="high">
@@ -170,6 +175,7 @@
             <h1 class="website-name">FILMIXO-HUB <i class="verified-badge fa-solid fa-circle-check"></i></h1>
             <p class="username">@filmixo</p>
             <div class="stats">
+                <!-- 🔥 ফিক্স: ডিফল্ট ভ্যালু 0 রাখা হয়েছে এবং CSS দিয়ে জায়গা ধরা হয়েছে -->
                 <span>Total Videos <b id="total-videos-count">0</b></span> • 
                 <span>Total Views <b id="total-views-count">0</b></span>
             </div>
@@ -234,14 +240,8 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
         import { getFirestore, doc, getDoc, setDoc, increment, onSnapshot, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
-        // ============================================
-        //  ১. ব্রাউজারের ডিফল্ট স্ক্রল পুনরুদ্ধার বন্ধ করা
-        // ============================================
         if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
         
-        // ============================================
-        //  ২. স্ক্রলিং পজিশন সংরক্ষণ 
-        // ============================================
         let scrollTimeout;
         window.addEventListener('scroll', () => {
             clearTimeout(scrollTimeout);
