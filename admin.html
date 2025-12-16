@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,137 +5,185 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Filmixo Admin - Fixed Link Generator</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #1da1f2; --dark: #34495e; --bg: #f4f6f8; }
+        :root { --primary: #1da1f2; --primary-hover: #0c85d0; --dark: #1f2937; --light-bg: #f3f4f6; --border: #e5e7eb; }
+        
         body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: var(--bg); 
-            padding: 20px; 
+            font-family: 'Inter', sans-serif; 
+            background: var(--light-bg); 
+            padding: 30px 15px; 
             color: var(--dark);
+            min-height: 100vh;
         }
+
         .container { 
-            max-width: 850px; 
+            max-width: 900px; 
             margin: 0 auto;
             background: white; 
-            padding: 40px; 
-            border-radius: 15px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            padding: 35px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05); 
+            border: 1px solid white;
         }
-        h2 { text-align: center; color: var(--primary); margin-bottom: 30px; text-transform: uppercase; letter-spacing: 1px; }
+
+        h2 { 
+            text-align: center; color: var(--dark); margin-bottom: 25px; 
+            font-size: 22px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        h2 i { color: var(--primary); }
+
+        /* --- ফর্ম লেআউট --- */
+        .form-row { display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .form-group { margin-bottom: 15px; }
         
-        .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #555; }
+        label { 
+            display: block; margin-bottom: 6px; font-weight: 600; 
+            font-size: 13px; color: #4b5563; text-transform: uppercase; letter-spacing: 0.5px;
+        }
         
         input, textarea { 
             width: 100%; 
-            padding: 14px; 
-            border: 1px solid #e1e8ed; 
-            border-radius: 8px; 
-            font-size: 15px; 
-            background: #f9f9f9;
-            transition: 0.3s; 
+            padding: 12px 15px; 
+            border: 1px solid var(--border); 
+            border-radius: 6px; 
+            font-size: 14px; 
+            background: #fff;
+            color: #111;
+            transition: all 0.2s ease; 
             box-sizing: border-box; 
         }
-        input:focus, textarea:focus { border-color: var(--primary); background: #fff; outline: none; box-shadow: 0 0 0 4px rgba(29, 161, 242, 0.1); }
-        textarea { height: 120px; resize: vertical; }
         
-        /* গ্রিড লেআউট */
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        input:focus, textarea:focus { 
+            border-color: var(--primary); 
+            outline: none; 
+            box-shadow: 0 0 0 3px rgba(29, 161, 242, 0.15); 
+        }
         
-        /* লিংক সেকশন ডিজাইন */
+        textarea { height: 100px; resize: vertical; line-height: 1.5; }
+        
+        /* --- লিংক সেকশন ডিজাইন (Compact) --- */
         .link-section {
-            background: #f8fbff;
-            border: 1px solid #e1e8ed;
+            background: #f8fafc;
+            border: 1px solid var(--border);
             padding: 20px;
-            border-radius: 10px;
-            margin-top: 25px;
+            border-radius: 8px;
+            margin-top: 20px;
         }
-        .section-title {
-            font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 15px; border-bottom: 2px solid #e1e8ed; padding-bottom: 10px; display: inline-block;
+        .section-header {
+            font-size: 14px; font-weight: 700; color: var(--primary); 
+            margin-bottom: 15px; display: flex; align-items: center; gap: 8px;
+            border-bottom: 1px solid var(--border); padding-bottom: 8px;
         }
 
+        .links-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr; /* ৩টি লিংক পাশাপাশি */
+            gap: 15px;
+        }
+
+        /* --- বাটন --- */
         .generate-btn {
-            width: 100%; padding: 16px; background: var(--primary); color: white; border: none; 
-            border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 25px;
-            transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(29, 161, 242, 0.3);
+            width: 100%; padding: 14px; background: var(--primary); color: white; border: none; 
+            border-radius: 6px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 25px;
+            transition: all 0.2s ease; display: flex; justify-content: center; align-items: center; gap: 8px;
         }
-        .generate-btn:hover { background: #0d8bd9; transform: translateY(-2px); }
-        .generate-btn:active { transform: scale(0.98); }
+        .generate-btn:hover { background: var(--primary-hover); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(29, 161, 242, 0.25); }
+        .generate-btn:active { transform: scale(0.99); }
 
-        /* আউটপুট এরিয়া */
+        /* --- আউটপুট এরিয়া --- */
         .output-box { 
-            margin-top: 30px; display: none; position: relative; 
-            background: #282c34; border-radius: 10px; overflow: hidden;
+            margin-top: 25px; display: none; position: relative; 
+            background: #1e1e1e; border-radius: 8px; overflow: hidden; border: 1px solid #333;
         }
         pre { 
-            color: #61dafb; padding: 25px; font-family: 'Consolas', monospace; font-size: 14px; 
-            white-space: pre-wrap; margin: 0; max-height: 500px; overflow-y: auto;
+            color: #a5d6ff; padding: 20px; font-family: 'Consolas', monospace; font-size: 13px; 
+            white-space: pre-wrap; margin: 0; max-height: 300px; overflow-y: auto; line-height: 1.4;
         }
         .copy-btn { 
-            position: absolute; top: 15px; right: 15px; 
-            background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);
-            padding: 5px 12px; border-radius: 5px; cursor: pointer; font-size: 13px; transition: 0.2s;
+            position: absolute; top: 10px; right: 10px; 
+            background: rgba(255,255,255,0.15); color: white; border: none;
+            padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; transition: 0.2s;
+            display: flex; align-items: center; gap: 5px;
         }
-        .copy-btn:hover { background: rgba(255,255,255,0.2); }
+        .copy-btn:hover { background: rgba(255,255,255,0.3); }
+
+        /* --- রেসপন্সিভ --- */
+        @media (max-width: 768px) {
+            .form-row, .links-grid { grid-template-columns: 1fr; gap: 10px; }
+            .container { padding: 20px; }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2><i class="fa-solid fa-code"></i> Post JSON Generator</h2>
+    <h2><i class="fa-solid fa-file-code"></i> JSON Generator</h2>
     
-    <!-- বেসিক ইনফরমেশন -->
+    <!-- টাইটেল -->
     <div class="form-group">
         <label>Post Title</label>
-        <input type="text" id="title" placeholder="মুভির নাম বা টাইটেল">
+        <input type="text" id="title" placeholder="Enter movie title here...">
     </div>
 
-    <div class="grid-2">
-        <div class="form-group">
-            <label>Thumbnail / Poster Image URL</label>
-            <input type="text" id="media" placeholder="ইমেজ লিংক">
+    <!-- মিডিয়া এবং ডিউরেশন (পাশাপাশি) -->
+    <div class="form-row">
+        <div>
+            <label>Thumbnail / Image URL</label>
+            <input type="text" id="media" placeholder="https://example.com/image.jpg">
         </div>
-        <div class="form-group">
-            <label>Video Duration</label>
-            <input type="text" id="duration" placeholder="যেমন: 02:30:00">
+        <div>
+            <label>Duration</label>
+            <input type="text" id="duration" placeholder="00:00:00">
         </div>
     </div>
 
+    <!-- প্যারাগ্রাফ -->
     <div class="form-group">
-        <label>Article Paragraphs (New Line = New Paragraph)</label>
-        <textarea id="paragraphs" placeholder="আর্টিকেলের লেখা এখানে দিন..."></textarea>
+        <label>Article Paragraphs (Line break = New Paragraph)</label>
+        <textarea id="paragraphs" placeholder="Write article content here..."></textarea>
     </div>
 
-    <!-- লিংক সেকশন (৩টি আলাদা ইনপুট) -->
+    <!-- লিংক সেকশন (গোছালো গ্রিড) -->
     <div class="link-section">
-        <div class="section-title"><i class="fa-solid fa-link"></i> ডাউনলোড বাটন কনফিগারেশন</div>
+        <div class="section-header"><i class="fa-solid fa-link"></i> Download Buttons Configuration</div>
         
-        <div class="form-group">
-            <label>১. ভিজিট লিংক ১ - 1080p (প্রথম বাটন)</label>
-            <input type="text" id="visitLink1" placeholder="Visit Link 1">
-        </div>
-
-        <div class="form-group">
-            <label>২. ভিজিট লিংক ২ - 720p (দ্বিতীয় বাটন)</label>
-            <input type="text" id="visitLink2" placeholder="Visit Link 2">
-        </div>
-
-        <div class="form-group">
-            <label style="color:#e0245e;">৩. মুভি ডাউনলোড লিংক (ফাইনাল বাটন)</label>
-            <input type="text" id="finalMovieLink" placeholder="Original Movie Link">
+        <div class="links-grid">
+            <!-- 1080p -->
+            <div>
+                <label style="color: #2ecc71;">Link 1 (1080p)</label>
+                <input type="text" id="visitLink1" placeholder="Visit Link 1 URL">
+            </div>
+            
+            <!-- 720p -->
+            <div>
+                <label style="color: #f39c12;">Link 2 (720p)</label>
+                <input type="text" id="visitLink2" placeholder="Visit Link 2 URL">
+            </div>
+            
+            <!-- Final Movie -->
+            <div>
+                <label style="color: #e0245e;">Final Movie Link</label>
+                <input type="text" id="finalMovieLink" placeholder="Original Download URL">
+            </div>
         </div>
     </div>
     
     <input type="hidden" id="generatedId">
-    <button class="generate-btn" onclick="generateJSON()">Generate JSON Code</button>
+    
+    <button class="generate-btn" onclick="generateJSON()">
+        <i class="fa-solid fa-bolt"></i> Generate JSON Code
+    </button>
 
     <div class="output-box" id="output-area">
-        <button class="copy-btn" onclick="copyCode()" id="copyBtn"><i class="fa-regular fa-copy"></i> Copy</button>
+        <button class="copy-btn" onclick="copyCode()" id="copyBtn"><i class="fa-regular fa-copy"></i> Copy Code</button>
         <pre id="json-output"></pre>
     </div>
 </div>
 
 <script>
+    // --- লজিকে কোনো পরিবর্তন করা হয়নি, হুবহু আগের মতোই রাখা হয়েছে ---
+
     document.addEventListener('DOMContentLoaded', () => {
         setupDefaults();
     });
@@ -170,7 +217,7 @@
         const date = new Date();
         const uploadTime = date.toISOString();
 
-        // JSON অবজেক্ট তৈরি (৩টি আলাদা কী সহ)
+        // JSON অবজেক্ট তৈরি (লজিক অপরিবর্তিত)
         const postData = {
             id: id,
             uploadTime: uploadTime,
@@ -182,7 +229,7 @@
             
             // ৩টি আলাদা বাটন লিংক ম্যাপিং:
             downloadLink2: link1,      // ভিজিট বাটন ১ (1080p)
-            downloadLink3: link2,      // ভিজিট বাটন ২ (720p) - [নতুন কী]
+            downloadLink3: link2,      // ভিজিট বাটন ২ (720p)
             downloadLink1: movieLink   // ফাইনাল মুভি লিংক
         };
 
@@ -200,7 +247,7 @@
         navigator.clipboard.writeText(code);
         const btn = document.getElementById('copyBtn');
         btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied';
-        setTimeout(() => btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy', 2000);
+        setTimeout(() => btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy Code', 2000);
     }
 </script>
 
