@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>  
 <html lang="en">  
 <head>  
@@ -15,7 +14,14 @@
         font-family: Arial, Helvetica, sans-serif; 
         text-decoration: none; 
     }  
-    body { background: #fff; display: flex; justify-content: center; }  
+    body { 
+        background: #fff; 
+        display: flex; 
+        justify-content: center; 
+        /* 🔥 গ্লোবাল ফিক্স: নীল হাইলাইট বন্ধ */
+        -webkit-tap-highlight-color: transparent; 
+        user-select: none;
+    }  
 
     /* --- মেইন র্যাপার (ঝাঁকুনি এবং ফেডিং ফিক্স) --- */  
     .main-wrapper {   
@@ -32,7 +38,7 @@
     
     .main-wrapper.loaded { opacity: 1 !important; }  
 
-    /* হেডার */  
+    /* হেডার - হেডার সেকশনে কোনো পরিবর্তন করা হয়নি */  
     header {   
         background: #1da1f2; padding: 12px 15px; display: flex; justify-content: space-between;   
         align-items: center; color: white; position: sticky; top: 0; z-index: 100;   
@@ -50,10 +56,8 @@
         font-size: 16px; 
         margin: 0; 
         color: #0f1419; 
-        /* 🔥 ফিক্স: ডিসপ্লে ফ্লেক্স রিমুভ করে ইনলাইন-ফ্লেক্স রাখা হলো */
         display: inline-flex; 
         align-items: center; 
-        /* 🔥 ফিক্স: গ্যাপ যোগ করা হলো যাতে ভেরিফাই ব্যাজ ঠিকভাবে বসে */
         gap: 5px;
     }  
     .author-text span { font-size: 14px; color: #1da1f2; display: block; margin-top: -2px; }  
@@ -72,13 +76,19 @@
         margin-top: 5px; 
         cursor: pointer; 
         contain: content; 
+        -webkit-tap-highlight-color: transparent; /* ভিডিও কনটেইনারের হাইলাইট বন্ধ */
     }  
+    /* ভিডিও কনটেইনারে ক্লিক করলে জুম এফেক্ট (index.html এর মত) */
+    .video-container:active img {
+        transform: scale(1.02);
+    }
     .video-container img { 
         width: 100%; 
         height: 100%; 
         object-fit: contain; 
         display: block; 
         will-change: transform; 
+        transition: transform 0.1s ease; /* ট্রানজিশন যোগ করা হলো */
     }  
     
     .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }  
@@ -94,7 +104,16 @@
     .download-title-text { font-size: 18px; font-weight: 800; color: #0f1419; text-align: center; margin: 20px 0 10px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }  
     .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 12px; }  
     
-    .download-btn-v2 { display: flex; align-items: center; justify-content: center; width: 100%; padding: 14px 10px; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: all 0.2s; position: relative; }  
+    .download-btn-v2 { 
+        display: flex; align-items: center; justify-content: center; width: 100%; padding: 14px 10px; 
+        border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center; color: white; 
+        cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); 
+        transition: all 0.2s; position: relative; 
+        /* 🔥 ফিক্স: নীল হাইলাইট বন্ধ রাখা হলো */
+        -webkit-tap-highlight-color: transparent; 
+        user-select: none;
+    }  
+    /* 🔥 ফিক্স: ক্লিক করলে ডেবে যাবে */
     .download-btn-v2:active { transform: scale(0.98); }  
 
     /* ভিজিটেড বাটন */
@@ -141,21 +160,66 @@
     .stats-left { display: flex; align-items: center; gap: 20px; flex-grow: 1; overflow: hidden; }  
     .view-stat { flex: 0 0 auto; display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; }  
     .like-stat-container { flex: 1 1 auto; display: flex; justify-content: center; }  
-    .love-btn { display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: 0.2s; user-select: none; }  
+    .love-btn { 
+        display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; 
+        color: #536471; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: 0.2s; 
+        user-select: none; 
+        -webkit-tap-highlight-color: transparent; /* লাভ বাটনের হাইলাইট বন্ধ */
+    }  
     .love-btn.liked { color: #e0245e; } .love-btn.liked i { font-weight: 900; }  
     .share-icons { flex: 0 0 auto; display: flex; gap: 8px; }  
-    .share-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 13px; transition: 0.2s; }  
+    .share-icon { 
+        width: 28px; height: 28px; border-radius: 50%; display: flex; 
+        align-items: center; justify-content: center; color: white; cursor: pointer; 
+        font-size: 13px; transition: transform 0.2s; /* ট্রানজিশন ফিক্স */
+        /* 🔥 ফিক্স: নীল হাইলাইট বন্ধ রাখা হলো */
+        -webkit-tap-highlight-color: transparent; 
+        user-select: none;
+    }  
+    /* 🔥 ফিক্স: ক্লিক করলে ডেবে যাবে */
+    .share-icon:active { 
+        transform: scale(0.9); 
+    }
 
-    /* --- রিলেটেড পোস্ট কার্ডের স্টাইল ফিক্স (index.html থেকে) --- */
+    /* --- রিলেটেড পোস্ট কার্ডের স্টাইল ফিক্স (index.html থেকে লজিক) --- */
     .related-section { background: #fff; margin-top: 0; }  
     .related-header { padding: 15px; font-weight: 800; color: #000000; border-bottom: 1px solid #e1e8ed; text-transform: uppercase; background: #fff; }  
-    .post-card { background: white; padding: 5px 15px 5px 15px; border-bottom: 1px solid #e1e8ed; display: flex; flex-direction: column; gap: 6px; }  
+    .post-card { 
+        background: white; padding: 5px 15px 5px 15px; border-bottom: 1px solid #e1e8ed; 
+        display: flex; flex-direction: column; gap: 6px; 
+    }  
+    
+    /* 🔥 রিলেটেড পোস্টের নতুন ট্যাব লজিক (Index.html এর মতো) */
+    .post-title, .post-excerpt { 
+        cursor: pointer; 
+        -webkit-tap-highlight-color: transparent; 
+        user-select: none;
+        transition: color 0.1s ease;
+    }
+    
+    .post-title:active { color: #1da1f2; } /* টাইটেল নীল হবে */
+    .post-excerpt:active { color: #1da1f2; } /* প্যারাগ্রাফ নীল হবে */
+    
+    .media-container img { 
+        width: 100%; 
+        height: 100%; 
+        object-fit: cover; 
+        margin: 0 auto; 
+        max-height: none; 
+        transition: transform 0.1s ease;
+        transform: scale(1.0);
+    }
+    
+    .media-container:active img { 
+        transform: scale(1.02); /* ইমেজ জুম হবে */
+    }
+    
+    /* অন্যান্য রিলেটেড পোস্ট স্টাইল (অপরিবর্তিত) */
     .post-header { display: flex; gap: 10px; align-items: center; }  
     .post-pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }  
     .post-pfp img { width: 100%; height: 100%; object-fit: cover; }  
     .post-meta-text { display: flex; flex-direction: column; justify-content: center; }  
     .name-row { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }   
-    /* 🔥 ফিক্স: name-row h3 এর গ্যাপ যোগ করা হলো */
     .name-row h3 { font-size: 18px; font-weight: 800; color: #0f1419; margin: 0; display: inline-flex; align-items: center; gap: 5px; }  
     .post-username { font-size: 14px; color: #1da1f2; margin-top: 0; }  
     .verified-badge { color: #1da1f2; font-size: 16px; margin-left: -2px; margin-right: 0; display: inline-flex; align-items: center; }  
@@ -165,8 +229,7 @@
     .post-excerpt { font-size: 15px; color: #0f1419; line-height: 1.4; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }  
     .read-more-text { color: #1da1f2; font-weight: 600; font-size: 14px; }  
     .hashtags { color: #1d9bf0; font-size: 15px; margin-bottom: 10px; cursor: default; }  
-    .media-container { position: relative; width: 100%; border-radius: 12px; overflow: hidden; margin-top: 5px; display: block; cursor: pointer; background: #000; aspect-ratio: 3 / 4; max-height: 720px; }  
-    .media-container img { width: 100%; height: 100%; object-fit: cover; margin: 0 auto; max-height: none; }  
+    .media-container { position: relative; width: 100%; border-radius: 12px; overflow: hidden; margin-top: 5px; display: block; cursor: pointer; background: #000; aspect-ratio: 3 / 4; max-height: 720px; -webkit-tap-highlight-color: transparent; }  
     .media-container.auto-fit { aspect-ratio: initial; height: auto; }  
     .media-container.auto-fit img { height: auto; object-fit: contain; }  
     .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background-color: rgba(0, 0, 0, 0.6); border-radius: 50%; display: flex; justify-content: center; align-items: center; pointer-events: none; border: 2px solid rgba(255,255,255,0.8); }  
@@ -174,13 +237,8 @@
     .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0, 0, 0, 0.8); color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; pointer-events: none; z-index: 5; }  
     
     .post-footer { 
-        display: flex; 
-        justify-content: space-between; 
-        align-items: center; 
-        margin-top: 12px; 
-        color: #536471; 
-        font-size: 16px; 
-        font-weight: 500; 
+        display: flex; justify-content: space-between; align-items: center; 
+        margin-top: 12px; color: #536471; font-size: 16px; font-weight: 500; 
     }  
     .footer-left { display: flex; align-items: center; gap: 6px; }  
     .footer-right { display: flex; align-items: center; gap: 20px; }  
@@ -189,36 +247,40 @@
     .label-text { font-weight: 500; font-size: 15px; }
 
     .love-btn-rel { 
-        cursor: pointer; 
-        display: flex; 
-        align-items: center; 
-        gap: 5px; 
-        transition: all 0.2s; 
-        user-select: none; 
-        font-weight: 500; 
-        font-size: 15px; 
+        cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all 0.2s; 
+        user-select: none; font-weight: 500; font-size: 15px; 
+        -webkit-tap-highlight-color: transparent; 
     }  
     .love-btn-rel i { font-size: 18px; } 
     .love-btn-rel:hover { color: #e0245e; background-color: rgba(224, 36, 94, 0.1); padding: 4px 8px; border-radius: 15px; margin: -4px -8px; }  
     .love-btn-rel.liked { color: #e0245e !important; } .love-btn-rel.liked i { font-weight: 900; }  
     
-    .post-date-display { 
-        font-size: 14px; 
-        color: #65676b; 
-        font-weight: 500; 
-    }
+    .post-date-display { font-size: 14px; color: #65676b; font-weight: 500; }
 
     .footer-share-btn i {
         font-size: 16px; 
         color: #536471;
+        transition: color 0.1s ease;
     }
-    .footer-share-btn { cursor: pointer; padding: 8px; border-radius: 50%; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; }  
+    .footer-share-btn:active i {
+        color: #1da1f2; /* শেয়ার আইকনে ক্লিক করলে নীল হবে */
+    }
+    .footer-share-btn { 
+        cursor: pointer; padding: 8px; border-radius: 50%; transition: all 0.2s ease; 
+        display: flex; align-items: center; justify-content: center; 
+        -webkit-tap-highlight-color: transparent; 
+        user-select: none;
+    }  
     .footer-share-btn:hover { background-color: rgba(0,0,0,0.05); }  
 
     /* --- ফুটার সেকশন ফিক্স (index.html থেকে) --- */  
     .site-footer { background-color: #fff; padding: 30px 20px; text-align: center; border-top: none; margin-top: 0; }  
     .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }  
-    .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; }  
+    .footer-links a { 
+        color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; 
+        -webkit-tap-highlight-color: transparent; 
+        user-select: none;
+    }  
     .footer-links a:hover { color: #1da1f2; text-decoration: underline; }
     .footer-copyright { color: #536471; font-size: 13px; }  
     .footer-copyright a { color: #1da1f2; font-weight: bold; }
@@ -579,16 +641,22 @@
             const safeTitle = post.title.replace(/'/g, "\\'");  
             const cardWrapper = document.createElement('div');  
             
-            // HTML ফিক্স: ভিউ ও লাইক কাউন্টার শূন্য (0) দিয়ে শুরু হচ্ছে 
+            // HTML কাঠামো সংশোধন: টাইটেল, প্যারাগ্রাফ, এবং ইমেজ কনটেইনারকে আলাদাভাবে ক্লিকযোগ্য করা হয়েছে। 
             cardWrapper.innerHTML = `  
                 <div class="post-card" data-id="${post.id}">  
                     <div class="post-header">  
                         <div class="post-pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div>  
                         <div class="post-meta-text"><div class="name-row"><h3>FILMIXO <i class="verified-badge fa-solid fa-circle-check"></i></h3><span class="post-username">@filmixo</span> <span class="dot-separator">·</span><span class="time-ago" data-upload-time="${post.uploadTime}">${timeAgo(post.uploadTime)}</span></div></div>  
                     </div>  
-                    <div class="clickable-area" onclick="openPost('${post.id}')"><div class="post-title">${post.title}</div><div class="post-excerpt">${excerpt} <span class="read-more-text">See more</span></div></div>  
+                    
+                    <div class="post-title" onclick="openPost('${post.id}')">${post.title}</div>
+                    
+                    <div class="post-excerpt" onclick="openPost('${post.id}')">${excerpt} <span class="read-more-text">See more</span></div>
+                    
                     <div class="hashtags">${post.hashtags}</div>  
-                    <div class="clickable-area" onclick="openPost('${post.id}')"><div class="media-container"><img src="${post.mediaImage}" loading="lazy"><div class="play-icon"></div><div class="duration-badge">${post.videoDuration}</div></div></div>  
+                    
+                    <div class="media-container" onclick="openPost('${post.id}')"><img src="${post.mediaImage}" loading="lazy"><div class="play-icon"></div><div class="duration-badge">${post.videoDuration}</div></div>
+                    
                     <div class="post-footer">
                         <div class="footer-left">
                             <i class="fa-solid fa-chart-simple"></i> 
