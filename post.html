@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>  
 <html lang="en">  
 <head>  
@@ -11,7 +12,6 @@
         margin: 0; 
         padding: 0; 
         box-sizing: border-box; 
-        /* 🔥 ফন্ট ফিক্স: index.html এর সাথে সামঞ্জস্য বজায় রাখতে Arial ব্যবহার করা হলো 🔥 */
         font-family: Arial, Helvetica, sans-serif; 
         text-decoration: none; 
     }  
@@ -46,7 +46,16 @@
     .author-info { display: flex; align-items: center; gap: 10px; }  
     .pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }  
     .pfp img { width: 100%; height: 100%; object-fit: cover; }  
-    .author-text h3 { font-size: 16px; margin: 0; color: #0f1419; display: inline-flex; align-items: center; }  
+    .author-text h3 { 
+        font-size: 16px; 
+        margin: 0; 
+        color: #0f1419; 
+        /* 🔥 ফিক্স: ডিসপ্লে ফ্লেক্স রিমুভ করে ইনলাইন-ফ্লেক্স রাখা হলো */
+        display: inline-flex; 
+        align-items: center; 
+        /* 🔥 ফিক্স: গ্যাপ যোগ করা হলো যাতে ভেরিফাই ব্যাজ ঠিকভাবে বসে */
+        gap: 5px;
+    }  
     .author-text span { font-size: 14px; color: #1da1f2; display: block; margin-top: -2px; }  
     .post-time { font-size: 13px; color: #536471; font-weight: bold; }  
 
@@ -125,7 +134,6 @@
         display: flex; 
         align-items: center; 
         background: #fff; 
-        /* index.html-এ থাকা পোস্ট-ফুটারের ফন্ট সাইজ এবং কালার এখানেও প্রয়োগ করা হলো */
         font-size: 15px; 
         color: #536471; 
         font-weight: 500;
@@ -147,9 +155,10 @@
     .post-pfp img { width: 100%; height: 100%; object-fit: cover; }  
     .post-meta-text { display: flex; flex-direction: column; justify-content: center; }  
     .name-row { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }   
-    .name-row h3 { font-size: 18px; font-weight: 800; color: #0f1419; margin: 0; display: inline-flex; align-items: center; gap: 5px; /* index.html-এর সাথে সামঞ্জস্য */ }  
+    /* 🔥 ফিক্স: name-row h3 এর গ্যাপ যোগ করা হলো */
+    .name-row h3 { font-size: 18px; font-weight: 800; color: #0f1419; margin: 0; display: inline-flex; align-items: center; gap: 5px; }  
     .post-username { font-size: 14px; color: #1da1f2; margin-top: 0; }  
-    .verified-badge { color: #1da1f2; font-size: 16px; margin-left: -2px; margin-right: 0; /* index.html-এর সাথে সামঞ্জস্য */ display: inline-flex; align-items: center; }  
+    .verified-badge { color: #1da1f2; font-size: 16px; margin-left: -2px; margin-right: 0; display: inline-flex; align-items: center; }  
     .time-ago { font-size: 15px; color: #536471; }  
     .dot-separator { font-size: 15px; color: #536471; margin: 0 2px; }  
     .post-title { font-size: 18px; font-weight: 700; color: #0f1419; margin-bottom: 8px; margin-top: -3px; line-height: 1.3; }  
@@ -157,14 +166,13 @@
     .read-more-text { color: #1da1f2; font-weight: 600; font-size: 14px; }  
     .hashtags { color: #1d9bf0; font-size: 15px; margin-bottom: 10px; cursor: default; }  
     .media-container { position: relative; width: 100%; border-radius: 12px; overflow: hidden; margin-top: 5px; display: block; cursor: pointer; background: #000; aspect-ratio: 3 / 4; max-height: 720px; }  
-    .media-container img { width: 100%; height: 100%; display: block; object-fit: cover; margin: 0 auto; max-height: none; }  
+    .media-container img { width: 100%; height: 100%; object-fit: cover; margin: 0 auto; max-height: none; }  
     .media-container.auto-fit { aspect-ratio: initial; height: auto; }  
     .media-container.auto-fit img { height: auto; object-fit: contain; }  
     .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background-color: rgba(0, 0, 0, 0.6); border-radius: 50%; display: flex; justify-content: center; align-items: center; pointer-events: none; border: 2px solid rgba(255,255,255,0.8); }  
     .play-icon::after { content: ''; display: block; width: 0; height: 0; border-left: 18px solid white; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 4px; }  
     .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0, 0, 0, 0.8); color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; pointer-events: none; z-index: 5; }  
     
-    /* 🔥 রিলেটেড পোস্টের ফুটার স্টাইল ফিক্স (index.html থেকে) 🔥 */
     .post-footer { 
         display: flex; 
         justify-content: space-between; 
@@ -177,11 +185,9 @@
     .footer-left { display: flex; align-items: center; gap: 6px; }  
     .footer-right { display: flex; align-items: center; gap: 20px; }  
     
-    /* ভিউ ও লাইকের সংখ্যা এবং লেবেল */
     .count-text { font-weight: 500; font-size: 15px; } 
     .label-text { font-weight: 500; font-size: 15px; }
 
-    /* লাইক বাটন ফিক্স */
     .love-btn-rel { 
         cursor: pointer; 
         display: flex; 
@@ -189,23 +195,21 @@
         gap: 5px; 
         transition: all 0.2s; 
         user-select: none; 
-        font-weight: 500; /* index.html-এর সাথে সামঞ্জস্য */
-        font-size: 15px; /* ফন্ট সাইজ index.html-এর সাথে সামঞ্জস্য */
+        font-weight: 500; 
+        font-size: 15px; 
     }  
-    .love-btn-rel i { font-size: 18px; /* index.html-এর সাথে সামঞ্জস্য */ } 
+    .love-btn-rel i { font-size: 18px; } 
     .love-btn-rel:hover { color: #e0245e; background-color: rgba(224, 36, 94, 0.1); padding: 4px 8px; border-radius: 15px; margin: -4px -8px; }  
     .love-btn-rel.liked { color: #e0245e !important; } .love-btn-rel.liked i { font-weight: 900; }  
     
-    /* ডেট ডিসপ্লে */
     .post-date-display { 
-        font-size: 14px; /* index.html-এর সাথে সামঞ্জস্য */
+        font-size: 14px; 
         color: #65676b; 
         font-weight: 500; 
     }
 
-    /* শেয়ার বাটন */
     .footer-share-btn i {
-        font-size: 16px; /* index.html-এর সাথে সামঞ্জস্য */
+        font-size: 16px; 
         color: #536471;
     }
     .footer-share-btn { cursor: pointer; padding: 8px; border-radius: 50%; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; }  
@@ -217,7 +221,6 @@
     .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; }  
     .footer-links a:hover { color: #1da1f2; text-decoration: underline; }
     .footer-copyright { color: #536471; font-size: 13px; }  
-    /* 🔥 কপিরাইটের লিংক ফিক্স (index.html থেকে) 🔥 */
     .footer-copyright a { color: #1da1f2; font-weight: bold; }
     
     /* --- নোটিফিকেশন পরিবর্তন --- */
@@ -576,7 +579,7 @@
             const safeTitle = post.title.replace(/'/g, "\\'");  
             const cardWrapper = document.createElement('div');  
             
-            // 🔥 HTML ফিক্স: ভিউ ও লাইক কাউন্টার শূন্য (0) দিয়ে শুরু হচ্ছে 🔥
+            // HTML ফিক্স: ভিউ ও লাইক কাউন্টার শূন্য (0) দিয়ে শুরু হচ্ছে 
             cardWrapper.innerHTML = `  
                 <div class="post-card" data-id="${post.id}">  
                     <div class="post-header">  
