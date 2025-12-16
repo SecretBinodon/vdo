@@ -235,7 +235,7 @@
     <div id="search-overlay">
         <div class="search-header">
             <button class="search-back-btn" onclick="hideSearch()"><i class="fa-solid fa-arrow-left"></i></button>
-            <div class="search-input-container"><input type="text" id="search-input" placeholder="Search posts, titles, hashtags..." autofocus></div>
+            <div class="search-input-container"><input type="text" id="search-input" placeholder="Search movie name..." autofocus></div>
         </div>
         <div id="search-results"><div id="not-found">Post Not Found</div></div>
     </div>
@@ -391,7 +391,7 @@
         
         function renderSearchResults(query) {
             searchResults.innerHTML = '';
-            if (query.length === 0) { searchResults.innerHTML = `<div style="text-align:center; color:#536471; margin-top:50px;">Start typing to search posts...</div>`; notFound.style.display = 'none'; return; }
+            if (query.length === 0) { searchResults.innerHTML = `<div style="text-align:center; color:#536471; margin-top:50px;">Start typing to search movie...</div>`; notFound.style.display = 'none'; return; }
             const lowerCaseQuery = query.toLowerCase();
             const filteredPosts = allPosts.filter(post => post.title.toLowerCase().includes(lowerCaseQuery) || (post.hashtags && post.hashtags.toLowerCase().includes(lowerCaseQuery)));
             if (filteredPosts.length === 0) { notFound.style.display = 'block'; return; }
