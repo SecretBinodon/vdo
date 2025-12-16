@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +9,7 @@
     <style>
         .cover-photo { 
             width: 100%; 
-            height: 150px; 
+            height: 150px; /* হাইট 150px নিশ্চিত করা হলো */
             background-color: #ddd; 
             overflow: hidden; 
             position: relative; 
@@ -84,7 +83,6 @@
             font-size: 14px; font-weight: bold; color: white; 
             cursor: pointer; display: flex; align-items: center; 
             gap: 5px; transition: transform 0.1s; 
-            /* ট্যাপ হাইলাইট বন্ধ (বাটন) */
             -webkit-tap-highlight-color: transparent; 
             user-select: none;
         }
@@ -190,7 +188,6 @@
             gap: 4px; 
             transition: background-color 0.1s ease;
             white-space: nowrap; 
-             /* ট্যাপ হাইলাইট বন্ধ (নেভ বাটন) */
             -webkit-tap-highlight-color: transparent; 
             user-select: none;
         }
@@ -250,18 +247,15 @@
         .time-ago { font-size: 15px; color: #536471; }
         .dot-separator { font-size: 15px; color: #536471; margin: 0 2px; }
         
-        /* 🔥 ট্যাপ এফেক্ট ১: টাইটেল/প্যারাগ্রাফ (আগের মতো নীল) */
-        .clickable-area { 
+        /* 🔥 ট্যাপ এফেক্ট ১ ও ২: টাইটেল ও প্যারাগ্রাফ কালার পরিবর্তন */
+        .post-title, .post-excerpt { 
             cursor: pointer; 
             -webkit-tap-highlight-color: transparent; 
             user-select: none;
-            transition: background-color 0.1s ease; 
+            transition: color 0.1s ease; /* কালার ট্রানজিশন যোগ করা হলো */
         }
-        .clickable-area:active {
-            /* পূর্বের শক্তিশালী নীল এফেক্ট নিশ্চিত করা হলো */
-            background-color: rgba(29, 161, 242, 0.15); 
-        }
-
+        
+        /* টাইটেল ক্লিক করলে নীল হবে */
         .post-title { 
             font-size: 18px; 
             font-weight: 700; 
@@ -270,33 +264,34 @@
             margin-top: -3px; 
             line-height: 1.3; 
         }
+        .post-title:active {
+            color: #1da1f2; /* নীল রঙ */
+        }
+        
+        /* প্যারাগ্রাফ ক্লিক করলে নীল হবে */
         .post-excerpt { 
             font-size: 15px; color: #0f1419; line-height: 1.4; margin-bottom: 8px;
             display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
         }
+        .post-excerpt:active {
+            color: #1da1f2; /* নীল রঙ */
+        }
         .read-more-text { color: #1da1f2; font-weight: 600; font-size: 14px; }
         .hashtags { color: #1d9bf0; font-size: 15px; margin-bottom: 10px; cursor: default; }
         
+        /* 🔥 ট্যাপ এফেক্ট ৩: ইমেজ কন্টেইনার জুম */
         .media-container {
             position: relative; 
             width: 100%; 
             border-radius: 12px; /* ইমেজের গোল কোণা */
-            overflow: hidden; /* ইমেজের বাইরের ট্যাপ হাইলাইট বন্ধ করার জন্য */
+            overflow: hidden; /* জুম কন্টেইনারের বাইরে যাবে না */
             margin-top: 5px; 
             display: block; 
             cursor: pointer; 
             background: #000;
             aspect-ratio: 3 / 4; 
             max-height: 720px; 
-            /* background-color ট্রানজিশন যোগ করা হলো যাতে blue ট্যাপ এফেক্ট স্মুথ হয় */
-            transition: background-color 0.1s ease; 
             -webkit-tap-highlight-color: transparent; 
-        }
-        /* 🔥 ট্যাপ এফেক্ট ২: ইমেজ কন্টেইনার (নীল, রাউন্ডেড, ও বাউন্ডেড) */
-        .media-container:active {
-            /* ইমেজের দৃশ্যমান অংশের মধ্যেই নীল হাইলাইট থাকবে (border-radius অনুসরণ করবে) */
-            background-color: rgba(29, 161, 242, 0.15); 
-            /* box-shadow: inset 0 0 0 1000px rgba(29, 161, 242, 0.2); যদি background-color কাজ না করে */
         }
         
         .media-container img { 
@@ -306,6 +301,12 @@
             object-fit: cover; 
             margin: 0 auto; 
             max-height: none; 
+            transition: transform 0.1s ease; /* জুম ট্রানজিশন */
+            transform: scale(1.0); /* ডিফল্ট স্কেল */
+        }
+        
+        .media-container:active img {
+            transform: scale(1.02); /* হালকা জুম */
         }
         
         .media-container.auto-fit {
@@ -322,6 +323,7 @@
             width: 60px; height: 60px; background-color: rgba(0, 0, 0, 0.6);
             border-radius: 50%; display: flex; justify-content: center; align-items: center;
             pointer-events: none; border: 2px solid rgba(255,255,255,0.8);
+            z-index: 5; /* জুম হওয়া ইমেজের উপরে থাকবে */
         }
         .play-icon::after {
             content: ''; display: block; width: 0; height: 0;
@@ -352,7 +354,6 @@
             transition: all 0.2s; 
             user-select: none; 
             font-weight: 500; 
-            /* ট্যাপ হাইলাইট বন্ধ (লাইক বাটন) */
             -webkit-tap-highlight-color: transparent;
         }
         .love-btn i { 
@@ -381,7 +382,7 @@
             color: #536471;
             transition: color 0.1s ease; 
         }
-        /* 🔥 ট্যাপ এফেক্ট ৩: শেয়ার আইকন কালার পরিবর্তন (নীল) */
+        /* শেয়ার আইকন ট্যাপ করলে নীল হবে */
         .footer-share-btn:active i {
             color: #1da1f2; 
         }
@@ -389,7 +390,6 @@
         .footer-share-btn {
             cursor: pointer; padding: 8px; border-radius: 50%; transition: all 0.2s ease;
             display: flex; align-items: center; justify-content: center;
-            /* ট্যাপ হাইলাইট বন্ধ (শেয়ার বাটন) */
             -webkit-tap-highlight-color: transparent; 
             user-select: none;
         }
@@ -436,7 +436,6 @@
         .site-footer { background-color: #fff; padding: 30px 20px; text-align: center; border-top: none; margin-top: 0; }
         .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }
         .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; 
-            /* ট্যাপ হাইলাইট বন্ধ */
             -webkit-tap-highlight-color: transparent; user-select: none;
         }
         .footer-links a:hover { color: #1da1f2; text-decoration: underline; }
@@ -449,7 +448,6 @@
             width: 100%; padding: 12px; background-color: #000; color: white; border: none; 
             border-radius: 25px; font-size: 16px; font-weight: bold; cursor: pointer; 
             margin-top: 10px;
-            /* ট্যাপ হাইলাইট বন্ধ */
             -webkit-tap-highlight-color: transparent; 
             user-select: none;
         }
@@ -483,7 +481,6 @@
         .search-back-btn {
             background: none; border: none; font-size: 24px; color: #000;
             cursor: pointer; padding: 5px;
-            /* ট্যাপ হাইলাইট বন্ধ */
             -webkit-tap-highlight-color: transparent; 
             user-select: none;
         }
@@ -494,7 +491,6 @@
             padding: 10px 0; border-bottom: 1px solid #eee; cursor: pointer;
             display: flex; align-items: center; gap: 10px;
             transition: background-color 0.1s;
-            /* ট্যাপ হাইলাইট বন্ধ */
             -webkit-tap-highlight-color: transparent;
             user-select: none;
         }
@@ -752,18 +748,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="clickable-area" onclick="openPost('${post.id}')">
-                            <div class="post-title">${post.title}</div>
-                            <div class="post-excerpt">${excerpt} <span class="read-more-text">See more</span></div>
-                        </div>
+                        
+                        <div class="post-title" onclick="openPost('${post.id}')">${post.title}</div>
+                        
+                        <div class="post-excerpt" onclick="openPost('${post.id}')">${excerpt} <span class="read-more-text">See more</span></div>
+                        
                         <div class="hashtags">${post.hashtags}</div>
-                        <div class="clickable-area" onclick="openPost('${post.id}')">
-                            <div class="media-container">
-                                <img src="${post.mediaImage}" loading="lazy" data-post-id="${post.id}">
-                                <div class="play-icon"></div>
-                                <div class="duration-badge">${post.videoDuration}</div>
-                            </div>
+                        
+                        <div class="media-container" onclick="openPost('${post.id}')">
+                            <img src="${post.mediaImage}" loading="lazy" data-post-id="${post.id}">
+                            <div class="play-icon"></div>
+                            <div class="duration-badge">${post.videoDuration}</div>
                         </div>
+                        
                         <div class="post-footer">
                             <div class="footer-left">
                                 <i class="fa-solid fa-chart-simple"></i> 
