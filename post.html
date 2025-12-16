@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>  
 <html lang="en">  
 <head>  
@@ -18,12 +19,12 @@
         background: #fff; 
         display: flex; 
         justify-content: center; 
-        /* 🔥 ১. গ্লোবাল ফিক্স: অপ্রয়োজনীয় হাইলাইট বন্ধ করা হলো (সকলের জন্য) */
+        /* গ্লোবাল ফিক্স: অপ্রয়োজনীয় হাইলাইট বন্ধ */
         -webkit-tap-highlight-color: transparent; 
         user-select: none;
     }  
 
-    /* --- মেইন র্যাপার (ঝাঁকুনি এবং ফেডিং ফিক্স) --- */  
+    /* --- মেইন র্যাপার (অতিরিক্ত ফেডিং লজিক সরানো হলো) --- */  
     .main-wrapper {   
         width: 100%;   
         max-width: 600px;   
@@ -33,9 +34,11 @@
         border-left: 1px solid #eee;   
         border-right: 1px solid #eee;   
         padding-bottom: 0;   
-        opacity: 0;   
+        /* 🔥 ফেডিং/স্লাইডিং ইফেক্ট বন্ধ: পোস্ট লোড হওয়ার সাথে সাথেই দৃশ্যমান হবে */
+        opacity: 1 !important; 
     }  
     
+    /* 🔥 অপ্রয়োজনীয় ক্লাস রিমুভ করা হলো */
     .main-wrapper.loaded { opacity: 1 !important; }  
 
     /* হেডার */  
@@ -46,16 +49,14 @@
     }  
     .logo-area { font-weight: 800; font-size: 20px; text-transform: uppercase; }  
     
-    /* 🔥 হেডার বাটন: ২. শুধুমাত্র এই দুটিতে ট্যাপ হাইলাইট ফিরিয়ে আনা হলো এবং ডেবে যাওয়া ইফেক্ট অক্ষত রাখা হলো */
+    /* হেডার বাটন: ডিফল্ট ট্যাপ হাইলাইট এবং ডেবে যাওয়া ইফেক্ট */
     .header-btn { 
         background: white; color: #1da1f2; padding: 6px 15px; border-radius: 20px; 
         font-weight: bold; font-size: 14px; margin-left: 10px; cursor: pointer; 
         transition: transform 0.1s ease; 
-        /* 🔥 ডিফল্ট নীল হাইলাইট ফিরিয়ে আনা হলো */
         -webkit-tap-highlight-color: inherit !important; 
     }  
     .header-btn:active {
-        /* ৩. ডেবে যাওয়ার ইফেক্ট অক্ষত আছে */
         transform: scale(0.95); 
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) inset; 
     }
@@ -77,7 +78,6 @@
     .post-time { font-size: 13px; color: #536471; font-weight: bold; }  
 
     /* --- ভিডিও কন্টেইনার (ফিক্সড সাইজ) --- */  
-    /* গ্লোবাল সেটিংসের কারণে এখানে নীল পর্দা আসবে না */
     .video-container { 
         width: 100%; 
         aspect-ratio: 16 / 9; 
@@ -92,13 +92,14 @@
         contain: content; 
         user-select: none;
     }  
-    /* 🔥 প্রধান থাম্বনেইলের জুম এফেক্ট অপসারণ নিশ্চিত */
+    /* 🔥 থাম্বনেইল ইফেক্ট বন্ধ করা হলো: পোস্টের সাথে সাথে বের হবে */
     .video-container img { 
         width: 100%; 
         height: 100%; 
         object-fit: contain; 
         display: block; 
-        will-change: transform; 
+        /* 🔥 অপ্রয়োজনীয় ট্রানজিশন এবং ট্রান্সফর্ম সরানো হলো */
+        will-change: auto; 
         transition: none; 
         transform: scale(1.0); 
     }  
@@ -116,7 +117,7 @@
     .download-title-text { font-size: 18px; font-weight: 800; color: #0f1419; text-align: center; margin: 20px 0 10px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }  
     .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 12px; }  
     
-    /* ৩. স্টেপ বাটন: ডেবে যাওয়া ইফেক্ট অক্ষত আছে, নীল হাইলাইট নেই */
+    /* স্টেপ বাটন: ডেবে যাওয়া ইফেক্ট অক্ষত আছে, নীল হাইলাইট নেই */
     .download-btn-v2 { 
         display: flex; align-items: center; justify-content: center; width: 100%; padding: 14px 10px; 
         border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center; color: white; 
@@ -124,7 +125,11 @@
         transition: all 0.2s; position: relative; 
         user-select: none;
     }  
-    .download-btn-v2:active { transform: scale(0.98); }  
+    /* কাস্টম অ্যাক্টিভ ক্লাস ও :active স্টেট উভয়ই ডেবে যাওয়ার জন্য ব্যবহার করা হচ্ছে */
+    .download-btn-v2:active, 
+    .download-btn-v2.active-click { 
+        transform: scale(0.98); 
+    }  
 
     /* ভিজিটেড বাটন */
     .download-btn-v2.completed-step {
@@ -134,7 +139,6 @@
     }
 
     /* 🔥 লাক্সারিয়াস ফাইনাল বাটন 🔥 */
-    /* ৩. ফাইনাল বাটন: ডেবে যাওয়া ইফেক্ট অক্ষত আছে, নীল হাইলাইট নেই */
     .final-download-btn {
         display: none; 
         background: linear-gradient(135deg, #1e1e2f, #3a3a5e, #1e1e2f) !important; 
@@ -151,8 +155,9 @@
         user-select: none;
     }
     
-    /* 🔥 ফাইনাল বাটনে ডেবে যাওয়া ইফেক্ট যোগ */
-    .final-download-btn:active {
+    /* 🔥 নিশ্চিত করা হলো: ফাইনাল বাটনে ডেবে যাওয়া ইফেক্ট যোগ (ক্লাস + :active) */
+    .final-download-btn:active,
+    .final-download-btn.active-click { 
         transform: scale(0.98); 
     }
 
@@ -195,7 +200,7 @@
         transform: scale(0.9); 
     }
 
-    /* --- রিলেটেড পোস্ট কার্ডের স্টাইল ফিক্স (Index.html লজিক) --- */
+    /* --- রিলেটেড পোস্ট কার্ডের স্টাইল ফিক্স --- */
     .related-section { background: #fff; margin-top: 0; }  
     .related-header { padding: 15px; font-weight: 800; color: #000000; border-bottom: 1px solid #e1e8ed; text-transform: uppercase; background: #fff; }  
     .post-card { 
@@ -284,7 +289,7 @@
     }  
     .footer-share-btn:hover { background-color: rgba(0,0,0,0.05); }  
 
-    /* --- ফুটার সেকশন ফিক্স (index.html থেকে) --- */  
+    /* --- ফুটার সেকশন ফিক্স --- */  
     .site-footer { background-color: #fff; padding: 30px 20px; text-align: center; border-top: none; margin-top: 0; }  
     .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }  
     .footer-links a { 
@@ -408,26 +413,50 @@
 
     // --- STEP 2: HANDLE CLICK (Same Tab Navigation) ---
     window.handleAdClick = function(btnId, url) {
-        if (localStorage.getItem(getVisitedKey(btnId)) === 'true') return; // ইতিমধ্যে ভিজিট করা থাকলে কাজ করবে না
+        if (localStorage.getItem(getVisitedKey(btnId)) === 'true') return; 
+        
+        const btn = document.getElementById(btnId);
+        
+        // ডেবে যাওয়ার ইফেক্ট যোগ
+        if (btn) {
+            btn.classList.add('active-click');
+            setTimeout(() => {
+                btn.classList.remove('active-click');
+            }, 200);
+        }
 
         localStorage.setItem(PENDING_CLICK_BTN_KEY, btnId);
         localStorage.setItem(CLICK_TIME_KEY, Date.now());
 
         // একই ট্যাবে ওপেন হবে
-        window.location.href = url;
+        setTimeout(() => {
+            window.location.href = url;
+        }, 100);
     };
 
-    // --- STEP 3: HANDLE FINAL DOWNLOAD ---
-    // 🔥 পরিবর্তন ১: ক্লিক করার পর UI তে বাটন হাইড হবে না, শুধু লোকাল স্টোরেজ ক্লিয়ার হবে।
+    // --- STEP 3: HANDLE FINAL DOWNLOAD (ক্লিক ইফেক্ট সহ) ---
     window.handleFinalDownload = function(finalUrl) {
-        // লোকাল স্টোরেজ ক্লিয়ার
-        localStorage.removeItem(getVisitedKey('btn-1080'));
-        localStorage.removeItem(getVisitedKey('btn-720'));
-        
-        // মুভি লিঙ্কে যাওয়া
-        window.location.href = finalUrl;
-        
-        // **গুরুত্বপূর্ণ:** এখানে updateButtonState() কল করা হচ্ছে না, তাই পেজ রিফ্রেশ না হওয়া পর্যন্ত বাটনটি দৃশ্যমান থাকবে।
+        const finalBtn = document.getElementById('btn-final');
+        if (finalBtn) {
+            finalBtn.classList.add('active-click'); // ইফেক্ট শুরু
+
+            // ডেবে থাকার পর রিলিজ করে লিংকে যাওয়া
+            setTimeout(() => {
+                finalBtn.classList.remove('active-click');
+                
+                // লোকাল স্টোরেজ ক্লিয়ার
+                localStorage.removeItem(getVisitedKey('btn-1080'));
+                localStorage.removeItem(getVisitedKey('btn-720'));
+                
+                // মুভি লিঙ্কে যাওয়া
+                window.location.href = finalUrl;
+            }, 200); // 200ms ডেবে থাকার পর
+        } else {
+             // যদি বাটন না খুঁজে পায়
+            localStorage.removeItem(getVisitedKey('btn-1080'));
+            localStorage.removeItem(getVisitedKey('btn-720'));
+            window.location.href = finalUrl;
+        }
     };
 
     // --- STEP 4: UI UPDATE ---
@@ -519,7 +548,7 @@
         let downloadSectionHTML = '';  
         if (post.downloadLink2 || post.downloadLink3) {  
             
-            const finalMovieUrl = post.downloadLink1; // Final Movie Link
+            const finalMovieUrl = post.downloadLink1; 
 
             downloadSectionHTML += `  
                 <div class="download-title-text">DOWNLOAD FULL MOVIE IN HD</div>  
@@ -603,7 +632,7 @@
   
             renderMainPost(mainPost);  
             setupFirebaseForMainPost(mainPost.id);  
-            mainWrapper.classList.add('loaded'); // INSTANT VISIBILITY (Opacity 1)
+            /* 🔥 অপ্রয়োজনীয় ক্লাস রিমুভ করা হয়েছে */
             setInterval(updateAllTimeElements, 60000);   
               
             const anchorPostTime = new Date(mainPost.uploadTime).getTime();  
@@ -612,7 +641,7 @@
             setupRelatedSectionObserver();   
         } catch (e) {   
             postContainer.innerHTML = `<div style="padding:20px;text-align:center;color:red;">Error loading post: ${e.message}</div>`;   
-            mainWrapper.classList.add('loaded');   
+            /* 🔥 অপ্রয়োজনীয় ক্লাস রিমুভ করা হয়েছে */
         }  
     }  
   
@@ -654,7 +683,6 @@
             const safeTitle = post.title.replace(/'/g, "\\'");  
             const cardWrapper = document.createElement('div');  
             
-            // HTML কাঠামো: টাইটেল, প্যারাগ্রাফ, এবং ইমেজ কনটেইনারকে আলাদাভাবে ক্লিকযোগ্য করা হয়েছে। 
             cardWrapper.innerHTML = `  
                 <div class="post-card" data-id="${post.id}">  
                     <div class="post-header">  
