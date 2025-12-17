@@ -14,7 +14,7 @@
             color: #fff; 
             display: flex; 
             flex-direction: column; 
-            height: 100vh; 
+            min-height: 100vh; /* পুরো স্ক্রিন উচ্চতা নিশ্চিত করবে */
         }
 
         header { 
@@ -34,13 +34,12 @@
         .container { 
             width: 100%; 
             max-width: 600px; 
-            padding: 0 20px; 
+            padding: 20px; 
             text-align: center; 
             margin: 0 auto;
-            flex: 1; 
+            /* flex: 1; সরিয়ে দেওয়া হয়েছে যাতে অকারণে জায়গা না নেয় */
             display: flex; 
             flex-direction: column; 
-            justify-content: flex-start; /* কার্ডটিকে উপরের দিকে রাখবে */
             align-items: center; 
         }
 
@@ -51,11 +50,11 @@
             padding: 20px; 
             border: 1px solid #333; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-            margin-top: 20px; /* হেডার থেকে কার্ডের দূরত্ব */
+            margin-bottom: 10px; /* কার্ডের নিচে গ্যাপ কমিয়ে দেওয়া হলো */
         }
 
         .movie-thumb { width: 100%; border-radius: 10px; margin-bottom: 15px; border: 1px solid #444; }
-        .movie-title { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.3; }
+        .movie-title { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.3; }
         .status-badge { display: inline-block; padding: 5px 15px; background: rgba(255, 215, 0, 0.1); color: #FFD700; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 20px; border: 1px solid #FFD700; }
 
         .final-dl-btn { 
@@ -64,18 +63,7 @@
             background: linear-gradient(135deg, #FFD700, #b8860b, #FFD700);
             color: #000; box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
             transition: transform 0.2s; align-items: center; justify-content: center; gap: 10px;
-            animation: pulseGlow 2s infinite alternate;
         }
-
-        @keyframes pulseGlow { 
-            0% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.3); } 
-            100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.6); } 
-        }
-
-        .final-dl-btn:active { transform: scale(0.96); }
-
-        .loader { width: 50px; height: 50px; border: 5px solid #333; border-top: 5px solid #FFD700; border-radius: 50%; animation: spin 1s linear infinite; margin: 40px auto; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         footer { 
             width: 100%; 
@@ -86,11 +74,14 @@
             font-size: 13px; 
             border-top: 1px solid #222; 
             margin: 0 auto;
-            flex-shrink: 0; 
+            /* অটো-মার্জিন টপ দিলে এটি স্ক্রিনের একদম নিচে স্টিকি হয়ে থাকবে */
+            margin-top: auto; 
         }
         footer b { color: #FFD700; }
 
         .hidden { display: none; }
+        .loader { width: 50px; height: 50px; border: 5px solid #333; border-top: 5px solid #FFD700; border-radius: 50%; animation: spin 1s linear infinite; margin: 40px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
