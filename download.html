@@ -6,42 +6,94 @@
     <title>Final Step - Filmixo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* --- General Reset --- */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         
-        /* পরিবর্তন ১: বডি ডিসপ্লে পরিবর্তন করা হয়েছে যাতে কার্ডটি উপরে থাকে */
-        body { background-color: #0f0f0f; color: #fff; display: block; min-height: 100vh; }
+        /* ফুটারকে নিচে রাখার জন্য ফ্লেক্সবক্স সেটআপ */
+        body { 
+            background-color: #0f0f0f; 
+            color: #fff; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+        }
 
-        /* পরিবর্তন ২: হেডার হাইট কন্টেন্ট অনুযায়ী সেট করা হয়েছে */
-        header { width: 100%; max-width: 600px; padding: 15px 20px; text-align: center; background: #1a1a1a; border-bottom: 2px solid #FFD700; box-shadow: 0 4px 15px rgba(0,0,0,0.5); position: sticky; top: 0; z-index: 100; margin: 0 auto; }
+        /* --- Luxury Header --- */
+        header { 
+            width: 100%; 
+            max-width: 600px; 
+            padding: 15px 20px; 
+            text-align: center; 
+            background: #1a1a1a; 
+            border-bottom: 2px solid #FFD700; 
+            margin: 0 auto; 
+            z-index: 100;
+        }
         .logo { font-size: 26px; font-weight: 900; color: #FFD700; text-transform: uppercase; letter-spacing: 3px; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
 
-        /* কন্টেইনার মার্জিন এবং এলাইনমেন্ট ঠিক করা হয়েছে */
-        .container { width: 100%; max-width: 600px; padding: 20px; text-align: center; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+        /* --- Content Wrapper --- */
+        .container { 
+            width: 100%; 
+            max-width: 600px; 
+            padding: 20px; 
+            text-align: center; 
+            margin: 0 auto; 
+            flex: 1; /* এটি কন্টেন্টকে জায়গা নিয়ে ফুটারকে নিচে পাঠিয়ে দিবে */
+        }
 
         .movie-card { width: 100%; background: #1a1a1a; border-radius: 15px; padding: 20px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 20px; }
         .movie-thumb { width: 100%; border-radius: 10px; margin-bottom: 15px; border: 1px solid #444; }
         .movie-title { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.3; }
         .status-badge { display: inline-block; padding: 5px 15px; background: rgba(255, 215, 0, 0.1); color: #FFD700; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 20px; border: 1px solid #FFD700; }
 
-        /* পরিবর্তন ৩: বাটন সাইজ ছোট, হোয়াইট স্ট্রোক এবং নীল ট্যাব ইফেক্ট বন্ধ করা হয়েছে */
+        /* --- Luxury Button (Updated) --- */
         .final-dl-btn { 
-            display: none; width: 90%; margin: 0 auto; padding: 14px; border-radius: 50px; font-size: 16px; font-weight: 900; 
-            text-transform: uppercase; border: 2px solid #ffffff; cursor: pointer; text-decoration: none;
-            background: linear-gradient(135deg, #FFD700, #b8860b, #FFD700);
-            color: #000; box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
-            transition: transform 0.2s, box-shadow 0.2s; align-items: center; justify-content: center; gap: 10px;
-            animation: pulseGlow 2s infinite;
-            -webkit-tap-highlight-color: transparent; /* নীল কালার বন্ধ করার জন্য */
+            display: none; 
+            width: 90%; 
+            margin: 0 auto; 
+            padding: 14px; 
+            border-radius: 50px; 
+            font-size: 16px; 
+            font-weight: 900; 
+            text-transform: uppercase; 
+            border: 2px solid #ffffff; 
+            cursor: pointer; 
+            text-decoration: none;
+            /* গ্রেডিয়েন্ট কালার */
+            background: linear-gradient(135deg, #FFD700, #FFB900);
+            color: #000; 
+            /* শ্যাডো ইফেক্ট বন্ধ করা হয়েছে */
+            box-shadow: none; 
+            transition: all 0.3s ease; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 10px;
+            -webkit-tap-highlight-color: transparent;
             outline: none;
         }
-        .final-dl-btn:active { transform: scale(0.96); }
-        @keyframes pulseGlow { 0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.4); } 100% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.7); } }
+
+        /* প্রতি ক্লিকে বা অ্যাকশনে কালার পরিবর্তন (Hover/Active) */
+        .final-dl-btn:hover, .final-dl-btn:active { 
+            background: linear-gradient(135deg, #ffffff, #FFD700); /* কালার রিভার্স বা চেঞ্জ হবে */
+            transform: scale(0.96); 
+            box-shadow: none;
+        }
 
         .loader { width: 50px; height: 50px; border: 5px solid #333; border-top: 5px solid #FFD700; border-radius: 50%; animation: spin 1s linear infinite; margin: 40px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* পরিবর্তন ৪: ফুটার হাইট কন্টেন্ট অনুযায়ী সেট করা হয়েছে */
-        footer { width: 100%; max-width: 600px; padding: 15px; text-align: center; color: #777; font-size: 14px; border-top: 1px solid #222; margin: 0 auto; }
+        /* --- Footer (Fixed to Bottom) --- */
+        footer { 
+            width: 100%; 
+            max-width: 600px; 
+            padding: 15px; 
+            text-align: center; 
+            color: #777; 
+            font-size: 14px; 
+            border-top: 1px solid #222; 
+            margin: 0 auto;
+            background: #0f0f0f;
+        }
         footer b { color: #FFD700; }
 
         .hidden { display: none; }
@@ -102,7 +154,6 @@
                 }
             } catch (error) {
                 console.error("Error loading JSON:", error);
-                alert("Something went wrong. Please try again.");
             }
         }
 
