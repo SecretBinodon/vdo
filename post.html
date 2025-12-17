@@ -83,8 +83,8 @@
     .verified-badge { color: #1da1f2; font-size: 15px; margin-left: -2px; margin-right: 0; display: inline-flex; align-items: center; }  
     .time-ago { font-size: 15px; color: #536471; }  
     .dot-separator { font-size: 15px; color: #536471; margin: 0 2px; }  
-    .post-title { font-size: 18px; font-weight: 700; color: #0f1419; margin-bottom: 5px; margin-top: -3px; line-height: 1.3; }  
-    .post-excerpt { font-size: 15px; color: #0f1419; line-height: 1.4; margin-bottom: 0px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }  
+    .post-title { font-size: 18px; font-weight: 700; color: #0f1419; margin-bottom: 4px; margin-top: -3px; line-height: 1.3; }  
+    .post-excerpt { font-size: 15px; color: #0f1419; line-height: 1.4; margin-bottom: 0px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }  
     .read-more-text { color: #1da1f2; font-weight: 600; font-size: 14px; }  
     .hashtags { color: #1d9bf0; font-size: 15px; margin-bottom: 1px; cursor: default; }  
     .media-container { position: relative; width: 100%; border-radius: 12px; overflow: hidden; margin-top: 1px; margin-bottom: 1px; display: block; cursor: pointer; background: #000; aspect-ratio: 3 / 4; max-height: 720px; -webkit-tap-highlight-color: transparent; }  
@@ -345,7 +345,7 @@
     function renderBatch(postsToLoad) {  
         const container = document.getElementById('related-posts-container');  
         postsToLoad.forEach(post => {  
-            let excerpt = post.paragraphs && post.paragraphs.length > 0 ? post.paragraphs[0].substring(0, 200) + "..." : "";  
+            let excerpt = post.paragraphs && post.paragraphs.length > 0 ? post.paragraphs[0].substring(0, 100) + "..." : "";  
             const safeTitle = post.title.replace(/'/g, "\\'");  
             const cardWrapper = document.createElement('div');  
             
