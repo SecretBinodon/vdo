@@ -196,11 +196,11 @@
         window.location.href = url;
     };
 
-    window.handleFinalDownload = function(finalUrl) {
-        localStorage.removeItem(getVisitedKey('btn-1080'));
-        localStorage.removeItem(getVisitedKey('btn-720'));
-        window.location.href = finalUrl;
-    };
+    window.handleFinalDownload = function() {
+    localStorage.removeItem(getVisitedKey('btn-1080'));
+    localStorage.removeItem(getVisitedKey('btn-720'));
+    window.location.href = `download.html?id=${postId}`;
+   };
 
     function updateButtonState() {
         const btn1080 = document.getElementById('btn-1080');
@@ -243,7 +243,7 @@
 
         let downloadSectionHTML = '';  
         if (post.downloadLink2 || post.downloadLink3) {  
-            downloadSectionHTML += `<div class="download-title-text">DOWNLOAD FULL MOVIE IN HD</div><div class="download-buttons-container">${post.downloadLink2 ? `<div id="btn-1080" class="download-btn-v2" style="background:${getRandomColor()};" onclick="handleAdClick('btn-1080', '${post.downloadLink2}')"><i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 1080p Full HD</div>` : ''}${post.downloadLink3 ? `<div id="btn-720" class="download-btn-v2" style="background:${getRandomColor()};" onclick="handleAdClick('btn-720', '${post.downloadLink3}')"><i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 720p HD</div>` : ''}<div id="btn-final" class="download-btn-v2 final-download-btn" onclick="handleFinalDownload('${finalMovieUrl}')"><i class="fa-solid fa-film" style="margin-right: 8px;"></i> DOWNLOAD FULL MOVIE</div></div>`;  
+            downloadSectionHTML += `<div class="download-title-text">DOWNLOAD FULL MOVIE IN HD</div><div class="download-buttons-container">${post.downloadLink2 ? `<div id="btn-1080" class="download-btn-v2" style="background:${getRandomColor()};" onclick="handleAdClick('btn-1080', '${post.downloadLink2}')"><i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 1080p Full HD</div>` : ''}${post.downloadLink3 ? `<div id="btn-720" class="download-btn-v2" style="background:${getRandomColor()};" onclick="handleAdClick('btn-720', '${post.downloadLink3}')"><i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i> 720p HD</div>` : ''}<div id="btn-final" class="download-btn-v2 final-download-btn" onclick="handleFinalDownload()"><i class="fa-solid fa-film" style="margin-right: 8px;"></i> DOWNLOAD FULL MOVIE</div></div>`;  
         }  
           
         // 🔥 IMAGE FIX: decoding="sync" and fetchpriority="high" added below
