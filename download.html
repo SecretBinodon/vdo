@@ -8,43 +8,102 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         
-        body { background-color: #0f0f0f; color: #fff; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        /* বডি সেটআপ যাতে ফুটার সবসময় নিচে থাকে */
+        body { 
+            background-color: #0f0f0f; 
+            color: #fff; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+            align-items: center;
+        }
 
         /* --- Luxury Header --- */
         header { 
-            width: 100%; max-width: 600px; padding: 15px 20px; text-align: center; 
-            background: #1a1a1a; border-bottom: 2px solid #FFD700; 
-            position: sticky; top: 0; z-index: 100; 
+            width: 100%; 
+            max-width: 600px; 
+            padding: 15px 20px; 
+            text-align: center; 
+            background: #1a1a1a; 
+            border-bottom: 2px solid #FFD700; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
         }
         .logo { font-size: 26px; font-weight: 900; color: #FFD700; text-transform: uppercase; letter-spacing: 3px; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
 
         /* --- Content Wrapper --- */
-        .container { width: 100%; max-width: 600px; padding: 30px 20px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; align-items: center; }
+        .container { 
+            width: 100%; 
+            max-width: 600px; 
+            padding: 25px 20px; 
+            text-align: center; 
+            flex-grow: 1; /* এটি কন্টেন্টকে জায়গা নিয়ে ফুটারকে নিচে রাখবে */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-        .movie-card { width: 100%; background: #1a1a1a; border-radius: 15px; padding: 20px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 30px; }
+        .movie-card { 
+            width: 100%; 
+            background: #1a1a1a; 
+            border-radius: 15px; 
+            padding: 20px; 
+            border: 1px solid #333; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* কার্ডের ভেতরের সব এলিমেন্ট সেন্টারে রাখবে */
+        }
+
         .movie-thumb { width: 100%; border-radius: 10px; margin-bottom: 15px; border: 1px solid #444; }
         .movie-title { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.3; }
         .status-badge { display: inline-block; padding: 5px 15px; background: rgba(255, 215, 0, 0.1); color: #FFD700; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 20px; border: 1px solid #FFD700; }
 
         /* --- Luxury Button --- */
         .final-dl-btn { 
-            display: none; width: 85%; padding: 16px; border-radius: 50px; font-size: 17px; font-weight: 900; 
-            text-transform: uppercase; border: 2px solid #ffffff; cursor: pointer; text-decoration: none;
-            color: #000; box-shadow: none; 
-            transition: transform 0.2s; align-items: center; justify-content: center; gap: 10px;
-            -webkit-tap-highlight-color: transparent; outline: none;
+            display: none; 
+            width: 90%; 
+            max-width: 400px;
+            padding: 16px; 
+            border-radius: 50px; 
+            font-size: 17px; 
+            font-weight: 900; 
+            text-transform: uppercase; 
+            border: 2px solid #ffffff; 
+            cursor: pointer; 
+            text-decoration: none;
+            color: #000; 
+            box-shadow: none; 
+            transition: transform 0.2s; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 10px;
+            -webkit-tap-highlight-color: transparent; 
+            outline: none;
+            margin: 10px auto; /* বাটনটি মেডেল পয়েন্টে রাখার জন্য */
         }
         
-        /* বাটনে ক্লিক করলে শুধু দেবে যাবে, কালার চেঞ্জ হবে না */
-        .final-dl-btn:active { transform: scale(0.94); }
+        /* ক্লিক করলে শুধু ডুবে যাবে, কালার পরিবর্তন হবে না */
+        .final-dl-btn:active { transform: scale(0.95); }
 
         /* --- Footer --- */
         footer { 
-            width: 100%; max-width: 600px; padding: 20px; text-align: center; 
-            color: #777; font-size: 14px; border-top: 1px solid #222; 
+            width: 100%; 
+            max-width: 600px; 
+            padding: 20px; 
+            text-align: center; 
+            color: #777; 
+            font-size: 14px; 
+            border-top: 1px solid #222; 
             background: #0f0f0f;
+            margin-top: auto; /* ফুটারকে একদম নিচে স্টিকি রাখবে */
         }
         footer b { color: #FFD700; }
+
+        .loader { width: 50px; height: 50px; border: 5px solid #333; border-top: 5px solid #FFD700; border-radius: 50%; animation: spin 1s linear infinite; margin: 40px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         .hidden { display: none; }
     </style>
@@ -57,12 +116,11 @@
 
     <div class="container">
         <div id="loading-ui">
-            <div class="loader" style="width: 50px; height: 50px; border: 5px solid #333; border-top: 5px solid #FFD700; border-radius: 50%; animation: spin 1s linear infinite; margin: 40px auto;"></div>
-            <style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
+            <div class="loader"></div>
             <p>Processing Your Request...</p>
         </div>
 
-        <div id="download-ui" class="hidden">
+        <div id="download-ui" class="hidden" style="width: 100%;">
             <div class="movie-card">
                 <img id="movie-img" src="" alt="Thumbnail" class="movie-thumb">
                 <div class="movie-title" id="movie-name">Movie Title Loading...</div>
@@ -81,14 +139,13 @@
     </footer>
 
     <script>
-        // রিফ্রেশে বাটনের কালার পরিবর্তনের লজিক
+        // রিফ্রেশে বাটনের কালার পরিবর্তনের লিস্ট
         const buttonColors = [
-            'linear-gradient(135deg, #FFD700, #b8860b)', // Gold
-            'linear-gradient(135deg, #00c6ff, #0072ff)', // Blue
-            'linear-gradient(135deg, #f80759, #bc4e9c)', // Pink/Red
-            'linear-gradient(135deg, #11998e, #38ef7d)', // Green
-            'linear-gradient(135deg, #FC466B, #3F5EFB)', // Purple/Red
-            'linear-gradient(135deg, #f7971e, #ffd200)'  // Orange/Yellow
+            'linear-gradient(135deg, #FFD700, #b8860b)', 
+            'linear-gradient(135deg, #00c6ff, #0072ff)', 
+            'linear-gradient(135deg, #f80759, #bc4e9c)', 
+            'linear-gradient(135deg, #11998e, #38ef7d)', 
+            'linear-gradient(135deg, #f7971e, #ffd200)'
         ];
 
         const urlParams = new URLSearchParams(window.location.search);
@@ -108,7 +165,7 @@
                     downloadBtn.href = movie.downloadLink1;
                     downloadBtn.style.display = 'flex';
 
-                    // প্রতি রিফ্রেশে র‍্যান্ডম কালার সেট করা
+                    // র‍্যান্ডম কালার সেট করা
                     const randomColor = buttonColors[Math.floor(Math.random() * buttonColors.length)];
                     downloadBtn.style.background = randomColor;
 
