@@ -8,15 +8,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
         
-        /* বডি সেটআপ যাতে ফুটার স্টিকি থাকে */
-        body { 
-            background-color: #0f0f0f; 
-            color: #fff; 
-            display: flex; 
-            flex-direction: column; 
-            min-height: 100vh; 
-            align-items: center;
-        }
+        body { background-color: #0f0f0f; color: #fff; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
 
         /* --- Luxury Header --- */
         header { 
@@ -29,7 +21,6 @@
         /* --- Content Wrapper --- */
         .container { 
             width: 100%; max-width: 600px; padding: 30px 20px; text-align: center; 
-            flex-grow: 1; /* এটি ফুটারকে নিচে ঠেলে দিবে */
             display: flex; flex-direction: column; align-items: center; 
         }
 
@@ -54,11 +45,11 @@
         
         .final-dl-btn:active { transform: scale(0.95); }
 
-        /* --- Sticky Footer --- */
+        /* --- Footer (কার্ডের নিচে আগের মতো) --- */
         footer { 
             width: 100%; max-width: 600px; padding: 20px; text-align: center; 
             color: #777; font-size: 14px; border-top: 1px solid #222; 
-            background: #0f0f0f; margin-top: auto; 
+            background: #0f0f0f; margin-top: 10px;
         }
         footer b { color: #FFD700; }
 
@@ -87,7 +78,7 @@
                 <div class="status-badge"><i class="fa-solid fa-check-circle"></i> Verification Complete</div>
                 <p style="color: #aaa; font-size: 14px; margin-bottom: 20px;">Your high-speed download link is ready. Click the button below to start.</p>
                 
-                <a href="#" id="main-dl-link" class="final-dl-btn">
+                <a href="#" id="main-dl-link" class="final-dl-btn" target="_blank" rel="noopener noreferrer">
                     <i class="fa-solid fa-circle-down"></i> START DOWNLOAD NOW
                 </a>
             </div>
@@ -99,7 +90,7 @@
     </footer>
 
     <script>
-        // বাটন কালার লিস্ট (রিফ্রেশে পরিবর্তনের জন্য)
+        // বাটন কালার লিস্ট
         const buttonColors = [
             'linear-gradient(135deg, #FFD700, #b8860b)', 
             'linear-gradient(135deg, #00c6ff, #0072ff)', 
@@ -108,7 +99,7 @@
             'linear-gradient(135deg, #f7971e, #ffd200)'
         ];
 
-        // সব ক্লিক ইভেন্ট নতুন ট্যাবে ওপেন করার লজিক
+        // ১. সব ক্লিক ইভেন্টকে নতুন ট্যাবে পাঠানোর লজিক
         document.addEventListener('click', function(e) {
             const target = e.target.closest('a');
             if (target) {
@@ -134,7 +125,7 @@
                     downloadBtn.href = movie.downloadLink1;
                     downloadBtn.style.display = 'flex';
 
-                    // রিফ্রেশে র‍্যান্ডম কালার সেট করা
+                    // রিফ্রেশে কালার চেঞ্জ
                     const randomColor = buttonColors[Math.floor(Math.random() * buttonColors.length)];
                     downloadBtn.style.background = randomColor;
 
