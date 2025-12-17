@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Step - Filmixo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: #0f0f0f; color: #fff; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+
+        /* --- Luxury Header --- */
+        header { width: 100%; max-width: 600px; padding: 20px; text-align: center; background: #1a1a1a; border-bottom: 2px solid #FFD700; box-shadow: 0 4px 15px rgba(0,0,0,0.5); position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 26px; font-weight: 900; color: #FFD700; text-transform: uppercase; letter-spacing: 3px; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+
+        /* --- Content Wrapper --- */
+        .container { width: 100%; max-width: 600px; padding: 30px 20px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; align-items: center; }
+
+        .movie-card { width: 100%; background: #1a1a1a; border-radius: 15px; padding: 20px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 30px; }
+        .movie-thumb { width: 100%; border-radius: 10px; margin-bottom: 15px; border: 1px solid #444; }
+        .movie-title { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.3; }
+        .status-badge { display: inline-block; padding: 5px 15px; background: rgba(255, 215, 0, 0.1); color: #FFD700; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 20px; border: 1px solid #FFD700; }
+
+        /* --- Luxury Button --- */
+        .final-dl-btn { 
+            display: none; width: 100%; padding: 18px; border-radius: 50px; font-size: 18px; font-weight: 900; 
+            text-transform: uppercase; border: none; cursor: pointer; text-decoration: none;
+            background: linear-gradient(135deg, #FFD700, #b8860b, #FFD700);
+            color: #000; box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s; align-items: center; justify-content: center; gap: 10px;
+            animation: pulseGlow 2s infinite;
+        }
+        .final-dl-btn:active { transform: scale(0.96); }
+        @keyframes pulseGlow { 0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.4); } 100% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.7); } }
+
+        /* --- Loading Spinner --- */
+        .loader { width: 50px; height: 50px; border: 5px solid #333; border-top: 5px solid #FFD700; border-radius: 50%; animation: spin 1s linear infinite; margin: 40px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* --- Footer --- */
+        footer { width: 100%; max-width: 600px; padding: 25px; text-align: center; color: #777; font-size: 14px; border-top: 1px solid #222; }
+        footer b { color: #FFD700; }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">FILMIXO</div>
+    </header>
+
+    <div class="container">
+        <div id="loading-ui">
+            <div class="loader"></div>
+            <p>Processing Your Request...</p>
+        </div>
+
+        <div id="download-ui" class="hidden">
+            <div class="movie-card">
+                <img id="movie-img" src="" alt="Thumbnail" class="movie-thumb">
+                <div class="movie-title" id="movie-name">Movie Title Loading...</div>
+                <div class="status-badge"><i class="fa-solid fa-check-circle"></i> Verification Complete</div>
+                <p style="color: #aaa; font-size: 14px; margin-bottom: 20px;">Your high-speed download link is ready. Click the button below to start.</p>
+                
+                <a href="#" id="main-dl-link" class="final-dl-btn">
+                    <i class="fa-solid fa-circle-down"></i> START DOWNLOAD NOW
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Copyright © 2026 <b>Filmixo.com</b>. All rights reserved.
+    </footer>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const postId = urlParams.get('id');
+
+        async function loadDownloadData() {
+            try {
+                const response = await fetch('posts.json');
+                const posts = await response.json();
+                const movie = posts.find(p => p.id === postId);
+
+                if (movie) {
+                    document.getElementById('movie-name').innerText = movie.title;
+                    document.getElementById('movie-img').src = movie.mediaImage;
+                    
+                    // JSON থেকে অরিজিনাল ডাউনলোড লিংক (downloadLink1) সেট করা হচ্ছে
+                    const downloadBtn = document.getElementById('main-dl-link');
+                    downloadBtn.href = movie.downloadLink1;
+                    downloadBtn.style.display = 'flex';
+
+                    // UI আপডেট
+                    document.getElementById('loading-ui').classList.add('hidden');
+                    document.getElementById('download-ui').classList.remove('hidden');
+                } else {
+                    document.body.innerHTML = "<div style='color:white; text-align:center; margin-top:50px;'>Invalid Movie ID!</div>";
+                }
+            } catch (error) {
+                console.error("Error loading JSON:", error);
+                alert("Something went wrong. Please try again.");
+            }
+        }
+
+        // পেজ লোড হলে ডাটা আনা শুরু হবে
+        window.onload = loadDownloadData;
+    </script>
+</body>
+</html>
