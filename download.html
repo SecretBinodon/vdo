@@ -7,14 +7,16 @@
     <title>Final Step - Filmixo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        /* সব ডিফল্ট মার্জিন/প্যাডিং বন্ধ করা */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         
+        /* বডিকে ফোনের ফুল স্ক্রিন হাইট দেওয়া হলো */
         body { 
             background-color: #0f0f0f; 
             color: #fff; 
             display: flex; 
             flex-direction: column; 
-            min-height: 100vh; /* পুরো স্ক্রিন উচ্চতা নিশ্চিত করবে */
+            height: 100vh; /* ডিসপ্লের সমান উচ্চতা */
         }
 
         header { 
@@ -24,23 +26,23 @@
             text-align: center; 
             background: #1a1a1a; 
             border-bottom: 2px solid #FFD700; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5); 
             margin: 0 auto;
             flex-shrink: 0; 
         }
 
         .logo { font-size: 24px; font-weight: 900; color: #FFD700; text-transform: uppercase; letter-spacing: 3px; }
 
+        /* মাঝখানের কন্টেইনার যা কার্ডটিকে ধরে রাখবে */
         .container { 
             width: 100%; 
             max-width: 600px; 
-            padding: 20px; 
-            text-align: center; 
             margin: 0 auto;
-            /* flex: 1; সরিয়ে দেওয়া হয়েছে যাতে অকারণে জায়গা না নেয় */
+            flex: 1; /* এটি হেডার ও ফুটারের মাঝখানের সবটুকু খালি জায়গা দখল করবে */
             display: flex; 
             flex-direction: column; 
+            justify-content: flex-start; /* কার্ডকে উপরে রাখবে */
             align-items: center; 
+            padding: 20px;
         }
 
         .movie-card { 
@@ -49,13 +51,12 @@
             border-radius: 15px; 
             padding: 20px; 
             border: 1px solid #333; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-            margin-bottom: 10px; /* কার্ডের নিচে গ্যাপ কমিয়ে দেওয়া হলো */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .movie-thumb { width: 100%; border-radius: 10px; margin-bottom: 15px; border: 1px solid #444; }
         .movie-title { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.3; }
-        .status-badge { display: inline-block; padding: 5px 15px; background: rgba(255, 215, 0, 0.1); color: #FFD700; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 20px; border: 1px solid #FFD700; }
+        .status-badge { display: inline-block; padding: 5px 15px; background: rgba(255, 215, 0, 0.1); color: #FFD700; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 15px; border: 1px solid #FFD700; }
 
         .final-dl-btn { 
             display: none; width: 100%; padding: 18px; border-radius: 50px; font-size: 18px; font-weight: 900; 
@@ -65,6 +66,7 @@
             transition: transform 0.2s; align-items: center; justify-content: center; gap: 10px;
         }
 
+        /* ফুটারকে স্ক্রিনের একদম নিচে সেট করা */
         footer { 
             width: 100%; 
             max-width: 600px; 
@@ -74,8 +76,8 @@
             font-size: 13px; 
             border-top: 1px solid #222; 
             margin: 0 auto;
-            /* অটো-মার্জিন টপ দিলে এটি স্ক্রিনের একদম নিচে স্টিকি হয়ে থাকবে */
-            margin-top: auto; 
+            flex-shrink: 0; /* ফুটারকে ছোট হতে দেবে না */
+            background: #0f0f0f;
         }
         footer b { color: #FFD700; }
 
@@ -93,10 +95,10 @@
     <div class="container">
         <div id="loading-ui">
             <div class="loader"></div>
-            <p style="color: #aaa;">Processing Request...</p>
+            <p style="color: #aaa; text-align: center;">Processing Request...</p>
         </div>
 
-        <div id="download-ui" class="hidden">
+        <div id="download-ui" class="hidden" style="width: 100%;">
             <div class="movie-card">
                 <img id="movie-img" src="" alt="Thumbnail" class="movie-thumb">
                 <div class="movie-title" id="movie-name">Loading...</div>
@@ -132,7 +134,7 @@
                     document.getElementById('loading-ui').classList.add('hidden');
                     document.getElementById('download-ui').classList.remove('hidden');
                 } else {
-                    document.body.innerHTML = "<div style='color:white; text-align:center; padding-top:50px;'>Invalid Content ID!</div>";
+                    document.body.innerHTML = "<div style='color:white; text-align:center; padding-top:100px;'>Invalid Content ID!</div>";
                 }
             } catch (error) {
                 console.error("Error:", error);
