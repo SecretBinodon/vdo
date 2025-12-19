@@ -1,91 +1,90 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Download - Filmixo</title>
+    <title>Download - Filmixo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* প্রফেশনাল লাক্সারিয়াস ডার্ক থিম সিএসএস */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; text-decoration: none; }
+        /* প্রফেশনাল লাক্সারিয়াস ডার্ক থিম */
+        * { 
+            margin: 0; padding: 0; box-sizing: border-box; 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            -webkit-tap-highlight-color: transparent; /* বাটনে ক্লিক করলে নীল পর্দা হবে না */
+        }
         
         body { 
-            background-color: #050505;
-            background-image: 
-                radial-gradient(circle at 50% 0%, #1a1a1a 0%, #050505 70%),
-                radial-gradient(circle at 0% 100%, #111 0%, transparent 40%);
-            display: flex; justify-content: center; min-height: 100vh; color: #ffffff; 
+            background-color: #0f0f0f; 
+            display: flex; justify-content: center; min-height: 100vh; color: #fff; 
         }
 
         .main-wrapper { 
-            width: 100%; max-width: 480px; min-height: 100vh; 
-            display: flex; flex-direction: column; 
-            background: rgba(255, 255, 255, 0.01);
-            border-left: 1px solid rgba(255,255,255,0.05); 
-            border-right: 1px solid rgba(255,255,255,0.05);
-            box-shadow: 0 0 50px rgba(0,0,0,1);
+            width: 100%; max-width: 500px; display: flex; flex-direction: column; 
+            background: #0f0f0f; position: relative;
         }
 
+        /* হেডার */
         header { 
-            background: #1da1f2; padding: 18px; display: flex; 
-            justify-content: center; align-items: center; color: white; 
-            position: sticky; top: 0; z-index: 100; box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            background: #1a1a1a; padding: 15px; text-align: center;
+            border-bottom: 2px solid #FFD700; position: sticky; top: 0; z-index: 100;
         }
-        .logo-area { font-weight: 900; font-size: 24px; text-transform: uppercase; letter-spacing: 4px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .logo-area { 
+            font-weight: 900; font-size: 24px; color: #FFD700; 
+            text-transform: uppercase; letter-spacing: 3px; 
+        }
 
-        .container { flex: 1; padding: 25px; display: flex; flex-direction: column; align-items: center; }
+        .container { flex: 1; padding: 20px; display: flex; flex-direction: column; align-items: center; }
 
-        /* মুভি কার্ড ডিজাইন */
-        .movie-card { width: 100%; display: none; text-align: center; } 
+        /* আগের সেই কার্ড সিস্টেম */
+        .movie-card { 
+            width: 100%; background: #1a1a1a; border-radius: 15px; padding: 20px; 
+            border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            display: none; text-align: center; 
+        } 
         .movie-card.loaded { display: block; }
 
         .movie-thumb { 
-            width: 100%; border-radius: 20px; margin-bottom: 25px; 
-            aspect-ratio: 16/9; object-fit: cover; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-            border: 1px solid rgba(255,255,255,0.08);
+            width: 100%; border-radius: 10px; margin-bottom: 15px; 
+            aspect-ratio: 16/9; object-fit: cover; border: 1px solid #444;
         }
 
         .movie-title { 
-            font-size: 22px; font-weight: 800; margin-bottom: 15px; 
-            color: #fff; line-height: 1.4; text-align: center; 
-            background: linear-gradient(to bottom, #fff, #bbb);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-size: 20px; font-weight: 700; margin-bottom: 10px; 
+            color: #fff; line-height: 1.3; 
         }
         
         .status-badge { 
-            display: inline-flex; align-items: center; justify-content: center; gap: 8px; 
-            padding: 8px 20px; background: rgba(29, 161, 242, 0.1); color: #1da1f2; 
-            border-radius: 50px; font-size: 13px; font-weight: 700; margin-bottom: 25px;
-            border: 1px solid rgba(29, 161, 242, 0.3); text-transform: uppercase;
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px; 
+            padding: 5px 15px; background: rgba(255, 215, 0, 0.1); color: #FFD700; 
+            border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 15px;
+            border: 1px solid #FFD700;
         }
 
         /* অ্যাড সেকশন */
-        .ad-container { width: 100%; margin: 15px 0; min-height: 50px; display: flex; justify-content: center; }
+        .ad-container { width: 100%; margin: 10px 0; min-height: 50px; display: flex; justify-content: center; }
 
-        .instruction-text { color: #888; font-size: 14px; margin: 15px 0; line-height: 1.6; }
+        .instruction-text { color: #aaa; font-size: 14px; margin: 10px 0; line-height: 1.4; }
 
-        /* ফিক্সড সাইজ বাটন যাতে ছোট-বড় না হয় */
+        /* ফিক্সড সাইজ বাটন (যাতে ছোট-বড় না হয়) */
         .btn-wrapper { width: 100%; display: flex; justify-content: center; margin-top: 10px; }
         .final-dl-btn { 
             display: flex; align-items: center; justify-content: center; 
-            width: 280px; height: 58px; /* ফিক্সড উইডথ এবং হাইট */
-            border-radius: 50px; font-size: 15px; font-weight: 900; 
-            text-transform: uppercase; border: 1px solid rgba(255,255,255,0.2); 
-            cursor: pointer; color: #fff; transition: all 0.4s ease; 
-            gap: 12px; opacity: 0.5; pointer-events: none; 
-            white-space: nowrap; overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            width: 280px; height: 55px; /* সাইজ ফিক্সড */
+            border-radius: 50px; font-size: 16px; font-weight: 900; 
+            text-transform: uppercase; border: 2px solid #ffffff; 
+            cursor: pointer; color: #000; transition: transform 0.2s; 
+            gap: 10px; opacity: 0.6; pointer-events: none; outline: none;
         }
-        .final-dl-btn.active { opacity: 1; pointer-events: auto; border-color: rgba(255,255,255,0.5); }
+        .final-dl-btn.active { opacity: 1; pointer-events: auto; }
         .final-dl-btn:active { transform: scale(0.96); }
 
+        /* ফুটার */
         .site-footer { 
-            padding: 35px; text-align: center; border-top: 1px solid rgba(255,255,255,0.03); 
-            background: rgba(0,0,0,0.6); margin-top: auto; 
+            padding: 20px; text-align: center; border-top: 1px solid #222; 
+            color: #777; font-size: 13px; margin-top: auto; 
         }
-        .footer-copyright { color: #555; font-size: 12px; letter-spacing: 1px; }
-        .footer-copyright b { color: #1da1f2; }
+        .site-footer b { color: #FFD700; }
     </style>
 </head>
 <body>
@@ -99,12 +98,18 @@
     </div>
 
     <footer class="site-footer">
-        <div class="footer-copyright">Copyright © 2026 <b>Filmixo.com</b>. All rights reserved.</div>
+        Copyright © 2026 <b>Filmixo.com</b>. All rights reserved.
     </footer>
 </div>
 
 <script>
-    const buttonColors = ['#1da1f2', '#e0245e', '#17bf63', '#794bc4'];
+    const buttonColors = [
+        'linear-gradient(135deg, #FFD700, #b8860b)', 
+        'linear-gradient(135deg, #00c6ff, #0072ff)', 
+        'linear-gradient(135deg, #f80759, #bc4e9c)', 
+        'linear-gradient(135deg, #11998e, #38ef7d)'
+    ];
+    
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get('id');
     let downloadUrl = "";
@@ -118,10 +123,8 @@
             if (movie) {
                 downloadUrl = movie.downloadLink1;
                 const randomBg = buttonColors[Math.floor(Math.random() * buttonColors.length)];
-                
                 const contentDiv = document.getElementById('movie-content');
                 
-                // ১. প্রথমে কন্টেন্ট স্ট্রাকচার তৈরি
                 contentDiv.innerHTML = `
                     <img src="${movie.mediaImage}" class="movie-thumb" alt="Thumbnail">
                     <div class="movie-title">${movie.title}</div>
@@ -129,7 +132,7 @@
                     
                     <div class="ad-container" id="ad-box"></div>
 
-                    <p class="instruction-text">Link generated successfully. <br>Your download will be ready in a few seconds.</p>
+                    <p class="instruction-text">Your high-speed link is ready. <br>Click the button below to start.</p>
                     
                     <div class="btn-wrapper">
                         <a href="#" id="timer-btn" class="final-dl-btn" style="background: ${randomBg}">
@@ -138,18 +141,14 @@
                     </div>
                 `;
 
-                // ২. অ্যাড লোড করার জন্য সরাসরি স্ক্রিপ্ট ইনজেকশন (নিরাপদ পদ্ধতি)
+                // অ্যাড লোড লজিক
                 const adBox = document.getElementById('ad-box');
-                const adScriptConfig = document.createElement('script');
-                adScriptConfig.type = 'text/javascript';
-                adScriptConfig.text = `atOptions = {'key' : 'a77d37045b73ff51a416345b6ebcc586', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {}};`;
-                
-                const adScriptInvoke = document.createElement('script');
-                adScriptInvoke.type = 'text/javascript';
-                adScriptInvoke.src = 'https://prototypesorting.com/a77d37045b73ff51a416345b6ebcc586/invoke.js';
-                
-                adBox.appendChild(adScriptConfig);
-                adBox.appendChild(adScriptInvoke);
+                const conf = document.createElement('script');
+                conf.text = `atOptions = {'key' : 'a77d37045b73ff51a416345b6ebcc586', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {}};`;
+                const inv = document.createElement('script');
+                inv.src = 'https://prototypesorting.com/a77d37045b73ff51a416345b6ebcc586/invoke.js';
+                adBox.appendChild(conf);
+                adBox.appendChild(inv);
 
                 contentDiv.classList.add('loaded');
                 initTimer();
