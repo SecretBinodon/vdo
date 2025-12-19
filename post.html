@@ -199,7 +199,7 @@
     window.handleFinalDownload = function() {
     localStorage.removeItem(getVisitedKey('btn-1080'));
     localStorage.removeItem(getVisitedKey('btn-720'));
-    window.location.href = `download.html?id=${postId}`;
+    window.open(`download.html?id=${postId}`, '_blank');
    };
 
     function updateButtonState() {
