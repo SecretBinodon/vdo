@@ -3,75 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download Step - Filmixo</title>
+    <title>Download - Filmixo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; text-decoration: none; }
-        body { background-color: #fff; display: flex; justify-content: center; min-height: 100vh; color: #0f1419; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-decoration: none; }
+        
+        /* লাক্সারিয়াস ডার্ক গ্রাডিয়েন্ট ব্যাকগ্রাউন্ড */
+        body { 
+            background: radial-gradient(circle at top, #121212 0%, #000000 100%); 
+            display: flex; justify-content: center; min-height: 100vh; color: #fff; 
+        }
 
-        /* মেইন র‍্যাপার সরাসরি দৃশ্যমান থাকবে */
         .main-wrapper { 
-            width: 100%; max-width: 600px; min-height: 100vh; 
+            width: 100%; max-width: 500px; min-height: 100vh; 
             display: flex; flex-direction: column; 
-            border-left: 1px solid #eee; border-right: 1px solid #eee;
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 1px solid rgba(255,255,255,0.05); 
+            border-right: 1px solid rgba(255,255,255,0.05);
             position: relative;
         }
 
+        /* হেডার সেন্টার অ্যালাইনমেন্ট */
         header { 
-            background: #1da1f2; padding: 12px 15px; display: flex; 
-            justify-content: space-between; align-items: center; color: white; 
-            position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+            background: #1da1f2; padding: 15px; display: flex; 
+            justify-content: center; align-items: center; color: white; 
+            position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.5); 
         }
-        .logo-area { font-weight: 800; font-size: 20px; text-transform: uppercase; }
+        .logo-area { font-weight: 900; font-size: 24px; text-transform: uppercase; letter-spacing: 3px; }
 
-        /* কন্টেন্ট এরিয়া - ফুটার জাম্প রোধ করতে min-height ব্যবহার করা হয়েছে */
         .container { 
-            flex: 1; /* ফুটারকে নিচে ঠেলে রাখবে */
-            padding: 15px; 
+            flex: 1; padding: 20px; 
             display: flex; flex-direction: column; align-items: center;
             min-height: 80vh; 
         }
 
-        .movie-card { width: 100%; display: none; } /* শুরুতে হাইড থাকবে */
+        /* কন্টেন্ট লোড হওয়ার আগে হাইড থাকবে */
+        .movie-card { width: 100%; display: none; text-align: center; } 
         .movie-card.loaded { display: block; }
 
         .movie-thumb { 
-            width: 100%; border-radius: 12px; margin-bottom: 15px; 
-            aspect-ratio: 16/9; object-fit: cover; background: #eee; 
-            border: 1px solid #e1e8ed;
+            width: 100%; border-radius: 15px; margin-bottom: 20px; 
+            aspect-ratio: 16/9; object-fit: cover; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .movie-title { font-size: 20px; font-weight: 800; margin-bottom: 10px; color: #0f1419; text-align: left; }
+        /* মুভি নেম সেন্টার */
+        .movie-title { 
+            font-size: 22px; font-weight: 800; margin-bottom: 12px; 
+            color: #fff; line-height: 1.4; padding: 0 5px;
+            text-align: center; 
+        }
         
+        /* ভেরিফাই ব্যাজ সেন্টার */
         .status-badge { 
-            display: inline-flex; align-items: center; gap: 5px; 
-            padding: 5px 12px; background: #e8f5fd; color: #1da1f2; 
-            border-radius: 20px; font-size: 13px; font-weight: bold; margin-bottom: 15px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px; 
+            padding: 7px 18px; background: rgba(29, 161, 242, 0.1); color: #1da1f2; 
+            border-radius: 50px; font-size: 14px; font-weight: bold; margin-bottom: 20px;
+            border: 1px solid rgba(29, 161, 242, 0.4);
+        }
+
+        /* অ্যাডের জন্য সিম্পল কন্টেইনার (যাতে কাট না যায়) */
+        .ad-container {
+            width: 100%;
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+            overflow: visible; /* কোনো কিছু হাইড হবে না */
         }
 
         .instruction-text { 
-            color: #536471; font-size: 14px; margin-top: 10px; 
-            margin-bottom: 10px; text-align: center; line-height: 1.4;
+            color: #999; font-size: 14px; margin-top: 10px; 
+            margin-bottom: 15px; text-align: center; line-height: 1.5;
         }
 
+        /* বাটন ডিজাইন (টেক্সট অনুযায়ী ব্যাকগ্রাউন্ড) */
         .final-dl-btn { 
-            display: flex; width: 100%; padding: 16px; border-radius: 50px; 
-            font-size: 16px; font-weight: 900; text-transform: uppercase; 
-            border: 2px solid #ffffff; cursor: pointer; color: #fff; 
-            transition: transform 0.2s; align-items: center; justify-content: center; 
-            gap: 10px; margin: 10px auto; opacity: 0.6; pointer-events: none; 
-            white-space: nowrap; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: inline-flex; 
+            align-items: center; justify-content: center; 
+            padding: 15px 30px; 
+            border-radius: 50px; font-size: 16px; font-weight: 900; 
+            text-transform: uppercase; border: 2px solid rgba(255,255,255,0.8); 
+            cursor: pointer; color: #fff; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            gap: 10px; margin: 10px auto; opacity: 0.5; pointer-events: none; 
+            white-space: nowrap; box-shadow: 0 8px 20px rgba(0,0,0,0.4);
         }
-        .final-dl-btn.active { opacity: 1; pointer-events: auto; }
-        .final-dl-btn:active { transform: scale(0.96); }
+        .final-dl-btn.active { opacity: 1; pointer-events: auto; transform: translateY(-3px); }
+        .final-dl-btn:active { transform: translateY(0); }
 
-        /* ফুটার স্টাইল */
         .site-footer { 
-            padding: 30px 20px; text-align: center; border-top: 1px solid #e1e8ed; 
-            background: #fff; margin-top: auto; 
+            padding: 30px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); 
+            background: rgba(0,0,0,0.4); margin-top: auto; 
         }
-        .footer-copyright { color: #536471; font-size: 13px; }
-        .footer-copyright a { color: #1da1f2; font-weight: bold; }
+        .footer-copyright { color: #666; font-size: 13px; letter-spacing: 0.5px; }
+        .footer-copyright b { color: #1da1f2; }
     </style>
 </head>
 <body>
@@ -88,7 +113,7 @@
 
     <footer class="site-footer">
         <div class="footer-copyright">
-            Copyright © 2026 <a href="index.html">Filmixo.com</a>. All rights reserved.
+            Copyright © 2026 <b>Filmixo.com</b>. All rights reserved.
         </div>
     </footer>
 </div>
@@ -115,32 +140,35 @@
                     <div class="movie-title">${movie.title}</div>
                     <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Verification Successful</div>
                     
-                    <div style="min-height:50px; margin: 5px 0; display:flex; justify-content:center;">
-                        <iframe src="about:blank" style="border:none; height:50px; width:320px;" id="ad-slot"></iframe>
+                    <div class="ad-container">
+                        <script type="text/javascript">
+                            atOptions = {
+                                'key' : 'a77d37045b73ff51a416345b6ebcc586',
+                                'format' : 'iframe',
+                                'height' : 50,
+                                'width' : 320,
+                                'params' : {}
+                            };
+                        <\/script>
+                        <script type="text/javascript" src="https://prototypesorting.com/a77d37045b73ff51a416345b6ebcc586/invoke.js"><\/script>
                     </div>
 
-                    <p class="instruction-text">Your link is generated successfully. <br>Download button will be active shortly.</p>
+                    <p class="instruction-text">Your high-speed download link is ready. <br>The button will be active shortly.</p>
                     
-                    <a href="#" id="timer-btn" class="final-dl-btn" style="background: ${randomBg}">
-                        <i class="fa-solid fa-hourglass-half"></i> <span id="btn-text">Wait for 5 Seconds</span>
-                    </a>
+                    <div style="text-align: center;">
+                        <a href="#" id="timer-btn" class="final-dl-btn" style="background: ${randomBg}">
+                            <i class="fa-solid fa-hourglass-half"></i> <span id="btn-text">Wait for 5 Seconds</span>
+                        </a>
+                    </div>
                 `;
 
-                // অ্যাড ইনজেকশন
-                const frame = document.getElementById('ad-slot').contentWindow.document;
-                frame.open();
-                frame.write(`<script type="text/javascript">atOptions={'key':'a77d37045b73ff51a416345b6ebcc586','format':'iframe','height':50,'width':320,'params':{}};</scr`+`ipt><script src="https://prototypesorting.com/a77d37045b73ff51a416345b6ebcc586/invoke.js"></scr`+`ipt>`);
-                frame.close();
-
-                // কন্টেন্ট রেডি হলে ক্লাস যোগ করা (যাতে একবারে দেখায়)
+                // কন্টেন্ট দৃশ্যমান করা
                 contentDiv.classList.add('loaded');
                 
-                // কন্টেন্ট লোড হওয়ার পর টাইমার শুরু
+                // টাইমার শুরু
                 initTimer();
             }
-        } catch (err) {
-            console.log("Error loading data", err);
-        }
+        } catch (err) { console.log("Error:", err); }
     }
 
     function initTimer() {
@@ -148,7 +176,6 @@
         const btn = document.getElementById('timer-btn');
         const text = document.getElementById('btn-text');
 
-        // টাইমার শুরু
         const countdown = setInterval(() => {
             timeLeft--;
             if (timeLeft > 0) {
@@ -159,14 +186,16 @@
                 btn.querySelector('i').className = "fa-solid fa-circle-down";
                 btn.classList.add('active');
                 btn.href = downloadUrl;
-                btn.onclick = () => { window.open(downloadUrl, '_blank'); return false; };
+                btn.onclick = (e) => { 
+                    window.open(downloadUrl, '_blank'); 
+                    return false; 
+                };
             }
         }, 1000);
     }
 
-    // পেজ লোড হওয়ার প্রসেস
+    // পেজ রেন্ডার শুরু
     document.addEventListener('DOMContentLoaded', loadPageData);
-
 </script>
 
 </body>
