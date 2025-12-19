@@ -3,149 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Final Step - Filmixo</title>
+    <title>Download Step - Filmixo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-        
-        body { background-color: #0f0f0f; color: #fff; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; text-decoration: none; }
+        body { background-color: #fff; display: flex; justify-content: center; min-height: 100vh; color: #0f1419; }
 
-        /* মেইন র‍্যাপার যা সরাসরি দৃশ্যমান হবে */
-        .main-wrapper { width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: center; }
+        /* মেইন র‍্যাপার সরাসরি দৃশ্যমান থাকবে */
+        .main-wrapper { 
+            width: 100%; max-width: 600px; min-height: 100vh; 
+            display: flex; flex-direction: column; 
+            border-left: 1px solid #eee; border-right: 1px solid #eee;
+            position: relative;
+        }
 
         header { 
-            width: 100%; padding: 15px 20px; text-align: center; 
-            background: #1a1a1a; border-bottom: 2px solid #FFD700; 
-            position: sticky; top: 0; z-index: 100; 
+            background: #1da1f2; padding: 12px 15px; display: flex; 
+            justify-content: space-between; align-items: center; color: white; 
+            position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
         }
-        .logo { font-size: 26px; font-weight: 900; color: #FFD700; text-transform: uppercase; letter-spacing: 3px; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+        .logo-area { font-weight: 800; font-size: 20px; text-transform: uppercase; }
 
-        .container { width: 100%; padding: 15px 20px; text-align: center; }
-
-        /* মুভি কার্ডের কন্টেন্ট আসার আগে এটি হাইড থাকবে */
-        #content-area { width: 100%; display: none; }
-        #content-area.visible { display: block; }
-
-        .movie-card { 
-            width: 100%; background: #1a1a1a; border-radius: 15px; padding: 20px; 
-            border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-            margin-bottom: 30px; display: flex; flex-direction: column; align-items: center;
+        /* কন্টেন্ট এরিয়া - ফুটার জাম্প রোধ করতে min-height ব্যবহার করা হয়েছে */
+        .container { 
+            flex: 1; /* ফুটারকে নিচে ঠেলে রাখবে */
+            padding: 15px; 
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 80vh; 
         }
+
+        .movie-card { width: 100%; display: none; } /* শুরুতে হাইড থাকবে */
+        .movie-card.loaded { display: block; }
+
+        .movie-thumb { 
+            width: 100%; border-radius: 12px; margin-bottom: 15px; 
+            aspect-ratio: 16/9; object-fit: cover; background: #eee; 
+            border: 1px solid #e1e8ed;
+        }
+
+        .movie-title { font-size: 20px; font-weight: 800; margin-bottom: 10px; color: #0f1419; text-align: left; }
         
-        .movie-thumb { width: 100%; border-radius: 10px; margin-bottom: 15px; border: 1px solid #444; aspect-ratio: 16/9; object-fit: cover; background: #000; }
-        .movie-title { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.3; }
-        .status-badge { display: inline-block; padding: 5px 12px; background: rgba(255, 215, 0, 0.1); color: #FFD700; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 10px; border: 1px solid #FFD700; }
+        .status-badge { 
+            display: inline-flex; align-items: center; gap: 5px; 
+            padding: 5px 12px; background: #e8f5fd; color: #1da1f2; 
+            border-radius: 20px; font-size: 13px; font-weight: bold; margin-bottom: 15px;
+        }
 
-        .instruction-text { color: #aaa; font-size: 14px; margin-top: 10px; margin-bottom: 12px; line-height: 1.4; }
+        .instruction-text { 
+            color: #536471; font-size: 14px; margin-top: 10px; 
+            margin-bottom: 10px; text-align: center; line-height: 1.4;
+        }
 
         .final-dl-btn { 
-            display: flex; width: 100%; max-width: 380px; padding: 16px; 
-            border-radius: 50px; font-size: 16px; font-weight: 900; text-transform: uppercase; 
-            border: 2px solid #ffffff; cursor: pointer; text-decoration: none;
-            color: #000; transition: transform 0.2s; 
-            align-items: center; justify-content: center; gap: 10px;
-            -webkit-tap-highlight-color: transparent; outline: none; margin: 10px auto;
-            opacity: 0.6; pointer-events: none; white-space: nowrap;
+            display: flex; width: 100%; padding: 16px; border-radius: 50px; 
+            font-size: 16px; font-weight: 900; text-transform: uppercase; 
+            border: 2px solid #ffffff; cursor: pointer; color: #fff; 
+            transition: transform 0.2s; align-items: center; justify-content: center; 
+            gap: 10px; margin: 10px auto; opacity: 0.6; pointer-events: none; 
+            white-space: nowrap; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         .final-dl-btn.active { opacity: 1; pointer-events: auto; }
         .final-dl-btn:active { transform: scale(0.96); }
 
-        footer { width: 100%; padding: 20px; text-align: center; color: #777; font-size: 13px; border-top: 1px solid #222; margin-top: auto; }
-        footer b { color: #FFD700; }
+        /* ফুটার স্টাইল */
+        .site-footer { 
+            padding: 30px 20px; text-align: center; border-top: 1px solid #e1e8ed; 
+            background: #fff; margin-top: auto; 
+        }
+        .footer-copyright { color: #536471; font-size: 13px; }
+        .footer-copyright a { color: #1da1f2; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="main-wrapper">
-    <header><div class="logo">FILMIXO</div></header>
+    <header>
+        <div class="logo-area">FILMIXO</div>
+    </header>
 
-    <div class="container" id="main-container">
-        <div id="content-area"></div>
+    <div class="container">
+        <div id="movie-content" class="movie-card">
+            </div>
     </div>
 
-    <footer>Copyright © 2026 <b>Filmixo.com</b>. All rights reserved.</footer>
+    <footer class="site-footer">
+        <div class="footer-copyright">
+            Copyright © 2026 <a href="index.html">Filmixo.com</a>. All rights reserved.
+        </div>
+    </footer>
 </div>
 
 <script>
-    const buttonColors = ['linear-gradient(135deg, #FFD700, #b8860b)', 'linear-gradient(135deg, #00c6ff, #0072ff)', 'linear-gradient(135deg, #f80759, #bc4e9c)', 'linear-gradient(135deg, #11998e, #38ef7d)'];
+    const buttonColors = ['#1da1f2', '#e0245e', '#17bf63', '#794bc4'];
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get('id');
-    let movieData = null;
+    let downloadUrl = "";
 
-    async function fetchMovieData() {
+    async function loadPageData() {
         try {
             const res = await fetch('posts.json');
             const posts = await res.json();
-            movieData = posts.find(p => p.id === postId);
-            if (movieData) {
-                renderUI();
-            } else {
-                document.getElementById('main-container').innerHTML = "Movie Not Found";
+            const movie = posts.find(p => p.id === postId);
+
+            if (movie) {
+                downloadUrl = movie.downloadLink1;
+                const randomBg = buttonColors[Math.floor(Math.random() * buttonColors.length)];
+                
+                const contentDiv = document.getElementById('movie-content');
+                contentDiv.innerHTML = `
+                    <img src="${movie.mediaImage}" class="movie-thumb" alt="Thumbnail">
+                    <div class="movie-title">${movie.title}</div>
+                    <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Verification Successful</div>
+                    
+                    <div style="min-height:50px; margin: 5px 0; display:flex; justify-content:center;">
+                        <iframe src="about:blank" style="border:none; height:50px; width:320px;" id="ad-slot"></iframe>
+                    </div>
+
+                    <p class="instruction-text">Your link is generated successfully. <br>Download button will be active shortly.</p>
+                    
+                    <a href="#" id="timer-btn" class="final-dl-btn" style="background: ${randomBg}">
+                        <i class="fa-solid fa-hourglass-half"></i> <span id="btn-text">Wait for 5 Seconds</span>
+                    </a>
+                `;
+
+                // অ্যাড ইনজেকশন
+                const frame = document.getElementById('ad-slot').contentWindow.document;
+                frame.open();
+                frame.write(`<script type="text/javascript">atOptions={'key':'a77d37045b73ff51a416345b6ebcc586','format':'iframe','height':50,'width':320,'params':{}};</scr`+`ipt><script src="https://prototypesorting.com/a77d37045b73ff51a416345b6ebcc586/invoke.js"></scr`+`ipt>`);
+                frame.close();
+
+                // কন্টেন্ট রেডি হলে ক্লাস যোগ করা (যাতে একবারে দেখায়)
+                contentDiv.classList.add('loaded');
+                
+                // কন্টেন্ট লোড হওয়ার পর টাইমার শুরু
+                initTimer();
             }
-        } catch (e) { console.error(e); }
+        } catch (err) {
+            console.log("Error loading data", err);
+        }
     }
 
-    function renderUI() {
-        const contentArea = document.getElementById('content-area');
-        const randomColor = buttonColors[Math.floor(Math.random() * buttonColors.length)];
-        
-        // সমস্ত HTML একবারে তৈরি করে ইনজেক্ট করা হচ্ছে যাতে ব্লাঙ্ক না দেখায়
-        contentArea.innerHTML = `
-            <div class="movie-card">
-                <img src="${movieData.mediaImage}" alt="Thumbnail" class="movie-thumb">
-                <div class="movie-title">${movieData.title}</div>
-                <div class="status-badge"><i class="fa-solid fa-check-circle"></i> Verification Complete</div>
-                
-                <div style="min-height: 50px; width: 100%; display: flex; justify-content: center;">
-                    <iframe src="about:blank" style="border:none; height:50px; width:320px;" id="ad-frame"></iframe>
-                </div>
-                
-                <p class="instruction-text">Your high-speed download link is ready. <br>Please wait a moment to start.</p>
-                
-                <a href="#" id="main-dl-link" class="final-dl-btn" style="background: ${randomColor}">
-                    <i class="fa-solid fa-hourglass-half"></i> <span id="btn-label">Wait for 5 Seconds</span>
-                </a>
-            </div>
-        `;
+    function initTimer() {
+        let timeLeft = 5;
+        const btn = document.getElementById('timer-btn');
+        const text = document.getElementById('btn-text');
 
-        // অ্যাড লোড করা (আপনার স্ক্রিপ্ট অনুযায়ী)
-        const frame = document.getElementById('ad-frame').contentWindow.document;
-        frame.open();
-        frame.write(`<script type="text/javascript">atOptions = {'key' : 'a77d37045b73ff51a416345b6ebcc586','format' : 'iframe','height' : 50,'width' : 320,'params' : {}};</scr`+`ipt><script type="text/javascript" src="https://prototypesorting.com/a77d37045b73ff51a416345b6ebcc586/invoke.js"></scr`+`ipt>`);
-        frame.close();
-
-        // কন্টেন্ট এরিয়া দৃশ্যমান করা
-        contentArea.classList.add('visible');
-    }
-
-    function startTimer() {
-        let count = 5;
-        const btn = document.getElementById('main-dl-link');
-        const label = document.getElementById('btn-label');
-        if (!btn) return;
-
-        const timer = setInterval(() => {
-            count--;
-            if (count > 0) {
-                label.innerText = `Wait for ${count} Seconds`;
+        // টাইমার শুরু
+        const countdown = setInterval(() => {
+            timeLeft--;
+            if (timeLeft > 0) {
+                text.innerText = `Wait for ${timeLeft} Seconds`;
             } else {
-                clearInterval(timer);
-                label.innerText = "START DOWNLOAD NOW";
+                clearInterval(countdown);
+                text.innerText = "START DOWNLOAD NOW";
                 btn.querySelector('i').className = "fa-solid fa-circle-down";
-                btn.href = movieData.downloadLink1;
                 btn.classList.add('active');
-                btn.onclick = (e) => { window.open(movieData.downloadLink1, '_blank'); return false; };
+                btn.href = downloadUrl;
+                btn.onclick = () => { window.open(downloadUrl, '_blank'); return false; };
             }
         }, 1000);
     }
 
-    // ১. ডেটা ফেচ শুরু
-    fetchMovieData();
+    // পেজ লোড হওয়ার প্রসেস
+    document.addEventListener('DOMContentLoaded', loadPageData);
 
-    // ২. পেজ ১০০% লোড হলে টাইমার শুরু (ইমেজ, স্ক্রিপ্ট সব সহ)
-    window.onload = function() {
-        startTimer();
-    };
 </script>
 
 </body>
