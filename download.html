@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VL-ZONE - Download</title>
+    <title>Download - Filmixo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-   <script type="text/javascript"src="https://prototypesorting.com/a0/08/d1/a008d17e02685c0505877ed11b7610d9.js"></script>
-
-   <script type="text/javascript"src="https://prototypesorting.com/70/2c/67/702c67f9d1db58564142cc27691530f9.js"></script>
+   <script type="text/javascript" src="https://prototypesorting.com/a0/08/d1/a008d17e02685c0505877ed11b7610d9.js"></script>
+   <script type="text/javascript" src="https://prototypesorting.com/70/2c/67/702c67f9d1db58564142cc27691530f9.js"></script>
     
     <style>
         :root {
@@ -32,10 +31,9 @@
             width: 100%; max-width: 500px; display: flex; flex-direction: column; 
         }
 
-        /* কম্প্যাক্ট হেডার */
         header { 
             background: rgba(20, 20, 20, 0.95);
-            padding: 12px; /* হাইট কমানো হয়েছে */
+            padding: 12px;
             text-align: center;
             border-bottom: 2px solid var(--primary-gold);
             position: sticky; top: 0; z-index: 100;
@@ -49,19 +47,46 @@
 
         .container { flex: 1; padding: 1px 15px; }
 
-        /* গ্লাস ডিজাইন কার্ড - অ্যানিমেশন রিমুভড */
         .movie-card { 
             width: 100%; background: var(--glass-bg); border-radius: 15px; 
-            padding: 15px; /* প্যাডিং কমানো হয়েছে */
+            padding: 15px; 
             padding-bottom: 25px;
             border: 1px solid var(--glass-border);
             display: none; text-align: center; 
         } 
         .movie-card.loaded { display: block; }
 
+        /* ইমেজ কন্টেইনার এবং আইকন পজিশনিং */
+        .thumb-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #333;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .movie-thumb { 
-            width: 100%; border-radius: 10px; margin-bottom: 10px; 
-            aspect-ratio: 16/9; object-fit: cover; border: 1px solid #333;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* জুম হবে না, অরিজিনাল রেশিও বজায় থাকবে */
+        }
+
+        .play-icon-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
+            color: rgba(255, 255, 255, 0.8);
+            text-shadow: 0 0 15px rgba(0,0,0,0.5);
+            pointer-events: none;
+            z-index: 2;
         }
 
         .movie-title { 
@@ -76,12 +101,10 @@
             border: 1px solid var(--primary-gold);
         }
 
-        /* অ্যাড সেকশন - কোনো কন্টেইনার বা বর্ডার নেই */
         .ad-unit { width: 100%; margin: 5px 0; overflow: hidden; }
 
         .instruction-text { color: #aaa; font-size: 13px; margin: 8px 0; line-height: 1.4; }
 
-        /* বাটন ডিজাইন */
         .btn-wrapper { width: 100%; display: flex; justify-content: center; margin-top: 5px; }
         
         .final-dl-btn { 
@@ -95,7 +118,6 @@
         .final-dl-btn.active { opacity: 1; pointer-events: auto; }
         .final-dl-btn:active { transform: scale(0.96); }
 
-        /* ফুটার */
         .site-footer { 
             padding: 15px; text-align: center; border-top: 1px solid #222; 
             color: #777; font-size: 12px; margin-top: auto; 
@@ -106,42 +128,26 @@
 <body>
 
 <div class="main-wrapper">
-    <header><div class="logo-area">VL-ZONE</div></header>
+    <header><div class="logo-area">FILMIXO</div></header>
 
-<div style="display: flex; justify-content: center; overflow: hidden; width: 100%; margin: 5px 0">
-<div style="flex-shrink: 0;">
-     
-<script type="text/javascript">
-  atOptions = {
-  	'key' : 'fe5e23bc5bdf1a2a65486ec3cbb7cd02',
-  	'format' : 'iframe',
-  	'height' : 60,
-  	'width' : 468,
-  	'params' : {}
-  };
-</script>
-<script
-  type="text/javascript"
-  src="https://prototypesorting.com/fe5e23bc5bdf1a2a65486ec3cbb7cd02/invoke.js"
-></script>
-
-    </div>
+    <div style="display: flex; justify-content: center; overflow: hidden; width: 100%; margin: 5px 0">
+        <div style="flex-shrink: 0;">
+            <script type="text/javascript">
+              atOptions = { 'key' : 'fe5e23bc5bdf1a2a65486ec3cbb7cd02', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };
+            </script>
+            <script type="text/javascript" src="https://prototypesorting.com/fe5e23bc5bdf1a2a65486ec3cbb7cd02/invoke.js"></script>
+        </div>
     </div>
     
-       <div class="container">
-        <div id="movie-content" class="movie-card">
-            </div>
-       </div>
+    <div class="container">
+        <div id="movie-content" class="movie-card"></div>
+    </div>
 
-<script
-  async="async"
-  data-cfasync="false"
-  src="https://prototypesorting.com/247476cdf6d68a31797ec615e7b10572/invoke.js"
-></script>
-<div id="container-247476cdf6d68a31797ec615e7b10572"></div>
+    <script async="async" data-cfasync="false" src="https://prototypesorting.com/247476cdf6d68a31797ec615e7b10572/invoke.js"></script>
+    <div id="container-247476cdf6d68a31797ec615e7b10572"></div>
 
     <footer class="site-footer">
-        Copyright © 2026 <b>vlzone.com</b>. All rights reserved.
+        Copyright © 2026 <b>Filmixo.com</b>. All rights reserved.
     </footer>
 </div>
 
@@ -157,6 +163,10 @@
     const postId = urlParams.get('id');
     let downloadUrl = "";
 
+    // নিরাপত্তা যাচাই: ব্যবহারকারী কি post.html থেকে এসেছে?
+    const referrer = document.referrer;
+    const isValidEntry = referrer.includes("post.html");
+
     async function loadPageData() {
         try {
             const res = await fetch('posts.json');
@@ -169,7 +179,10 @@
                 const contentDiv = document.getElementById('movie-content');
                 
                 contentDiv.innerHTML = `
-                    <img src="${movie.mediaImage}" class="movie-thumb" alt="Thumbnail">
+                    <div class="thumb-wrapper">
+                        <img src="${movie.mediaImage}" class="movie-thumb" alt="Thumbnail">
+                        <i class="fa-solid fa-circle-play play-icon-overlay"></i>
+                    </div>
                     <div class="movie-title">${movie.title}</div>
                     <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Verification Successful</div>
                     
@@ -184,7 +197,6 @@
                     </div>
                 `;
 
-                // অ্যাড সরাসরি প্লেসমেন্ট (কোনো এক্সট্রা কন্টেইনার ছাড়া)
                 const adBox = document.getElementById('ad-box');
                 const conf = document.createElement('script');
                 conf.text = `atOptions = {'key' : 'a77d37045b73ff51a416345b6ebcc586', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {}};`;
@@ -211,11 +223,20 @@
                 text.innerText = `Wait for ${timeLeft} Seconds`;
             } else {
                 clearInterval(countdown);
-                text.innerText = "START DOWNLOAD NOW";
-                icon.className = "fa-solid fa-circle-down";
-                btn.classList.add('active');
-                btn.href = downloadUrl;
-                btn.onclick = (e) => { window.open(downloadUrl, '_blank'); return false; };
+                
+                // বাটন অ্যাক্টিভ করার সময় চেক করা হচ্ছে সে সঠিক পথে এসেছে কিনা
+                if (isValidEntry) {
+                    text.innerText = "START DOWNLOAD NOW";
+                    icon.className = "fa-solid fa-circle-down";
+                    btn.classList.add('active');
+                    btn.href = downloadUrl;
+                    btn.onclick = (e) => { window.open(downloadUrl, '_blank'); return false; };
+                } else {
+                    text.innerText = "Access Denied!";
+                    btn.style.background = "red";
+                    btn.style.opacity = "1";
+                    alert("Please follow the steps from the post page to get the link.");
+                }
             }
         }, 1000);
     }
