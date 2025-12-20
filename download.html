@@ -56,7 +56,7 @@
         } 
         .movie-card.loaded { display: block; }
 
-        /* ইমেজ কন্টেইনার এবং আইকন পজিশনিং */
+        /* ইমেজ কন্টেইনার এবং আইকন পজিশনিং (16:9 অরিজিনাল সাইজ) */
         .thumb-wrapper {
             position: relative;
             width: 100%;
@@ -74,7 +74,7 @@
         .movie-thumb { 
             max-width: 100%;
             max-height: 100%;
-            object-fit: contain; /* জুম হবে না, অরিজিনাল রেশিও বজায় থাকবে */
+            object-fit: contain; 
         }
 
         .play-icon-overlay {
@@ -163,9 +163,10 @@
     const postId = urlParams.get('id');
     let downloadUrl = "";
 
-    // নিরাপত্তা যাচাই: ব্যবহারকারী কি post.html থেকে এসেছে?
+    // GitHub Pages ডোমেইন এবং রেফারার চেক লজিক
     const referrer = document.referrer;
-    const isValidEntry = referrer.includes("post.html");
+    const baseDomain = "vlzone.github.io/vdo/";
+    const isValidEntry = referrer.includes(baseDomain + "post.html");
 
     async function loadPageData() {
         try {
@@ -224,7 +225,6 @@
             } else {
                 clearInterval(countdown);
                 
-                // বাটন অ্যাক্টিভ করার সময় চেক করা হচ্ছে সে সঠিক পথে এসেছে কিনা
                 if (isValidEntry) {
                     text.innerText = "START DOWNLOAD NOW";
                     icon.className = "fa-solid fa-circle-down";
@@ -232,10 +232,9 @@
                     btn.href = downloadUrl;
                     btn.onclick = (e) => { window.open(downloadUrl, '_blank'); return false; };
                 } else {
-                    text.innerText = "Access Denied!";
-                    btn.style.background = "red";
-                    btn.style.opacity = "1";
-                    alert("Please follow the steps from the post page to get the link.");
+                    // সরাসরি লিঙ্কে আসলে পপ-আপ আসবে এবং রিডাইরেক্ট হবে
+                    alert("Unauthorized Access! Please complete the steps from the post page.");
+                    window.location.href = `https://${baseDomain}post.html?id=${postId}`;
                 }
             }
         }, 1000);
