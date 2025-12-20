@@ -343,7 +343,7 @@
             totalViewsEl.innerText = formatCount(total);
         }
         
-        window.openPost = (id) => { sessionStorage.setItem('scrollPos', window.scrollY); window.location.href = `/vdo/post.html?id=${id}`; };
+        window.openPost = (id) => { sessionStorage.setItem('scrollPos', window.scrollY); window.location.href = `/movie/post.html?id=${id}`; };
         
         function deactivateNavButtons() { document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.classList.add('inactive'); }); }
 
