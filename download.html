@@ -56,7 +56,6 @@
         } 
         .movie-card.loaded { display: block; }
 
-        /* ইমেজ কন্টেইনার এবং আইকন পজিশনিং (16:9 অরিজিনাল সাইজ) */
         .thumb-wrapper {
             position: relative;
             width: 100%;
@@ -77,16 +76,33 @@
             object-fit: contain; 
         }
 
-        .play-icon-overlay {
+        /* প্রফেশনাল ও রিয়েলস্টিক প্লে আইকন ডিজাইন */
+        .professional-play-btn {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 50px;
-            color: rgba(255, 255, 255, 0.8);
-            text-shadow: 0 0 15px rgba(0,0,0,0.5);
-            pointer-events: none;
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 215, 0, 0.2);
+            backdrop-filter: blur(8px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255, 215, 0, 0.6);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5), inset 0 0 10px rgba(255,215,0,0.3);
             z-index: 2;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .professional-play-btn::before {
+            content: '';
+            width: 0;
+            height: 0;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            border-left: 20px solid #FFD700;
+            margin-left: 5px;
+            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.8));
         }
 
         .movie-title { 
@@ -163,7 +179,6 @@
     const postId = urlParams.get('id');
     let downloadUrl = "";
 
-    // GitHub Pages ডোমেইন এবং রেফারার চেক লজিক
     const referrer = document.referrer;
     const baseDomain = "vlzone.github.io/vdo/";
     const isValidEntry = referrer.includes(baseDomain + "post.html");
@@ -182,7 +197,7 @@
                 contentDiv.innerHTML = `
                     <div class="thumb-wrapper">
                         <img src="${movie.mediaImage}" class="movie-thumb" alt="Thumbnail">
-                        <i class="fa-solid fa-circle-play play-icon-overlay"></i>
+                        <div class="professional-play-btn"></div>
                     </div>
                     <div class="movie-title">${movie.title}</div>
                     <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Verification Successful</div>
@@ -232,7 +247,6 @@
                     btn.href = downloadUrl;
                     btn.onclick = (e) => { window.open(downloadUrl, '_blank'); return false; };
                 } else {
-                    // সরাসরি লিঙ্কে আসলে পপ-আপ আসবে এবং রিডাইরেক্ট হবে
                     alert("Unauthorized Access! Please complete the steps from the post page.");
                     window.location.href = `https://${baseDomain}post.html?id=${postId}`;
                 }
