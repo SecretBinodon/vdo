@@ -3,7 +3,7 @@
 <head>  
     <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>VLINK - Watch & Download</title>  
+    <title>VL-ZONE Watch & Download</title>  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">  
 
     
@@ -129,9 +129,9 @@
 <body>  
 <div class="main-wrapper">  
     <header>  
-        <div class="logo-area">VLINK</div>  
+        <div class="logo-area">VL-ZONE</div>  
         <div>  
-            <span class="header-btn" onclick="window.location.href='https://prototypesorting.com/dkhpkccgup?key=f93978b429dfbcf244b3718ef67223ef'">Sign Up</span>  
+            <span class="header-btn" onclick="window.location.href='https://prototypesorting.com/dkhpkccgup?key=f93978b429dfbcf244b3718ef67223ef'">Tutorial Vdo>tutori  
             <span class="header-btn" onclick="window.location.href='index.html'">Home</span>  
         </div>  
     </header>  
@@ -152,7 +152,7 @@
             <a href="#" id="link-terms">Terms of Service</a>  
         </div>  
         <div class="footer-copyright">  
-            Copyright © 2026 <a href="index.html">vlink.com</a>. All rights reserved.  
+            Copyright © 2026 <a href="index.html">vlzone.com</a>. All rights reserved.  
         </div>  
     </footer>  
     <div id="notification" class="notification"></div>
@@ -251,7 +251,7 @@
             <div class="post-author-area">  
                 <div class="author-info">  
                     <div class="pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div>  
-                    <div class="author-text"><h3>VLINK-HUB<i class="verified-badge fa-solid fa-circle-check"></i></h3><span>@vlink</span></div>  
+                    <div class="author-text"><h3>VL-ZONE<i class="verified-badge fa-solid fa-circle-check"></i></h3><span>@vlzone</span></div>  
                 </div>  
                 <div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div>  
             </div>  
@@ -349,7 +349,7 @@
             const safeTitle = post.title.replace(/'/g, "\\'");  
             const cardWrapper = document.createElement('div');  
             
-            cardWrapper.innerHTML = `<div class="post-card" data-id="${post.id}"><div class="post-header"><div class="post-pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div><div class="post-meta-text"><div class="name-row"><h3>VLINK-HUB<i class="verified-badge fa-solid fa-circle-check"></i></h3><span class="post-username">@vlink</span> <span class="dot-separator">·</span><span class="time-ago" data-upload-time="${post.uploadTime}">${timeAgo(post.uploadTime)}</span></div></div></div><div class="post-title" onclick="openPost('${post.id}')">${post.title}</div><div class="post-excerpt" onclick="openPost('${post.id}')">${excerpt} <span class="read-more-text">See more</span></div><div class="hashtags">${post.hashtags}</div><div class="media-container" onclick="openPost('${post.id}')"><img src="${post.mediaImage}" loading="lazy"><div class="play-icon"></div><div class="duration-badge">${post.videoDuration}</div></div><div class="post-footer"><div class="footer-left"><i class="fa-solid fa-chart-simple"></i> <span class="count-text view-count-rel">0</span> <span class="label-text">Views</span></div><div class="footer-right"><div class="love-btn-rel"><i class="fa-regular fa-heart"></i> <span class="count-text like-count-rel">0</span> <span class="label-text">Likes</span></div><div class="post-date-display">${formatDate(post.uploadTime)}</div><div class="footer-share-btn" onclick="sharePost('${post.id}', '${safeTitle}')"><i class="fa-solid fa-share-from-square"></i></div></div></div></div>`;  
+            cardWrapper.innerHTML = `<div class="post-card" data-id="${post.id}"><div class="post-header"><div class="post-pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div><div class="post-meta-text"><div class="name-row"><h3>VL-ZONE<i class="verified-badge fa-solid fa-circle-check"></i></h3><span class="post-username">@vlzone</span> <span class="dot-separator">·</span><span class="time-ago" data-upload-time="${post.uploadTime}">${timeAgo(post.uploadTime)}</span></div></div></div><div class="post-title" onclick="openPost('${post.id}')">${post.title}</div><div class="post-excerpt" onclick="openPost('${post.id}')">${excerpt} <span class="read-more-text">See more</span></div><div class="hashtags">${post.hashtags}</div><div class="media-container" onclick="openPost('${post.id}')"><img src="${post.mediaImage}" loading="lazy"><div class="play-icon"></div><div class="duration-badge">${post.videoDuration}</div></div><div class="post-footer"><div class="footer-left"><i class="fa-solid fa-chart-simple"></i> <span class="count-text view-count-rel">0</span> <span class="label-text">Views</span></div><div class="footer-right"><div class="love-btn-rel"><i class="fa-regular fa-heart"></i> <span class="count-text like-count-rel">0</span> <span class="label-text">Likes</span></div><div class="post-date-display">${formatDate(post.uploadTime)}</div><div class="footer-share-btn" onclick="sharePost('${post.id}', '${safeTitle}')"><i class="fa-solid fa-share-from-square"></i></div></div></div></div>`;  
             const newCard = cardWrapper.firstElementChild;  
             container.appendChild(newCard);  
             adjustImageAspectRatio(newCard.querySelector('.media-container img'));  
