@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FILMIXO Download - Premium Access</title>
+    <title>FILMIXO - Premium Download</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -17,27 +17,44 @@
             display: flex; flex-direction: column; flex: 1;
         }
 
-        /* হেডার: টাইট হাইট ও 1px বটম মার্জিন */
+        /* হেডার ও বর্ডার */
         header { 
-            background: #1da1f2; padding: 8px 15px; /* প্যাডিং কমিয়ে হাইট ফিক্স করা হয়েছে */
+            background: #1da1f2; padding: 8px 15px; 
             display: flex; justify-content: space-between; align-items: center; 
             color: white; position: sticky; top: 0; z-index: 100;
-            margin-bottom: 1px; /* হেডারের নিচে ১ পিক্সেল গ্যাপ */
+            border-bottom: 1px solid #e1e8ed;
         }
         .header-left { flex: 1; display: flex; justify-content: flex-start; }
         .header-center { flex: 2; text-align: center; font-weight: 800; font-size: 18px; text-transform: uppercase; }
-        .header-right { flex: 1; display: flex; justify-content: flex-end; gap: 10px; font-size: 16px; }
-        .home-icon { background: white; color: #1da1f2; padding: 3px 8px; border-radius: 12px; font-weight: bold; font-size: 11px; cursor: pointer; }
+        .header-right { flex: 1; display: flex; justify-content: flex-end; gap: 15px; font-size: 18px; }
+
+        /* হোম বাটন প্রেস ইফেক্ট */
+        .home-icon { 
+            background: white; color: #1da1f2; padding: 3px 10px; border-radius: 12px; 
+            font-weight: bold; font-size: 11px; cursor: pointer;
+            transition: transform 0.1s ease;
+            display: inline-flex; align-items: center; justify-content: center;
+        }
+        .home-icon:active { transform: scale(0.85); } /* ডেবে যাওয়া */
+
+        /* সোশ্যাল আইকন প্রেস ইফেক্ট */
+        .header-right i { 
+            cursor: pointer; 
+            transition: transform 0.1s ease; 
+            color: white;
+        }
+        .header-right i:active { transform: scale(0.8); } /* ডেবে যাওয়া */
 
         .container { flex: 1; width: 100%; }
 
-        /* মুভি কার্ড: মার্জিন টপ ০ */
+        /* মুভি কার্ড */
         .movie-card { 
             width: 100%; background: #fff; padding: 15px; 
-            border-bottom: 1px solid #e1e8ed; margin-top: 0; text-align: center;
+            border-top: 1px solid #e1e8ed; 
+            border-bottom: 1px solid #e1e8ed; 
+            margin-top: 0; text-align: center;
         }
 
-        /* থাম্বনেইল ও প্লে আইকন */
         .thumb-wrapper {
             position: relative; width: 100%; aspect-ratio: 16/9; background: #000;
             border-radius: 12px; margin-bottom: 10px; overflow: hidden;
@@ -45,13 +62,11 @@
         }
         .movie-thumb { width: 100%; height: 100%; object-fit: contain; }
         
-        /* প্লে আইকন লেয়ার */
         .play-overlay {
             position: absolute; font-size: 50px; color: rgba(255, 255, 255, 0.9);
             text-shadow: 0 0 15px rgba(0,0,0,0.5); z-index: 2;
         }
 
-        /* ভিডিও ডিউরেশন ও এইচডি ব্যাজ */
         .meta-info {
             position: absolute; bottom: 8px; width: 100%; padding: 0 10px;
             display: flex; justify-content: space-between; align-items: center; z-index: 3;
@@ -61,7 +76,6 @@
         .hd-tag { background: #ffad1f; color: #000; padding: 1px 4px; border-radius: 3px; font-size: 10px; font-weight: 900; }
         .audio-icon { color: #fff; font-size: 12px; }
 
-        /* ভিডিও প্রগ্রেস বার (০ সেকেন্ড) */
         .video-progress-container {
             width: 100%; height: 3px; background: rgba(255,255,255,0.3);
             position: absolute; bottom: 0; left: 0; z-index: 4;
@@ -76,25 +90,20 @@
             border-radius: 20px; font-size: 12px; font-weight: bold; margin-bottom: 12px;
         }
 
-        .instruction-text { color: #536471; font-size: 13px; line-height: 1.4; margin-bottom: 15px; }
-
-        /* বাটন */
+        /* ডাউনলোড বাটন প্রেস ইফেক্ট */
         .btn-wrapper { width: 100%; display: flex; justify-content: center; padding-bottom: 10px; }
         .final-dl-btn { 
             display: flex; align-items: center; justify-content: center; 
             width: 100%; max-width: 300px; padding: 12px; border-radius: 30px; 
             font-size: 15px; font-weight: 800; text-transform: uppercase; 
             background: #f0f3f4; color: #536471; border: none; cursor: default;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); gap: 10px; pointer-events: none;
+            transition: all 0.2s ease; gap: 10px; pointer-events: none;
         }
-        .final-dl-btn.active { pointer-events: auto; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .final-dl-btn.active { pointer-events: auto; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .final-dl-btn.active:active { transform: scale(0.92); }
 
-        /* ফুটার: হাইট একদম টাইট */
-        .site-footer { 
-            padding: 10px 15px; /* প্যাডিং কমিয়ে টেক্সট অনুযায়ী করা হয়েছে */
-            text-align: center; border-top: 1px solid #eee; background: #fff; 
-        }
-        .footer-copyright { color: #536471; font-size: 12px; line-height: 1.2; }
+        .site-footer { padding: 10px 15px; text-align: center; border-top: 1px solid #eee; background: #fff; }
+        .footer-copyright { color: #536471; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -106,9 +115,9 @@
         </div>
         <div class="header-center">FILMIXO</div>
         <div class="header-right">
-            <i class="fa-brands fa-facebook"></i>
-            <i class="fa-brands fa-whatsapp"></i>
-            <i class="fa-brands fa-telegram"></i>
+            <i class="fa-brands fa-facebook" onclick="window.open('https://facebook.com/yourlink')"></i>
+            <i class="fa-brands fa-whatsapp" onclick="window.open('https://wa.me/yourlink')"></i>
+            <i class="fa-brands fa-telegram" onclick="window.open('https://t.me/yourlink')"></i>
         </div>
     </header>
 
@@ -116,17 +125,14 @@
         <div class="movie-card">
             <div class="thumb-wrapper">
                 <img id="movie-img" src="" class="movie-thumb" alt="">
-                
                 <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
-                
                 <div class="meta-info">
-                    <div class="duration">02:14:35</div>
+                    <div id="video-length" class="duration">00:00:00</div>
                     <div class="quality-icons">
                         <i class="fa-solid fa-microphone audio-icon"></i>
                         <span class="hd-tag">HD</span>
                     </div>
                 </div>
-
                 <div class="video-progress-container">
                     <div class="video-progress-bar"></div>
                 </div>
@@ -134,8 +140,6 @@
 
             <div id="movie-title" class="movie-title">Loading...</div>
             <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Link Verified</div>
-            
-            <p class="instruction-text">The server is ready. Click the button below to start your high-speed download.</p>
             
             <div class="btn-wrapper">
                 <a href="#" id="timer-btn" class="final-dl-btn">
@@ -146,9 +150,7 @@
     </div>
 
     <footer class="site-footer">
-        <div class="footer-copyright">
-            Copyright © 2026 <b>filmixo.com</b>. All rights reserved.
-        </div>
+        <div class="footer-copyright">Copyright © 2026 <b>filmixo.com</b>. All rights reserved.</div>
     </footer>
 </div>
 
@@ -180,6 +182,7 @@
                 downloadUrl = movie.downloadLink1;
                 document.getElementById('movie-img').src = movie.mediaImage;
                 document.getElementById('movie-title').innerText = movie.title;
+                if(movie.videoLength) document.getElementById('video-length').innerText = movie.videoLength;
                 startTimer();
             }
         } catch (err) { console.error(err); }
