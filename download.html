@@ -49,7 +49,8 @@
             padding: 15px; 
             padding-bottom: 25px;
             border: 1px solid var(--glass-border);
-            display: none; text-align: center; 
+            display: none; /* ডাটা লোড না হওয়া পর্যন্ত হাইড থাকবে */
+            text-align: center; 
         } 
         .movie-card.loaded { display: block; }
 
@@ -80,9 +81,7 @@
             transform: translate(-50%, -50%);
             font-size: 50px;
             color: rgba(255, 255, 255, 0.8);
-            text-shadow: 0 0 15px rgba(0,0,0,0.5);
             pointer-events: none;
-            z-index: 2;
         }
 
         .movie-title { 
@@ -90,23 +89,20 @@
             color: #fff; line-height: 1.3; 
         }
         
-        /* এখানে গ্যাপ কমানো হয়েছে */
         .status-badge { 
             display: inline-flex; align-items: center; justify-content: center; gap: 6px; 
             padding: 4px 12px; background: rgba(255, 215, 0, 0.1); color: var(--primary-gold); 
             border-radius: 20px; font-size: 12px; font-weight: 600; 
-            margin-bottom: 2px; /* আগে 10px ছিল, এখন 2px করা হয়েছে */
+            margin-bottom: 2px; /* ব্যাজের নিচের গ্যাপ কমানো হয়েছে */
             border: 1px solid var(--primary-gold);
         }
 
-        /* অ্যাড ইউনিটের গ্যাপ কমানো হয়েছে */
-        .ad-unit { 
+        .ad-unit-inner { 
             width: 100%; 
-            margin: 0px 0; /* গ্যাপ একদম জিরো করা হয়েছে */
-            overflow: hidden; 
+            margin: 0px 0; /* অ্যাডের গ্যাপ কমানো হয়েছে */
             display: flex;
             justify-content: center;
-            align-items: center;
+            overflow: hidden;
         }
 
         .instruction-text { color: #aaa; font-size: 13px; margin: 8px 0; line-height: 1.4; }
@@ -117,18 +113,16 @@
             display: flex; align-items: center; justify-content: center; 
             width: 280px; height: 50px; border-radius: 50px; 
             font-size: 15px; font-weight: 900; text-transform: uppercase; 
-            border: 2px solid #ffffff; cursor: pointer; color: #000; 
+            border: 2px solid #ffffff; color: #000; 
             transition: transform 0.2s; gap: 10px; opacity: 0.6; 
-            pointer-events: none; outline: none; text-decoration: none;
+            pointer-events: none; text-decoration: none;
         }
         .final-dl-btn.active { opacity: 1; pointer-events: auto; }
-        .final-dl-btn:active { transform: scale(0.96); }
 
         .site-footer { 
             padding: 15px; text-align: center; border-top: 1px solid #222; 
             color: #777; font-size: 12px; margin-top: auto; 
         }
-        .site-footer b { color: var(--primary-gold); }
     </style>
 </head>
 <body>
@@ -137,20 +131,42 @@
     <header><div class="logo-area">FILMIXO</div></header>
 
     <div style="display: flex; justify-content: center; overflow: hidden; width: 100%; margin: 5px 0">
-        <div style="flex-shrink: 0;">
-            <script type="text/javascript">
-              atOptions = { 'key' : 'fe5e23bc5bdf1a2a65486ec3cbb7cd02', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };
-            </script>
-            <script type="text/javascript" src="https://prototypesorting.com/fe5e23bc5bdf1a2a65486ec3cbb7cd02/invoke.js"></script>
-        </div>
+        <script type="text/javascript">
+          atOptions = { 'key' : 'fe5e23bc5bdf1a2a65486ec3cbb7cd02', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };
+        </script>
+        <script type="text/javascript" src="https://prototypesorting.com/fe5e23bc5bdf1a2a65486ec3cbb7cd02/invoke.js"></script>
     </div>
     
     <div class="container">
-        <div id="movie-content" class="movie-card"></div>
+        <div id="movie-content" class="movie-card">
+            <div class="thumb-wrapper">
+                <img id="movie-img" src="" class="movie-thumb" alt="Thumbnail">
+                <i class="fa-solid fa-circle-play play-icon-overlay"></i>
+            </div>
+            <div id="movie-name" class="movie-title"></div>
+            <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Verification Successful</div>
+            
+            <div class="ad-unit-inner">
+                <script type="text/javascript">
+                    atOptions = { 'key' : 'a77d37045b73ff51a416345b6ebcc586', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };
+                </script>
+                <script type="text/javascript" src="https://prototypesorting.com/a77d37045b73ff51a416345b6ebcc586/invoke.js"></script>
+            </div>
+
+            <p class="instruction-text">Your high-speed link is ready. <br>Click the button below to start.</p>
+            
+            <div class="btn-wrapper">
+                <a href="#" id="timer-btn" class="final-dl-btn">
+                    <i class="fa-solid fa-hourglass-half"></i> <span id="btn-text">Wait for 10 Seconds</span>
+                </a>
+            </div>
+        </div>
     </div>
 
-    <script async="async" data-cfasync="false" src="https://prototypesorting.com/247476cdf6d68a31797ec615e7b10572/invoke.js"></script>
-    <div id="container-247476cdf6d68a31797ec615e7b10572"></div>
+    <div style="display: flex; justify-content: center; width: 100%; margin: 10px 0;">
+        <script async="async" data-cfasync="false" src="https://prototypesorting.com/247476cdf6d68a31797ec615e7b10572/invoke.js"></script>
+        <div id="container-247476cdf6d68a31797ec615e7b10572"></div>
+    </div>
 
     <footer class="site-footer">
         Copyright © 2026 <b>filmixo.com</b>. All rights reserved.
@@ -158,20 +174,12 @@
 </div>
 
 <script>
-    const buttonColors = [
-        'linear-gradient(135deg, #FFD700, #b8860b)', 
-        'linear-gradient(135deg, #00c6ff, #0072ff)', 
-        'linear-gradient(135deg, #f80759, #bc4e9c)', 
-        'linear-gradient(135deg, #11998e, #38ef7d)'
-    ];
-    
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get('id');
-    let downloadUrl = "";
-
-    // রেফারার চেক (আপনার নতুন ডোমেইন পাথ অনুযায়ী)
     const referrer = document.referrer;
+    // আপনার নতুন ডোমেইন অনুযায়ী রেফারার চেক
     const isValidEntry = referrer.includes("filmixo.github.io/movie/post.html");
+    let downloadUrl = "";
 
     async function loadPageData() {
         if (!postId) return;
@@ -183,38 +191,20 @@
 
             if (movie) {
                 downloadUrl = movie.downloadLink1;
-                const randomBg = buttonColors[Math.floor(Math.random() * buttonColors.length)];
-                const contentDiv = document.getElementById('movie-content');
                 
-                // এখানে HTML সরাসরি লেখা হয়েছে এবং অ্যাড ইউনিট ইনজেক্ট করা হয়েছে
-                contentDiv.innerHTML = `
-                    <div class="thumb-wrapper">
-                        <img src="${movie.mediaImage}" class="movie-thumb" alt="Thumbnail">
-                        <i class="fa-solid fa-circle-play play-icon-overlay"></i>
-                    </div>
-                    <div class="movie-title">${movie.title}</div>
-                    <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Verification Successful</div>
-                    
-                    <div class="ad-unit">
-                        <script type="text/javascript">
-                            atOptions = { 'key' : 'a77d37045b73ff51a416345b6ebcc586', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };
-                        <\/script>
-                        <script type="text/javascript" src="https://prototypesorting.com/a77d37045b73ff51a416345b6ebcc586/invoke.js"><\/script>
-                    </div>
-
-                    <p class="instruction-text">Your high-speed link is ready. <br>Click the button below to start.</p>
-                    
-                    <div class="btn-wrapper">
-                        <a href="#" id="timer-btn" class="final-dl-btn" style="background: ${randomBg}">
-                            <i class="fa-solid fa-hourglass-half"></i> <span id="btn-text">Wait for 10 Seconds</span>
-                        </a>
-                    </div>
-                `;
-
-                contentDiv.classList.add('loaded');
+                // ডাটা বসানো হচ্ছে
+                document.getElementById('movie-img').src = movie.mediaImage;
+                document.getElementById('movie-name').innerText = movie.title;
+                
+                // র্যান্ডম বাটন কালার
+                const colors = ['linear-gradient(135deg, #FFD700, #b8860b)', 'linear-gradient(135deg, #00c6ff, #0072ff)', 'linear-gradient(135deg, #f80759, #bc4e9c)'];
+                document.getElementById('timer-btn').style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                // কার্ড শো করা হচ্ছে
+                document.getElementById('movie-content').classList.add('loaded');
                 initTimer();
             }
-        } catch (err) { console.error(err); }
+        } catch (err) { console.error("Error loading JSON:", err); }
     }
 
     function initTimer() {
