@@ -258,11 +258,11 @@
         const itv = setInterval(() => {
             sec--;
             if (sec > 0) {
-                txt.innerText = `Wait ${sec} second`;
+                txt.innerText = `Plz Wait ${sec} second`;
             } else {
                 clearInterval(itv);
                 const color = getBtnColor();
-                txt.innerText = "DOWNLOAD NOW";
+                txt.innerText = "Click Download Now";
                 ico.className = "fa-solid fa-circle-down";
                 btn.style.background = color;
                 btn.style.color = "#fff";
