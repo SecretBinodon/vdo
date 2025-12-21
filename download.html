@@ -98,17 +98,14 @@
         }
 
         .instruction-text { 
-    color: #aaa; 
-    font-size: 13px; 
-    margin: 2px 0 8px 0; 
-    line-height: 1.4; 
-    
-    /* এই তিনটি লাইন মাস্ট যোগ করবেন */
-    width: 100%; 
-    display: block;
-    padding: 0 10px; /* ডানে-বামে একটু জায়গা রাখা যাতে কার্ডের সাথে লেগে না যায় */
-}
-
+            color: #aaa; 
+            font-size: 13px; 
+            margin: 2px 0 8px 0; 
+            line-height: 1.4; 
+            width: 100%; 
+            display: block;
+            padding: 0 5px; /* হালকা প্যাডিং রাখা হয়েছে যাতে একদম বর্ডারে না ঠেকে */
+        }
 
         .btn-wrapper { width: 100%; display: flex; justify-content: center; margin-top: 5px; }
         
@@ -144,7 +141,7 @@
             <div id="movie-title" class="movie-title"></div>
             <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Verification Successful</div>
             
-            <p class="instruction-text">Your high-speed link is ready. <br>Click the button below to start.</p>
+            <p class="instruction-text">Your high-speed link is ready. Click the button below to start.</p>
             
             <div class="btn-wrapper">
                 <a href="#" id="timer-btn" class="final-dl-btn">
