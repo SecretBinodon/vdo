@@ -386,19 +386,20 @@
 
 
 
-
-
+        // ১. হ্যান্ডেল ভিডিও ক্লিক (আগের ফাংশন)
     window.handleVideoClick = function() {  
         const p = document.getElementById('main-play-btn'), s = document.getElementById('main-spinner');  
         if(p) p.style.display = 'none'; if(s) s.style.display = 'block';  
         setTimeout(() => { window.location.href = CONFIG.GLOBAL_VIDEO_LINK; }, 100);   
     };
 
+    // ২. পেজ শো হলে স্পিনার ঠিক করা
     window.addEventListener('pageshow', () => {  
         const p = document.getElementById('main-play-btn'), s = document.getElementById('main-spinner');  
         if(p) p.style.display = 'flex'; if(s) s.style.display = 'none';  
     });  
   
+    // ৩. পোস্ট ওপেন এবং শেয়ার ফাংশন
     window.openPost = (id) => window.location.href = `/movie/post.html?id=${id}`;  
     
     window.sharePost = (id, title) => { 
@@ -428,7 +429,7 @@
         }  
     };
 
-    // --- পজিশন সেভ ও রিস্টোর লজিক ---
+    // ৪. স্মার্ট স্ক্রল রিস্টোর লজিক (Lazy Load ফ্রেন্ডলি)
     window.addEventListener('beforeunload', () => {
         if (postId) {
             sessionStorage.setItem(`finalScroll_${postId}`, window.scrollY);
@@ -439,28 +440,35 @@
         history.scrollRestoration = 'manual';
     }
 
-    function restoreScrollPos() {
+    async function restoreScrollPos() {
         const navigationType = window.performance.getEntriesByType("navigation")[0]?.type;
         const savedPos = sessionStorage.getItem(`finalScroll_${postId}`);
 
         if (navigationType === 'back_forward' && savedPos) {
+            const scrollTarget = parseInt(savedPos);
+
+            // যদি পজিশন রিলেটেড সেকশনের দিকে হয়, তবে ফোর্স লোড ব্যাচ
+            if (scrollTarget > 500) {
+                loadNextBatch(); 
+            }
+
+            // কন্টেন্ট রেন্ডার হওয়ার জন্য পর্যাপ্ত সময় (৮০০ms) দিয়ে স্ক্রল করা
             setTimeout(() => {
                 window.scrollTo({
-                    top: parseInt(savedPos),
+                    top: scrollTarget,
                     behavior: 'instant'
                 });
                 sessionStorage.removeItem(`finalScroll_${postId}`);
-            }, 650); 
+            }, 800); 
         } else {
             sessionStorage.removeItem(`finalScroll_${postId}`);
         }
     }
 
-    // প্রথমে পোস্ট লোড হবে, তারপর স্ক্রল হবে
+    // ৫. কন্টেন্ট লোড হওয়ার পর স্ক্রল রিস্টোর শুরু
     init().then(() => {
-        setTimeout(restoreScrollPos, 100);
+        restoreScrollPos();
     });
-    
 </script>  
 </body>  
 </html>
