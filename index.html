@@ -148,7 +148,7 @@
         .result-title { font-size: 16px; font-weight: 600; color: #0f1419; }
         .result-excerpt { font-size: 13px; color: #536471; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .result-img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; }
-        #not-found { text-align: center; color: #65676b; margin-top: 50px; font-size: 18px; font-weight: 500; display: none; padding: 20px; border-radius: 8px; background-color: #f0f2f5; }
+        #not-found { text-align: center; color: #536471; margin-top: 60px; font-size: 18px; font-weight: 700; display: none; padding: 30px 20px; border-radius: 15px; background-color: #f8f9fa; border: 1px dashed #cfd9de; margin-left: 15px; margin-right: 15px; }
     </style>
 </head>
 <body>
@@ -409,8 +409,15 @@
                 return titleA.localeCompare(titleB);
             });
             
-            if (searchFiltered.length === 0) { notFound.style.display = 'block'; return; }
-            notFound.style.display = 'none'; loadMoreSearch();
+                if (searchFiltered.length === 0) { 
+                searchResults.innerHTML = ''; 
+                notFound.innerHTML = '<i class="fa-solid fa-video-slash" style="display:block; font-size:30px; margin-bottom:10px; color:#9fa6ad;"></i> Movie Not Found'; 
+                notFound.style.display = 'block'; 
+                searchResults.appendChild(notFound); 
+                return; 
+            }
+            notFound.style.display = 'none'; 
+            loadMoreSearch();
         }
 
         function loadMoreSearch() {
