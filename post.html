@@ -382,10 +382,7 @@
             if((await getDoc(uRef)).exists()) { } else { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); } 
         });  
     }  
-
-
-
-
+    
         // ১. হ্যান্ডেল ভিডিও ক্লিক (আগের ফাংশন)
     window.handleVideoClick = function() {  
         const p = document.getElementById('main-play-btn'), s = document.getElementById('main-spinner');  
@@ -467,7 +464,7 @@
 
     // ৫. কন্টেন্ট লোড হওয়ার পর স্ক্রল রিস্টোর শুরু
     init().then(() => {
-        restoreScrollPos();
+    restoreScrollPos();
     });
 </script>  
 </body>  
