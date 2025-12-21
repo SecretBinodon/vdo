@@ -306,7 +306,7 @@
             availablePosts = historicalPosts.slice(0, CONFIG.TOTAL_RELATED_POSTS);  
             if (availablePosts.length > 0) {
             document.getElementById('related-section-id').style.display = 'block';
-            setupRelatedSectionObserver(); 
+            setupRelatedSectionObserver(); }
         } catch (e) {   
             postContainer.innerHTML = `<div style="padding:20px;text-align:center;color:red;">Error loading post: ${e.message}</div>`;   
             mainWrapper.classList.add('loaded');   
