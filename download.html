@@ -93,15 +93,13 @@
         .status-badge { 
             display: inline-flex; align-items: center; justify-content: center; gap: 6px; 
             padding: 4px 12px; background: rgba(255, 215, 0, 0.1); color: var(--primary-gold); 
-            border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 2px;
+            border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 15px;
             border: 1px solid var(--primary-gold);
         }
 
-        .ad-unit { width: 100%; margin: 0px 0; overflow: hidden; display: flex; justify-content: center; }
-
         .instruction-text { color: #aaa; font-size: 13px; margin: 8px 0; line-height: 1.4; }
 
-        .btn-wrapper { width: 100%; display: flex; justify-content: center; margin-top: 5px; }
+        .btn-wrapper { width: 100%; display: center; justify-content: center; margin-top: 5px; }
         
         .final-dl-btn { 
             display: flex; align-items: center; justify-content: center; 
@@ -126,15 +124,6 @@
 <div class="main-wrapper">
     <header><div class="logo-area">FILMIXO</div></header>
 
-    <div style="display: flex; justify-content: center; overflow: hidden; width: 100%; margin: 5px 0">
-        <div style="flex-shrink: 0;">
-            <script type="text/javascript">
-              atOptions = { 'key' : 'fe5e23bc5bdf1a2a65486ec3cbb7cd02', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };
-            </script>
-            <script type="text/javascript" src="https://prototypesorting.com/fe5e23bc5bdf1a2a65486ec3cbb7cd02/invoke.js"></script>
-        </div>
-    </div>
-    
     <div class="container">
         <div id="movie-content" class="movie-card">
             <div class="thumb-wrapper">
@@ -144,13 +133,6 @@
             <div id="movie-title" class="movie-title"></div>
             <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Verification Successful</div>
             
-            
-                <script type="text/javascript">
-                    atOptions = { 'key' : 'a77d37045b73ff51a416345b6ebcc586', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };
-                </script>
-                <script type="text/javascript" src="https://prototypesorting.com/a77d37045b73ff51a416345b6ebcc586/invoke.js"></script>
-            </div>
-
             <p class="instruction-text">Your high-speed link is ready. <br>Click the button below to start.</p>
             
             <div class="btn-wrapper">
@@ -159,10 +141,6 @@
                 </a>
             </div>
         </div>
-    </div>
-
-    <div style="display: flex; justify-content: center; width: 100%; margin: 5px 0">
-        <script async="async" data-cfasync="false" src="https://prototypesorting.com/247476cdf6d68a31797ec615e7b10572/invoke.js"></script>
     </div>
 
     <footer class="site-footer">
@@ -190,10 +168,11 @@
                 document.getElementById('movie-img').src = movie.mediaImage;
                 document.getElementById('movie-title').innerText = movie.title;
                 document.getElementById('timer-btn').style.background = buttonColors[Math.floor(Math.random() * buttonColors.length)];
+                
                 document.getElementById('movie-content').classList.add('loaded');
                 initTimer();
             }
-        } catch (err) { console.error(err); }
+        } catch (err) { console.error("Error loading data:", err); }
     }
 
     function initTimer() {
