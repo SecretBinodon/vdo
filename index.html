@@ -19,15 +19,12 @@
         body { background-color: #ffffff; display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; }
         .main-container { background-color: white; width: 100%; max-width: 600px; min-height: 10vh; border-left: 1px solid #ddd; border-right: 1px solid #ddd; position: relative; padding-bottom: 0; }
 
-        /* --- কভার ফটো (ফিক্সড হাইট) --- */
-        .cover-photo { width: 100%; height: 150px; min-height: 150px; background-color: #ddd; overflow: hidden; position: relative; aspect-ratio: 320 / 150; display: block; }
-        .cover-photo img { width: 100%; height: 100%; object-fit: cover; display: block; will-change: transform; transition: none; }
-
         /* --- প্রোফাইল হেডার --- */
         .profile-header-area { position: relative; padding: 0 15px; display: flex; justify-content: space-between; align-items: flex-start; }
         .profile-pic-container { margin-top: -75px; z-index: 2; }
         .profile-pic { width: 140px; height: 140px; border-radius: 50%; border: 4px solid white; background-color: #000; overflow: hidden; display: flex; justify-content: center; align-items: center; }
         .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
+        .cover-photo { width: 100%; height: 150px; background-color: #f0f2f5; overflow: hidden; position: relative; display: block; } .cover-photo img { width: 100%; height: 150px; object-fit: cover; display: block; }
         .action-buttons { display: flex; gap: 8px; margin-top: 10px; }
         .btn { border: none; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: bold; color: white; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: transform 0.1s; -webkit-tap-highlight-color: transparent; user-select: none; }
         .btn:active { transform: scale(0.95); }
