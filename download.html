@@ -3,176 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FILMIXO Download</title>
+    <title>FILMIXO Download - Ready to Movie</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --primary-gold: #FFD700;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --primary-blue: #1da1f2;
+            --bg-gray: #f0f2f5;
         }
 
-        /* এটি সেই গুরুত্বপূর্ণ স্টার চিহ্ন যা সব ডিভাইসে গ্যাপ ঠিক রাখে */
-        * { 
-            margin: 0; padding: 0; box-sizing: border-box; 
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        /* পুরো পেজকে সব ডিভাইসে মাঝখানে রাখার লজিক */
-        body { 
-            background: #050505;
-            display: flex; 
-            flex-direction: column;
-            align-items: center; 
-            min-height: 100vh; 
-            color: #fff;
-            width: 100%;
-        }
-
-        /* ল্যাপটপ বা বড় স্ক্রিনে ৫00px এর মধ্যে কন্টেন্ট ধরে রাখা */
-        .main-wrapper { 
-            width: 100%; 
-            max-width: 500px; 
-            display: flex; 
-            flex-direction: column; 
-            margin: 0 auto;
-        }
-
-        header { 
-            background: rgba(20, 20, 20, 0.95);
-            padding: 12px;
-            text-align: center;
-            border-bottom: 2px solid var(--primary-gold);
-            position: sticky; top: 0; z-index: 100;
-            backdrop-filter: blur(10px);
-            width: 100%;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; text-decoration: none; }
         
-        .logo-area { 
-            font-weight: 900; font-size: 22px; color: var(--primary-gold); 
-            text-transform: uppercase; letter-spacing: 3px; 
+        body { background-color: #ffffff; display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; }
+
+        .main-wrapper { 
+            width: 100%; max-width: 600px; min-height: 100vh; background: #fff; 
+            border-left: 1px solid #eee; border-right: 1px solid #eee;
+            display: flex; flex-direction: column;
         }
 
-        .container { flex: 1; padding: 10px 15px; width: 100%; }
+        /* হেডার: ইনডেক্স এবং পোস্ট পেজের সাথে মিল রেখে */
+        header { 
+            background: var(--primary-blue); padding: 12px 15px; 
+            display: flex; justify-content: space-between; align-items: center; 
+            color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+        }
+        .logo-area { font-weight: 800; font-size: 20px; text-transform: uppercase; }
+        .header-btn { background: white; color: var(--primary-blue); padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 14px; cursor: pointer; }
 
+        .container { flex: 1; padding: 20px 15px; text-align: center; }
+
+        /* কার্ডটি সরাসরি দৃশ্যমান থাকবে, কোনো display: none থাকবে না */
         .movie-card { 
-            width: 100%; background: var(--glass-bg); border-radius: 15px; 
-            padding: 15px; 
-            padding-bottom: 25px;
-            border: 1px solid var(--glass-border);
-            display: none; text-align: center; 
-        } 
-        .movie-card.loaded { display: block; }
+            width: 100%; background: #fff; border-radius: 12px; 
+            padding: 15px; border: 1px solid #e1e8ed;
+            margin-bottom: 20px;
+        }
 
         .thumb-wrapper {
             position: relative; width: 100%; aspect-ratio: 16/9; background: #000;
-            border-radius: 10px; margin-bottom: 10px; border: 1px solid #333;
-            overflow: hidden; display: flex; align-items: center; justify-content: center;
+            border-radius: 10px; margin-bottom: 15px; overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
         }
+        .movie-thumb { width: 100%; height: 100%; object-fit: contain; }
 
-        .movie-thumb { max-width: 100%; max-height: 100%; object-fit: contain; }
-
-        .play-icon-overlay {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            font-size: 50px; color: rgba(255, 255, 255, 0.8);
-            text-shadow: 0 0 15px rgba(0,0,0,0.5); pointer-events: none; z-index: 2;
-        }
-
-        .movie-title { font-size: 19px; font-weight: 700; margin-bottom: 8px; color: #fff; line-height: 1.3; }
+        .movie-title { font-size: 20px; font-weight: 800; color: #0f1419; margin-bottom: 10px; min-height: 26px; }
         
         .status-badge { 
-            display: inline-flex; align-items: center; justify-content: center; gap: 6px; 
-            padding: 4px 12px; background: rgba(255, 215, 0, 0.1); color: var(--primary-gold); 
-            border-radius: 20px; font-size: 12px; font-weight: 600; 
-            margin-top: 15px; margin-bottom: 5px; border: 1px solid var(--primary-gold);
+            display: inline-flex; align-items: center; gap: 6px; 
+            padding: 6px 15px; background: #e8f5fd; color: var(--primary-blue); 
+            border-radius: 20px; font-size: 13px; font-weight: bold; margin-bottom: 15px;
         }
 
-        .instruction-text { 
-            color: #aaa; font-size: 13px; margin: 2px 0 8px 0; line-height: 1.4; 
-            width: 100%; display: block; padding: 0 5px;
-        }
+        .instruction-text { color: #536471; font-size: 14px; line-height: 1.4; margin-bottom: 20px; }
 
-        .btn-wrapper { width: 100%; display: flex; justify-content: center; margin-top: 5px; }
-        
+        /* বাটন ডিজাইন */
+        .btn-wrapper { width: 100%; display: flex; justify-content: center; }
         .final-dl-btn { 
             display: flex; align-items: center; justify-content: center; 
-            width: 280px; height: 50px; border-radius: 50px; 
-            font-size: 15px; font-weight: 900; text-transform: uppercase; 
-            border: 2px solid #ffffff; cursor: pointer; color: #000; 
-            transition: transform 0.2s; gap: 10px; opacity: 0.6; 
-            pointer-events: none; outline: none; text-decoration: none;
+            width: 100%; max-width: 300px; padding: 15px; border-radius: 30px; 
+            font-size: 16px; font-weight: 800; text-transform: uppercase; 
+            background: #000; color: #fff; border: none; cursor: pointer;
+            transition: transform 0.1s; gap: 10px; opacity: 0.5; pointer-events: none;
         }
-        .final-dl-btn.active { opacity: 1; pointer-events: auto; }
+        .final-dl-btn.active { opacity: 1; pointer-events: auto; background: var(--primary-blue); }
         .final-dl-btn:active { transform: scale(0.96); }
 
-        .site-footer { 
-            padding: 15px; text-align: center; border-top: 1px solid #222; 
-            color: #777; font-size: 12px; margin-top: auto; width: 100%;
-        }
-        .site-footer b { color: var(--primary-gold); }
+        /* ফুটার */
+        .site-footer { padding: 30px 20px; text-align: center; border-top: 1px solid #eee; margin-top: auto; }
+        .footer-copyright { color: #536471; font-size: 13px; }
+        .footer-copyright a { color: var(--primary-blue); font-weight: bold; }
+
+        /* অ্যাড সেকশন */
+        .ad-slot { width: 100%; margin: 15px 0; min-height: 100px; display: flex; align-items: center; justify-content: center; background: #fafafa; border: 1px dashed #ddd; }
     </style>
 </head>
 <body>
 
 <div class="main-wrapper">
-    <header><div class="logo-area">FILMIXO</div></header>
+    <header>
+        <div class="logo-area">FILMIXO</div>
+        <div class="header-btn" onclick="window.location.href='index.html'">Home</div>
+    </header>
 
-
-<div style="display: flex; justify-content: center; overflow: hidden; width: 100%; margin: 5px 0">
-        <script type="text/javascript">
-  atOptions = {
-  	'key' : 'da9154b956691d2aa7c677010e7b6501',
-  	'format' : 'iframe',
-  	'height' : 60,
-  	'width' : 468,
-  	'params' : {}
-  };
-</script>
-<script
-  type="text/javascript"
-  src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"
-></script>
-</div>
-
-    
     <div class="container">
-        <div id="movie-content" class="movie-card">
+        <div class="ad-slot">
+            <p style="color:#ccc; font-size:12px;">Advertisement</p>
+        </div>
+
+        <div class="movie-card">
             <div class="thumb-wrapper">
-                <img id="movie-img" src="" class="movie-thumb" alt="Thumbnail">
-                <i class="fa-solid fa-circle-play play-icon-overlay"></i>
+                <img id="movie-img" src="" class="movie-thumb" alt="">
             </div>
-            <div id="movie-title" class="movie-title"></div>
-            <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Verification Successful</div>
+            <div id="movie-title" class="movie-title">Loading...</div>
+            <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Link Verified</div>
             
-            <p class="instruction-text">Your high-speed link is ready. Click the button below to start.</p>
+            <p class="instruction-text">Your secure download link is being generated. Please wait a few seconds.</p>
             
             <div class="btn-wrapper">
                 <a href="#" id="timer-btn" class="final-dl-btn">
-                    <i class="fa-solid fa-hourglass-half"></i> <span id="btn-text">Wait for 10 Seconds</span>
+                    <i class="fa-solid fa-hourglass-start"></i> <span id="btn-text">Please Wait...</span>
                 </a>
             </div>
+        </div>
+
+        <div class="ad-slot">
+            <p style="color:#ccc; font-size:12px;">Advertisement</p>
         </div>
     </div>
 
     <footer class="site-footer">
-        Copyright © 2026 <b>filmixo.com</b>. All rights reserved.
+        <div class="footer-copyright">
+            Copyright © 2026 <a href="index.html">filmixo.com</a>. All rights reserved.
+        </div>
     </footer>
 </div>
 
-<script>
-    const buttonColors = ['linear-gradient(135deg, #FFD700, #b8860b)', 'linear-gradient(135deg, #00c6ff, #0072ff)', 'linear-gradient(135deg, #f80759, #bc4e9c)'];
+<script type="module">
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get('id');
-    const referrer = document.referrer;
-    
-    // লজিক: শুধুমাত্র নির্দিষ্ট পোস্ট পেজ থেকে আসলেই isValidEntry সত্য হবে
-    const isValidEntry = referrer.includes("filmixo.github.io/movie/post.html");
     let downloadUrl = "";
 
-    async function loadPageData() {
+    // দ্রুত ডেটা লোড করার জন্য এবং ব্লাঙ্ক স্ক্রিন এড়াতে
+    async function initDownloadPage() {
         if (!postId) return;
+
         try {
             const res = await fetch('posts.json');
             const posts = await res.json();
@@ -182,14 +137,12 @@
                 downloadUrl = movie.downloadLink1;
                 document.getElementById('movie-img').src = movie.mediaImage;
                 document.getElementById('movie-title').innerText = movie.title;
-                document.getElementById('timer-btn').style.background = buttonColors[Math.floor(Math.random() * buttonColors.length)];
-                document.getElementById('movie-content').classList.add('loaded');
-                initTimer();
+                startTimer();
             }
         } catch (err) { console.error("Error loading data:", err); }
     }
 
-    function initTimer() {
+    function startTimer() {
         let timeLeft = 10;
         const btn = document.getElementById('timer-btn');
         const text = document.getElementById('btn-text');
@@ -198,25 +151,19 @@
         const countdown = setInterval(() => {
             timeLeft--;
             if (timeLeft > 0) {
-                text.innerText = `Wait for ${timeLeft} Seconds`;
+                text.innerText = `Wait ${timeLeft}s`;
             } else {
                 clearInterval(countdown);
-                
-                // সিকিউরিটি চেক: যদি ইউজার সঠিক সোর্স থেকে আসে
-                if (isValidEntry || (referrer !== "" && referrer.includes("filmixo.github.io"))) {
-                    text.innerText = "START DOWNLOAD NOW";
-                    icon.className = "fa-solid fa-circle-down";
-                    btn.classList.add('active');
-                    btn.href = downloadUrl;
-                } else {
-                    // অবৈধভাবে আসলে এলার্ট দিবে এবং পোস্টে ফেরত পাঠাবে
-                    alert("Unauthorized Access! Please complete the steps from the post page.");
-                    window.location.href = "https://filmixo.github.io/movie/post.html?id=" + postId;
-                }
+                text.innerText = "DOWNLOAD NOW";
+                icon.className = "fa-solid fa-circle-down";
+                btn.classList.add('active');
+                btn.href = downloadUrl;
             }
         }, 1000);
     }
-    document.addEventListener('DOMContentLoaded', loadPageData);
+
+    // উইন্ডো লোড হওয়ার জন্য অপেক্ষা না করে সরাসরি কল
+    initDownloadPage();
 </script>
 </body>
 </html>
