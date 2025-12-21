@@ -382,59 +382,84 @@
             if((await getDoc(uRef)).exists()) { } else { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); } 
         });  
     }  
-  
+
+
+
+
+
+
     window.handleVideoClick = function() {  
         const p = document.getElementById('main-play-btn'), s = document.getElementById('main-spinner');  
         if(p) p.style.display = 'none'; if(s) s.style.display = 'block';  
         setTimeout(() => { window.location.href = CONFIG.GLOBAL_VIDEO_LINK; }, 100);   
-    }  
+    };
+
     window.addEventListener('pageshow', () => {  
         const p = document.getElementById('main-play-btn'), s = document.getElementById('main-spinner');  
         if(p) p.style.display = 'flex'; if(s) s.style.display = 'none';  
     });  
   
     window.openPost = (id) => window.location.href = `/movie/post.html?id=${id}`;  
-    window.sharePost = (id, title) => { const url = window.location.origin + `/movie/post.html?id=${id}`; if (navigator.share) { navigator.share({ title: title, text: title, url: url }).catch((e) => console.log('Share failed', e)); } else { navigator.clipboard.writeText(url); showNotification("Link copied! 📋"); } }  
+    
+    window.sharePost = (id, title) => { 
+        const url = window.location.origin + `/movie/post.html?id=${id}`; 
+        if (navigator.share) { 
+            navigator.share({ title: title, text: title, url: url }).catch((e) => console.log('Share failed', e)); 
+        } else { 
+            navigator.clipboard.writeText(url); 
+            showNotification("Link copied! 📋"); 
+        } 
+    };
+
     window.share = (platform, title) => {  
-        const url = encodeURIComponent(window.location.href); const text = encodeURIComponent(title);  
-        if (platform === 'msg') { const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent); if (isMobile) window.location.href = `fb-messenger://share/?link=${url}`; else window.open(`https://www.facebook.com/dialog/send?link=${url}&app_id=123456789&redirect_uri=${url}`, '_blank'); } else { let link = ''; if(platform === 'fb') link = `https://www.facebook.com/sharer/sharer.php?u=${url}`; else if(platform === 'wa') link = `https://wa.me/?text=${text}%20${url}`; else if(platform === 'tw') link = `https://twitter.com/intent/tweet?text=${text}&url=${url}`; else if(platform === 'tg') link = `https://t.me/share/url?url=${url}&text=${text}`; window.open(link, '_blank'); }  
-    }  
-  
-        window.addEventListener('beforeunload', () => {
-    sessionStorage.setItem(`scrollPos_${postId}`, window.scrollY);
-});
+        const url = encodeURIComponent(window.location.href); 
+        const text = encodeURIComponent(title);  
+        if (platform === 'msg') { 
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent); 
+            if (isMobile) window.location.href = `fb-messenger://share/?link=${url}`; 
+            else window.open(`https://www.facebook.com/dialog/send?link=${url}&app_id=123456789&redirect_uri=${url}`, '_blank'); 
+        } else { 
+            let link = ''; 
+            if(platform === 'fb') link = `https://www.facebook.com/sharer/sharer.php?u=${url}`; 
+            else if(platform === 'wa') link = `https://wa.me/?text=${text}%20${url}`; 
+            else if(platform === 'tw') link = `https://twitter.com/intent/tweet?text=${text}&url=${url}`; 
+            else if(platform === 'tg') link = `https://t.me/share/url?url=${url}&text=${text}`; 
+            window.open(link, '_blank'); 
+        }  
+    };
 
-if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
-}
-
+    // --- পজিশন সেভ ও রিস্টোর লজিক ---
     window.addEventListener('beforeunload', () => {
-        sessionStorage.setItem(`scrollPos_${postId}`, window.scrollY);
+        if (postId) {
+            sessionStorage.setItem(`finalScroll_${postId}`, window.scrollY);
+        }
     });
 
     if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
     }
 
-    function restoreScroll() {
-        const savedScrollPos = sessionStorage.getItem(`scrollPos_${postId}`);
+    function restoreScrollPos() {
         const navigationType = window.performance.getEntriesByType("navigation")[0]?.type;
+        const savedPos = sessionStorage.getItem(`finalScroll_${postId}`);
 
-        if (savedScrollPos && navigationType === 'back_forward') {
+        if (navigationType === 'back_forward' && savedPos) {
             setTimeout(() => {
                 window.scrollTo({
-                    top: parseInt(savedScrollPos),
+                    top: parseInt(savedPos),
                     behavior: 'instant'
                 });
-                sessionStorage.removeItem(`scrollPos_${postId}`);
-            }, 500);
+                sessionStorage.removeItem(`finalScroll_${postId}`);
+            }, 650); 
         } else {
-            sessionStorage.removeItem(`scrollPos_${postId}`);
+            sessionStorage.removeItem(`finalScroll_${postId}`);
         }
     }
 
-    init();
-    restoreScroll();
+    // প্রথমে পোস্ট লোড হবে, তারপর স্ক্রল হবে
+    init().then(() => {
+        setTimeout(restoreScrollPos, 100);
+    });
     
 </script>  
 </body>  
