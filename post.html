@@ -138,7 +138,7 @@
     
     <div id="post-details-container"></div>  
 
-    <div class="related-section" id="related-section-id">  
+    <div class="related-section" id="related-section-id" style="display: none;">  
         <div class="related-header">RELATED POSTS</div>  
         <div id="related-posts-container"></div>  
         <div id="sentinel"><div class="load-more-spinner"></div></div>  
@@ -304,7 +304,9 @@
             const anchorPostTime = new Date(mainPost.uploadTime).getTime();  
             const historicalPosts = posts.filter(p => p.id !== mainPost.id && new Date(p.uploadTime).getTime() < anchorPostTime).sort((a, b) => new Date(b.uploadTime).getTime() - new Date(a.uploadTime).getTime());  
             availablePosts = historicalPosts.slice(0, CONFIG.TOTAL_RELATED_POSTS);  
-            setupRelatedSectionObserver();   
+            if (availablePosts.length > 0) {
+            document.getElementById('related-section-id').style.display = 'block';
+            setupRelatedSectionObserver(); 
         } catch (e) {   
             postContainer.innerHTML = `<div style="padding:20px;text-align:center;color:red;">Error loading post: ${e.message}</div>`;   
             mainWrapper.classList.add('loaded');   
