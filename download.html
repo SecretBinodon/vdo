@@ -90,14 +90,24 @@
             color: #fff; line-height: 1.3; 
         }
         
+        /* এখানে গ্যাপ কমানো হয়েছে */
         .status-badge { 
             display: inline-flex; align-items: center; justify-content: center; gap: 6px; 
             padding: 4px 12px; background: rgba(255, 215, 0, 0.1); color: var(--primary-gold); 
-            border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 10px;
+            border-radius: 20px; font-size: 12px; font-weight: 600; 
+            margin-bottom: 2px; /* আগে 10px ছিল, এখন 2px করা হয়েছে */
             border: 1px solid var(--primary-gold);
         }
 
-        .ad-unit { width: 100%; margin: 5px 0; overflow: hidden; }
+        /* অ্যাড ইউনিটের গ্যাপ কমানো হয়েছে */
+        .ad-unit { 
+            width: 100%; 
+            margin: 0px 0; /* গ্যাপ একদম জিরো করা হয়েছে */
+            overflow: hidden; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
         .instruction-text { color: #aaa; font-size: 13px; margin: 8px 0; line-height: 1.4; }
 
@@ -159,13 +169,12 @@
     const postId = urlParams.get('id');
     let downloadUrl = "";
 
-    // নিখুঁত রেফারার চেক লজিক (HTTPS এবং ফোল্ডার পাথ সহ)
+    // রেফারার চেক (আপনার নতুন ডোমেইন পাথ অনুযায়ী)
     const referrer = document.referrer;
-    // আপনার অরিজিনাল ইউআরএল পাথ চেক করা হচ্ছে
     const isValidEntry = referrer.includes("filmixo.github.io/movie/post.html");
 
     async function loadPageData() {
-        if (!postId) return; // আইডি না থাকলে কাজ করবে না
+        if (!postId) return;
 
         try {
             const res = await fetch('posts.json');
@@ -177,6 +186,7 @@
                 const randomBg = buttonColors[Math.floor(Math.random() * buttonColors.length)];
                 const contentDiv = document.getElementById('movie-content');
                 
+                // এখানে HTML সরাসরি লেখা হয়েছে এবং অ্যাড ইউনিট ইনজেক্ট করা হয়েছে
                 contentDiv.innerHTML = `
                     <div class="thumb-wrapper">
                         <img src="${movie.mediaImage}" class="movie-thumb" alt="Thumbnail">
@@ -185,7 +195,12 @@
                     <div class="movie-title">${movie.title}</div>
                     <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Verification Successful</div>
                     
-                    <div class="ad-unit" id="ad-box"></div>
+                    <div class="ad-unit">
+                        <script type="text/javascript">
+                            atOptions = { 'key' : 'a77d37045b73ff51a416345b6ebcc586', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };
+                        <\/script>
+                        <script type="text/javascript" src="https://prototypesorting.com/a77d37045b73ff51a416345b6ebcc586/invoke.js"><\/script>
+                    </div>
 
                     <p class="instruction-text">Your high-speed link is ready. <br>Click the button below to start.</p>
                     
@@ -196,19 +211,10 @@
                     </div>
                 `;
 
-                // অ্যাড বক্স সেটআপ
-                const adBox = document.getElementById('ad-box');
-                const conf = document.createElement('script');
-                conf.text = `atOptions = {'key' : 'a77d37045b73ff51a416345b6ebcc586', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {}};`;
-                const inv = document.createElement('script');
-                inv.src = 'https://prototypesorting.com/a77d37045b73ff51a416345b6ebcc586/invoke.js';
-                adBox.appendChild(conf);
-                adBox.appendChild(inv);
-
                 contentDiv.classList.add('loaded');
                 initTimer();
             }
-        } catch (err) { console.error("Data loading error:", err); }
+        } catch (err) { console.error(err); }
     }
 
     function initTimer() {
@@ -224,18 +230,13 @@
             } else {
                 clearInterval(countdown);
                 
-                // শক্তিশালী লজিক চেক
                 if (isValidEntry || (referrer !== "" && referrer.includes("filmixo.github.io"))) {
                     text.innerText = "START DOWNLOAD NOW";
                     icon.className = "fa-solid fa-circle-down";
                     btn.classList.add('active');
-                    btn.href = downloadUrl; // JSON থেকে আসা আসল লিঙ্ক
-                    btn.onclick = (e) => { 
-                        window.location.href = downloadUrl; 
-                        return false; 
-                    };
+                    btn.href = downloadUrl;
+                    btn.onclick = () => { window.location.href = downloadUrl; return false; };
                 } else {
-                    // অবৈধভাবে ঢুকলে অ্যালার্ট এবং পোস্ট পেজে ব্যাক পাঠানো
                     alert("Unauthorized Access! Please complete the steps from the post page.");
                     window.location.href = "https://filmixo.github.io/movie/post.html?id=" + postId;
                 }
