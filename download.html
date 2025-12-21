@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FILMIXO Download</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-
-
     
     <style>
         :root {
@@ -56,7 +53,6 @@
         } 
         .movie-card.loaded { display: block; }
 
-        /* ইমেজ কন্টেইনার এবং আইকন পজিশনিং (16:9 অরিজিনাল সাইজ) */
         .thumb-wrapper {
             position: relative;
             width: 100%;
@@ -163,12 +159,14 @@
     const postId = urlParams.get('id');
     let downloadUrl = "";
 
-    // GitHub Pages ডোমেইন এবং রেফারার চেক লজিক
+    // নিখুঁত রেফারার চেক লজিক (HTTPS এবং ফোল্ডার পাথ সহ)
     const referrer = document.referrer;
-    const baseDomain = "https://filmixo.github.io/movie/";
-    const isValidEntry = referrer.includes(baseDomain + "post.html");
+    // আপনার অরিজিনাল ইউআরএল পাথ চেক করা হচ্ছে
+    const isValidEntry = referrer.includes("filmixo.github.io/movie/post.html");
 
     async function loadPageData() {
+        if (!postId) return; // আইডি না থাকলে কাজ করবে না
+
         try {
             const res = await fetch('posts.json');
             const posts = await res.json();
@@ -198,6 +196,7 @@
                     </div>
                 `;
 
+                // অ্যাড বক্স সেটআপ
                 const adBox = document.getElementById('ad-box');
                 const conf = document.createElement('script');
                 conf.text = `atOptions = {'key' : 'a77d37045b73ff51a416345b6ebcc586', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {}};`;
@@ -209,7 +208,7 @@
                 contentDiv.classList.add('loaded');
                 initTimer();
             }
-        } catch (err) { console.error(err); }
+        } catch (err) { console.error("Data loading error:", err); }
     }
 
     function initTimer() {
@@ -225,16 +224,20 @@
             } else {
                 clearInterval(countdown);
                 
-                if (isValidEntry) {
+                // শক্তিশালী লজিক চেক
+                if (isValidEntry || (referrer !== "" && referrer.includes("filmixo.github.io"))) {
                     text.innerText = "START DOWNLOAD NOW";
                     icon.className = "fa-solid fa-circle-down";
                     btn.classList.add('active');
-                    btn.href = downloadUrl;
-                    btn.onclick = (e) => { window.open(downloadUrl, '_blank'); return false; };
+                    btn.href = downloadUrl; // JSON থেকে আসা আসল লিঙ্ক
+                    btn.onclick = (e) => { 
+                        window.location.href = downloadUrl; 
+                        return false; 
+                    };
                 } else {
-                    // সরাসরি লিঙ্কে আসলে পপ-আপ আসবে এবং রিডাইরেক্ট হবে
+                    // অবৈধভাবে ঢুকলে অ্যালার্ট এবং পোস্ট পেজে ব্যাক পাঠানো
                     alert("Unauthorized Access! Please complete the steps from the post page.");
-                    window.location.href = `https://${baseDomain}/movie/post.html?id=${postId}`;
+                    window.location.href = "https://filmixo.github.io/movie/post.html?id=" + postId;
                 }
             }
         }, 1000);
