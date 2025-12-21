@@ -402,11 +402,7 @@
         
         searchInput.addEventListener('input', () => { renderSearchResults(searchInput.value.trim()); });
 
-
-
-
-        
-                async function loadFeed() {
+            async function loadFeed() {
             try {
                 const res = await fetch('posts.json');
                 const posts = await res.json();
@@ -436,11 +432,6 @@
             }
         }
 
-
-
-
-
-        
         document.getElementById('loginForm').addEventListener('submit', (e) => {
             e.preventDefault();
             document.getElementById('loginBtn').innerText='Logging in...';
