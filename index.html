@@ -309,7 +309,7 @@
             const sentinel = document.getElementById('sentinel');
             observer = new IntersectionObserver((entries) => {
                 if (entries[0].isIntersecting) { loadNextBatch(CONFIG.BATCH_SIZE); }
-            }, { rootMargin: '200px' });
+               }, { rootMargin: '500px' });
             observer.observe(sentinel);
         }
         
@@ -366,39 +366,53 @@
         const searchResults = document.getElementById('search-results');
         const notFound = document.getElementById('not-found');
 
-        window.showSearch = () => {
+            window.showSearch = () => {
             searchOverlay.style.display = 'flex';
             deactivateNavButtons();
             document.getElementById('nav-search').classList.add('active');
             document.getElementById('nav-search').classList.remove('inactive');
             searchInput.focus(); renderSearchResults(''); 
             document.body.style.overflow = 'hidden'; 
+            history.pushState({ action: 'search_open' }, ''); // ব্যাক বাটন লজিক
         };
 
         window.hideSearch = () => {
-            searchOverlay.classList.remove('show');
-            setTimeout(() => { searchOverlay.style.display = 'none'; }, 300);
+            searchOverlay.style.display = 'none';
             document.body.style.overflow = ''; searchInput.value = '';
-            searchResults.innerHTML = notFound.outerHTML; notFound.style.display = 'none';
             showFeed(); 
         };
+
+        window.addEventListener('popstate', () => { 
+            if (searchOverlay.style.display === 'flex') { hideSearch(); } 
+        });
         
-        function renderSearchResults(query) {
-            searchResults.innerHTML = '';
-            if (query.length === 0) { searchResults.innerHTML = `<div style="text-align:center; color:#536471; margin-top:50px;">Start typing to search movie...</div>`; notFound.style.display = 'none'; return; }
-            const lowerCaseQuery = query.toLowerCase();
-            const filteredPosts = allPosts.filter(post => post.title.toLowerCase().includes(lowerCaseQuery) || (post.hashtags && post.hashtags.toLowerCase().includes(lowerCaseQuery)));
-            if (filteredPosts.length === 0) { notFound.style.display = 'block'; return; }
-            notFound.style.display = 'none';
-            filteredPosts.forEach(post => {
+         let searchIdx = 0; let searchFiltered = [];
+        function renderSearchResults(q) {
+            searchResults.innerHTML = ''; searchIdx = 0; const query = q.toLowerCase().trim();
+            if (!query) { searchResults.innerHTML = `<div style="text-align:center; color:#536471; margin-top:50px;">Start typing to search...</div>`; notFound.style.display = 'none'; return; }
+            searchFiltered = allPosts.filter(p => p.title.toLowerCase().includes(query) || (p.hashtags && p.hashtags.toLowerCase().includes(query)));
+            if (searchFiltered.length === 0) { notFound.style.display = 'block'; return; }
+            notFound.style.display = 'none'; loadMoreSearch();
+        }
+
+        function loadMoreSearch() {
+            const batch = searchFiltered.slice(searchIdx, searchIdx + 10);
+            batch.forEach(post => {
                 const item = document.createElement('div');
                 item.className = 'search-result-item';
-                item.setAttribute('onclick', `openPost('${post.id}'); hideSearch();`);
-                let excerpt = post.paragraphs && post.paragraphs.length > 0 ? post.paragraphs[0].substring(0, 100) + "..." : "No description available.";
-                item.innerHTML = `<img src="${post.mediaImage}" class="result-img" loading="lazy"><div><div class="result-title">${post.title}</div><div class="result-excerpt">${excerpt}</div></div>`;
+                item.onclick = () => { openPost(post.id); hideSearch(); };
+                let exc = post.paragraphs?.[0]?.substring(0, 70) + "..." || "";
+                item.innerHTML = `<img src="${post.mediaImage}" class="result-img"><div><div class="result-title">${post.title}</div><div class="result-excerpt">${exc}</div></div>`;
                 searchResults.appendChild(item);
             });
+            searchIdx += 10;
         }
+
+        searchResults.addEventListener('scroll', () => {
+            if (searchResults.scrollTop + searchResults.clientHeight >= searchResults.scrollHeight - 50) {
+                if (searchIdx < searchFiltered.length) { loadMoreSearch(); }
+            }
+        });
         
         searchInput.addEventListener('input', () => { renderSearchResults(searchInput.value.trim()); });
 
