@@ -390,7 +390,25 @@
         function renderSearchResults(q) {
             searchResults.innerHTML = ''; searchIdx = 0; const query = q.toLowerCase().trim();
             if (!query) { searchResults.innerHTML = `<div style="text-align:center; color:#536471; margin-top:50px;">Start typing to search...</div>`; notFound.style.display = 'none'; return; }
-            searchFiltered = allPosts.filter(p => p.title.toLowerCase().includes(query) || (p.hashtags && p.hashtags.toLowerCase().includes(query)));
+            
+                searchFiltered = allPosts.filter(p => 
+                p.title.toLowerCase().includes(query) || 
+                (p.hashtags && p.hashtags.toLowerCase().includes(query))
+            ).sort((a, b) => {
+                const titleA = a.title.toLowerCase();
+                const titleB = b.title.toLowerCase();
+                
+                // ১. যদি টাইটেল সার্চ করা অক্ষর দিয়ে শুরু হয়, তবে তাকে অগ্রাধিকার দিন
+                const startsWithA = titleA.startsWith(query);
+                const startsWithB = titleB.startsWith(query);
+                
+                if (startsWithA && !startsWithB) return -1;
+                if (!startsWithA && startsWithB) return 1;
+                
+                // ২. যদি দুটিই শুরু হয় বা শুরু না হয়, তবে নামের অক্ষর অনুযায়ী সাজান
+                return titleA.localeCompare(titleB);
+            });
+            
             if (searchFiltered.length === 0) { notFound.style.display = 'block'; return; }
             notFound.style.display = 'none'; loadMoreSearch();
         }
