@@ -408,24 +408,33 @@ if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
 }
 
-window.addEventListener('load', () => {
-    const savedScrollPos = sessionStorage.getItem(`scrollPos_${postId}`);
-    const navigationType = window.performance.getEntriesByType("navigation")[0]?.type;
+    window.addEventListener('beforeunload', () => {
+        sessionStorage.setItem(`scrollPos_${postId}`, window.scrollY);
+    });
 
-    if (savedScrollPos && navigationType === 'back_forward') {
-        setTimeout(() => {
-            window.scrollTo({
-                top: parseInt(savedScrollPos),
-                behavior: 'instant'
-            });
-            sessionStorage.removeItem(`scrollPos_${postId}`);
-        }, 150);
-    } else {
-        sessionStorage.removeItem(`scrollPos_${postId}`);
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
     }
-});
 
-init();
+    function restoreScroll() {
+        const savedScrollPos = sessionStorage.getItem(`scrollPos_${postId}`);
+        const navigationType = window.performance.getEntriesByType("navigation")[0]?.type;
+
+        if (savedScrollPos && navigationType === 'back_forward') {
+            setTimeout(() => {
+                window.scrollTo({
+                    top: parseInt(savedScrollPos),
+                    behavior: 'instant'
+                });
+                sessionStorage.removeItem(`scrollPos_${postId}`);
+            }, 500);
+        } else {
+            sessionStorage.removeItem(`scrollPos_${postId}`);
+        }
+    }
+
+    init();
+    restoreScroll();
     
 </script>  
 </body>  
