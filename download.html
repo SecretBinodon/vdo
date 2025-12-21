@@ -4,56 +4,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FILMIXO - High Speed Download</title>
+    <title>FILMIXO - Premium Download</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; text-decoration: none; }
         body { background-color: #ffffff; display: flex; flex-direction: column; min-height: 100vh; -webkit-tap-highlight-color: transparent; }
-        .main-wrapper { width: 100%; max-width: 600px; margin: 0 auto; background: #fff; border-left: 1px solid #eee; border-right: 1px solid #eee; flex: 1; display: flex; flex-direction: column; }
-
-        /* Header */
-        header { background: #1da1f2; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #e1e8ed; }
-        .header-left { flex: 1; }
-        .header-center { flex: 2; text-align: center; font-weight: 800; font-size: 18px; text-transform: uppercase; }
-        .header-right { flex: 1; display: flex; justify-content: flex-end; gap: 15px; font-size: 18px; }
-        .home-icon { background: white; color: #1da1f2; padding: 4px 10px; border-radius: 12px; font-weight: bold; font-size: 12px; cursor: pointer; transition: 0.1s; }
-        .home-icon:active, .header-right i:active { transform: scale(0.85); }
-
-        /* Movie Card */
-        .container { flex: 1; width: 100%; }
-        .movie-card { width: 100%; padding: 15px; border-top: 1px solid #e1e8ed; text-align: center; }
         
-        /* Thumb & Video Style */
-        .thumb-wrapper { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; margin-bottom: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #ddd; }
+        .main-wrapper { 
+            width: 100%; max-width: 600px; margin: 0 auto; background: #fff; 
+            border-left: 1px solid #eee; border-right: 1px solid #eee; 
+            flex: 1; display: flex; flex-direction: column; 
+        }
+
+        /* হেডার */
+        header { 
+            background: #1da1f2; padding: 10px 15px; 
+            display: flex; justify-content: space-between; align-items: center; 
+            color: white; position: sticky; top: 0; z-index: 100; 
+            border-bottom: 1px solid #e1e8ed; 
+        }
+        .home-icon { background: white; color: #1da1f2; padding: 4px 10px; border-radius: 12px; font-weight: bold; font-size: 11px; cursor: pointer; transition: 0.1s; }
+        .home-icon:active, .header-right i:active { transform: scale(0.85); }
+        .header-right { display: flex; gap: 15px; font-size: 18px; }
+
+        .container { flex: 1; width: 100%; }
+
+        /* মুভি কার্ড ও বর্ডার (পোস্ট ফাইলের মতো) */
+        .movie-card { 
+            width: 100%; padding: 15px; 
+            border-top: 1px solid #e1e8ed; /* উপরের বর্ডার */
+            border-bottom: 1px solid #e1e8ed; /* নিচের বর্ডার */
+            margin-top: 1px; text-align: center;
+        }
+
+        /* থাম্বনেইল এরিয়া */
+        .thumb-wrapper { 
+            position: relative; width: 100%; aspect-ratio: 16/9; 
+            background: #000; border-radius: 12px; margin-bottom: 12px; 
+            overflow: hidden; display: flex; align-items: center; justify-content: center; 
+        }
         .movie-thumb { width: 100%; height: 100%; object-fit: contain; }
-        .play-overlay { position: absolute; width: 55px; height: 55px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; }
+        
+        /* প্লে বাটন */
+        .play-overlay { 
+            position: absolute; width: 55px; height: 55px; 
+            background: rgba(0,0,0,0.6); border-radius: 50%; 
+            border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; 
+        }
         .play-overlay::after { content: ''; border-left: 18px solid white; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 5px; }
         
-        .meta-info { position: absolute; bottom: 10px; width: 100%; padding: 0 12px; display: flex; justify-content: space-between; align-items: center; z-index: 10; }
-        .duration { background: rgba(0,0,0,0.8); color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: bold; }
-        .hd-group { display: flex; align-items: center; gap: 5px; color: white; }
-        .hd-tag { background: #ffad1f; color: #000; padding: 1px 4px; border-radius: 3px; font-size: 10px; font-weight: 900; }
+        /* ভিডিও কন্ট্রোলস (স্ক্রিনশট অনুযায়ী) */
+        .video-controls-layer {
+            position: absolute; bottom: 10px; left: 0; width: 100%;
+            padding: 0 12px; display: flex; align-items: center; gap: 10px; z-index: 10;
+        }
+        .time-text { color: white; font-size: 12px; font-weight: bold; white-space: nowrap; }
+        
+        /* লম্বা প্রগ্রেস বার (স্ক্রিনশট অনুযায়ী) */
+        .progress-line-bg { 
+            flex-grow: 1; height: 3px; background: rgba(255, 255, 255, 0.3); 
+            border-radius: 2px; position: relative; 
+        }
+        .progress-line-fill { width: 0%; height: 100%; background: #ff0000; border-radius: 2px; }
 
-        /* প্রগ্রেস বার লজিক (০ সেকেন্ডের লাল দাগ) */
-        .progress-container { position: absolute; bottom: 0; left: 0; width: 100%; height: 4px; background: rgba(255,255,255,0.2); z-index: 11; }
-        .progress-bar { width: 0%; height: 100%; background: #ff0000; }
+        .right-meta { display: flex; align-items: center; gap: 6px; color: white; }
+        .hd-badge { background: #ffad1f; color: #000; padding: 1px 4px; border-radius: 3px; font-size: 10px; font-weight: 900; }
 
         .movie-title { font-size: 19px; font-weight: 800; color: #0f1419; margin-bottom: 8px; line-height: 1.3; }
 
-        /* সবুজ সাকসেস ব্যাজ */
-        .success-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 15px; background: #e7f7ed; color: #17bf63; border-radius: 20px; font-size: 13px; font-weight: bold; margin-bottom: 15px; border: 1px solid #17bf63; }
+        /* ভেরিফাই সাকসেসফুল ব্যাজ */
+        .verify-tag { 
+            display: inline-flex; align-items: center; gap: 6px; 
+            padding: 6px 15px; background: #e7f7ed; color: #17bf63; 
+            border-radius: 20px; font-size: 13px; font-weight: bold; 
+            margin-bottom: 15px; border: 1px solid #17bf63; 
+        }
 
         /* ফাস্ট ডাউনলোড টেক্সট */
-        .fast-dl-text { font-size: 18px; font-weight: 800; color: #0f1419; margin: 10px 0; text-transform: uppercase; letter-spacing: 0.5px; }
+        .fast-dl-label { font-size: 18px; font-weight: 800; color: #0f1419; margin: 10px 0; text-transform: uppercase; }
 
-        /* বাটন স্টাইল */
-        .btn-wrapper { width: 100%; display: flex; justify-content: center; padding-bottom: 20px; }
-        .final-dl-btn { display: flex; align-items: center; justify-content: center; width: 100%; max-width: 320px; padding: 14px; border-radius: 30px; font-size: 16px; font-weight: 800; text-transform: uppercase; background: #f0f3f4; color: #536471; border: none; transition: 0.2s; gap: 10px; pointer-events: none; }
-        .final-dl-btn.active { pointer-events: auto; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .final-dl-btn.active:active { transform: scale(0.94); }
+        /* বাটন ইফেক্ট */
+        .btn-container { width: 100%; display: flex; justify-content: center; padding-bottom: 20px; }
+        .dl-button { 
+            display: flex; align-items: center; justify-content: center; 
+            width: 100%; max-width: 320px; padding: 14px; border-radius: 30px; 
+            font-size: 16px; font-weight: 800; text-transform: uppercase; 
+            background: #f0f3f4; color: #536471; border: none; transition: 0.2s; gap: 10px; pointer-events: none; 
+        }
+        .dl-button.active { pointer-events: auto; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .dl-button.active:active { transform: scale(0.94); }
 
-        footer { padding: 15px; text-align: center; border-top: 1px solid #eee; background: #fff; color: #536471; font-size: 13px; }
+        footer { padding: 12px; text-align: center; border-top: 1px solid #eee; background: #fff; color: #536471; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -68,24 +110,30 @@
     <div class="container">
         <div class="movie-card">
             <div class="thumb-wrapper">
-                <img id="movie-img" src="" class="movie-thumb" alt="Thumbnail">
+                <img id="target-img" src="" class="movie-thumb">
                 <div class="play-overlay"></div>
                 
-                <div class="meta-info">
-                    <div id="video-length" class="duration">00:00</div>
-                    <div class="hd-group"><i class="fa-solid fa-microphone"></i><span class="hd-tag">HD</span></div>
+                <div class="video-controls-layer">
+                    <div id="target-duration" class="time-text">00:00</div>
+                    
+                    <div class="progress-line-bg">
+                        <div class="progress-line-fill"></div>
+                    </div>
+
+                    <div class="right-meta">
+                        <i class="fa-solid fa-volume-high"></i> <span class="hd-badge">HD</span>
+                    </div>
                 </div>
-                <div class="progress-container"><div class="progress-bar"></div></div>
             </div>
 
-            <div id="movie-title" class="movie-title">Loading...</div>
+            <div id="target-title" class="movie-title">Loading...</div>
             
-            <div class="success-badge"><i class="fa-solid fa-circle-check"></i> Verify Successful</div>
+            <div class="verify-tag"><i class="fa-solid fa-circle-check"></i> Verify Successful</div>
             
-            <div class="fast-dl-text">Fast Download Link Here</div>
+            <div class="fast-dl-label">Fast Download Link Here</div>
 
-            <div class="btn-wrapper">
-                <a href="#" id="timer-btn" class="final-dl-btn">
+            <div class="btn-container">
+                <a href="#" id="dl-timer-btn" class="dl-button">
                     <i id="btn-icon" class="fa-solid fa-hourglass-half"></i> <span id="btn-text">Wait 10 second</span>
                 </a>
             </div>
@@ -96,69 +144,65 @@
 </div>
 
 <script type="module">
-    const urlParams = new URLSearchParams(window.location.search);
-    const postId = urlParams.get('id');
-    const isFromPost = document.referrer.includes('post.html');
-    let downloadUrl = "";
+    const params = new URLSearchParams(window.location.search);
+    const pid = params.get('id');
+    const isVerified = document.referrer.includes('post.html');
+    let finalLink = "";
 
-    function getRandomColor() {
-        const colors = ['#1da1f2', '#e0245e', '#17bf63', '#ffad1f', '#794bc4', '#000000', '#f44336'];
-        return colors[Math.floor(Math.random() * colors.length)];
+    function getBtnColor() {
+        const c = ['#1da1f2', '#e0245e', '#17bf63', '#ffad1f', '#794bc4', '#000000'];
+        return c[Math.floor(Math.random() * c.length)];
     }
 
-    function getContrastColor(hexColor) {
-        const r = parseInt(hexColor.substr(1, 2), 16), g = parseInt(hexColor.substr(3, 2), 16), b = parseInt(hexColor.substr(5, 2), 16);
-        return ((r * 299 + g * 587 + b * 114) / 1000) > 128 ? '#000000' : '#ffffff';
-    }
+    async function loadData() {
+        if (!pid) return;
 
-    async function init() {
-        if (!postId) return;
-
-        // সরাসরি এক্সেস সিকিউরিটি লজিক
-        if (!isFromPost) {
-            alert("Direct access denied! Please complete the steps on the post page first.");
-            window.location.href = `post.html?id=${postId}`;
+        // সিকিউরিটি লজিক
+        if (!isVerified) {
+            alert("Please complete steps on the post page first!");
+            window.location.href = `post.html?id=${pid}`;
             return;
         }
 
         try {
             const res = await fetch('posts.json');
-            const posts = await res.json();
-            const movie = posts.find(p => p.id === postId);
+            const data = await res.json();
+            const post = data.find(p => p.id === pid);
             
-            if (movie) {
-                downloadUrl = movie.downloadLink1;
-                document.getElementById('movie-img').src = movie.mediaImage;
-                document.getElementById('movie-title').innerText = movie.title;
-                // অরিজিনাল ভিডিও লেন্থ লোড
-                document.getElementById('video-length').innerText = movie.videoDuration || "00:00";
-                startTimer();
+            if (post) {
+                finalLink = post.downloadLink1;
+                document.getElementById('target-img').src = post.mediaImage;
+                document.getElementById('target-title').innerText = post.title;
+                document.getElementById('target-duration').innerText = post.videoDuration || "00:00";
+                runTimer();
             }
-        } catch (err) { console.error(err); }
+        } catch (e) { console.error(e); }
     }
 
-    function startTimer() {
-        let timeLeft = 10;
-        const btn = document.getElementById('timer-btn'), text = document.getElementById('btn-text'), icon = document.getElementById('btn-icon');
+    function runTimer() {
+        let sec = 10;
+        const btn = document.getElementById('dl-timer-btn'), 
+              txt = document.getElementById('btn-text'), 
+              ico = document.getElementById('btn-icon');
 
-        const countdown = setInterval(() => {
-            timeLeft--;
-            if (timeLeft > 0) {
-                text.innerText = `Wait ${timeLeft} second`;
+        const itv = setInterval(() => {
+            sec--;
+            if (sec > 0) {
+                txt.innerText = `Wait ${sec} second`;
             } else {
-                clearInterval(countdown);
-                const bg = getRandomColor();
-                text.innerText = "DOWNLOAD NOW";
-                icon.className = "fa-solid fa-circle-down";
-                btn.style.background = bg;
-                btn.style.color = getContrastColor(bg);
+                clearInterval(itv);
+                const color = getBtnColor();
+                txt.innerText = "DOWNLOAD NOW";
+                ico.className = "fa-solid fa-circle-down";
+                btn.style.background = color;
+                btn.style.color = "#fff";
                 btn.classList.add('active');
-                btn.href = downloadUrl;
+                btn.href = finalLink;
             }
         }, 1000);
     }
 
-    init();
+    loadData();
 </script>
 </body>
 </html>
