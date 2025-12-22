@@ -153,7 +153,9 @@
 <body>
 
     <div class="main-container">
-    <div class="cover-photo" id="cover-slider"></div>
+    <div id="cover-slider" class="cover-photo">
+    <img src="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/FILMIXO.jpg" style="width: 100%; height: 100%; object-fit: cover;">
+</div>
 
         <div class="profile-header-area">
             <div class="profile-pic-container">
@@ -266,7 +268,7 @@
         window.sendEmail = function() { window.location.href = `mailto:${CONFIG.CONTACT_EMAIL}`; }
         window.shareProfile = function() { const url = window.location.href.split('?')[0]; const title = "Secret Binodon"; const text = "Secret Binodon - The #1 Platform for Viral Videos! 🎥 Watch the latest trending videos all in one place. Visit now!"; if (navigator.share) { navigator.share({ title: title, text: text, url: url }).catch((error) => console.log('Share failed', error)); } else { navigator.clipboard.writeText(`${text} ${url}`); showNotification("Website link copied! 📋"); } }
         window.sharePost = function(id, title) { const url = window.location.origin + `/movie/post.html?id=${id}`; if (navigator.share) { navigator.share({ title: title, text: title, url: url }).catch((e) => console.log('Share failed', e)); } else { navigator.clipboard.writeText(url); showNotification("Link copied! 📋"); } }
-        let sliderInterval; function startCoverSlider(posts) { const sc = document.getElementById('cover-slider'); const recent = posts.slice(0, 10); if (recent.length <= 1) { if (recent.length === 1) sc.innerHTML = `<img src="${recent[0].mediaImage}" style="width:100%;height:100%;object-fit:cover;">`; return; } const slidesHTML = recent.map(p => `<img src="${p.mediaImage}" fetchpriority="high" loading="eager">`).join(''); sc.innerHTML = `<div id="slider-inner" class="cover-photo-inner">${slidesHTML}<img src="${recent[0].mediaImage}"></div>`; let cur = 0; const inner = document.getElementById('slider-inner'); const total = recent.length; if (sliderInterval) clearInterval(sliderInterval); sliderInterval = setInterval(() => { cur++; inner.style.transition = "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)"; inner.style.transform = `translateX(-${cur * 100}%)`; if (cur === total) { setTimeout(() => { inner.style.transition = "none"; cur = 0; inner.style.transform = `translateX(0)`; }, 800); } }, 4000); }
+        let sliderInterval; function startCoverSlider(posts) { const sc = document.getElementById('cover-slider'); const recent = posts.slice(0, 10); if (recent.length <= 1) return; setTimeout(() => { const slidesHTML = recent.map(p => `<img src="${p.mediaImage}" fetchpriority="high" loading="eager">`).join(''); sc.innerHTML = `<div id="slider-inner" class="cover-photo-inner">${slidesHTML}<img src="${recent[0].mediaImage}"></div>`; let cur = 0; const inner = document.getElementById('slider-inner'); const total = recent.length; if (sliderInterval) clearInterval(sliderInterval); sliderInterval = setInterval(() => { cur++; inner.style.transition = "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)"; inner.style.transform = `translateX(-${cur * 100}%)`; if (cur === total) { setTimeout(() => { inner.style.transition = "none"; cur = 0; inner.style.transform = `translateX(0)`; }, 800); } }, 4000); }, 4000); }
 
         function adjustImageAspectRatio(imgElement) {
             const mediaContainer = imgElement.closest('.media-container');
