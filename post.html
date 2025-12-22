@@ -241,6 +241,13 @@
         if(post.paragraphs) { post.paragraphs.forEach((p) => { content += `<p class="article-para">${p}</p>`; }); }
         const finalMovieUrl = post.downloadLink1; 
 
+
+
+<script async="async" data-cfasync="false" src="https://prototypesorting.com/1608cb6a976841a38e804d64801334bb/invoke.js"></script>
+<div id="container-1608cb6a976841a38e804d64801334bb"></div>
+
+
+        
         let downloadSectionHTML = '';  
         if (post.downloadLink2 || post.downloadLink3) {  
             downloadSectionHTML += `<div class="download-title-text">Download Full Movie in HD</div><div class="download-buttons-container">${post.downloadLink2 ? `<div id="btn-1080" class="download-btn-v2" style="background:${getRandomColor()};" onclick="handleAdClick('btn-1080', '${post.downloadLink2}')"><i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i>Download 1080p Full HD</div>` : ''}${post.downloadLink3 ? `<div id="btn-720" class="download-btn-v2" style="background:${getRandomColor()};" onclick="handleAdClick('btn-720', '${post.downloadLink3}')"><i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i>Download 720p HD</div>` : ''}<div id="btn-final" class="download-btn-v2 final-download-btn" onclick="handleFinalDownload()"><i class="fa-solid fa-film" style="margin-right: 8px;"></i>Ready to movie Download</div></div>`;  
