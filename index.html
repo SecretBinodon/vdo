@@ -24,9 +24,9 @@
         .profile-pic-container { margin-top: -75px; z-index: 2; }
         .profile-pic { width: 140px; height: 140px; border-radius: 50%; border: 4px solid white; background-color: #000; overflow: hidden; display: flex; justify-content: center; align-items: center; }
         .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
-        .cover-photo { width: 100%; aspect-ratio: 21 / 9; background-color: #f0f2f5; overflow: hidden; position: relative; display: block; } 
-        .cover-photo-inner { display: flex; width: 100%; height: 100%; transition: transform 0.8s cubic-bezier(0.45, 0, 0.55, 1); } 
-        .cover-photo img { width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; display: block; }
+        .cover-photo { width: 100%; aspect-ratio: 21 / 9; background-color: #000; overflow: hidden; position: relative; display: block; contain: paint; }
+        .cover-photo-inner { display: flex; width: 100%; height: 100%; will-change: transform; }
+        .cover-photo img { width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; display: block; background: #000; }
         .action-buttons { display: flex; gap: 8px; margin-top: 10px; }
         .btn { border: none; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: bold; color: white; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: transform 0.1s; -webkit-tap-highlight-color: transparent; user-select: none; }
         .btn:active { transform: scale(0.95); }
@@ -266,7 +266,7 @@
         window.sendEmail = function() { window.location.href = `mailto:${CONFIG.CONTACT_EMAIL}`; }
         window.shareProfile = function() { const url = window.location.href.split('?')[0]; const title = "Secret Binodon"; const text = "Secret Binodon - The #1 Platform for Viral Videos! 🎥 Watch the latest trending videos all in one place. Visit now!"; if (navigator.share) { navigator.share({ title: title, text: text, url: url }).catch((error) => console.log('Share failed', error)); } else { navigator.clipboard.writeText(`${text} ${url}`); showNotification("Website link copied! 📋"); } }
         window.sharePost = function(id, title) { const url = window.location.origin + `/movie/post.html?id=${id}`; if (navigator.share) { navigator.share({ title: title, text: title, url: url }).catch((e) => console.log('Share failed', e)); } else { navigator.clipboard.writeText(url); showNotification("Link copied! 📋"); } }
-        let sliderInterval; function startCoverSlider(posts) { const sc = document.getElementById('cover-slider'); const recent = posts.slice(0, 10); if (!recent.length) return; sc.innerHTML = `<div id="slider-inner" class="cover-photo-inner">${recent.map(p => `<img src="${p.mediaImage}">`).join('')}</div>`; let cur = 0; const inner = document.getElementById('slider-inner'); if (recent.length <= 1) return; if (sliderInterval) clearInterval(sliderInterval); sliderInterval = setInterval(() => { cur = (cur + 1) % recent.length; inner.style.transform = `translateX(-${cur * 100}%)`; }, 4000); }
+        let sliderInterval; function startCoverSlider(posts) { const sc = document.getElementById('cover-slider'); const recent = posts.slice(0, 10); if (recent.length <= 1) { if (recent.length === 1) sc.innerHTML = `<img src="${recent[0].mediaImage}" style="width:100%;height:100%;object-fit:cover;">`; return; } const slidesHTML = recent.map(p => `<img src="${p.mediaImage}" fetchpriority="high" loading="eager">`).join(''); sc.innerHTML = `<div id="slider-inner" class="cover-photo-inner">${slidesHTML}<img src="${recent[0].mediaImage}"></div>`; let cur = 0; const inner = document.getElementById('slider-inner'); const total = recent.length; if (sliderInterval) clearInterval(sliderInterval); sliderInterval = setInterval(() => { cur++; inner.style.transition = "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)"; inner.style.transform = `translateX(-${cur * 100}%)`; if (cur === total) { setTimeout(() => { inner.style.transition = "none"; cur = 0; inner.style.transform = `translateX(0)`; }, 800); } }, 4000); }
 
         function adjustImageAspectRatio(imgElement) {
             const mediaContainer = imgElement.closest('.media-container');
