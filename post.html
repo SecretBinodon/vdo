@@ -110,10 +110,34 @@
     .load-more-spinner { width: 24px; height: 24px; border: 3px solid #ccc; border-top: 3px solid #1da1f2; border-radius: 50%; animation: spin 1s linear infinite; display: none; }  
     #sentinel.loading .load-more-spinner { display: block; }  
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }  
-   .ad-top-ctrl, .ad-btm-ctrl { display: flex; justify-content: center; width: 100%; overflow: hidden; height: auto; }
-   .ad-top-ctrl { margin: 10px 0; } .ad-btm-ctrl { margin: 20px 0; }
+    
+    /* 🔥 AD CONTROLLERS & WRAPPERS - আপডেটেড 🔥 */
+    /* ডিফল্ট অবস্থায় ডিসপ্লে নান (কোন জায়গা নিবে না) */
+    .ad-top-ctrl, .ad-btm-ctrl { 
+        display: none; /* ডিফল্ট হাইড */
+        justify-content: center; 
+        align-items: center; 
+        width: 100%; 
+        overflow-x: hidden; /* ডানে বামে ওভারফ্লো হলে হাইড হবে */
+        overflow-y: visible; /* উপরে নিচে কাটবে না */
+        background: transparent;
+        text-align: center;
+    }
+    
+    /* যখন জাভাস্ক্রিপ্ট ক্লাস যুক্ত করবে তখন শো করবে এবং মার্জিন নিবে */
+    .ad-top-ctrl.ad-visible {
+        display: flex;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
 
+    .ad-btm-ctrl.ad-visible {
+        display: flex;
+        margin-top: 15px;
+        margin-bottom: 10px;
+    }
     </style>
+
 </head>  
 <body>  
 <div class="main-wrapper">  
@@ -211,7 +235,7 @@
         if (imgElement.complete) { imgElement.onload(); }  
     }  
 
-        // 🔥 MAIN POST RENDER (Corrected Layout) 🔥
+    // 🔥 MAIN POST RENDER (With Corrected Ad Placements) 🔥
     function renderMainPost(post) {  
         let content = `<h1 class="article-title">${post.title}</h1>`;  
         if(post.paragraphs) { post.paragraphs.forEach((p) => { content += `<p class="article-para">${p}</p>`; }); }
@@ -230,10 +254,8 @@
                 <div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div>  
             </div>  
             
-            <div class="ad-top-ctrl">
-                <script type="text/javascript">atOptions = { 'key' : 'da9154b956691d2aa7c677010e7b6501', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };</script>
-                <script type="text/javascript" src="//prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
-            </div>
+            <!-- 🔥 AD 1: Top Ad (Image Container এর উপরে) -->
+            <div id="ad-top-wrapper" class="ad-top-ctrl"></div>
 
             <div class="video-container" onclick="handleVideoClick()">
                 <img src="${post.mediaImage}" loading="eager" decoding="sync" fetchpriority="high" alt="Movie Thumbnail">
@@ -245,9 +267,9 @@
             <div class="content-body">  
                 ${content}  
                 
-                <div class="ad-btm-ctrl">
-                    <script type="text/javascript">atOptions = { 'key' : '1608cb6a976841a38e804d64801334bb', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };</script>
-                    <script type="text/javascript" src="//prototypesorting.com/1608cb6a976841a38e804d64801334bb/invoke.js"></script>
+                <!-- 🔥 AD 2: Bottom Ad (Article নিচে) -->
+                <div id="ad-bottom-wrapper" class="ad-btm-ctrl">
+                    <div id="container-1608cb6a976841a38e804d64801334bb"></div>
                 </div>
 
                 ${downloadSectionHTML}   
@@ -269,7 +291,58 @@
         const mainTimeElement = document.getElementById('main-post-time');  
         if (mainTimeElement) { timeElementsToUpdate.push({ element: mainTimeElement, dateString: post.uploadTime }); }  
         
+        // 🔥 INJECT ADS LOGIC 🔥
+        injectAdCodes();
+
         checkVisitStatus();
+    }  
+
+    // 🔥 AD INJECTION FUNCTION (Fixed for Original Size & Centering) 🔥
+    function injectAdCodes() {
+        // ১. Top Ad Inject (Sandboxed Iframe)
+        const topWrap = document.getElementById('ad-top-wrapper');
+        if(topWrap) {
+            // লোড করার সময় ভিজিবল করছি, লোড না হলে জায়গা নিবে না (JS দিয়ে কন্ট্রোল)
+            topWrap.classList.add('ad-visible'); 
+            
+            topWrap.innerHTML = '';
+            const ifr = document.createElement('iframe');
+            
+            // আমরা অ্যাডকে তার অরিজিনাল সাইজ (Native 468x60) দিচ্ছি।
+            // কোনো কন্টেইনার দিয়ে তাকে চাপানো হবে না।
+            ifr.width = 468;
+            ifr.height = 60;
+            
+            // CSS দিয়ে নিশ্চিত করছি আইফ্রেম যেন তার সাইজেই থাকে, কিন্তু বর্ডার না থাকে
+            ifr.style.width = '468px'; 
+            ifr.style.height = '60px';
+            ifr.style.border = '0';
+            ifr.style.overflow = 'hidden'; 
+            ifr.scrolling = 'no';
+            
+            topWrap.appendChild(ifr);
+            
+            const d = ifr.contentWindow.document;
+            d.open();
+            // অরিজিনাল অ্যাড কোড
+            d.write('<script>atOptions = { "key" : "da9154b956691d2aa7c677010e7b6501", "format" : "iframe", "height" : 60, "width" : 468, "params" : {} };<\/script><script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"><\/script>');
+            d.close();
+        }
+
+        // ২. Bottom Ad Inject (Async Script Append)
+        const btmWrapper = document.getElementById('ad-bottom-wrapper');
+        const btmContainer = document.getElementById('container-1608cb6a976841a38e804d64801334bb');
+        
+        if(btmWrapper && btmContainer) {
+            // লোড করার সময় ভিজিবল করছি
+            btmWrapper.classList.add('ad-visible');
+            
+            const s = document.createElement('script');
+            s.src = "https://prototypesorting.com/1608cb6a976841a38e804d64801334bb/invoke.js";
+            s.async = true;
+            s.setAttribute('data-cfasync', 'false');
+            btmContainer.parentNode.appendChild(s);
+        }
     }
   
     async function init() {  
