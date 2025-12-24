@@ -6,11 +6,8 @@
     <title>FILMIXO movie watch & Download</title>  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">  
 
-    
-    
-    
-    
     <style>  
+    /* --- বেসিক সেটআপ --- */
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; text-decoration: none; }  
     body { display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; }  
     .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; padding-bottom: 0; opacity: 0; }  
@@ -19,10 +16,15 @@
     /* --- হেডার সেকশন --- */  
     header { background: #1da1f2; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }  
     .logo-area { font-weight: 800; font-size: 20px; text-transform: uppercase; }  
-    .header-btn { background: white; color: #1da1f2; padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 14px; margin-left: 10px; cursor: pointer; transition: transform 0.1s ease; -webkit-tap-highlight-color: inherit !important; }  
+    .header-btn { background: white; color: #1da1f2; padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 14px; margin-left: 10px; cursor: pointer; transition: transform 0.1s ease; }  
     .header-btn:active { transform: scale(0.95); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) inset; }
 
-    /* --- পোস্ট ডিটেইলস এরিয়া --- */  
+    /* --- [স্মার্ট অ্যাড বক্স] --- */
+    /* অ্যাড না থাকলে হাইট ০ থাকবে, অ্যাড আসলে অটোমেটিক জায়গা নিবে */
+    .ad-box { width: 100%; display: flex; justify-content: center; align-items: center; min-height: 0; transition: all 0.3s ease; }
+    .ad-box:not(:empty) { margin: 10px 0; } /* অ্যাড লোড হলেই কেবল মার্জিন পাবে */
+
+    /* --- পোস্ট ডিটেইলস --- */  
     .post-author-area { padding: 10px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e1e8ed; }  
     .author-info { display: flex; align-items: center; gap: 10px; }  
     .pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }  
@@ -31,20 +33,20 @@
     .author-text span { font-size: 14px; color: #1da1f2; display: block; margin-top: -2px; }  
     .post-time { font-size: 13px; color: #536471; font-weight: bold; }  
 
-    /* --- ভিডিও/ইমেজ কন্টেইনার (ফিক্সড) --- */  
-    .video-container { width: 100%; aspect-ratio: 16 / 9; background: #000; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: 5px; cursor: pointer; contain: content; user-select: none; }  
+    /* --- ভিডিও প্লেয়ার --- */  
+    .video-container { width: 100%; aspect-ratio: 16 / 9; background: #000; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: 5px; cursor: pointer; contain: content; }  
     .video-container img { width: 100%; height: 100%; object-fit: contain; display: block; will-change: transform; transition: none; opacity: 1; }  
     .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }  
     .play-btn-center::after { content: ''; border-left: 20px solid white; border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 5px; }  
     .main-video-spinner { display: none; position: absolute; width: 50px; height: 50px; border: 5px solid rgba(255, 255, 255, 0.3); border-top: 5px solid #fff; border-radius: 50%; animation: spin 1s linear infinite; z-index: 6; }  
     .video-controls { position: absolute; bottom: 0; left: 0; width: 100%; padding: 10px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; display: flex; justify-content: space-between; font-size: 12px; z-index: 5; }  
 
-    /* --- কন্টেন্ট ও প্যারাগ্রাফ --- */
+    /* --- আর্টিকেল ও কন্টেন্ট --- */
     .content-body { padding: 15px 15px 0 15px; }  
     .article-title { font-size: 20px; font-weight: 800; margin-bottom: 15px; color: #0f1419; line-height: 1.3; }  
     .article-para { font-size: 15px; line-height: 1.2; color: #1c1e21; margin-bottom: 12px; text-align: left; letter-spacing: -0.3px; }  
 
-    /* --- ডাউনলোড বাটন সেকশন --- */  
+    /* --- ডাউনলোড সেকশন --- */  
     .download-title-text { font-size: 18px; font-weight: 800; color: #0f1419; text-align: center; margin: 20px 0 10px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }  
     .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 12px; }  
     .download-btn-v2 { display: flex; align-items: center; justify-content: center; width: 100%; padding: 14px 10px; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: all 0.2s; position: relative; }  
@@ -54,7 +56,7 @@
     .final-download-btn:active { transform: scale(0.98); }
     @keyframes luxuryGlow { 0% { box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); transform: scale(1); } 100% { box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); transform: scale(1.02); } }
 
-    /* --- স্ট্যাটস সেকশন --- */  
+    /* --- স্ট্যাটস ও শেয়ার --- */  
     .stats-section { padding: 12px 0; margin-top: 15px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; font-size: 15px; color: #536471; font-weight: 500; }  
     .stats-left { display: flex; align-items: center; gap: 20px; flex-grow: 1; overflow: hidden; }  
     .view-stat { flex: 0 0 auto; display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; }  
@@ -94,7 +96,7 @@
     .play-icon::after { content: ''; display: block; width: 0; height: 0; border-left: 18px solid white; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 4px; }  
     .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0, 0, 0, 0.8); color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; pointer-events: none; z-index: 5; }  
     
-    /* --- ফুটার ও শেয়ার বাটন --- */
+    /* --- ফুটার কার্ড ও লিংক --- */
     .post-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 5px; color: #536471; font-size: 16px; font-weight: 500; }  
     .footer-left { display: flex; align-items: center; gap: 6px; }  
     .footer-right { display: flex; align-items: center; gap: 20px; }  
@@ -127,6 +129,18 @@
 
 </head>  
 <body>  
+
+<!-- [AD SECTION 1] Thumbnail এর উপরের অ্যাড -->
+<template id="ad-src-top">
+    <!-- এখানে এডের কোড লাগান -->
+</template>
+
+<!-- [AD SECTION 2] Article এর নিচের অ্যাড -->
+<template id="ad-src-mid">
+    <!-- এখানে এডের কোড লাগান -->
+</template>
+
+
 <div class="main-wrapper">  
     <header>  
         <div class="logo-area">FILMIXO</div>  
@@ -197,10 +211,10 @@
     };
 
     window.handleFinalDownload = function() {
-    localStorage.removeItem(getVisitedKey('btn-1080'));
-    localStorage.removeItem(getVisitedKey('btn-720'));
-    window.open(`download.html?id=${postId}`, '_blank');
-   };
+        localStorage.removeItem(getVisitedKey('btn-1080'));
+        localStorage.removeItem(getVisitedKey('btn-720'));
+        window.open(`download.html?id=${postId}`, '_blank');
+    };
 
     function updateButtonState() {
         const btn1080 = document.getElementById('btn-1080');
@@ -234,19 +248,20 @@
         };  
         if (imgElement.complete) { imgElement.onload(); }  
     }  
+
+    // --- অ্যাড ইনজেক্ট ফাংশন ---
+    function injectAd(tid, cid) { const t=document.getElementById(tid), c=document.getElementById(cid); if(t&&c){ c.appendChild(t.content.cloneNode(true)); } }
       
-    // --- মেইন পোস্ট রেন্ডার (IMAGE FIX HERE) ---  
+    // --- মেইন পোস্ট রেন্ডার ---  
     function renderMainPost(post) {  
         let content = `<h1 class="article-title">${post.title}</h1>`;  
         if(post.paragraphs) { post.paragraphs.forEach((p) => { content += `<p class="article-para">${p}</p>`; }); }
-        const finalMovieUrl = post.downloadLink1; 
         
         let downloadSectionHTML = '';  
         if (post.downloadLink2 || post.downloadLink3) {  
             downloadSectionHTML += `<div class="download-title-text">Download Full Movie in HD</div><div class="download-buttons-container">${post.downloadLink2 ? `<div id="btn-1080" class="download-btn-v2" style="background:${getRandomColor()};" onclick="handleAdClick('btn-1080', '${post.downloadLink2}')"><i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i>Download 1080p Full HD</div>` : ''}${post.downloadLink3 ? `<div id="btn-720" class="download-btn-v2" style="background:${getRandomColor()};" onclick="handleAdClick('btn-720', '${post.downloadLink3}')"><i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i>Download 720p HD</div>` : ''}<div id="btn-final" class="download-btn-v2 final-download-btn" onclick="handleFinalDownload()"><i class="fa-solid fa-film" style="margin-right: 8px;"></i>Ready to movie Download</div></div>`;  
         }  
           
-        // 🔥 IMAGE FIX: decoding="sync" and fetchpriority="high" added below
         document.getElementById('post-details-container').innerHTML = `  
             <div class="post-author-area">  
                 <div class="author-info">  
@@ -256,6 +271,8 @@
                 <div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div>  
             </div>  
             
+            <div id="ad-box-top" class="ad-box"></div>
+
             <div class="video-container" onclick="handleVideoClick()">
                 <img src="${post.mediaImage}" loading="eager" decoding="sync" fetchpriority="high" alt="Movie Thumbnail">
                 <div class="play-btn-center" id="main-play-btn"></div>
@@ -264,7 +281,8 @@
             </div>
 
             <div class="content-body">  
-                ${content}  
+                ${content} 
+                <div id="ad-box-mid" class="ad-box"></div>
                 ${downloadSectionHTML}   
                 <div class="stats-section">  
                     <div class="stats-left">  
@@ -281,6 +299,9 @@
                 </div>  
             </div>`;  
           
+        injectAd('ad-src-top', 'ad-box-top'); 
+        injectAd('ad-src-mid', 'ad-box-mid');
+
         const mainTimeElement = document.getElementById('main-post-time');  
         if (mainTimeElement) { timeElementsToUpdate.push({ element: mainTimeElement, dateString: post.uploadTime }); }  
         checkVisitStatus();
@@ -383,20 +404,17 @@
         });  
     }  
     
-        // ১. হ্যান্ডেল ভিডিও ক্লিক (আগের ফাংশন)
     window.handleVideoClick = function() {  
         const p = document.getElementById('main-play-btn'), s = document.getElementById('main-spinner');  
         if(p) p.style.display = 'none'; if(s) s.style.display = 'block';  
         setTimeout(() => { window.location.href = CONFIG.GLOBAL_VIDEO_LINK; }, 100);   
     };
 
-    // ২. পেজ শো হলে স্পিনার ঠিক করা
     window.addEventListener('pageshow', () => {  
         const p = document.getElementById('main-play-btn'), s = document.getElementById('main-spinner');  
         if(p) p.style.display = 'flex'; if(s) s.style.display = 'none';  
     });  
   
-    // ৩. পোস্ট ওপেন এবং শেয়ার ফাংশন
     window.openPost = (id) => window.location.href = `/movie/post.html?id=${id}`;  
     
     window.sharePost = (id, title) => { 
@@ -426,7 +444,6 @@
         }  
     };
 
-    // ৪. স্মার্ট স্ক্রল রিস্টোর লজিক (Lazy Load ফ্রেন্ডলি)
     window.addEventListener('beforeunload', () => {
         if (postId) {
             sessionStorage.setItem(`finalScroll_${postId}`, window.scrollY);
@@ -443,13 +460,9 @@
 
         if (navigationType === 'back_forward' && savedPos) {
             const scrollTarget = parseInt(savedPos);
-
-            // যদি পজিশন রিলেটেড সেকশনের দিকে হয়, তবে ফোর্স লোড ব্যাচ
             if (scrollTarget > 500) {
                 loadNextBatch(); 
             }
-
-            // কন্টেন্ট রেন্ডার হওয়ার জন্য পর্যাপ্ত সময় (৮০০ms) দিয়ে স্ক্রল করা
             setTimeout(() => {
                 window.scrollTo({
                     top: scrollTarget,
@@ -462,7 +475,6 @@
         }
     }
 
-    // ৫. কন্টেন্ট লোড হওয়ার পর স্ক্রল রিস্টোর শুরু
     init().then(() => {
     restoreScrollPos();
     });
