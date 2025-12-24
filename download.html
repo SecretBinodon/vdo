@@ -25,11 +25,11 @@
             color: white; position: sticky; top: 0; z-index: 100; 
             border-bottom: 1px solid #e1e8ed; 
         }
-        .header-center { flex: 2; text-align: center; font-weight: 900; font-size: 20px; text-transform: uppercase; letter-spacing: 1px; }
-        .home-icon { background: white; color: #1da1f2; padding: 4px 10px; border-radius: 12px; font-weight: bold; font-size: 11px; cursor: pointer; transition: 0.1s; }
+        .header-center { flex: 2; display: flex; justify-content: center; align-items: center; font-weight: 900; font-size: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .home-icon { background: white; color: #1da1f2; padding: 4px 10px; border-radius: 12px; font-weight: bold; font-size: 11px; cursor: pointer; transition: 0.1s; display: flex; align-items: center; gap: 5px; }
         .home-icon:active, .header-right i:active { transform: scale(0.85); }
-        .header-right { display: flex; gap: 15px; font-size: 18px; }
-
+        .header-right { display: flex; gap: 15px; font-size: 18px; align-items: center; }
+        
         .container { flex: 1; width: 100%; }
 
         .movie-card { 
@@ -113,17 +113,11 @@
 <div class="main-wrapper">
     <header>
         <div class="header-left"><div class="home-icon" onclick="window.location.href='index.html'"><i class="fa-solid fa-house"></i> Home</div></div>
-        <div class="header-center">FILMIXO</div>
+        <div class="header-center"><i class="fa-solid fa-clapperboard" style="margin-right: 8px;"></i>FILMIXO</div>
         <div class="header-right">
-    <a href="আপনার_ফেসবুক_লিঙ্ক_এখানে" target="_blank" style="color: white;">
-        <i class="fa-brands fa-facebook"></i>
-    </a>
-    <a href="https://whatsapp.com/channel/0029VbBoOki1iUxRTHPME83U" target="_blank" style="color: white;">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
-    <a href="https://t.me/filmixo_hub" target="_blank" style="color: white;">
-        <i class="fa-brands fa-telegram"></i>
-    </a>
+    <a href="আপনার_ফেসবুক_লিঙ্ক_এখানে" target="_blank" style="color: white;"><i class="fa-brands fa-facebook"></i></a>
+    <a href="https://whatsapp.com/channel/0029VbBoOki1iUxRTHPME83U" target="_blank" style="color: white;"><i class="fa-brands fa-whatsapp"></i></a>
+    <a href="https://t.me/filmixo_hub" target="_blank" style="color: white;"><i class="fa-brands fa-telegram"></i></a>
 </div>
 </header>
 
