@@ -43,8 +43,10 @@
     .content-body { padding: 15px 15px 0 15px; }  
     .article-title { font-size: 20px; font-weight: 800; margin-bottom: 15px; color: #0f1419; line-height: 1.3; }  
     .article-para { font-size: 15px; line-height: 1.2; color: #1c1e21; margin-bottom: 12px; text-align: left; letter-spacing: -0.3px; }  
-    .top-ad-box { display: flex; justify-content: center; margin-top: 15px; margin-bottom: 15px; }
-    .bottom-ad-box { display: flex; justify-content: center; margin-top: 20px; margin-bottom: 20px; }
+    .ad-free-container { display: flex; justify-content: center; width: 100%; overflow: visible; position: relative; }
+    .ad-free-container div, .ad-free-container iframe { max-width: none !important; width: auto !important; height: auto !important; }
+     #top-ad-id { margin-top: 15px; margin-bottom: 15px; } 
+     #bottom-ad-id { margin-top: 20px; margin-bottom: 20px; }
 
     /* --- ডাউনলোড বাটন সেকশন --- */  
     .download-title-text { font-size: 18px; font-weight: 800; color: #0f1419; text-align: center; margin: 20px 0 10px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }  
@@ -238,18 +240,16 @@
     }  
       
     // --- মেইন পোস্ট রেন্ডার (IMAGE FIX HERE) ---  
-    function renderMainPost(post) {  
+        function renderMainPost(post) {  
         let content = `<h1 class="article-title">${post.title}</h1>`;  
         if(post.paragraphs) { post.paragraphs.forEach((p) => { content += `<p class="article-para">${p}</p>`; }); }
-        const finalMovieUrl = post.downloadLink1; 
         
         let downloadSectionHTML = '';  
         if (post.downloadLink2 || post.downloadLink3) {  
             downloadSectionHTML += `<div class="download-title-text">Download Full Movie in HD</div><div class="download-buttons-container">${post.downloadLink2 ? `<div id="btn-1080" class="download-btn-v2" style="background:${getRandomColor()};" onclick="handleAdClick('btn-1080', '${post.downloadLink2}')"><i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i>Download 1080p Full HD</div>` : ''}${post.downloadLink3 ? `<div id="btn-720" class="download-btn-v2" style="background:${getRandomColor()};" onclick="handleAdClick('btn-720', '${post.downloadLink3}')"><i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i>Download 720p HD</div>` : ''}<div id="btn-final" class="download-btn-v2 final-download-btn" onclick="handleFinalDownload()"><i class="fa-solid fa-film" style="margin-right: 8px;"></i>Ready to movie Download</div></div>`;  
         }  
           
-        // 🔥 IMAGE FIX: decoding="sync" and fetchpriority="high" added below
-            document.getElementById('post-details-container').innerHTML = `  
+        document.getElementById('post-details-container').innerHTML = `  
             <div class="post-author-area">  
                 <div class="author-info">  
                     <div class="pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div>  
@@ -258,7 +258,7 @@
                 <div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div>  
             </div>  
             
-            <div class="top-ad-box" id="top-ad-id"></div>
+            <div id="top-ad-id" class="ad-free-container"></div>
 
             <div class="video-container" onclick="handleVideoClick()">
                 <img src="${post.mediaImage}" loading="eager" decoding="sync" fetchpriority="high" alt="Movie Thumbnail">
@@ -269,7 +269,9 @@
 
             <div class="content-body">  
                 ${content}  
-                <div class="bottom-ad-box" id="bottom-ad-id"></div>
+                
+                <div id="bottom-ad-id" class="ad-free-container"></div>
+
                 ${downloadSectionHTML}   
                 <div class="stats-section">  
                     <div class="stats-left">  
@@ -289,7 +291,6 @@
         const mainTimeElement = document.getElementById('main-post-time');  
         if (mainTimeElement) { timeElementsToUpdate.push({ element: mainTimeElement, dateString: post.uploadTime }); }  
 
-        // অ্যাড ইনজেকশন লজিক
         const topCont = document.getElementById('top-ad-id');
         if(topCont) {
             window.atOptions = { 'key' : 'da9154b956691d2aa7c677010e7b6501', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };
@@ -299,14 +300,13 @@
 
         const botCont = document.getElementById('bottom-ad-id');
         if(botCont) {
-            const innerDiv = document.createElement('div'); innerDiv.id = "container-1608cb6a976841a38e804d64801334bb"; 
-            botCont.appendChild(innerDiv);
+            const innerDiv = document.createElement('div'); innerDiv.id = "container-1608cb6a976841a38e804d64801334bb"; botCont.appendChild(innerDiv);
             const s2 = document.createElement('script'); s2.async = true; s2.dataset.cfasync = "false"; s2.src = "https://prototypesorting.com/1608cb6a976841a38e804d64801334bb/invoke.js";
             botCont.appendChild(s2);
         }
         
         checkVisitStatus();
-    }  
+    }
   
     async function init() {  
         const postContainer = document.getElementById('post-details-container');  
