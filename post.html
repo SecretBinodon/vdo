@@ -43,7 +43,6 @@
     .content-body { padding: 15px 15px 0 15px; }  
     .article-title { font-size: 20px; font-weight: 800; margin-bottom: 15px; color: #0f1419; line-height: 1.3; }  
     .article-para { font-size: 15px; line-height: 1.2; color: #1c1e21; margin-bottom: 12px; text-align: left; letter-spacing: -0.3px; }  
-    .ad-zone{width:100%;display:flex;justify-content:center;overflow:hidden;margin:10px 0}.ad-zone-inner{display:inline-block}
 
     /* --- ডাউনলোড বাটন সেকশন --- */  
     .download-title-text { font-size: 18px; font-weight: 800; color: #0f1419; text-align: center; margin: 20px 0 10px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }  
@@ -160,8 +159,6 @@
 </div>  
 
 <script type="module">  
-function injectAd(id, code){const box=document.querySelector(`#${id} .ad-zone-inner`);if(!box)return;box.innerHTML='';const t=document.createElement('div');t.innerHTML=code;[...t.childNodes].forEach(n=>{if(n.tagName==='SCRIPT'){const s=document.createElement('script');[...n.attributes].forEach(a=>s.setAttribute(a.name,a.value));s.text=n.textContent;box.appendChild(s)}else box.appendChild(n)})}
-
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";  
     import { getFirestore, doc, getDoc, setDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";  
   
@@ -259,8 +256,6 @@ function injectAd(id, code){const box=document.querySelector(`#${id} .ad-zone-in
                 <div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div>  
             </div>  
             
-       <div class="ad-zone" id="ad-top-media"><div class="ad-zone-inner"></div></div>
-            
             <div class="video-container" onclick="handleVideoClick()">
                 <img src="${post.mediaImage}" loading="eager" decoding="sync" fetchpriority="high" alt="Movie Thumbnail">
                 <div class="play-btn-center" id="main-play-btn"></div>
@@ -270,9 +265,6 @@ function injectAd(id, code){const box=document.querySelector(`#${id} .ad-zone-in
 
             <div class="content-body">  
                 ${content}  
-                
-          <div class="ad-zone" id="ad-article-bottom"><div class="ad-zone-inner"></div></div>
-                
                 ${downloadSectionHTML}   
                 <div class="stats-section">  
                     <div class="stats-left">  
@@ -292,26 +284,6 @@ function injectAd(id, code){const box=document.querySelector(`#${id} .ad-zone-in
         const mainTimeElement = document.getElementById('main-post-time');  
         if (mainTimeElement) { timeElementsToUpdate.push({ element: mainTimeElement, dateString: post.uploadTime }); }  
         checkVisitStatus();
-        
- // ===== TOP MEDIA AD (Image / Video এর উপরে) =====
-injectAd(
-'ad-top-media',
-`
-<script>
-atOptions={'key':'da9154b956691d2aa7c677010e7b6501','format':'iframe','height':60,'width':468,'params':{}};
-</script>
-<script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
-`
-);
-
-// ===== ARTICLE BOTTOM AD (Article নিচে, Download এর উপরে) =====
-injectAd(
-'ad-article-bottom',
-`
-<script async="async" data-cfasync="false" src="https://prototypesorting.com/1608cb6a976841a38e804d64801334bb/invoke.js"></script>
-<div id="container-1608cb6a976841a38e804d64801334bb"></div>
-`
-);
     }  
   
     async function init() {  
