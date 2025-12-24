@@ -211,7 +211,7 @@
         if (imgElement.complete) { imgElement.onload(); }  
     }  
 
-    // 🔥 MAIN POST RENDER (With Exact Ad Placements) 🔥
+        // 🔥 MAIN POST RENDER (Corrected Layout) 🔥
     function renderMainPost(post) {  
         let content = `<h1 class="article-title">${post.title}</h1>`;  
         if(post.paragraphs) { post.paragraphs.forEach((p) => { content += `<p class="article-para">${p}</p>`; }); }
@@ -230,7 +230,7 @@
                 <div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div>  
             </div>  
             
-                <div class="ad-top-ctrl">
+            <div class="ad-top-ctrl">
                 <script type="text/javascript">atOptions = { 'key' : 'da9154b956691d2aa7c677010e7b6501', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };</script>
                 <script type="text/javascript" src="//prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
             </div>
@@ -270,7 +270,7 @@
         if (mainTimeElement) { timeElementsToUpdate.push({ element: mainTimeElement, dateString: post.uploadTime }); }  
         
         checkVisitStatus();
-    }  
+    }
   
     async function init() {  
         const postContainer = document.getElementById('post-details-container');  
