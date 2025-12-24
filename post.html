@@ -22,7 +22,7 @@
     /* --- [স্মার্ট অ্যাড বক্স] --- */
     /* অ্যাড না থাকলে হাইট ০ থাকবে, অ্যাড আসলে অটোমেটিক জায়গা নিবে */
     .ad-box { width: 100%; display: flex; justify-content: center; align-items: center; min-height: 0; transition: all 0.3s ease; }
-    .ad-box:not(:empty) { margin: 0px 0; } /* অ্যাড লোড হলেই কেবল মার্জিন পাবে */
+    .ad-box:not(:empty) { margin: 1px 0; } /* অ্যাড লোড হলেই কেবল মার্জিন পাবে */
 
     /* --- পোস্ট ডিটেইলস --- */  
     .post-author-area { padding: 10px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e1e8ed; }  
@@ -34,7 +34,7 @@
     .post-time { font-size: 13px; color: #536471; font-weight: bold; }  
 
     /* --- ভিডিও প্লেয়ার --- */  
-    .video-container { width: 100%; aspect-ratio: 16 / 9; background: #000; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: 5px; cursor: pointer; contain: content; }  
+    .video-container { width: 100%; aspect-ratio: 16 / 9; background: #000; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: 3px; cursor: pointer; contain: content; }  
     .video-container img { width: 100%; height: 100%; object-fit: contain; display: block; will-change: transform; transition: none; opacity: 1; }  
     .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }  
     .play-btn-center::after { content: ''; border-left: 20px solid white; border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 5px; }  
