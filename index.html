@@ -252,7 +252,7 @@
         const deviceId = localStorage.getItem('deviceId') || 'device-' + Date.now();
         localStorage.setItem('deviceId', deviceId);
 
-        const CONFIG = { INITIAL_LOAD: 5, BATCH_SIZE: 5, CONTACT_EMAIL: "contact@secretbinodon.com", footer: { about: "#", contact: "#", privacy: "#", terms: "#" } };
+        const CONFIG = { INITIAL_LOAD: 5, BATCH_SIZE: 20, CONTACT_EMAIL: "contact@secretbinodon.com", footer: { about: "#", contact: "#", privacy: "#", terms: "#" } };
 
         document.getElementById('link-about').href = CONFIG.footer.about;
         document.getElementById('link-contact').href = CONFIG.footer.contact;
